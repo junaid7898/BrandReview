@@ -17,17 +17,17 @@ const Header = () => {
   const [data, setData] = useState(['car 1', 'car2', 'car3', 'car 4', 'car 5', 'car 6'])
 
   //states to show and hide nav links and search bar
-  const [isShowingMenu, setIsShowingMenu] = useState(-1000);
+  const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(-1000);
 
   const [isLogged, setIsLogged] = useState(true);
 
   //javascript for show and hide menu when media queries work
   const showMenu = () => {
-    setIsShowingMenu(0);
+    setIsShowingMenu(true);
   };
   const hideMenu = () => {
-    setIsShowingMenu(-1000);
+    setIsShowingMenu(false);
   };
 
   //javascript for show and hide search bar
@@ -73,18 +73,19 @@ const Header = () => {
             }}
           />
           <img src={SearchIcon} />
-        </div>
-        {searchKey === '' ? 
+          {searchKey === '' ? 
           (null)
           :
           <>
             <SearchList styling="nav__search__results" showResult = {showResult} data = {data}/>
           </>
         }
+        </div>
+        
         
       </div>
 
-      <div className="nav__links" style={{ right: isShowingMenu }}>
+      <div className={`nav__links ${isShowingMenu ? `nav__links-show` : `nav__links-hide`}`}>
         <ul>
           {isLogged ? (
             <>

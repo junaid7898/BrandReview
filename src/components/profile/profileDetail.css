@@ -1,0 +1,30 @@
+.details{
+    max-width: 90%;
+    margin: auto;
+    margin-bottom: 50px;
+}
+.details ul{
+    padding: 0px;
+    margin-bottom: 50px;
+    text-align: center;   
+}
+.details ul li{
+    list-style: none;
+    display: inline-block;
+    padding: 8px 20px;
+    position: relative;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    
+}
+.details ul li:active{
+    color: #35C9CE
+}
+
+.details__list__click{
+    border-bottom: 2px solid #35C9CE;
+    border-collapse: collapse;
+    color: #35C9CE;
+}

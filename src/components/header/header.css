@@ -1,0 +1,195 @@
+.nav{
+    display: flex; 
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    max-width: 100%;   
+    padding: 20px 50px;
+    z-index: 1;
+}
+
+.nav__innerContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* nav icon and website name */
+.nav__icon{
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+.nav__icon h1{
+    color:#35C9CE;
+}
+.nav__icon img , .nav__icon h1{
+    display: inline-block;
+}
+
+
+
+/* nav Search Bar */
+.nav__searchdiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+}
+.nav__searchBar{
+    display: flex;
+    align-items: center;
+    background-color: #F8F8F8;
+    padding: 10px;
+    position: relative;
+}
+.nav__searchBar input, .nav__searchBar img{
+    display: inline-block;
+}
+.nav__searchBar input{
+    background-color: transparent;
+    border: 0px solid;
+    width: 250px;
+}
+.nav__searchBar input:focus{
+    outline: none;
+}
+
+.nav__search__results{
+    display: inline-block;
+    position: absolute;
+    border: 1px solid green;
+    top:60px;
+    width: 250px;
+    padding: 0px 10px;
+    z-index: 3;
+}
+
+
+
+/* nav links of Login and Register */
+.nav__links{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* text-align: right; */
+}
+.nav__links ul li{
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+    cursor: pointer;
+
+}
+
+.nav__links ul li a{
+    text-decoration: none;
+    color: inherit;
+}
+.nav__links ul li::after{
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #35C9CE;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+.nav__links ul li:hover::after{
+    width: 100%;
+}
+
+
+
+/* other elements of navbar wose display is none in laptop mode */
+.nav__search__icon{
+    display: none;
+}
+.nav__open__icon{
+    display: none;
+}
+
+.nav__close__icon{
+    display: none;
+}
+.searchBar__close__icon{
+    display: none;
+}
+
+
+
+/* @media Queries */
+
+@media(max-width: 700px){
+    .nav{
+        padding: 10px;
+    }
+    .nav__searchdiv{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        justify-content: space-around;
+        position: absolute;
+        width: 100%;
+        padding: 20px;
+        transition: 1s;
+    }
+    .nav__links{
+        position: absolute;
+        background: #F8F8F8;
+        width: 100%;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+    }
+    .nav__links ul{
+        padding: 10px;
+        
+    }
+    .nav__open__icon{
+        display: block;
+        cursor: pointer;
+        margin-right: 10px;
+        width: 30px;
+       
+    }
+    .nav__search__icon{
+        display: block;
+        cursor: pointer;
+        margin-left: 10px;
+        width: 30px;
+    }
+    .nav__close__icon{
+        display: block;
+        /* position: absolute; */
+        cursor: pointer;
+        color: black;
+        width: 30px;
+        height: 30px;
+        margin-left: auto;
+        margin-right: 10px;
+        /* top: 10px;
+        right: 40px; */
+    }
+    .searchBar__close__icon{
+        display: inline-block;
+        align-self: flex-start;
+        margin-right: 10px;
+        cursor: pointer;
+        color: black;
+        width: 20px;
+        height: 20px;
+        
+    }
+    .nav__icon{
+        padding-left: 0px;
+    }
+}

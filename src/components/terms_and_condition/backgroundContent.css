@@ -1,0 +1,29 @@
+.banner{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+}
+
+.banner__dots{
+    /* height: 50px;
+    width: 200px; */
+    margin-left: 100px;
+    margin-right: 300px;
+}
+
+@media(max-width: 700px){
+    .banner{
+        justify-content: flex-start;
+        max-width: 800px;
+    }
+    .banner__dots{
+        margin-right: 50px;
+        margin-left: 50px;
+        width: 100px;
+    }
+    .banner__img{
+        width: 50px;
+    }
+}

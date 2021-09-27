@@ -6,21 +6,69 @@ import HeaderButton from "../../assests/icons/header_button.png";
 import "./header.css";
 import { GrClose } from "react-icons/gr";
 import { GiHamburgerMenu } from "react-icons/gi";
-import {BsSearch} from 'react-icons/bs'
+import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import SearchList from "./SearchList";
 
 const Header = () => {
   //search bar states
   const [searchKey, setSearchKey] = useState(null);
-  const [showResult, setShowResult] = useState("none");
-  const [data, setData] = useState(['car 1', 'car2', 'car3', 'car 4', 'car 5', 'car 6'])
+  
+  const [data, setData] = useState([
+    {
+      name: "car 1",
+      img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
+    },
+    {
+      name: "pewdiepie 69",
+      img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
+    },
+    {
+      name: "bike 3",
+      img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
+    },
+    {
+      name: "car 4",
+      img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
+    },
+    {
+      name: "car 5",
+      img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
+    },
+    {
+      name: "fff2 6",
+      img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
+    },
+    {
+      name: "toyota 7",
+      img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
+    },
+  ]);
 
   //states to show and hide nav links and search bar
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(-1000);
-
+  const [searchResults, setSearchResults] = useState([])
+  const [showResult, setShowResult] = useState(false);
   const [isLogged, setIsLogged] = useState(true);
+
+
+  const handleSearch = (e) => {
+
+    if(e.trimStart() === ""){
+      setSearchResults([])
+      return
+    }
+    setSearchResults(
+      data.filter( item => {
+        if(item.name.toLowerCase().includes(e.trimStart().toLowerCase()))
+        {
+          return item
+        }
+      })
+    )
+
+  }
 
   //javascript for show and hide menu when media queries work
   const showMenu = () => {
@@ -39,7 +87,7 @@ const Header = () => {
   };
   return (
     <nav className="nav">
-      <div className = 'nav__innerContainer'>
+      <div className="nav__innerContainer">
         <BsSearch
           src={SearchIcon}
           className="nav__search__icon"
@@ -53,8 +101,10 @@ const Header = () => {
           <h1>Review Website</h1>
         </a>
 
-        <GiHamburgerMenu className="nav__open__icon" onClick={() => showMenu()} />
-
+        <GiHamburgerMenu
+          className="nav__open__icon"
+          onClick={() => showMenu()}
+        />
       </div>
 
       <div className="nav__searchdiv" style={{ left: showSearchBar }}>
@@ -68,24 +118,35 @@ const Header = () => {
             placeholder="Search"
             value={searchKey}
             onChange={(e) => {
-              setSearchKey(e.target.value);
-              setShowResult('block')
+              handleSearch(e.target.value);
+              setShowResult(true);
             }}
           />
           <img src={SearchIcon} />
-          {searchKey === '' ? 
-          (null)
-          :
-          <>
-            <SearchList styling="nav__search__results" showResult = {showResult} data = {data}/>
-          </>
-        }
+
+            {
+              searchResults.length > 0 && showResult ?
+              <>
+              <SearchList
+                styling="nav__search__results"
+                divStyling = 'nav__search__result__item'
+                showResult={showResult}
+                data={searchResults}
+                setShowResult = {setShowResult}
+              />
+            </>
+            :
+            null
+            }
+          
         </div>
-        
-        
       </div>
 
-      <div className={`nav__links ${isShowingMenu ? `nav__links-show` : `nav__links-hide`}`}>
+      <div
+        className={`nav__links ${
+          isShowingMenu ? `nav__links-show` : `nav__links-hide`
+        }`}
+      >
         <ul>
           {isLogged ? (
             <>

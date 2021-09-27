@@ -1,13 +1,25 @@
 import React from 'react'
-
-const SearchList = ({styling, showResult, data}) => {
+import { Link } from 'react-router-dom'
+const SearchList = ({styling ,divStyling,  data, setShowResult}) => {
+    
+    
     return (
-        <div className = {styling} style = {{display: showResult}}>
-            {data.map((item) => {
+        <div className = {styling}>
+            {
+                data ?
+                data.map((item) => {
                 return(
-                    <h1>{item}</h1>
+                    <Link to ={`${"/"}`} className = {divStyling} onClick = { () => setShowResult(false)}>
+                        <img src = {item.img} style = {{width: 50, borderRadius: 2  }}/>
+                        <h1>{item.name}</h1>
+                    </Link>
+                    
                 )
-            })}
+            }) :
+                <h3 style={{padding: 10}}>
+                    No Relavant Resutls
+                </h3>
+            }
         </div>
     )
 }

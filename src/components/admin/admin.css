@@ -45,13 +45,16 @@
 }
 
 .panel__div__details__initials{
-    
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .panel__div__details__initials div{
-    display: inline-block;
+    /* display: inline-block;
     text-align: center;
-    margin-right: 60px;
+    margin-right: 60px; */   
 }
 
 .panel__div__details__initials div h1, .panel__div__details__initials div h3{

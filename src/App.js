@@ -7,7 +7,7 @@ import { BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Admin from './components/admin/Admin';
-
+import HomePage from './page/Homepage/HomePage';
 function App() {
   return (
     <div className="App" >
@@ -15,6 +15,7 @@ function App() {
     <BrowserRouter>
     <Header/>
       <Switch>
+        <Route path="/" exact component={HomePage} />
         <Route path = '/terms' component = {Admin} />
         <Route path = '/review' component = {WriteReview}/>
         <Route path = '/profile' component = {Profile}/>

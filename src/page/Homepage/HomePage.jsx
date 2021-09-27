@@ -1,6 +1,10 @@
 import React from 'react'
 import Contact from './components/contact/Contact'
+
 import TopReview from './components/topreview/TopReview'
+
+import TopTenBrands from './components/top-ten-brands/TopTenBrands'
+
 
 function HomePage() {
     return (
@@ -9,7 +13,8 @@ function HomePage() {
                 <TopReview />
             </div>
             <div className="homepage__contact-container">
-                <Contact />
+                <TopTenBrands/>   
+                {/* <Contact /> */}
             </div>
         </div>
     )

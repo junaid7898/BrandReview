@@ -25,7 +25,7 @@ function TopTenBrands() {
                 topBrands.map((item, index) => {
                     console.log(index)
                     return(
-                             <Link className="topbrands__list">
+                             <Link to="/" className="topbrands__list">
                                 {index === 0 || index === 1 || index === 2 ? 
                                     (
                                     <img src = {index === 0 ? FirstPosition : index === 1 ? SecontPosition : ThirdPosition } className = 'topbrands__list__position'/>)

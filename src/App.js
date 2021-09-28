@@ -8,6 +8,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Admin from './components/admin/Admin';
 import HomePage from './page/Homepage/HomePage';
+import BrandPanel from './page/BrandPanel/BrandPanel';
 function App() {
   return (
     <div className="App" >
@@ -19,6 +20,8 @@ function App() {
         <Route path = '/terms' component = {Admin} />
         <Route path = '/review' component = {WriteReview}/>
         <Route path = '/profile' component = {Profile}/>
+        <Route path = '/brandpanel' component = {BrandPanel}/>
+        <Route path = '/termsandcondition' component = {TermsAndCondition}/>
       </Switch>
       <Footer/>
     </BrowserRouter>

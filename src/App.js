@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import TermsAndCondition from './components/terms_and_condition/TermsAndCondition';
 import WriteReview from './components/write_review/WriteReview';
-import Profile from './components/profile/Profile';
+import Profile from './page/profile/Profile'
 import { BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';

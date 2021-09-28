@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '../header/Header'
-import Footer from '../footer/Footer'
 import ProfileContent from './ProfileContent'
 import ProfileDetail from './ProfileDetail'
 

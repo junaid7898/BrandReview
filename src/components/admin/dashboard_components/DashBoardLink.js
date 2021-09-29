@@ -1,11 +1,11 @@
 import React from 'react'
 import './dashboardLink.css'
+import DashBoardChart from './DashBoardChart'
 const DashBoardLink = () => {
     return (
         <section className = 'dashboard__link'>
-            <div>
-                <h1>hello this is link for dashboard</h1>
-            </div>
+            <DashBoardChart/>
+            <DashBoardChart/>
         </section>
     )
 }

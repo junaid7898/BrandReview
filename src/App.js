@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import "./sass/main.scss"
 import TermsAndCondition from './page/terms_and_condition/TermsAndCondition';
 import WriteReview from './page/write_review/WriteReview';
 import Profile from './page/profile/Profile'
@@ -22,7 +22,7 @@ function App() {
     {/* <BrandComparisonDetail/> */}
       <Switch>
         <Route path="/" exact component={HomePage} />
-        <Route path = '/terms' component = {Admin} />
+        <Route path = '/admin' component = {Admin} />
         <Route path = '/review' component = {WriteReview}/>
         <Route path = '/profile' component = {Profile}/>
         <Route path = '/brandpanel' component = {BrandPanel}/>

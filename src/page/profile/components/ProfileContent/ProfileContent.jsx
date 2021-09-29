@@ -1,6 +1,5 @@
 import React from "react";
-import "./profilecontent.css";
-import ProfileImg from "../../assests/images/Profile Image.png";
+import ProfileImg from "../../../../assests/images/Profile Image.png";
 
 const ProfileContent = () => {
   return (

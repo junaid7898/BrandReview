@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import BrandIcon from "../../assests/images/brand_icon.png";
-import "./brandComparison.scss";
-import { AiFillCaretDown } from "react-icons/ai";
 import BrandSearchList from "./components/BrandSearchList";
 
 const BrandComparison = ({ brandList }) => {

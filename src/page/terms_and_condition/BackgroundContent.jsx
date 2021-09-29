@@ -2,7 +2,6 @@ import React from 'react'
 import img1 from '../../assests/images/img1.png'
 import dots from '../../assests/images/Dots.png'
 import img2 from '../../assests/images/Vector 3.png'
-import './backgroundContent.css'
 
 const BackgroundContent = () => {
     return (

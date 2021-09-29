@@ -1,5 +1,4 @@
 import React from 'react'
-import './myDetails.css'
 
 const DetailTag = ({label, value, class1}) => {
     return (

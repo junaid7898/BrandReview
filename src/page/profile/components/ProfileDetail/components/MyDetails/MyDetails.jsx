@@ -1,6 +1,5 @@
 import React from 'react'
-import DetailTag from './DetailTag'
-import './myDetails.css'
+import DetailTag from './components/DetailTag'
 
 const MyDetails = () => {
     return (

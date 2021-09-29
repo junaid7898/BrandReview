@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import "./profileDetail.css";
 
-import MyDetails from './MyDetails'
-import MyReviews from './MyReviews'
-import ReviewsAndFollowings from './ReviewsAndFollowings'
+import MyDetails from './components/MyDetails/MyDetails'
+import MyReviews from './components/MyReviews'
+import ReviewsAndFollowings from './components/ReviewsAndFollowings'
 
 const ProfileDetail = () => {
   const [showDetails, setShowDetails] = useState(true);

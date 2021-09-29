@@ -1,6 +1,6 @@
 import React from 'react'
-import BrandContent from './components/brand_content/BrandContent'
-import BrandDetail from './components/brand_details/BrandDetail'
+import BrandContent from './components/BrandContent'
+import BrandDetail from './components/BrandDetail'
 
 const BrandPanel = () => {
     return (

@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
-import './dashboard.css'
 import {FaSortAmountDownAlt} from 'react-icons/fa'
-import DashBoardLink from './dashboard_components/DashBoardLink'
+import DashBoardLink from './components/Dashboard Link/DashBoardLink'
 const AdminDashBoard = () => {
 
     const [showDashBoard , setShowDashBoard] = useState(true)

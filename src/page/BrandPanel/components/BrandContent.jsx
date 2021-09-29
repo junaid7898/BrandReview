@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import BrandIcon from "../../../../assests/images/brand_icon.png";
-import './brandContent.scss'
-import Stars from '../../../../assests/images/Stars.png'
+import BrandIcon from "../../../assests/images/brand_icon.png";
+import Stars from '../../../assests/images/Stars.png'
 
 const BrandContent = () => {
   const [brand, setBrand] = useState([

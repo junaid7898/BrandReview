@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import HeaderIcon from "../../assests/icons/header_icon.png";
 import SearchIcon from "../../assests/icons/search_icon.png";
-import LockIcon from "../../assests/icons/lock_icon.png";
-import HeaderButton from "../../assests/icons/header_button.png";
-import "./header.css";
 import { GrClose } from "react-icons/gr";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import SearchList from "./SearchList";
+import SearchList from "./components/SearchList";
 
 const Header = () => {
   //search bar states

@@ -1,6 +1,6 @@
 import React from 'react'
-import AdminDashBoard from './AdminDashBoard'
-import AdminPanel from './AdminPanel'
+import AdminDashBoard from './components/Admin Dashboard/AdminDashBoard'
+import AdminPanel from './components/AdminPanel'
 const Admin = () => {
     return (
         <section>

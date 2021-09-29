@@ -1,5 +1,4 @@
 import React from 'react'
-import "./header.scss"
 function Header() {
     return (
         <div className="homepage__header-container">

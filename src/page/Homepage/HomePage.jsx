@@ -1,13 +1,12 @@
 import React from 'react'
-import Contact from './components/contact/Contact'
+import Contact from './components/Contact'
 
-import TopReview from './components/topreview/TopReview'
+import TopReview from './components/topReview/TopReview'
 
-import TopTenBrands from './components/top-ten-brands/TopTenBrands'
-import Header from './components/Header/Header'
+import TopTenBrands from './components/TopTenBrands'
+import Header from './components/Header'
 import BrandComparison from '../../components/brand_comparison/BrandComparison'
-import Compare from './components/compare/Compare'
-import './homePageStyling.scss'
+import Compare from './components/Compare'
 
 
 function HomePage() {

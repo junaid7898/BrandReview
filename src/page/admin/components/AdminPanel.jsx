@@ -1,5 +1,4 @@
 import React from "react";
-import "./admin.css";
 const AdminPanel = () => {
   return (
     <section className="panel">

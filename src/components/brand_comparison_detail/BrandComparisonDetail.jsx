@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./brandComparisonDetails.scss";
 
 const BrandComparisonDetail = ({ brandDetails }) => {
     console.log(brandDetails)

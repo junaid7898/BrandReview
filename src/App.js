@@ -6,7 +6,7 @@ import Profile from './page/profile/Profile'
 import { BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-import Admin from './components/admin/Admin';
+import Admin from './page/admin/Admin';
 import HomePage from './page/Homepage/HomePage';
 import BrandPanel from './page/BrandPanel/BrandPanel';
 import BrandComparison from './components/brand_comparison/BrandComparison';

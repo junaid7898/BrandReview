@@ -1,6 +1,5 @@
 import React, {useState}from 'react'
 import {FaSortAmountDownAlt} from 'react-icons/fa'
-import './brandDetail.scss'
 
 const BrandDetail = () => {
     const [showDashBoard , setShowDashBoard] = useState(true)

@@ -1,7 +1,7 @@
 import React from "react";
-import vector4 from '../../assests/images/vector4.png'
-import vector5 from '../../assests/images/vector5.png'
-import vector6 from '../../assests/images/vector6.png'
+import vector4 from '../../../assests/images/vector4.png'
+import vector5 from '../../../assests/images/vector5.png'
+import vector6 from '../../../assests/images/vector6.png'
 
 const Content = () => {
   return (

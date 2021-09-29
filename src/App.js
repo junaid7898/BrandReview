@@ -12,7 +12,10 @@ import BrandPanel from './page/BrandPanel/BrandPanel';
 import BrandComparison from './components/brand_comparison/BrandComparison';
 import BrandComparisonDetail from './components/brand_comparison_detail/BrandComparisonDetail';
 import ComparisonPage from './page/Comparison/ComparisonPage';
+import SignUp from './page/Sign_up/SignUp';
 function App() {
+  
+  let user = false;
   return (
     <div className="App" >
     {/* <Profile/> */}
@@ -28,6 +31,16 @@ function App() {
         <Route path = '/brandpanel' component = {BrandPanel}/>
         <Route path = '/termsandcondition' component = {TermsAndCondition}/>
         <Route path = '/comparison' component = {ComparisonPage}/>  
+      
+      {
+        !user ?
+        <Route path = '/signup' component = {SignUp}/> 
+        : 
+        null
+      }
+      <Route path = '/*' >
+        <h1>Error 404</h1>
+      </Route>
       </Switch>
       <Footer/>
     </BrowserRouter>

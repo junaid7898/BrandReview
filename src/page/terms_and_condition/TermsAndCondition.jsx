@@ -1,6 +1,6 @@
 import React from 'react'
-import BackgroundContent from './BackgroundContent'
-import Content from './Content'
+import BackgroundContent from './components/BackgroundContent'
+import Content from './components/Content'
 
 
 

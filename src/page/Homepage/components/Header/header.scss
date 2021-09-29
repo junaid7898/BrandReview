@@ -1,0 +1,86 @@
+.homepage__header{
+    &-container{
+        position: relative;
+        top: -80px;
+    }
+    display: flex;
+    flex-direction: row;
+    &__left{
+        background-color: #E8FFFE;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 50px;
+        &__sub{
+            //width: 100%;
+            width: 500px;
+            margin: auto;
+        }
+    }
+    &__infoHeading{
+        width: 450px;
+        margin-bottom: 50px;
+        font-size: 50px;
+        font-size: 900;
+    }
+    &__infoText{
+        width: 450px;
+        margin-bottom: 50px;
+        color: rgba(163, 154, 154, 0.5);
+        font-size: 20px;
+    }
+    &__button{
+        border: none;
+        outline: none;
+        background-color: #35C9CE;
+        border-radius: 8px;
+        padding: 20px 30px;
+        font-size: 20px;
+        color: #FFFFFF;
+        cursor: pointer;
+        &:hover{
+            background-color: #2eb0b5;
+        }
+    }
+    &__right{
+        background-color: white;
+        width: 50%;
+        margin-top: 200px;
+    }
+    overflow: hidden;
+    &__brand{
+        display: flex;
+        align-items: center;
+        transform: rotate(30deg) translate(50px, 50px);
+        &__col1{
+            display: flex;
+            flex-direction: column;
+            margin:20px;
+        }
+        &__item{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 20px;
+            margin: 20px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            background-color: white;
+            border-radius: 10px;
+            &__logo{
+                max-width: 250px;
+                max-height: 302px;
+                &-container{
+                    width: 259px;
+                    height: 302px;
+                }
+            }
+            &__rating{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                margin: 20px 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,111 @@
+@mixin respond($breakpoint) {
+    // @if $breakpoint == tab-land {
+    //   @media (max-width: 75em) {
+    //     @content;
+    //   }
+    // } //1200px
+    @if $breakpoint == tab {
+      @media (max-width: 900px) {
+        @content;
+      } //900px
+    }
+    @if $breakpoint == phone {
+      @media (max-width: 700px) {
+        @content;
+      } //768px
+    }
+    @if $breakpoint == big-desktop {
+      @media (min-width: 87.5em) {
+        @content;
+      } //1400px
+    }
+  }
+
+
+
+.brand{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    max-width: 1100px;
+    background: #FFFFFF;
+    box-shadow: 0px 20px 80px rgba(0, 0, 0, 0.07);
+    border-radius: 20px;
+    margin: auto;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    &__logo{
+        width: 300px;
+        @include respond(phone){
+            margin: auto;
+        }
+    }
+    &__info{
+        margin-right: auto;
+        @include respond(phone){
+            margin: auto;
+        }
+        &__name{
+            font-family: AllRoundGothicW01-Bold;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 36px;
+            line-height: 43px;
+            color: rgba(0, 0, 0, 0.8);
+        }
+        &__para{
+            font-family: Hind Vadodara;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 27px;
+            color: rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+        }
+    }
+    &__progress{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: auto;
+        @include respond(phone){
+            margin: auto;
+        }
+        &__reviews{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            &__count{
+                font-family: inherit;
+                font-weight: 600;
+                font-size: 70px;
+                line-height: 105px;
+                color: #35C9CE;
+            }
+            h3{
+                color: #35C9CE;
+            }
+        }
+        &__ratings{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            img{
+                width: 100px;
+            }
+            p{
+                color: #FFCC0D;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 30px;
+            }
+        }
+    }
+}

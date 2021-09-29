@@ -29,14 +29,20 @@
 }
 
 .dashboard__filter__input{
-    background-color: #F8F8F8;
-    padding: 10px 10px;
-    border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #F8F8F8;
+            padding: 12px 15px;
+            width: 300px;
 }
 
 .dashboard__filter__input input{
-    border: 0px;
-    background-color: transparent;
+                flex: 1;
+                border: 0px;
+                background-color: transparent;
+                outline: none;
 }
 
 .dashboard__filter__input input:focus{

@@ -9,6 +9,7 @@
     padding-top: 200px;
     padding-left: 50px;
     padding-right: 50px;
+    padding-bottom: 20px;
     display: flex;
     flex-flow: row wrap;
     max-width: 100%;
@@ -34,6 +35,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
 }
 .footer__content__intro div h1{
     color: #35C9CE;
@@ -43,8 +45,25 @@
 .footer__content__intro p{
     max-width: 250px;
 }
-.footer__content__links p{
-    color: #35C9CE;
+.footer__content__links__title{
+    text-decoration: none;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+/* identical to box height */
+
+
+color: #000000; 
+}
+
+.footer__content__social__links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 30px;
 }
 
 
@@ -55,8 +74,7 @@
     justify-content: space-between;
     max-width: 100%;
     align-items: center;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding: 20px 50px
 }
 .footer__rights h1{
     color: #35C9CE;
@@ -67,6 +85,12 @@
 .footer__rights p{
     font-size: 14px;
     font-weight: 400;
+}
+
+@media(max-width: 700px){
+    .footer__content__intro{
+        margin-bottom: 30px;
+    }
 }
 
 

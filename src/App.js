@@ -13,6 +13,7 @@ import BrandComparison from './components/brand_comparison/BrandComparison';
 import BrandComparisonDetail from './components/brand_comparison_detail/BrandComparisonDetail';
 import ComparisonPage from './page/Comparison/ComparisonPage';
 import SignUp from './page/Sign_up/SignUp';
+import EmailVerification from './page/Email Verification/EmailVerification';
 function App() {
   
   let user = false;
@@ -31,6 +32,7 @@ function App() {
         <Route path = '/brandpanel' component = {BrandPanel}/>
         <Route path = '/termsandcondition' component = {TermsAndCondition}/>
         <Route path = '/comparison' component = {ComparisonPage}/>  
+        <Route path = '/verify-email/:token' component = {EmailVerification}/>  
       
       {
         !user ?

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import CarImage from '../../assests/images/car_image.jpg'
 
 const SearchList = ({styling ,divStyling,  data, setShowResult}) => {
     

@@ -1,5 +1,4 @@
 import React from 'react'
-import './contact.scss'
 
 import {AiOutlineMail, AiOutlinePhone} from 'react-icons/ai'
 import {IoLocation} from 'react-icons/io5'

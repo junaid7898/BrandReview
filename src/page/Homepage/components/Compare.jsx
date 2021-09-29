@@ -1,5 +1,4 @@
 import React from "react";
-import './compare.scss'
 const Compare = () => {
   return (
     <div className="compare__text">

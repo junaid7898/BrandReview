@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import "./topreview.scss"
-import Review from './component/Review/Review'
+import Review from './components/Review'
 import Ticker from 'react-ticker'
 function TopReview() {
     const rating = 2.5

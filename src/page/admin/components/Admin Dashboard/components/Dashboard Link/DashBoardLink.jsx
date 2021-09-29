@@ -1,6 +1,5 @@
 import React from 'react'
-import './dashboardLink.css'
-import DashBoardChart from './DashBoardChart'
+import DashBoardChart from './components/DashBoardChart'
 const DashBoardLink = () => {
     return (
         <section className = 'dashboard__link'>

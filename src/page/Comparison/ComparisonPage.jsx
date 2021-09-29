@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BrandComparison from '../../components/brand_comparison/BrandComparison'
 import BrandComparisonDetail from '../../components/brand_comparison_detail/BrandComparisonDetail'
-import './comparisonPage.scss'
 import KiaLogo from '../../assests/images/kia_logo.png';
 const ComparisonPage = () => {
     const [testBrand, setTestBrand] = useState(

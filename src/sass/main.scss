@@ -1,4 +1,6 @@
-//ANCHOR ===== Base =====
+//ANCHOR =====================
+//ANCHOR        Base
+//ANCHOR =====================
 
 @import "./base/variables";
 @import "./base/base";
@@ -9,14 +11,18 @@
 //ANCHOR     Components
 //ANCHOR =====================
 
+//ANCHOR Header
+@import "../components/header/styles/header";
 
+//ANCHOR Footer
+@import "../components/footer/styles/footer";
 
-//ANCHOR BrandComparison
+//ANCHOR Brand Comparison
 @import "../components/brand_comparison/styles/brandComparison";
 @import "../components/brand_comparison/styles/brandSearchList";
 
-
-
+//ANCHOR Brand Comparison Detail
+@import "../components/brand_comparison_detail/styles/brandComparisonDetails";
 
 
 
@@ -24,6 +30,13 @@
 //ANCHOR        Pages
 //ANCHOR =====================
 
+//ANCHOR Home Page
+@import "../page/Homepage/styles/homePageStyling";
+@import "../page/Homepage/styles/header";
+@import "../page/Homepage/styles/topreview";
+@import "../page/Homepage/styles/topTenBrands";
+@import "../page/Homepage/styles/compare";
+@import "../page/Homepage/styles/contact";
 
 
 //ANCHOR Profile Page
@@ -40,3 +53,19 @@
 //ANCHOR Terms and Conditions
 @import "../page/terms_and_condition/styles/backgroundContent";
 @import "../page/terms_and_condition/styles/content";
+
+
+//ANCHOR Comparison
+@import "../page/Comparison/styles/comparisonPage";
+
+
+//ANCHOR Brand Panel
+@import "../page/BrandPanel/styles/brandContent";
+@import "../page/BrandPanel/styles/brandDetail";
+
+
+//ANCHOR Admin Panel
+
+@import "../page/admin/styles/admin";
+@import "../page/admin/styles/dashboard";
+@import "../page/admin/styles/dashboardLink";

@@ -4,6 +4,8 @@ import SignUpOtpVerification from "./SignUpOtpVerification";
 import { Link } from "react-router-dom";
 
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
+import { userActions } from "../../../Redux/user slice/userSlice";
+import { useDispatch } from "react-redux";
 
 const SignUpInputs = () => {
   const [username, setUserName] = useState("");
@@ -13,6 +15,8 @@ const SignUpInputs = () => {
   const [OTP, setOTP] = useState(null);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null)
+
+  const dispatch = useDispatch()
 
   const signUp = async () => {
     console.log(username, email, password, phone);
@@ -24,14 +28,14 @@ const SignUpInputs = () => {
       phoneNumber: 3355114846,
     };
     try {
-        console.log('here---->')   
       const { data } = await axios.post(
         "http://localhost:4000/v1/auth/register",
         req
       ).then(res => {
-          console.log('actually---->' + res.data)
+        console.log(res)
+          dispatch(userActions.setUser(res.data))
       }).catch(err => {
-        console.log(err.message)
+        alert(err.response.data.message)
       });
       console.log('---->'+data);
       setUser(data);

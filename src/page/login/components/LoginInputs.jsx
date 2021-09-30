@@ -2,14 +2,35 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import GoogleIcon from "../../../assests/icons/googleIcon.png";
 import FacebookIcon from "../../../assests/icons/facebookIcon.png";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../../Redux/user slice/userSlice";
 
 const LoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const login = () => {
-    console.log(email, password);
+  const dispatch = useDispatch()
+  
+  const login = async () => {
+    const req = {
+      email,
+      password
+    };
+    try {
+        axios.post(
+        "http://localhost:4000/v1/auth/login",
+        req
+      ).then(res => {
+        console.log(res)
+          dispatch(userActions.setUser(res.data))
+      }).catch(err => {
+        alert(err.response.data.message)
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

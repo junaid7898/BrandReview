@@ -1,7 +1,7 @@
 import React from 'react'
 import Contact from './components/Contact'
 
-import TopReview from './components/topreview/TopReview'
+import TopReview from './components/topReview/TopReview'
 
 import TopTenBrands from './components/TopTenBrands'
 import Header from './components/Header'

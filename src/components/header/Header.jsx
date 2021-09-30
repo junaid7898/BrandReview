@@ -6,6 +6,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import SearchList from "./components/SearchList";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../Redux/user slice/userSlice";
 
 const Header = () => {
   //search bar states
@@ -48,6 +50,10 @@ const Header = () => {
   const [searchResults, setSearchResults] = useState([])
   const [showResult, setShowResult] = useState(false);
   const [isLogged, setIsLogged] = useState(true);
+
+  const dispatch = useDispatch()
+
+  const { user } = useSelector(state => state.user)
 
 
   const handleSearch = (e) => {
@@ -145,22 +151,23 @@ const Header = () => {
         }`}
       >
         <ul>
-          {isLogged ? (
+          {!user ? (
             <>
               <li>
-                <Link to="/terms">Login</Link>
+                <Link to="/login">Login</Link>
               </li>
               <li>
-                <Link to="/review">Register</Link>
-              </li>
-              <li>
-                <Link to="/profile">Profile</Link>
+                <Link to="/signup">Register</Link>
               </li>
             </>
           ) : (
             <>
               <li>
-                <Link to="/">Profile</Link>
+                <Link to={`/profile/${user.user.id}`}>Profile</Link>
+              </li>
+              <li>
+                {/* TODO api/logout */}
+                <button onClick={ () => {dispatch(userActions.removeUser())}} >Logout</button>
               </li>
             </>
           )}

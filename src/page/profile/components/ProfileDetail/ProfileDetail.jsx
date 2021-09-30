@@ -4,7 +4,7 @@ import MyDetails from './components/MyDetails/MyDetails'
 import MyReviews from './components/MyReviews'
 import ReviewsAndFollowings from './components/ReviewsAndFollowings'
 
-const ProfileDetail = () => {
+const ProfileDetail = ({user}) => {
   const [showDetails, setShowDetails] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
   const [showReviewFollow, setShowReviewsFollow] = useState(false);
@@ -35,7 +35,7 @@ const ProfileDetail = () => {
         <li onClick={handleShowReviewFollow} className = {showReviewFollow ? 'details__list__click': ''}>Reviews | Follow</li>
       </ul>
             {showDetails ? (
-                <MyDetails/>
+                <MyDetails user={user}/>
             ):(
                 showReviews ? 
                 (<MyReviews/>)

@@ -30,7 +30,7 @@ function App() {
         <Route path="/" exact component={HomePage} />
         <Route path = '/admin' component = {Admin} />
         <Route path = '/review' component = {WriteReview}/>
-        <Route path = '/profile' component = {Profile}/>
+        <Route path = '/profile/:userId' component = {Profile}/>
         <Route path = '/brandpanel' component = {BrandPanel}/>
         <Route path = '/termsandcondition' component = {TermsAndCondition}/>
         <Route path = '/comparison' component = {ComparisonPage}/>  

@@ -1,27 +1,27 @@
 import React from "react";
 import ProfileImg from "../../../../assests/images/Profile Image.png";
 
-const ProfileContent = () => {
+const ProfileContent = ({user}) => {
   return (
+      user ?
+
       <section >
         <div className="profile__intro">
-          <img src={ProfileImg} />
+          <img src={user.profileImage} />
 
           <div className="profile__intro__nameAndAddress">
-            <h1>Eddie Feest</h1>
-            <h3>1499 Traders Alley</h3>
-            <h3>Kansas City, MO6549</h3>
+            <h1>{user.name}</h1>
+            <h3>{user.email}</h3>
+            <h3>{user.countryCode && user.phoneNumber ? user.countryCode+user.phoneNumber : null}</h3>
           </div>
 
           <p className="profile__intro__detail">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text ever
-            since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only
-            five centuries,
+            {user.about ? user.about : " - "}
             </p>
           </div>
       </section>
+      :
+        null
   );
 };
 

@@ -1,14 +1,24 @@
 import React from 'react'
 import DetailTag from './components/DetailTag'
+import { useSelector, useDispatch } from 'react-redux'
+const MyDetails = ({user}) => {
 
-const MyDetails = () => {
+
     return (
         <section className = 'mydetails'>
-                <DetailTag class1 = 'tag ' label = 'phone' value = '0123456'/>
-                <DetailTag class1 = 'tag ' label = 'Birthday' value = 'Sep 15, 2003'/>
-                <DetailTag class1 = 'tag tag__address' label = 'address' value = " a type specimen book. It has survived not only five centuries" />
-                <DetailTag class1 = 'tag ' label = 'Country Code' value = '212123'/>
-                <DetailTag class1 = 'tag ' label = 'Email' value = 'abc@gmail.com'/>   
+                
+                {
+                    user ?
+                        <>
+                            <DetailTag class1 = 'tag ' label = 'phone' value = {user.phoneNumber}/>
+                            <DetailTag class1 = 'tag ' label = 'Birthday' value = {user.dateOfBirth}/>
+                            <DetailTag class1 = 'tag tag__address' label = 'address' value = {user.address} />
+                            <DetailTag class1 = 'tag ' label = 'Country Code' value = {user.countryCode}/>
+                            <DetailTag class1 = 'tag ' label = 'Email' value = {user.email}/>   
+                        </>
+                    :
+                        null
+                }
                 
         </section>
     )

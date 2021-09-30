@@ -14,6 +14,8 @@ import BrandComparisonDetail from './components/brand_comparison_detail/BrandCom
 import ComparisonPage from './page/Comparison/ComparisonPage';
 import SignUp from './page/Sign_up/SignUp';
 import EmailVerification from './page/Email Verification/EmailVerification';
+import Login from './page/login/Login';
+import BrandSignUp from './page/brand_sign_up/BrandSignUp';
 function App() {
   
   let user = false;
@@ -33,6 +35,8 @@ function App() {
         <Route path = '/termsandcondition' component = {TermsAndCondition}/>
         <Route path = '/comparison' component = {ComparisonPage}/>  
         <Route path = '/verify-email/:token' component = {EmailVerification}/>  
+        <Route path = '/login' component = {Login}/>
+        <Route path = '/brandsignup' component = {BrandSignUp}/>
       
       {
         !user ?

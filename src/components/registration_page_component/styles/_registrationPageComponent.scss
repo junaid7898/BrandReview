@@ -1,0 +1,78 @@
+@mixin respond($breakpoint) {
+    @if $breakpoint == tab {
+      @media (max-width: 900px) {
+        @content;
+      } //900px
+    }
+    @if $breakpoint == phone {
+      @media (max-width: 700px) {
+        @content;
+      } //768px
+    }
+    @if $breakpoint == big-desktop {
+      @media (min-width: 87.5em) {
+        @content;
+      } //1400px
+    }
+}
+
+  .registration__form__icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 24px;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    width: 400px;
+    background-color: #ffffff;
+    @include respond(phone){
+        width: 200px;
+        margin-bottom: 80px;
+        margin-top: 30px;
+    }
+    &__main {
+        @include respond(phone){
+            width: 100px;
+        }
+    }
+    &__topleft {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translateX(-50%) translateY(-50%);
+      @include respond(phone){
+          width: 100px;
+      }
+    }
+    &__topright {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translateX(50%) translateY(-50%);
+      @include respond(phone){
+        width: 100px;
+    }
+    }
+    &__bottomleft {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      transform: translateY(50%) translateX(-50%);
+      @include respond(phone){
+        width: 100px;
+    }
+    }
+    &__bottomright {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transform: translateY(50%) translateX(50%);
+      @include respond(phone){
+        width: 100px;
+    }
+    }
+
+}
+
+
+

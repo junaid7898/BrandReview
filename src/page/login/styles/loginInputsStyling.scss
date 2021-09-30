@@ -1,0 +1,202 @@
+@mixin respond($breakpoint) {
+  @if $breakpoint == tab {
+    @media (max-width: 900px) {
+      @content;
+    } //900px
+  }
+  @if $breakpoint == phone {
+    @media (max-width: 700px) {
+      @content;
+    } //768px
+  }
+  @if $breakpoint == big-desktop {
+    @media (min-width: 87.5em) {
+      @content;
+    } //1400px
+  }
+}
+
+.login__form__inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 500px;
+  max-width: 90%;
+  & p {
+    align-self: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 110%;
+    color: #b4b6c2;
+  }
+  &__after {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    &__checkbox {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      &__input {
+        margin-right: 20px;
+      }
+      & label {
+        margin-left: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 110%;
+        color: rgba(130, 134, 154, 0.6);
+      }
+    }
+    &__link {
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 110%;
+      color: #357bce;
+    }
+  }
+
+  &__title {
+    margin-bottom: 50px;
+    & h1 {
+      font-weight: bold;
+      font-size: 36px;
+      line-height: 110%;
+      color: #282c40;
+      margin-bottom: 20px;
+    }
+    &__noaccount-link {
+      text-decoration: none;
+      color: rgba(40, 44, 64, 0.6);
+      margin-bottom: 20px;
+    }
+  }
+  &__email {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+    & input {
+      width: 100%;
+      outline: none;
+      border: 0px solid;
+      border-bottom: 3px solid #ebebeb;
+      padding: 14px 0px;
+      &:focus {
+        border-color: green;
+      }
+    }
+
+    & label {
+      font-weight: 500;
+      font-size: 12px;
+      color: #82869a;
+      //   margin-left: 14px;
+    }
+  }
+  &__password {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+    & input {
+      width: 100%;
+      outline: none;
+      border: 0px solid;
+      border-bottom: 3px solid #ebebeb;
+      padding: 14px 0px;
+      &:focus {
+        border-color: green;
+      }
+    }
+    & label {
+      font-weight: 500;
+      font-size: 12px;
+      color: #82869a;
+      //   margin-left: 14px;
+    }
+  }
+  &__button {
+    width: 100%;
+    padding: 25px 0px;
+    border: 0px solid;
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: #357bce;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 20px;
+    box-shadow: rgba(41, 41, 141, 0.25) 0px 2px 5px -1px,
+      rgba(82, 36, 167, 0.3) 0px 1px 3px -1px;
+  }
+
+  &__social-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+    &__google {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 12px 30px;
+      @include respond(phone) {
+        padding: 10px 15px;
+      }
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+      cursor: pointer;
+      & p {
+        margin-left: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 110%;
+        /* or 15px */
+
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    &__facebook {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 12px 30px;
+      @include respond(phone) {
+        padding: 10px 10px;
+        margin-left: 10px;
+      }
+      cursor: pointer;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+      & p {
+        margin-left: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 110%;
+        /* or 15px */
+
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}

@@ -24,6 +24,9 @@
 //ANCHOR Brand Comparison Detail
 @import "../components/brand_comparison_detail/styles/brandComparisonDetails";
 
+//ANCHOR registration form component
+@import '../components/registration_page_component/styles/registrationPageComponent';
+
 
 
 //ANCHOR =====================
@@ -69,3 +72,14 @@
 @import "../page/admin/styles/admin";
 @import "../page/admin/styles/dashboard";
 @import "../page/admin/styles/dashboardLink";
+
+//ANCHOR Sign UP 
+
+@import '../page/Sign_up/styles/signUp';
+@import '../page/Sign_up/styles/signUpInputs';
+@import '../page/Sign_up/styles/signUpOtpVerification';
+
+//ANCHOR Login page
+
+@import '../page/login/styles/loginStyling.scss';
+@import '../page/login/styles/loginInputsStyling.scss';

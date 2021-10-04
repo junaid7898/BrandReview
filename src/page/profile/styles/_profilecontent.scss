@@ -45,6 +45,14 @@
             &__text{
                 color: white;
             }
+            &__file{
+                position: absolute;
+                opacity: 1;
+                height: 100%;
+                width: 100%;
+                opacity: 0;
+                cursor: pointer;
+            }
         }
         &:hover &__upload{
             height: 50%;

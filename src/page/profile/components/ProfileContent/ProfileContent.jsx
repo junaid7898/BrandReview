@@ -17,6 +17,7 @@ const ProfileContent = ({user}) => {
             <div className="profile__intro__displayImage__upload" onClick={uploadphoto}>
               <HiCamera className="profile__intro__displayImage__upload__icon"/>
               <p className="profile__intro__displayImage__upload__text">upload</p>
+              <input type="file" className="profile__intro__displayImage__upload__file" />
             </div>
           </div>
 

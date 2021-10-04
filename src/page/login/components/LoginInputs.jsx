@@ -94,7 +94,7 @@ const LoginInputs = () => {
         title="sign up"
         onClick={login}
       >
-        Sign UP
+        Login
       </button>
       <p>or continue with</p>
       <div className="login__form__inputs__social-button">

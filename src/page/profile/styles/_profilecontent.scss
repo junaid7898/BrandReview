@@ -20,35 +20,60 @@
         position: relative;
         overflow: hidden;
         border-radius: 50%;
-        & img {
-            width: 100px;
-            aspect-ratio: 1;
+        &__content{
+            &__uploading{
+                pointer-events: none;
+            }
+            & img {
+                width: 100px;
+                aspect-ratio: 1;
+                object-fit: cover;
+                object-position: top center;
+            }
+            &__upload{
+                position: absolute;
+                height: 0;
+                opacity: 0.5;
+                width: 100%;
+                background-color: rgb(129, 129, 129);
+                bottom: 0;
+                transition: all 300ms;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                cursor: pointer;
+                pointer-events: inherit;
+                &__icon{
+                    color: white;
+                    font-size: 20px;
+                    cursor: pointer !important;
+                }
+                &__text{
+                    color: white;
+                    cursor: inherit;
+                }
+                &__file{
+                    position: absolute;
+                    opacity: 1;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0;
+                    cursor: pointer !important;
+                }
+            }
+            &:hover &__upload{
+                height: 50%;
+            }
         }
-        &__upload{
+        &__loadingIndicator{
             position: absolute;
-            height: 0;
-            opacity: 0.5;
-            width: 100%;
-            background-color: rgb(129, 129, 129);
-            bottom: 0;
-            transition: all 300ms;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            cursor: pointer;
-            &__icon{
-                color: white;
-                font-size: 20px;
-            }
-            &__text{
-                color: white;
-            }
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        &:hover &__upload{
-            height: 50%;
-        }
+        
     }
 }
 

@@ -4,8 +4,21 @@
 
 @import "./base/variables";
 @import "./base/base";
-@import "./base/mixins";
 
+
+//ANCHOR =====================
+//ANCHOR      Animations
+//ANCHOR =====================
+
+@import "./animations/infiniteRotate";
+
+
+//ANCHOR =====================
+//ANCHOR       Mixins
+//ANCHOR =====================
+
+@import "./mixins/mediaQuery";
+@import "./mixins/infiniteRotate";
 
 //ANCHOR =====================
 //ANCHOR     Components
@@ -27,7 +40,8 @@
 //ANCHOR registration form component
 @import '../components/registration_page_component/styles/registrationPageComponent';
 
-
+//ANCHOR Loading Indicator
+@import "../components/loadingIndicator/styles/loadingIndicator";
 
 //ANCHOR =====================
 //ANCHOR        Pages

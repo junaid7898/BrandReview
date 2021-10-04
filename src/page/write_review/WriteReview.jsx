@@ -1,6 +1,10 @@
 import React from 'react'
 import ReviewImg from '../../assests/images/review_img.png'
 const WriteReview = () => {
+
+    
+
+
     return (
         <div className="review-container">
             <section className = 'review'>

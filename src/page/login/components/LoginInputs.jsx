@@ -46,7 +46,8 @@ const LoginInputs = () => {
         <label for = "userName">Your Email</label>
         <input
           id = "userName"
-          type="text"
+          type="email"
+          name="email"
           placeholder="Enter your email address"
           value={email}
           onChange={(e) => {
@@ -58,7 +59,8 @@ const LoginInputs = () => {
         <label for = "userPassword">Password</label>
         <input
           id = "userPassword"
-          type="text"
+          type="password"
+          name="password"
           placeholder="Enter your password"
           value={password}
           onChange={(e) => {

@@ -99,10 +99,10 @@ const Header = () => {
           }}
         />
 
-        <a className="nav__icon">
+        <Link to="/" className="nav__icon">
           <img src={HeaderIcon} />
           <h1>Review Website</h1>
-        </a>
+        </Link>
 
         <GiHamburgerMenu
           className="nav__open__icon"

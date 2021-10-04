@@ -29,7 +29,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path = '/admin' component = {Admin} />
-        <Route path = '/review' component = {WriteReview}/>
+        <Route path = '/writereview' component = {WriteReview}/>
         <Route path = '/profile/:userId' component = {Profile}/>
         <Route path = '/brandpanel' component = {BrandPanel}/>
         <Route path = '/termsandcondition' component = {TermsAndCondition}/>

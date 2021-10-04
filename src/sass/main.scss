@@ -83,3 +83,20 @@
 
 @import '../page/login/styles/loginStyling.scss';
 @import '../page/login/styles/loginInputsStyling.scss';
+
+//ANCHOR brand-login page
+
+@import '../page/brand_log_in/styles/brandLogin';
+@import '../page/brand_log_in/styles/brandLoginInputs';
+
+//ANCHOR brand-signup page
+
+@import '../page/brand_sign_up/styles/brandSignUp';
+@import '../page/brand_sign_up/styles/brandSignUpInputs';
+
+
+//ANCHOR brand-search page
+
+@import '../page/search/styles/styleInfo';
+@import '../page/search/styles/searchBrand.scss';
+@import '../page/search/styles/brandReviews'

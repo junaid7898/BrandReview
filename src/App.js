@@ -16,6 +16,9 @@ import SignUp from './page/Sign_up/SignUp';
 import EmailVerification from './page/Email Verification/EmailVerification';
 import Login from './page/login/Login';
 import BrandSignUp from './page/brand_sign_up/BrandSignUp';
+import BrandLogin from './page/brand_log_in/BrandLogin';
+import { AdminLogin } from './page/admin_login/AdminLogin';
+import SearchBrand from './page/search/SearchBrand';
 function App() {
   
   let user = false;
@@ -37,6 +40,9 @@ function App() {
         <Route path = '/verify-email/:token' component = {EmailVerification}/>  
         <Route path = '/login' component = {Login}/>
         <Route path = '/brandsignup' component = {BrandSignUp}/>
+        <Route path = '/brandlogin' component = {BrandLogin}/>
+        <Route path = '/adminlogin' component = {AdminLogin}/>
+        <Route path = '/search' component = {SearchBrand}/>
       
       {
         !user ?

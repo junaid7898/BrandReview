@@ -1,0 +1,60 @@
+.brand__review{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 1100px;
+    margin: auto;
+    background-color: blue;
+    &__comments{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        &__intro{
+            background-color: red;
+            padding: 10px 14px;
+            &__profile{
+                display: flex;
+                flex-direction: row;
+                &__img{
+                        width: 50px;
+                        height: 50px;
+                }
+                &__name-rating{
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: auto;
+                    margin-left: 10px;
+                    &__comment{
+                        max-width: 700px;
+                    }
+                }
+            }
+        }
+    }
+    &__replies{
+        background-color: salmon;
+        &__reply{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 10px 14px;
+            & img{
+                width: 30px;
+                height: 30px;
+            }
+            &__comment{
+                margin-left: 10px;
+                &__like{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    & h4{
+                        padding-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

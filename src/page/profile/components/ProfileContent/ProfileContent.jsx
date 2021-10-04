@@ -1,14 +1,27 @@
 import React, { useState, useRef } from "react";
 import {HiCamera} from 'react-icons/hi'
+import { useSelector, useDispatch } from "react-redux";
 import LoadingIndicator from '../../../../components/loadingIndicator/LoadingIndicator'
 import { uploadPhoto } from "../../../../helpers/uploadPhoto";
-const ProfileContent = ({user}) => {
-
+import { userActions } from "../../../../Redux/user slice/userSlice";
+const ProfileContent = ({user, setUser}) => {
+  const [isImageUploading, setIsImageUploading] = useState(false)
+  const {user:User} = useSelector(state => state.user)
+  const dispatch = useDispatch()
   const fileRef = useRef()
   const uploadphoto = async (e) => {
     try{
       setIsImageUploading(true)
-      await uploadPhoto(e.target.files[0], fileRef.current)
+      const { url: imageUrl } = await uploadPhoto(user,e.target.files[0], fileRef.current)
+      console.log(imageUrl)
+      setUser({
+        ...user,
+        profileImage: imageUrl
+      })
+      dispatch(userActions.setUser({
+        tokens: {...User.tokens},
+        user
+      }))
       setIsImageUploading(false)
     }
     catch(err){
@@ -16,9 +29,7 @@ const ProfileContent = ({user}) => {
       alert(err)
     }
   }
-
-  const [isImageUploading, setIsImageUploading] = useState(false)
-
+  
   return (
       user ?
 

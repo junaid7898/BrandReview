@@ -39,7 +39,7 @@ const Profile = () => {
 
     return (
         <div >
-            <ProfileContent user = {userDetails}/>
+            <ProfileContent user = {userDetails} setUser = {setUserDetails}/>
             {
                 currentUser
                 ?

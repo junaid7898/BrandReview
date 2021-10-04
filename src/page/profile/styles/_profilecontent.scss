@@ -20,43 +20,58 @@
         position: relative;
         overflow: hidden;
         border-radius: 50%;
-        & img {
-            width: 100px;
-            aspect-ratio: 1;
-        }
-        &__upload{
-            position: absolute;
-            height: 0;
-            opacity: 0.5;
-            width: 100%;
-            background-color: rgb(129, 129, 129);
-            bottom: 0;
-            transition: all 300ms;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            cursor: pointer;
-            &__icon{
-                color: white;
-                font-size: 20px;
+        &__content{
+            &__uploading{
+                pointer-events: none;
             }
-            &__text{
-                color: white;
+            & img {
+                width: 100px;
+                aspect-ratio: 1;
             }
-            &__file{
+            &__upload{
                 position: absolute;
-                opacity: 1;
-                height: 100%;
+                height: 0;
+                opacity: 0.5;
                 width: 100%;
-                opacity: 0;
+                background-color: rgb(129, 129, 129);
+                bottom: 0;
+                transition: all 300ms;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
                 cursor: pointer;
+                pointer-events: inherit;
+                &__icon{
+                    color: white;
+                    font-size: 20px;
+                    cursor: pointer !important;
+                }
+                &__text{
+                    color: white;
+                    cursor: inherit;
+                }
+                &__file{
+                    position: absolute;
+                    opacity: 1;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0;
+                    cursor: pointer !important;
+                }
+            }
+            &:hover &__upload{
+                height: 50%;
             }
         }
-        &:hover &__upload{
-            height: 50%;
+        &__loadingIndicator{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
+        
     }
 }
 

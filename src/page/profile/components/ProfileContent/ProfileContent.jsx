@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import {HiCamera} from 'react-icons/hi'
+import LoadingIndicator from '../../../../components/loadingIndicator/LoadingIndicator'
+import { uploadPhoto } from "../../../../helpers/uploadPhoto";
 const ProfileContent = ({user}) => {
 
-
-  const uploadphoto = () =>{
-    console.log("Upload")
+  const fileRef = useRef()
+  const uploadphoto = async (e) => {
+    try{
+      setIsImageUploading(true)
+      await uploadPhoto(e.target.files[0], fileRef.current)
+      setIsImageUploading(false)
+    }
+    catch(err){
+      setIsImageUploading(false)
+      alert(err)
+    }
   }
+
+  const [isImageUploading, setIsImageUploading] = useState(false)
 
   return (
       user ?
@@ -13,12 +25,20 @@ const ProfileContent = ({user}) => {
       <section >
         <div className="profile__intro">
           <div className="profile__intro__displayImage">
-            <img src={user.profileImage} />
-            <div className="profile__intro__displayImage__upload" onClick={uploadphoto}>
-              <HiCamera className="profile__intro__displayImage__upload__icon"/>
-              <p className="profile__intro__displayImage__upload__text">upload</p>
-              <input type="file" className="profile__intro__displayImage__upload__file" />
+            <div className={`profile__intro__displayImage__content ${isImageUploading && `profile__intro__displayImage__content__uploading`}`}>
+              <img src={user.profileImage} />
+              <div className="profile__intro__displayImage__content__upload">
+                <HiCamera className="profile__intro__displayImage__content__upload__icon"/>
+                <p className="profile__intro__displayImage__content__upload__text">upload</p>
+                <input ref={fileRef} type="file" accept="image/*" className="profile__intro__displayImage__content__upload__file" onChange={uploadphoto} />
+              </div>
             </div>
+            {
+              isImageUploading &&
+              <div className="profile__intro__displayImage__loadingIndicator">
+                <LoadingIndicator />
+              </div>
+            }
           </div>
 
           <div className="profile__intro__nameAndAddress">

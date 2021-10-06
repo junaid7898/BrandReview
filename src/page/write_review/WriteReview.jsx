@@ -2,21 +2,32 @@ import React, { useState } from "react";
 import ReviewImg from "../../assests/images/review_img.png";
 import { GrClose } from "react-icons/gr";
 import ImageViewer from "../../components/image_viewer/ImageViewer";
+import ImagePreview from "../../components/image_preview/ImagePreview"
 const WriteReview = () => {
   const [uploadImage, setUploadImage] = useState([]);
   const [onClickImage, setOnClickImage] = useState(false);
 
   const fileSelectHandler = (e) => {
+    if(uploadImage.length >= 5){
+      alert("max of 5 Images is allowed")
+      return
+    }
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
         setUploadImage([...uploadImage, reader.result ]);
       }
     };
-
-    reader.readAsDataURL(e.target.files[0]);
+    if(e.target.files[0]){
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
-  // asdas
+
+  const removeImage = (i) => {
+
+    setUploadImage( uploadImage.filter((img, index) => index !== i) )
+
+  }
 
   return (
     <div className="review-container">
@@ -44,20 +55,9 @@ const WriteReview = () => {
           {
               uploadImage.length > 0 ? 
             (
-              uploadImage.map( img => 
-                <div className="review__content__previewImg">
-                  <img
-                    src={img}
-                    onClick={() => setOnClickImage(img)}
-                    className="review__content__previewImg__img"
-                    alt = 'user'
-                  />
-                  {
-                    onClickImage ?
-                      <ImageViewer image={onClickImage} setImage={setOnClickImage} />
-                    :
-                      null
-                  }
+              uploadImage.map( (img, index) => 
+                <div key={index} className="review__content__previewImg">
+                  <ImagePreview image={img} index={index} removeImage = {removeImage} />
                 </div>
               )
             )
@@ -75,9 +75,10 @@ const WriteReview = () => {
               <input
                 type="file"
                 name="file"
-                accept="images/*"
+                accept="image/*"
                 id="uploadMedia"
                 onChange={fileSelectHandler}
+                onClick = { (e) => {e.target.value = null}}
               />
             </div>
             <h3 className="review__content__publishButton">Publish</h3>

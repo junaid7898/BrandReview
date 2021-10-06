@@ -24,7 +24,12 @@ const LoginInputs = () => {
         req
       ).then(res => {
         console.log(res)
-          dispatch(userActions.setUser(res.data))
+          const {payload} = dispatch(userActions.setUser(res.data))
+          console.log(payload)
+          if(rememberMe){
+            localStorage.setItem('userId', payload.user.id )
+            localStorage.setItem('accessToken', payload.tokens.access.token)
+          }
       }).catch(err => {
         alert(err.response.data.message)
       });

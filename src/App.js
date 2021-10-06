@@ -1,4 +1,3 @@
-import './App.css';
 import "./sass/main.scss"
 import TermsAndCondition from './page/terms_and_condition/TermsAndCondition';
 import WriteReview from './page/write_review/WriteReview';
@@ -22,8 +21,35 @@ import SearchBrand from './page/search/SearchBrand';
 import PhoneVerification from './page/phone_verification_page/PhoneVerification';
 import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
+import { useEffect } from 'react';
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { userActions } from "./Redux/user slice/userSlice";
 function App() {
   
+  const dispatch = useDispatch()
+  useEffect(() => {
+    
+    const userId = localStorage.getItem("userId")
+    const accessToken = localStorage.getItem("accessToken")
+    if(userId && accessToken){
+      axios.get(`http://localhost:4000/v1/auth/login/${userId}`,{
+        headers:{
+          'authorization' : `bearer ${accessToken}`
+        }
+      }).then(({data: user}) => {
+        dispatch(userActions.setUser(user))
+        console.log(user)
+      })
+    }
+
+  }, [])
+
+
+
+
+
+
   let user = false;
   return (
     <div className="App" >

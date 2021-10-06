@@ -20,6 +20,14 @@
     align-items: flex-start;
 }
 
+.review__content__upload{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+}
+
 .review__content__previewImg__img{
     width: 100px;
     border-radius: 10px;
@@ -28,25 +36,7 @@
 .review__content__previewImg__img:hover{
     transform: scale(1.1);
 }
-.review__content__previewImg__zoom{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-}
 
-.review__content__previewImg__zoom__icon{
-    background-color: #357BCE;
-}
-
-.review__content__previewImg__zoom img{
-    width: 800px;
-    border: 1px solid black;
-}
 
 @media(max-width: 700px){
     .review__content__previewImg__zoom img{

@@ -93,6 +93,9 @@ const SearchBrand = () => {
       }
     ],
   });
+
+  
+
   return (
     <div>
       <BrandInfo brand={testBrand} />

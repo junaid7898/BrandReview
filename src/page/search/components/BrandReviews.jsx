@@ -1,52 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAttach } from "react-icons/io";
 import { FaTelegramPlane } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
+import ImageViewer from "../../../components/image_viewer/ImageViewer";
+
 
 const BrandReviews = ({ comments }) => {
-  const [uploadImage, setUploadImage] = useState(null);
+  const [uploadImage, setUploadImage] = useState([]);
   const [onClickImage, setOnClickImage] = useState(false);
 
-  const fileSelectHandler = (e) => {
+  const addImage = (e) => {
+    const image = e.target.files[0]
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setUploadImage(reader.result);
+        setUploadImage([...uploadImage, reader.result ]);
       }
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    reader.readAsDataURL(image);
+
+
   };
+
+  useEffect(() => {
+    console.log(uploadImage)
+  }, [uploadImage])
 
   return (
     <div className="brand__review">
-      {uploadImage === null ? null : (
-        <div className="brand__review__image">
+      {uploadImage.length < 1 ? null : (
+        uploadImage.map(img => 
+          <div className="brand__review__image">
           <img
-            src={uploadImage}
+            src={img}
             className="brand__review__image__uploaded"
             onClick={() => {
               setOnClickImage(true);
             }}
             alt = 'brand'
           />
-          {onClickImage ? (
-            <div className="brand__review__image__zoom-view">
-              <div className="brand__review__image__zoom-view__close-icon">
-                <GrClose
-                  size={24}
-                  className= "brand__review__image__zoom-view__close-icon__icon" 
-                  onClick={() => setOnClickImage(false)}
-                />
-              </div>
-              <img
-                src={uploadImage}
-                className="brand__review__image__zoom-view__big-image"
-                alt = 'brand'
-              />
-            </div>
-          ) : null}
-        </div>
+          {
+            onClickImage ?
+              <ImageViewer setOnClickImage={setOnClickImage} image={img} />
+            :
+              null
+          }
+          
+          </div>
+          
+        )
       )}
 
       <div className="brand__review__your-review">
@@ -64,7 +66,7 @@ const BrandReviews = ({ comments }) => {
             name="picUpload"
             accept="images/*"
             onChange={(e) => {
-              fileSelectHandler(e);
+              addImage(e);
             }}
           />
           <FaTelegramPlane size={24} />

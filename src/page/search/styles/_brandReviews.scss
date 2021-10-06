@@ -11,23 +11,6 @@
             width: 100px;
             border-radius: 10px;
         }
-        &__zoom-view{
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 5;
-            
-            &__big-image{
-                width: 800px;
-                border: 1px solid black;
-            }
-            &__close-icon{
-                &__icon{
-                    background-color: $primary;
-                }
-            }
-        }
     }
     
     

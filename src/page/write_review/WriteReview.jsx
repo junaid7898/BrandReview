@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ReviewImg from "../../assests/images/review_img.png";
 import { GrClose } from "react-icons/gr";
 import ImageViewer from "../../components/image_viewer/ImageViewer";
 import ImagePreview from "../../components/image_preview/ImagePreview"
+import { useHistory } from "react-router";
 const WriteReview = () => {
+  let subject = ''
+  let message = ''
+  let reviewType = ''
+  const ref = useRef()
+  const history = useHistory();
   const [uploadImage, setUploadImage] = useState([]);
   const [onClickImage, setOnClickImage] = useState(false);
 
@@ -29,26 +35,59 @@ const WriteReview = () => {
 
   }
 
+  const onPublish = (e) => {
+    e.preventDefault()
+    const review = {
+      brandId: 'xxxxxxxxxxxx',
+      subject,
+      message,
+      type: reviewType,
+      images: [
+        'xxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxx',
+        'xxxxxxxxxxxxxxxxxx'
+      ]
+    }
+    alert(JSON.stringify(review, null, 2))
+    ref.current.reset()
+    setUploadImage([])
+    // history.push('/')
+  }
+
   return (
     <div className="review-container">
       <section className="review">
         <img className="review__img" src={ReviewImg} alt = 'user' />
-        <div className="review__content">
+        <form ref = {ref} className="review__content" onSubmit = {(e) => {
+          onPublish(e)
+        }} >
           <div className="review__content__tboxes">
             <input
               type="text"
               placeholder="Select the Brand"
               className="review__content__textbox"
+              required
             />
             <input
               type="text"
               placeholder="Subject"
               className="review__content__textbox"
+              onChange = {(e) => {subject = e.target.value}}
+              required
             />
+            <select className = 'review__content__dropdown' onChange = {(e) => {reviewType = e.target.value}} required>
+              <option value = {null} disabled selected = 'selected'>select review type</option>
+              <option value = 'complaint'>Complaint</option>
+              <option value = 'review'>Review</option>
+              <option value = 'thanked'>Thanked</option>
+              
+            </select>
             <textarea
               placeholder="Write Your Review"
               className="review__content__textarea"
               rows={10}
+              onChange = {e => {message = e.target.value}}
+              required
             />
           </div>
           <div className="review__content__upload">
@@ -81,9 +120,9 @@ const WriteReview = () => {
                 onClick = { (e) => {e.target.value = null}}
               />
             </div>
-            <h3 className="review__content__publishButton">Publish</h3>
+            <button type = 'submit' className="review__content__publishButton" >Publish</button>
           </div>
-        </div>
+        </form>
       </section>
     </div>
   );

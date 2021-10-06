@@ -113,4 +113,17 @@
 
 @import '../page/search/styles/styleInfo';
 @import '../page/search/styles/searchBrand.scss';
-@import '../page/search/styles/brandReviews'
+@import '../page/search/styles/brandReviews';
+
+//ANCHOR phon-verification page
+
+@import '../page/phone_verification_page/styles/phoneVerification';
+@import '../page/phone_verification_page/styles/phoneVerificationInputs';
+
+//ANCHOR error-404 page
+
+@import '../page/error_404_page/styles/error404page';
+
+//ANCHOR email-verification page
+
+@import '../page/email_verification_page/styles/emailVerificationPage';

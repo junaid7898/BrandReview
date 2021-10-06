@@ -3,16 +3,71 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    width: 1100px;
+    max-width: 800px;
     margin: auto;
-    background-color: blue;
+    z-index: 2;
+    &__image{
+        &__uploaded{
+            width: 100px;
+            border-radius: 10px;
+        }
+        &__zoom-view{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            
+            &__big-image{
+                width: 800px;
+                border: 1px solid black;
+            }
+            &__close-icon{
+                &__icon{
+                    background-color: $primary;
+                }
+            }
+        }
+    }
+    
+    
+    
+    &__your-review{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: $surface;
+        width: 100%;
+        border-radius: 10px;
+        margin: 10px 0px;
+        padding: 0px 10px;
+        & input{
+            flex: 1;
+            background-color: transparent;
+            border: 0px solid;
+            padding: 14px 10px;
+            &:focus{
+                outline: none;
+            }
+        }
+        &__icons{
+            cursor: pointer;
+            & input{
+                display: none;
+            }
+            &__upload-icon{
+                cursor: pointer;
+            }
+        }
+    }
     &__comments{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
+        margin-bottom: 60px;
         &__intro{
-            background-color: red;
+            // background-color: red;
             padding: 10px 14px;
             &__profile{
                 display: flex;
@@ -28,13 +83,20 @@
                     margin-left: 10px;
                     &__comment{
                         max-width: 700px;
+                        color: $onSurface-secondary;
+                    }
+                    & h2{
+                        color: $onSurface-primary;
+                    }
+                    & h3{
+                        color: $primary;
                     }
                 }
             }
         }
     }
     &__replies{
-        background-color: salmon;
+        // background-color: salmon;
         &__reply{
             display: flex;
             flex-direction: row;
@@ -46,6 +108,7 @@
             }
             &__comment{
                 margin-left: 10px;
+                color: $onSurface-secondary;
                 &__like{
                     display: flex;
                     flex-direction: row;
@@ -53,6 +116,27 @@
                     & h4{
                         padding-right: 10px;
                     }
+                }
+            }
+        }
+
+        &__my-comment{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            & img{
+                width: 50px;
+            }
+            & input{
+                flex: 1;
+                margin-left: 10px;
+                border-radius: 10px;
+                padding-left: 10px;
+                padding-right: 10px;
+                outline: none;
+                border: 0px solid;
+                &:focus{
+                    border: 1px solid;
                 }
             }
         }

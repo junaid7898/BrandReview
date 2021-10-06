@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Profile from "../../assests/images/Profile Image.png";
-import Star from '../../assests/images/Star.png'
-import ImagePreview from "../image_preview/ImagePreview";
+import Profile from "../../assests/images/download.jpg";
 import {AiFillStar} from 'react-icons/ai'
+import ImageThumbnail from "../image_thumbnail/ImageThumbnail";
+import ImageViewer from "../image_viewer/ImageViewer";
 
 const Review = () => {
+const [clicked, setClicked] = useState(null)
   const review = {
     profileImg: Profile,
     name: "Ali Abbasi",
@@ -52,10 +53,26 @@ const Review = () => {
 
         <div className="review__profile__pics">
           {/* import component image preview */}
-          {review.images.map((img, index) => 
-              <ImagePreview image = {img} index = {index} removeImage = {removeImage}/>
+          {review.images.map((item, index) =>{
+          return (
+              <div id = {index} onClick = {() => {
+                  setClicked(item)
+              }}>
+                <ImageThumbnail image = {item} />
+                {/* <img src = {item} style = {{width: 50}}/> */}
+              </div>
+              )
+        }
           )}
+                {
+                clicked !== null ?  
+                  <ImageViewer image={clicked} setImage={setClicked} />
+                :
+                  null
+                }
         </div>
+
+
       </div>
 
       <div className="review__text">

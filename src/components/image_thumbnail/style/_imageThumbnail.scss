@@ -1,0 +1,11 @@
+.image__thumbnail{
+    margin-right: 10px;
+    &__image{
+        min-height: 50px;
+        max-height: 50px;
+        border-radius: 10px;
+    }
+    &:hover{
+        transform: scale(1.1);
+    }
+}

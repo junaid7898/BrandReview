@@ -9,8 +9,10 @@ const BrandReviews = ({ comments }) => {
   const [onClickImage, setOnClickImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null)
 
-  const addImage = (e) => {
-    const image = e.target.files[0]
+  const addImage = (image) => {
+    if(uploadImage.length > 5){
+      alert("max 5 images")
+    }
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -29,28 +31,32 @@ const BrandReviews = ({ comments }) => {
 
   return (
     <div className="brand__review">
-      {uploadImage.length < 1 ? null : (
-        uploadImage.map(img => 
-          <div className="brand__review__image">
-          <img
-            src={img}
-            className="brand__review__image__uploaded"
-            onClick={() => {
-              setOnClickImage(img);
-            }}
-            alt = 'brand'
-          />
-          {
-            onClickImage ?
-              <ImageViewer image={onClickImage} setImage={setOnClickImage} />
-            :
-              null
-          }
-          
-          </div>
-          
-        )
-      )}
+      <div className="brand__review__uploadContainer">
+        {
+          uploadImage.length > 0 ? (
+            uploadImage.map(img => 
+              <div className="brand__review__image">
+              <img
+                src={img}
+                className="brand__review__image__uploaded"
+                onClick={() => {
+                  setOnClickImage(img);
+                }}
+                alt = 'brand'
+              />
+              {
+                onClickImage ?
+                  <ImageViewer image={onClickImage} setImage={setOnClickImage} />
+                :
+                  null
+              }
+              </div>
+            )
+          )
+        :
+          null
+        }
+      </div>
 
       <div className="brand__review__your-review">
         <input type="text" placeholder="Write Your Review" name="review" />
@@ -67,7 +73,7 @@ const BrandReviews = ({ comments }) => {
             name="picUpload"
             accept="images/*"
             onChange={(e) => {
-              addImage(e);
+              addImage(e.target.files[0]);
             }}
           />
           <FaTelegramPlane size={24} />

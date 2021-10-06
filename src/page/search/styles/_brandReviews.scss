@@ -6,10 +6,27 @@
     max-width: 800px;
     margin: auto;
     z-index: 2;
+    &__uploadContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+    }
     &__image{
+        &:not(:last-child){
+            margin-right: 10px;
+        }
+        
         &__uploaded{
             width: 100px;
             border-radius: 10px;
+            transition: all 300ms;
+            cursor: pointer;
+            &:hover{
+                transform: scale(1.05);
+            }
         }
     }
     

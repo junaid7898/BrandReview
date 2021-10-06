@@ -169,7 +169,11 @@ const Header = () => {
               </li>
               <li>
                 {/* TODO api/logout */}
-                <button onClick={ () => {dispatch(userActions.removeUser())}} >Logout</button>
+                <button onClick={ () => {
+                  dispatch(userActions.removeUser())
+                  localStorage.removeItem('userId')
+                  localStorage.removeItem('accessToken')
+                  }} >Logout</button>
               </li>
             </>
           )}

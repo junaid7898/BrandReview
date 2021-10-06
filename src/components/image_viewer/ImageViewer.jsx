@@ -5,11 +5,10 @@ function ImageViewer({image, setImage}) {
     return (
         <div className="imageViewer">
             <div className="imageViewer__mask" onClick={() => setImage(null)}/>
-            <div className="imageViewer__close" >
+            <div className="imageViewer__close" onClick={() => setImage(null)}>
             <GrClose
                 size={24}
                 className= "imageViewer__close__icon" 
-                onClick={() => setImage(null)}
             />
             </div>
             <img

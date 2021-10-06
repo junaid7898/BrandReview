@@ -1,0 +1,24 @@
+.email__verification{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 700px;
+    &__text{
+        color: $onSurface-primary;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+    &__button{
+        background-color: $primary;
+        width: 30%;
+           
+        text-decoration: none;
+        border-radius: 10px;
+        & h3{
+            padding: 10px 20px;
+            color: $onPrimary;
+        }
+    }
+}

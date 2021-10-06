@@ -50,9 +50,9 @@ const Content = () => {
           model sentence structures, to generate Lorem Ipsum which looks
           reasonable.
         </p>
-        <img className = 'vector4' src = {vector4} />
-        <img className = 'vector5' src = {vector5}/>
-        <img className = 'vector6' src = {vector6}/>
+        <img className = 'vector4' src = {vector4} alt = 'background'/>
+        <img className = 'vector5' src = {vector5} alt = 'background'/>
+        <img className = 'vector6' src = {vector6} alt = 'background'/>
       </div>
       
     </section>

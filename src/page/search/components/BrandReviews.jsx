@@ -7,6 +7,7 @@ import ImageViewer from "../../../components/image_viewer/ImageViewer";
 const BrandReviews = ({ comments }) => {
   const [uploadImage, setUploadImage] = useState([]);
   const [onClickImage, setOnClickImage] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null)
 
   const addImage = (e) => {
     const image = e.target.files[0]
@@ -35,13 +36,13 @@ const BrandReviews = ({ comments }) => {
             src={img}
             className="brand__review__image__uploaded"
             onClick={() => {
-              setOnClickImage(true);
+              setOnClickImage(img);
             }}
             alt = 'brand'
           />
           {
             onClickImage ?
-              <ImageViewer setOnClickImage={setOnClickImage} image={img} />
+              <ImageViewer image={onClickImage} setImage={setOnClickImage} />
             :
               null
           }

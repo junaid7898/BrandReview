@@ -16,6 +16,7 @@ const WriteReview = () => {
 
     reader.readAsDataURL(e.target.files[0]);
   };
+  // asdas
 
   return (
     <div className="review-container">

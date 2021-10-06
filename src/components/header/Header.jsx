@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../Redux/user slice/userSlice";
+import { brandActions } from '../../Redux/brand slice/brandSlice';
 
 const Header = () => {
   //search bar states
@@ -54,6 +55,7 @@ const Header = () => {
   const dispatch = useDispatch()
 
   const { user } = useSelector(state => state.user)
+  const {brand} = useSelector(state => state.brand)
 
 
   const handleSearch = (e) => {
@@ -163,7 +165,7 @@ const Header = () => {
           ) : (
             <>
               <li>
-                <Link to={`/profile/${user.user.id}`}>Profile</Link>
+                <Link to={`/profile/${user.user.id}`}>brand</Link>
               </li>
               <li>
                 {/* TODO api/logout */}

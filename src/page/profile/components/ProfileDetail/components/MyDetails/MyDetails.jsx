@@ -1,6 +1,5 @@
 import React from 'react'
 import DetailTag from './components/DetailTag'
-import { useSelector, useDispatch } from 'react-redux'
 const MyDetails = ({user}) => {
 
 

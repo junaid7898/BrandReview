@@ -19,6 +19,9 @@ import BrandSignUp from './page/brand_sign_up/BrandSignUp';
 import BrandLogin from './page/brand_log_in/BrandLogin';
 import { AdminLogin } from './page/admin_login/AdminLogin';
 import SearchBrand from './page/search/SearchBrand';
+import PhoneVerification from './page/phone_verification_page/PhoneVerification';
+import Error404Page from './page/error_404_page/Error404Page';
+import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
 function App() {
   
   let user = false;
@@ -34,7 +37,7 @@ function App() {
         <Route path = '/admin' component = {Admin} />
         <Route path = '/writereview' component = {WriteReview}/>
         <Route path = '/profile/:userId' component = {Profile}/>
-        <Route path = '/brandpanel' component = {BrandPanel}/>
+        <Route path = '/brandpanel/:brandId' component = {BrandPanel}/>
         <Route path = '/termsandcondition' component = {TermsAndCondition}/>
         <Route path = '/comparison' component = {ComparisonPage}/>  
         <Route path = '/verify-email/:token' component = {EmailVerification}/>  
@@ -43,6 +46,8 @@ function App() {
         <Route path = '/brandlogin' component = {BrandLogin}/>
         <Route path = '/adminlogin' component = {AdminLogin}/>
         <Route path = '/search' component = {SearchBrand}/>
+        <Route path = '/phoneverification' component = {PhoneVerification}/>
+        <Route path = '/emailverification' component = {EmailVerificationPage}/>
       
       {
         !user ?
@@ -50,9 +55,7 @@ function App() {
         : 
         null
       }
-      <Route path = '/*' >
-        <h1>Error 404</h1>
-      </Route>
+      <Route path = '/*' component = {Error404Page}/>
       </Switch>
       <Footer/>
     </BrowserRouter>

@@ -19,8 +19,8 @@ const BrandSignUpInputs = () => {
       password: password,
       email: email,
       countryCode: "+92",
-      phoneNumber: 3019511632,
-      about: 'hello! this is test brand',
+      phoneNumber: 3004444444,
+      about: 'hello! this is test brand, we are currently working on our main module.',
       logo: BrandLogo
     };
     try {

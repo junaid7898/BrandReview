@@ -1,0 +1,14 @@
+.imagePreview{
+    max-width: 300px;
+    max-height: 300px;
+    position: relative;
+    &__icon{
+        background-color: black;
+        color: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+    }
+}

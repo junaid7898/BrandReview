@@ -1,11 +1,10 @@
 .review{
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    margin: auto;
     margin-bottom: 50px;
-    max-width: 100%;
     z-index: 2;
 }
 .review__img{

@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import ReviewImg from "../../assests/images/review_img.png";
 import ImagePreview from "../../components/image_preview/ImagePreview"
 const WriteReview = () => {
   let subject = ''
@@ -52,7 +51,7 @@ const WriteReview = () => {
   return (
     <div className="review-container">
       <section className="review">
-        <img className="review__img" src={ReviewImg} alt = 'user' />
+        <img className="review__img" src="/assets/review_img.png" alt = 'user' />
         <form ref = {ref} className="review__content" onSubmit = {(e) => {
           onPublish(e)
         }} >

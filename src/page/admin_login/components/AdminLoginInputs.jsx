@@ -2,16 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import GoogleIcon from "../../../assests/icons/googleIcon.png";
 import FacebookIcon from "../../../assests/icons/facebookIcon.png";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { userActions } from "../../../Redux/user slice/userSlice";
 
 const AdminLoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-
-  const dispatch = useDispatch()
   
   const login = async () => {
       console.log(email,password)
@@ -100,11 +95,11 @@ const AdminLoginInputs = () => {
       <p>or continue with</p>
       <div className="login__form__inputs__social-button">
         <div className="login__form__inputs__social-button__google">
-          <img src={GoogleIcon} />
+          <img src={GoogleIcon} alt="google logo"/>
           <p>Sign in with Google</p>
         </div>
         <div className="login__form__inputs__social-button__facebook">
-          <img src={FacebookIcon} />
+          <img src={FacebookIcon} alt="facebook logo"/>
           <p>Sign in with Facebook</p>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import SignUpOtpVerification from "./SignUpOtpVerification";
 import { Link } from "react-router-dom";
 
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
@@ -12,10 +11,9 @@ const SignUpInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [OTP, setOTP] = useState(null);
+  // const [OTP] = useState(null);
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(null)
-
+  console.log(user)
   const dispatch = useDispatch()
 
   const signUp = async () => {
@@ -44,56 +42,56 @@ const SignUpInputs = () => {
     }
   };
 
-  const verifyPhone = async () => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:4000/v1/auth/send-verification-sms",
-        user,
-        {
-          headers: {
-            Authorization: `bearer ${user.tokens.access.token}`,
-          },
-        }
-      );
-      console.log(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const verifyPhone = async () => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://localhost:4000/v1/auth/send-verification-sms",
+  //       user,
+  //       {
+  //         headers: {
+  //           Authorization: `bearer ${user.tokens.access.token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
-  const sendOTP = async () => {
-    try {
-      const { data } = await axios.post(
-        `http://localhost:4000/v1/auth/verify-phone?OTPCode=${OTP}`,
-        user,
-        {
-          headers: {
-            Authorization: `bearer ${user.tokens.access.token}`,
-          },
-        }
-      );
-      console.log(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const sendOTP = async () => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       `http://localhost:4000/v1/auth/verify-phone?OTPCode=${OTP}`,
+  //       user,
+  //       {
+  //         headers: {
+  //           Authorization: `bearer ${user.tokens.access.token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
-  const verifyEmail = async () => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:4000/v1/auth/send-verification-email",
-        user,
-        {
-          headers: {
-            Authorization: `bearer ${user.tokens.access.token}`,
-          },
-        }
-      );
-      console.log(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const verifyEmail = async () => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://localhost:4000/v1/auth/send-verification-email",
+  //       user,
+  //       {
+  //         headers: {
+  //           Authorization: `bearer ${user.tokens.access.token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
   return (
     <div className="signup__form">
       <RegistrationPageComponent/>

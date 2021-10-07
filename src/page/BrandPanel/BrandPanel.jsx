@@ -34,7 +34,7 @@ const BrandPanel = () => {
                 // console.log('matched')
             }
         }
-    }, [])
+    }, [brand, brandId])
     return (
         <div>
         {brandDetails === null ? 

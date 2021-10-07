@@ -16,6 +16,19 @@
 }
 
 .profile__intro{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+    &__infoSection{
+        display: flex;
+        align-items: center;
+        margin: 0px 50px;
+    }
+    &__aboutSection{
+        margin: 0px 50px;
+    }
+    
     &__displayImage{
         position: relative;
         overflow: hidden;

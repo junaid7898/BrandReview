@@ -8,8 +8,6 @@ import Footer from './components/footer/Footer';
 import Admin from './page/admin/Admin';
 import HomePage from './page/Homepage/HomePage';
 import BrandPanel from './page/BrandPanel/BrandPanel';
-import BrandComparison from './components/brand_comparison/BrandComparison';
-import BrandComparisonDetail from './components/brand_comparison_detail/BrandComparisonDetail';
 import ComparisonPage from './page/Comparison/ComparisonPage';
 import SignUp from './page/Sign_up/SignUp';
 import EmailVerification from './page/Email Verification/EmailVerification';
@@ -43,12 +41,7 @@ function App() {
       })
     }
 
-  }, [])
-
-
-
-
-
+  }, [dispatch])
 
   let user = false;
   return (

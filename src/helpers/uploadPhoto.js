@@ -5,7 +5,7 @@ import axios from "axios"
 export const uploadPhoto = async(user, image, ref) =>{
     if(image.size > 264000){
         ref.value = null
-        throw "File is too large"
+        throw Error("File is too large")
     }
     console.log(image)
     try{
@@ -26,7 +26,7 @@ export const uploadPhoto = async(user, image, ref) =>{
     }
 
     const {data: uploadConfig} = await axios.post('http://localhost:4000/v1/aws/',{user, file})
-    const data = await axios.put(uploadConfig.url, image, {
+    await axios.put(uploadConfig.url, image, {
         headers:{
           'Content-Type' : file.type
         }

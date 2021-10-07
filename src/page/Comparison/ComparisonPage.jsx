@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import BrandComparison from '../../components/brand_comparison/BrandComparison'
 import BrandComparisonDetail from '../../components/brand_comparison_detail/BrandComparisonDetail'
 import KiaLogo from '../../assests/images/kia_logo.png';
@@ -27,52 +27,52 @@ const ComparisonPage = () => {
         },
       );
 
-    let SFR1 = ''
-    let SFR2 = ''
-    let SC1 = ''
-    let SC2 = ''
-    let OS1 = ''
-    let OS2 = ''
+    const SFR1 = useRef()
+    const SFR2 = useRef()
+    const SC1 = useRef()
+    const SC2 = useRef()
+    const OS1 = useRef()
+    const OS2 = useRef()
     useEffect(() => {
         if(testBrand && testBrand1){
             if(testBrand.solvedCount > testBrand1.solvedCount){
-                SC1 = true
-                SC2 = false
+                SC1.current = true
+                SC2.current = false
             }
             else{
-                SC1 = false
-                SC2 = true
+                SC1.current = false
+                SC2.current = true
             }
             if(testBrand.satisfactionRate > testBrand1.satisfactionRate){
-                SFR1 = true
-                SFR2 = false
+                SFR1.current = true
+                SFR2.current = false
             }
             else{
-                SFR1 = false
-                SFR2 = true
+                SFR1.current = false
+                SFR2.current = true
             }
             if(testBrand.overAllStatus > testBrand1.overAllStatus){
-                OS1 = true
-                OS2 = false
+                OS1.current = true
+                OS2.current = false
             }
             else{
-                OS1 = false
-                OS2 = true
+                OS1.current = false
+                OS2.current = true
             }
             setTestBrand({
                 ...testBrand,
-                satisfactionRateIsGreater: SFR1,
-                overAllStatusIsGreater: OS1,
-                solvedCountIsGreater: SC1
+                satisfactionRateIsGreater: SFR1.current,
+                overAllStatusIsGreater: OS1.current,
+                solvedCountIsGreater: SC1.current
             })
             setTestBrand1({
                 ...testBrand1,
-                satisfactionRateIsGreater: SFR2,
-                overAllStatusIsGreater: OS2,
-                solvedCountIsGreater: SC2
+                satisfactionRateIsGreater: SFR2.current,
+                overAllStatusIsGreater: OS2.current,
+                solvedCountIsGreater: SC2.current
             })   
         } 
-    }, [])   
+    }, [testBrand, testBrand1])   
     
     
 

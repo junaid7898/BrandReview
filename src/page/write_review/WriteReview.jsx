@@ -1,17 +1,12 @@
 import React, { useRef, useState } from "react";
 import ReviewImg from "../../assests/images/review_img.png";
-import { GrClose } from "react-icons/gr";
-import ImageViewer from "../../components/image_viewer/ImageViewer";
 import ImagePreview from "../../components/image_preview/ImagePreview"
-import { useHistory } from "react-router";
 const WriteReview = () => {
   let subject = ''
   let message = ''
   let reviewType = ''
   const ref = useRef()
-  const history = useHistory();
   const [uploadImage, setUploadImage] = useState([]);
-  const [onClickImage, setOnClickImage] = useState(false);
 
   const fileSelectHandler = (e) => {
     if(uploadImage.length >= 5){

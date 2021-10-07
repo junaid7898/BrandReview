@@ -1,5 +1,4 @@
 import React from 'react'
-import Stars from '../../../assests/images/Stars.png'
 import BrandComparison from '../../../components/brand_comparison/BrandComparison'
 
 const BrandInfo = ({brand}) => {

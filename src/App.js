@@ -39,7 +39,7 @@ function App() {
         }
       }).then(({data: user}) => {
         dispatch(userActions.setUser(user))
-        console.log(user)
+        console.log(user);
       })
     }
 

@@ -1,18 +1,41 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import GoogleIcon from "../../../assests/icons/googleIcon.png";
 import FacebookIcon from "../../../assests/icons/facebookIcon.png";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../../Redux/user slice/userSlice";
-
+import {useGoogleLogin} from 'react-google-login'
 const LoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
   const dispatch = useDispatch()
+  const history = useHistory()
+  const clientId = "29070885149-iipqn1acl0b33hh09fi9ns1tasangr9f.apps.googleusercontent.com"
   
+    const onSuccess = async({profileObj}) =>{
+      console.log(profileObj)  
+      const {data:user} = await axios.post("http://localhost:4000/v1/auth/login/google",{
+          user:{
+            name:profileObj.name,
+            password:profileObj.googleId,
+            email:profileObj.email,
+            profileImage:profileObj.imageUrl
+          }
+      })
+      dispatch(userActions.setUser(user))
+      history.push('/')
+    }
+
+  const {signIn: googleLogin} = useGoogleLogin({
+        onSuccess,
+        clientId,
+    })
+
+
   const login = async () => {
     const req = {
       email,
@@ -103,11 +126,11 @@ const LoginInputs = () => {
       </button>
       <p>or continue with</p>
       <div className="login__form__inputs__social-button">
-        <div className="login__form__inputs__social-button__google">
+        <div onClick={googleLogin} className="login__form__inputs__social-button__google">
           <img src={GoogleIcon} />
           <p>Sign in with Google</p>
         </div>
-        <div className="login__form__inputs__social-button__facebook">
+        <div  className="login__form__inputs__social-button__facebook">
           <img src={FacebookIcon} />
           <p>Sign in with Facebook</p>
         </div>

@@ -103,11 +103,11 @@ const BrandLoginInputs = () => {
       <p>or continue with</p>
       <div className="brand__login__inputs__social-button">
         <div className="brand__login__inputs__social-button__google">
-          <img src={GoogleIcon} />
+          <img src={GoogleIcon} alt="google logo" />
           <p>Sign in with Google</p>
         </div>
         <div className="brand__login__inputs__social-button__facebook">
-          <img src={FacebookIcon} />
+          <img src={FacebookIcon} alt="facebook logo" />
           <p>Sign in with Facebook</p>
         </div>
       </div>

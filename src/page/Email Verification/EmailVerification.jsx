@@ -5,11 +5,14 @@ function EmailVerification() {
 
     const {token} = useParams()
 
-    useEffect(async() =>{
-        if(token){
+    useEffect(() =>{
+        const fetcher = async(token) => {
             await axios.post(`http://localhost:4000/v1/auth/verify-email?token=${token}`)
         }
-    },[])
+        if(token){
+           fetcher(token) 
+        }
+    },[token])
 
     return (
         <div>

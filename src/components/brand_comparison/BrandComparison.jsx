@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import BrandIcon from "../../assests/images/brand_icon.png";
 import BrandSearchList from "./components/BrandSearchList";
 
-const BrandComparison = ({ brandList }) => {
-  const [testBrands, setTextBrands] = useState([
+const BrandComparison = () => {
+  const [testBrands] = useState([
     { brandName: "KIA", brandIcon: BrandIcon },
     { brandName: "Totyota", brandIcon: BrandIcon },
     { brandName: "Apple", brandIcon: BrandIcon },
@@ -21,7 +21,6 @@ const BrandComparison = ({ brandList }) => {
   const [brand1, setBrand1] = useState(null);
   const [brand2, setBrand2] = useState(null);
 
-  const [searchKey, setSearchKey] = useState("");
   const [showResult1, setShowResult1] = useState(false);
   const [showResult2, setShowResult2] = useState(false);
 
@@ -40,6 +39,7 @@ const BrandComparison = ({ brandList }) => {
         ) {
           return item;
         }
+        return null
       })
     );
   };

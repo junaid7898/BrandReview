@@ -3,7 +3,7 @@ import BrandIcon from "../../../assests/images/brand_icon.png";
 import Stars from '../../../assests/images/Stars.png'
 
 const BrandContent = ({item}) => {
-  const [brand, setItem] = useState(
+  const [brand] = useState(
     {
       brandName: "BMW",
       brandIcon: BrandIcon,
@@ -18,7 +18,7 @@ const BrandContent = ({item}) => {
     <section >
                <div className = 'brand' >
                     <div className="brand__logo">
-                        <img src = {item.logo}/>
+                        <img src = {item.logo} alt={`brand ${item.name} logo`}/>
                     </div>
                     <div className="brand__info">
                         <h1 className="brand__info__name"> {item.name} </h1>
@@ -30,7 +30,7 @@ const BrandContent = ({item}) => {
                             <h3>Reviews</h3>
                         </div>
                         <div className = 'brand__progress__ratings'>
-                            <img src = {Stars}/>
+                            <img src = {Stars} alt="stars"/>
                             <p>{item.ratingCount} Ratings</p>
                         </div>
                     </div>

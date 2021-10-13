@@ -1,4 +1,3 @@
-import './App.css';
 import "./sass/main.scss"
 import TermsAndCondition from './page/terms_and_condition/TermsAndCondition';
 import WriteReview from './page/write_review/WriteReview';
@@ -9,8 +8,6 @@ import Footer from './components/footer/Footer';
 import Admin from './page/admin/Admin';
 import HomePage from './page/Homepage/HomePage';
 import BrandPanel from './page/BrandPanel/BrandPanel';
-import BrandComparison from './components/brand_comparison/BrandComparison';
-import BrandComparisonDetail from './components/brand_comparison_detail/BrandComparisonDetail';
 import ComparisonPage from './page/Comparison/ComparisonPage';
 import SignUp from './page/Sign_up/SignUp';
 import EmailVerification from './page/Email Verification/EmailVerification';
@@ -22,10 +19,32 @@ import SearchBrand from './page/search/SearchBrand';
 import PhoneVerification from './page/phone_verification_page/PhoneVerification';
 import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
-import MultiDatePicker from './components/multi_date_picker/MultiDatePicker';
-import FilterComponent from './components/filter_component/FilterComponent';
+
+import { useEffect } from 'react';
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { userActions } from "./Redux/user slice/userSlice";
+
 function App() {
   
+  const dispatch = useDispatch()
+  useEffect(() => {
+    
+    const userId = localStorage.getItem("userId")
+    const accessToken = localStorage.getItem("accessToken")
+    if(userId && accessToken){
+      axios.get(`http://localhost:4000/v1/auth/login/${userId}`,{
+        headers:{
+          'authorization' : `bearer ${accessToken}`
+        }
+      }).then(({data: user}) => {
+        dispatch(userActions.setUser(user))
+        console.log(user);
+      })
+    }
+
+  }, [dispatch])
+
   let user = false;
   return (
     <div className="App" >

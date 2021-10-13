@@ -29,7 +29,7 @@ const ProfileDetail = ({user}) => {
     setShowReviewsFollow(true);
   };
 
-  const [testBrand, setTestBrand] = useState({
+  const [testBrand] = useState({
     brandImage: BrandImage,
     brandRatings: 4.9,
     brandTotalRatings: 1200,

@@ -12,7 +12,7 @@ const BrandSearchList = ({ data, showlist, setValue}) => {
                             setValue(item.brandName)
                             showlist(false)
                         }}>
-                            <img src = {item.brandIcon}/>
+                            <img src = {item.brandIcon} alt={`brand $item.brandName} logo`}/>
                             <h3>{item.brandName}</h3>
                         </div>
                     )

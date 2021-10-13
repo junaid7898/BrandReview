@@ -8,8 +8,6 @@ const BrandSignUpInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [OTP, setOTP] = useState(null);
-  const [user, setUser] = useState(null);
 
 
   const signup = async() => {

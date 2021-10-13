@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer__content">  
         <div className="footer__content__intro">
           <div>
-            <img src={logo} />
+            <img src={logo} alt="site logo" />
             <h1>Review Website</h1>
           </div>
 

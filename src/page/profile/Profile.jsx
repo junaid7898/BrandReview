@@ -34,7 +34,7 @@ const Profile = () => {
                 setCurrentUser(true)
             }
         }
-    }, [])
+    }, [user, userId])
 
 
     return (

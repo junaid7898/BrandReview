@@ -6,7 +6,7 @@ import SecontPosition from '../../../assests/images/2nd.png'
 import ThirdPosition from '../../../assests/images/3rd.png'
 
 function TopTenBrands() {
-    const [topBrands, setTopBrands] = useState([
+    const [topBrands] = useState([
         {brandName: 'gucci', ratting: 5, brandlogo: BeatsLogo, category: 'fashion'},
         {brandName: 'beats', ratting: 5, brandlogo: BeatsLogo, category: 'fashion'},
         {brandName: 'rolax', ratting: 4.8, brandlogo: BeatsLogo, category: 'fashion'},
@@ -27,11 +27,11 @@ function TopTenBrands() {
                              <Link to="/" className="topbrands__list">
                                 {index === 0 || index === 1 || index === 2 ? 
                                     (
-                                    <img src = {index === 0 ? FirstPosition : index === 1 ? SecontPosition : ThirdPosition } className = 'topbrands__list__position'/>)
+                                    <img alt="brand ranking" src = {index === 0 ? FirstPosition : index === 1 ? SecontPosition : ThirdPosition } className = 'topbrands__list__position'/>)
                                     :
                                     (null)
                                 }
-                                <img className="topbrands__list__img" src = {item.brandlogo}/>
+                                <img alt={`brand ${item.brandName} logo`} className="topbrands__list__img" src = {item.brandlogo}/>
                                 <h1 className="topbrands__list__name">{item.brandName}</h1>
                                 <h3 className="topbrands__list__category">{item.category}</h3>
                                 <h3 className="topbrands__list__ratings">

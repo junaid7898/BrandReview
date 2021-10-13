@@ -7,7 +7,6 @@ import ImageViewer from "../../../components/image_viewer/ImageViewer";
 const BrandReviews = ({ comments }) => {
   const [uploadImage, setUploadImage] = useState([]);
   const [onClickImage, setOnClickImage] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null)
 
   const addImage = (image) => {
     if(uploadImage.length > 5){

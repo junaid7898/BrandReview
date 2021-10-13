@@ -50,8 +50,6 @@ function App() {
         <Route path = '/search' component = {SearchBrand}/>
         <Route path = '/phoneverification' component = {PhoneVerification}/>
         <Route path = '/emailverification' component = {EmailVerificationPage}/>
-        <Route path = '/picker' component = {MultiDatePicker}/>
-        <Route path = '/filter' component = {FilterComponent}/>
       
       {
         !user ?

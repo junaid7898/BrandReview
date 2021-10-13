@@ -8,13 +8,12 @@ import { Link } from "react-router-dom";
 import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../Redux/user slice/userSlice";
-import { brandActions } from '../../Redux/brand slice/brandSlice';
 
 const Header = () => {
   //search bar states
-  const [searchKey, setSearchKey] = useState(null);
+  const [searchKey] = useState(null);
   
-  const [data, setData] = useState([
+  const [data] = useState([
     {
       name: "car 1",
       img:"https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png"
@@ -50,12 +49,10 @@ const Header = () => {
   const [showSearchBar, setShowSearchBar] = useState(-1000);
   const [searchResults, setSearchResults] = useState([])
   const [showResult, setShowResult] = useState(false);
-  const [isLogged, setIsLogged] = useState(true);
 
   const dispatch = useDispatch()
 
   const { user } = useSelector(state => state.user)
-  const {brand} = useSelector(state => state.brand)
 
 
   const handleSearch = (e) => {
@@ -70,6 +67,7 @@ const Header = () => {
         {
           return item
         }
+        return null
       })
     )
 
@@ -102,7 +100,7 @@ const Header = () => {
         />
 
         <Link to="/" className="nav__icon">
-          <img src={HeaderIcon} />
+          <img src={HeaderIcon} alt="site logo" />
           <h1>Review Website</h1>
         </Link>
 
@@ -127,7 +125,7 @@ const Header = () => {
               setShowResult(true);
             }}
           />
-          <img src={SearchIcon} />
+          <img src={SearchIcon} alt="search icon"/>
 
             {
               searchResults.length > 0 && showResult ?

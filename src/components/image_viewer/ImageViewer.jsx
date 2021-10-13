@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { GrClose } from "react-icons/gr";
 function ImageViewer({image, setImage}) {
     console.log(image)

@@ -3,11 +3,10 @@ import BrandInfo from "./components/BrandInfo";
 import BrandImage from "../../assests/images/brandcar.png";
 import BrandLogo from "../../assests/images/kia_logo.png";
 import Profile from "../../assests/images/Profile Image.png";
-import BrandReviews from "./components/BrandReviews";
 import Review from "../../components/reviews/Review";
 
 const SearchBrand = () => {
-  const [testBrand, setTestBrand] = useState({
+  const [testBrand] = useState({
     brandImage: BrandImage,
     brandRatings: 4.9,
     brandTotalRatings: 1200,

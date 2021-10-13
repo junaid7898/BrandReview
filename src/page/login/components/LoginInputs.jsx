@@ -28,7 +28,7 @@ const LoginInputs = () => {
       })
       dispatch(userActions.setUser(user))
       history.push('/')
-    }
+  }
 
   const {signIn: googleLogin} = useGoogleLogin({
         onSuccess,
@@ -127,11 +127,11 @@ const LoginInputs = () => {
       <p>or continue with</p>
       <div className="login__form__inputs__social-button">
         <div onClick={googleLogin} className="login__form__inputs__social-button__google">
-          <img src={GoogleIcon} />
+          <img src={GoogleIcon} alt="google logo" />
           <p>Sign in with Google</p>
         </div>
         <div  className="login__form__inputs__social-button__facebook">
-          <img src={FacebookIcon} />
+          <img src={FacebookIcon} alt="facebook logo" />
           <p>Sign in with Facebook</p>
         </div>
       </div>

@@ -1,148 +1,198 @@
-//ANCHOR =====================
-//ANCHOR        Base
-//ANCHOR =====================
+//SECTION SASS
+
+/* -------------------------------------------------------------------------- */
+/*                                    Base                                    */
+/* -------------------------------------------------------------------------- */
+//SECTION   Base
 
 @import "./base/variables";
 @import "./base/base";
+//!SECTION
+/* -------------------------------------------------------------------------- */
 
 
-//ANCHOR =====================
-//ANCHOR      Animations
-//ANCHOR =====================
+
+/* -------------------------------------------------------------------------- */
+/*                                 Animations                                 */
+/* -------------------------------------------------------------------------- */
+//SECTION   Animations
 
 @import "./animations/infiniteRotate";
 
+//!SECTION
+/* -------------------------------------------------------------------------- */
 
-//ANCHOR =====================
-//ANCHOR       Mixins
-//ANCHOR =====================
+
+/* -------------------------------------------------------------------------- */
+/*                                   Mixins                                   */
+/* -------------------------------------------------------------------------- */
+//SECTION   Mixins
 
 @import "./mixins/mediaQuery";
 @import "./mixins/infiniteRotate";
 
-//ANCHOR =====================
-//ANCHOR     Components
-//ANCHOR =====================
+//!SECTION
 
-//ANCHOR Header
-@import "../components/header/styles/header";
+/* -------------------------------------------------------------------------- */
+/*                                  Component                                 */
+/* -------------------------------------------------------------------------- */
 
-//ANCHOR Footer
-@import "../components/footer/styles/footer";
+//SECTION   Component
 
-//ANCHOR Brand Comparison
-@import "../components/brand_comparison/styles/brandComparison";
-@import "../components/brand_comparison/styles/brandSearchList";
-
-//ANCHOR Brand Comparison Detail
-@import "../components/brand_comparison_detail/styles/brandComparisonDetails";
-
-//ANCHOR registration form component
-@import '../components/registration_page_component/styles/registrationPageComponent';
-
-//ANCHOR Loading Indicator
-@import "../components/loadingIndicator/styles/loadingIndicator";
-
-//ANCHOR Image Viewer
-@import "../components/image_viewer/styles/imageViewer";
-
-//ANCHOR Image Preview
-@import "../components/image_preview/styles/imagePreview";
-
-//ANCHOR write comment
-
-@import '../components/write_comment/styles/writeComment';
-
-//ANCHOR review component
-
-@import '../components/reviews/styles/review';
-
-//ANCHOR image thumbnail
-
-@import '../components/image_thumbnail/style/imageThumbnail';
+    //SECTION  Header
+    @import "../components/header/styles/header";
+    //!SECTION =========
 
 
-//ANCHOR =====================
-//ANCHOR        Pages
-//ANCHOR =====================
-
-//ANCHOR Home Page
-@import "../page/Homepage/styles/homePageStyling";
-@import "../page/Homepage/styles/header";
-@import "../page/Homepage/styles/topreview";
-@import "../page/Homepage/styles/topTenBrands";
-@import "../page/Homepage/styles/compare";
-@import "../page/Homepage/styles/contact";
+    //SECTION  Footer
+    @import "../components/footer/styles/footer";
+    //!SECTION =========
 
 
-//ANCHOR Profile Page
-@import "../page/profile/styles/myDetails";
-@import "../page/profile/styles/profilecontent";
-@import "../page/profile/styles/profileDetail";
+    //SECTION  Brand Comparison
+    @import "../components/brand_comparison/styles/brandComparison";
+    @import "../components/brand_comparison/styles/brandSearchList";
+    //!SECTION =========
 
 
-
-//ANCHOR Write Review
-@import "../page/write_review/styles/writeReviewContent";
-
-
-//ANCHOR Terms and Conditions
-@import "../page/terms_and_condition/styles/backgroundContent";
-@import "../page/terms_and_condition/styles/content";
+    //SECTION  Brand Comparison Detail
+    @import "../components/brand_comparison_detail/styles/brandComparisonDetails";
+    //!SECTION =========
 
 
-//ANCHOR Comparison
-@import "../page/Comparison/styles/comparisonPage";
+    //SECTION  registration form component
+    @import '../components/registration_page_component/styles/registrationPageComponent';
+    //!SECTION =========
+
+    
+    //SECTION  Loading Indicator
+    @import "../components/loadingIndicator/styles/loadingIndicator";
+    //!SECTION =========
 
 
-//ANCHOR Brand Panel
-@import "../page/BrandPanel/styles/brandContent";
-@import "../page/BrandPanel/styles/brandDetail";
+    //SECTION  Image Viewer
+    @import "../components/image_viewer/styles/imageViewer";
+    //!SECTION =========
+
+    
+    //SECTION  Image Preview
+    @import "../components/image_preview/styles/imagePreview";
+    //!SECTION =========
 
 
-//ANCHOR Admin Panel
-
-@import "../page/admin/styles/admin";
-@import "../page/admin/styles/dashboard";
-@import "../page/admin/styles/dashboardLink";
-
-//ANCHOR Sign UP 
-
-@import '../page/Sign_up/styles/signUp';
-@import '../page/Sign_up/styles/signUpInputs';
-@import '../page/Sign_up/styles/signUpOtpVerification';
-
-//ANCHOR Login page
-
-@import '../page/login/styles/loginStyling.scss';
-@import '../page/login/styles/loginInputsStyling.scss';
-
-//ANCHOR brand-login page
-
-@import '../page/brand_log_in/styles/brandLogin';
-@import '../page/brand_log_in/styles/brandLoginInputs';
-
-//ANCHOR brand-signup page
-
-@import '../page/brand_sign_up/styles/brandSignUp';
-@import '../page/brand_sign_up/styles/brandSignUpInputs';
+    //SECTION  write comment
+    @import '../components/write_comment/styles/writeComment';
+    //!SECTION =========
 
 
-//ANCHOR brand-search page
+    //SECTION  review component
+    @import '../components/reviews/styles/review';
+    //!SECTION =========
 
-@import '../page/search/styles/styleInfo';
-@import '../page/search/styles/searchBrand.scss';
-@import '../page/search/styles/brandReviews';
 
-//ANCHOR phon-verification page
+    //SECTION  image thumbnail
+    @import '../components/image_thumbnail/style/imageThumbnail';
+    //!SECTION =========
+//!SECTION
 
-@import '../page/phone_verification_page/styles/phoneVerification';
-@import '../page/phone_verification_page/styles/phoneVerificationInputs';
+/* -------------------------------------------------------------------------- */
+/*                                    Page                                    */
+/* -------------------------------------------------------------------------- */
 
-//ANCHOR error-404 page
+//SECTION   Page
 
-@import '../page/error_404_page/styles/error404page';
+    //SECTION  Homepage
+    @import "../page/Homepage/styles/homePageStyling";
+    @import "../page/Homepage/styles/header";
+    @import "../page/Homepage/styles/topreview";
+    @import "../page/Homepage/styles/topTenBrands";
+    @import "../page/Homepage/styles/compare";
+    @import "../page/Homepage/styles/contact";
+    //!SECTION =========
 
-//ANCHOR email-verification page
 
-@import '../page/email_verification_page/styles/emailVerificationPage';
+    //SECTION  Profile Page
+    @import "../page/profile/styles/myDetails";
+    @import "../page/profile/styles/profilecontent";
+    @import "../page/profile/styles/profileDetail";
+    //!SECTION =========
+
+
+    //SECTION  Write Review
+    @import "../page/write_review/styles/writeReviewContent";
+    //!SECTION =========
+
+
+    //SECTION  Terms and Conditions
+    @import "../page/terms_and_condition/styles/backgroundContent";
+    @import "../page/terms_and_condition/styles/content";
+    //!SECTION =========
+
+
+    //SECTION  Comparison
+    @import "../page/Comparison/styles/comparisonPage";
+    //!Section
+
+    //SECTION  Brand Panel
+    @import "../page/BrandPanel/styles/brandContent";
+    @import "../page/BrandPanel/styles/brandDetail";
+    //!SECTION =========
+
+
+    //SECTION  Admin Panel
+    @import "../page/admin/styles/admin";
+    @import "../page/admin/styles/dashboard";
+    @import "../page/admin/styles/dashboardLink";
+    //!SECTION =========
+
+
+    //SECTION  Sign UP 
+    @import '../page/Sign_up/styles/signUp';
+    @import '../page/Sign_up/styles/signUpInputs';
+    @import '../page/Sign_up/styles/signUpOtpVerification';
+    //!SECTION =========
+
+
+    //SECTION  Login page
+    @import '../page/login/styles/loginStyling.scss';
+    @import '../page/login/styles/loginInputsStyling.scss';
+    //!SECTION =========
+
+
+    //SECTION  brand-login page
+    @import '../page/brand_log_in/styles/brandLogin';
+    @import '../page/brand_log_in/styles/brandLoginInputs';
+    //!SECTION =========
+
+
+    //SECTION  brand-signup page
+    @import '../page/brand_sign_up/styles/brandSignUp';
+    @import '../page/brand_sign_up/styles/brandSignUpInputs';
+    //!SECTION =========
+
+
+    //SECTION  brand-search page
+    @import '../page/search/styles/styleInfo';
+    @import '../page/search/styles/searchBrand.scss';
+    @import '../page/search/styles/brandReviews';
+    //!SECTION =========
+
+
+    //SECTION  phon-verification page
+    @import '../page/phone_verification_page/styles/phoneVerification';
+    @import '../page/phone_verification_page/styles/phoneVerificationInputs';
+    //!SECTION =========
+
+
+    //SECTION  error-404 page
+    @import '../page/error_404_page/styles/error404page';
+    //!SECTION =========
+
+
+    //SECTION  email-verification page
+    @import '../page/email_verification_page/styles/emailVerificationPage';
+    //!SECTION =========
+
+//!SECTION
+
+//!SECTION

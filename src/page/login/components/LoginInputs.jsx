@@ -28,7 +28,7 @@ const LoginInputs = () => {
       })
       dispatch(userActions.setUser(user))
       history.push('/')
-    }
+  }
 
   const {signIn: googleLogin} = useGoogleLogin({
         onSuccess,

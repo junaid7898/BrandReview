@@ -22,6 +22,8 @@ import SearchBrand from './page/search/SearchBrand';
 import PhoneVerification from './page/phone_verification_page/PhoneVerification';
 import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
+import MultiDatePicker from './components/multi_date_picker/MultiDatePicker';
+import FilterComponent from './components/filter_component/FilterComponent';
 function App() {
   
   let user = false;
@@ -48,6 +50,8 @@ function App() {
         <Route path = '/search' component = {SearchBrand}/>
         <Route path = '/phoneverification' component = {PhoneVerification}/>
         <Route path = '/emailverification' component = {EmailVerificationPage}/>
+        <Route path = '/picker' component = {MultiDatePicker}/>
+        <Route path = '/filter' component = {FilterComponent}/>
       
       {
         !user ?

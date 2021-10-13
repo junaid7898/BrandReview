@@ -29,37 +29,6 @@
             }
         }
     }
-    
-    
-    
-    &__your-review{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        background-color: $surface;
-        width: 100%;
-        border-radius: 10px;
-        margin: 10px 0px;
-        padding: 0px 10px;
-        & input{
-            flex: 1;
-            background-color: transparent;
-            border: 0px solid;
-            padding: 14px 10px;
-            &:focus{
-                outline: none;
-            }
-        }
-        &__icons{
-            cursor: pointer;
-            & input{
-                display: none;
-            }
-            &__upload-icon{
-                cursor: pointer;
-            }
-        }
-    }
     &__comments{
         display: flex;
         flex-direction: column;

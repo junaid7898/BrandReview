@@ -1,0 +1,113 @@
+.date__picker{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $surface;
+    padding: 13px 17px;
+    border-radius: 10px;
+    margin: auto;  
+    width: 300px;
+    &__dates{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        padding: 0px 0px;
+        font-size: 11px;
+    }
+    &__cursor-default{   
+        cursor: auto;
+    }
+    &__cursor-pointer{
+        cursor: pointer;
+        
+    }
+    &__custom-header{
+        display: flex;
+        align-items: flex-start;
+        padding: 20px 0px;
+        & h1{
+            color: $onSurface-secondary;
+            font-weight: bold;
+            font-size: 28px;
+            line-height: 33px;  
+            padding-left: 20px;
+        }
+    }
+    &__custom-calender{
+        // max-width: 400px;
+        padding: 8px 12px;
+        margin-top: 15px;
+    }
+
+    &__arrow{
+        display: none;
+    }
+    &__input{
+       background-color: transparent;
+       border: 0px solid;
+       padding: 4px 8px;
+       &:focus{
+           outline: none;
+       }
+    }
+    &__icon{
+        cursor: pointer;
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
+}
+
+.multi-locale-days .rmdp-day {
+    width: 80px;
+    height: 80px;
+  }
+
+.rmdp-day{
+    padding:5px !important;
+    &:not(:nth-child(n + 7)){
+        margin-right: 20px;
+    }
+
+    
+}
+
+.rmdp-range {
+    background-color: $primary !important;
+    
+}
+
+.rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden) span:hover {
+    background-color: $onSurface-secondary !important;
+}
+
+
+
+.rmdp-week-day{
+    color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.rmdp-range{
+    border-radius: 50%;
+    
+}
+.rmdp-week{
+    margin-bottom: 20px;
+}
+.rmdp-week:first-child{
+    margin-bottom: 10px;
+}
+.rmdp-week:last-child{
+    margin-bottom: 0;
+}
+
+.rmdp-day.rmdp-today span{
+    background-color: $onSurface-primary !important;
+    color: black;
+}
+
+.rmdp-header-values{
+    color: $onSurface-secondary !important;
+}

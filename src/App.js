@@ -19,10 +19,12 @@ import SearchBrand from './page/search/SearchBrand';
 import PhoneVerification from './page/phone_verification_page/PhoneVerification';
 import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
+
 import { useEffect } from 'react';
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { userActions } from "./Redux/user slice/userSlice";
+
 function App() {
   
   const dispatch = useDispatch()

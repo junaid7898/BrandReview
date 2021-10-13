@@ -89,6 +89,22 @@
     @import '../components/reviews/styles/review';
     //!SECTION =========
 
+//ANCHOR write your review component
+
+@import '../components/write_your_review_input/style/writeYourReviewComponent';
+
+//ANCHOR multi date picker
+
+@import '../components/multi_date_picker/style/multiDatePicker';
+
+//ANCHOR filter component
+
+@import '../components/filter_component/style/filterComponent';
+
+//ANCHOR update profile button
+
+@import '../components//update_profile_button/style/updateProfile';
+
 
     //SECTION  image thumbnail
     @import '../components/image_thumbnail/style/imageThumbnail';
@@ -100,6 +116,12 @@
 /* -------------------------------------------------------------------------- */
 
 //SECTION   Page
+
+//ANCHOR Profile Page
+@import "../page/profile/styles/myDetails";
+@import "../page/profile/styles/profilecontent";
+@import "../page/profile/styles/profileDetail";
+@import '../page/profile/components/ProfileDetail/components/MyDetails/styles/myReviews';
 
     //SECTION  Homepage
     @import "../page/Homepage/styles/homePageStyling";

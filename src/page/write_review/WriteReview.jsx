@@ -1,51 +1,77 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import ImagePreview from "../../components/image_preview/ImagePreview"
+import { uploadMultiPhotos } from "../../helpers/uploadMultiplePhotos";
 const WriteReview = () => {
-  let subject = ''
+  let title = ''
   let message = ''
-  let reviewType = ''
   const ref = useRef()
   const [uploadImage, setUploadImage] = useState([]);
 
-  const fileSelectHandler = (e) => {
-    if(uploadImage.length >= 5){
-      alert("max of 5 Images is allowed")
-      return
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setUploadImage([...uploadImage, reader.result ]);
-      }
-    };
-    if(e.target.files[0]){
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
 
+  const {user} = useSelector(state => state.user)
+
+
+  const fileSelectHandler = async(e) => {
+
+    console.log(e.target.value)
+
+    const images = e.target.files
+    if((images.length + uploadImage.length) > 5){
+      alert("Only 5 Images Allowed")
+      return 0
+    }
+    let loadedImages = [];
+
+    const selectedImages = [];
+
+    for(let index= 0; index < images.length ; index++){
+      if(images[index].size > 2500000){
+        continue
+      }
+
+      console.log(URL.createObjectURL(images[index]))
+      loadedImages = [...loadedImages, URL.createObjectURL(images[index])]
+    }
+
+
+
+    setUploadImage([...uploadImage, ...loadedImages])
+    
+  };
+  
   const removeImage = (i) => {
 
     setUploadImage( uploadImage.filter((img, index) => index !== i) )
 
   }
 
-  const onPublish = (e) => {
+
+
+
+  const onPublish = async(e) => {
     e.preventDefault()
+
+    
     const review = {
-      brandId: 'xxxxxxxxxxxx',
-      subject,
-      message,
-      type: reviewType,
-      images: [
-        'xxxxxxxxxxxxxxxxxx',
-        'xxxxxxxxxxxxxxxxxx',
-        'xxxxxxxxxxxxxxxxxx'
-      ]
+      brand: '614ecb6cad38bb28644f1a1e',
+      user: user.user.id,
+      title: "asdas",
+      message: "Message",
     }
-    alert(JSON.stringify(review, null, 2))
-    ref.current.reset()
-    setUploadImage([])
-    // history.push('/')
+
+    axios.post('http://localhost:4000/v1/review/', {review, uploadImage})
+
+    
+
+
+    // const urls = await uploadMultiPhotos(review, user, uploadImage)
+    // alert(JSON.stringify(review, null, 2))
+    // ref.current.reset()
+    // setUploadImage([])
+    
+    //NOTE Commented for testing purposes history.push('/')
   }
 
   return (
@@ -66,16 +92,15 @@ const WriteReview = () => {
               type="text"
               placeholder="Subject"
               className="review__content__textbox"
-              onChange = {(e) => {subject = e.target.value}}
+              onChange = {(e) => {title = e.target.value}}
               required
             />
-            <select className = 'review__content__dropdown' onChange = {(e) => {reviewType = e.target.value}} required>
+            {/* <select className = 'review__content__dropdown' onChange = {(e) => {reviewType = e.target.value}} required>
               <option value = {null} disabled selected = 'selected'>select review type</option>
               <option value = 'complaint'>Complaint</option>
               <option value = 'review'>Review</option>
               <option value = 'thanked'>Thanked</option>
-              
-            </select>
+            </select> */}
             <textarea
               placeholder="Write Your Review"
               className="review__content__textarea"
@@ -108,6 +133,7 @@ const WriteReview = () => {
               <input
                 type="file"
                 name="file"
+                multiple = {true}
                 accept="image/*"
                 id="uploadMedia"
                 onChange={fileSelectHandler}

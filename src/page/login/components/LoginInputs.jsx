@@ -26,7 +26,10 @@ const LoginInputs = () => {
             profileImage:profileObj.imageUrl
           }
       })
-      dispatch(userActions.setUser(user))
+      dispatch(userActions.setUser({
+        ...user,
+        role:"user"
+      }))
       history.push('/')
   }
 
@@ -47,12 +50,16 @@ const LoginInputs = () => {
         req
       ).then(res => {
         console.log(res)
-          const {payload} = dispatch(userActions.setUser(res.data))
+          const {payload} = dispatch(userActions.setUser({
+            ...res.data,
+            role:"user"
+          }))
           console.log(payload)
           if(rememberMe){
             localStorage.setItem('userId', payload.user.id )
             localStorage.setItem('accessToken', payload.tokens.access.token)
           }
+          history.push('/')
       }).catch(err => {
         alert(err.response.data.message)
       });

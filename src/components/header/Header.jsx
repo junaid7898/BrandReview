@@ -154,16 +154,29 @@ const Header = () => {
           {!user ? (
             <>
               <li>
-                <Link to="/login">Login</Link>
+                Login as
+                <Link to="/user/login">User</Link>
+                <Link to="/brand/login">Brand</Link>
               </li>
               <li>
-                <Link to="/signup">Register</Link>
+                Signup as
+                <Link to="/user/signup">User</Link>
+                <Link to="/brand/signup">Brand</Link>
               </li>
             </>
           ) : (
             <>
               <li>
-                <Link to={`/profile/${user.user.id}`}>brand</Link>
+                {
+                  user.role === "user" ?
+                    <Link to={`/user/${user.user.id}`}>Profile</Link>
+                  : user.role === "brand" ?
+                    <Link to={`/brandpanel/${user.user.id}`}>Panel</Link>
+                  : user.role === "admin" ?
+                    <Link to={`/admin`}>Panel</Link>
+                  :  
+                    null
+                }
               </li>
               <li>
                 {/* TODO api/logout */}

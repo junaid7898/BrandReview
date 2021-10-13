@@ -6,7 +6,7 @@ import GoogleIcon from "../../../assests/icons/googleIcon.png";
 import FacebookIcon from "../../../assests/icons/facebookIcon.png";
 
 import { useDispatch } from "react-redux";
-import { brandActions } from "../../../Redux/brand slice/brandSlice";
+import { userActions } from "../../../Redux/user slice/userSlice";
 
 const BrandLoginInputs = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +27,7 @@ const BrandLoginInputs = () => {
         .post("http://localhost:4000/v1/brandAuth/login", req)
         .then((res) => {
           console.log(res);
-          dispatch(brandActions.setBrand(res.data));
+          dispatch(userActions.setBrand(res.data));
         })
         .catch((err) => {
           console.log(err.response.data.message);

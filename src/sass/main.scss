@@ -105,6 +105,9 @@
 
 @import '../components//update_profile_button/style/updateProfile';
 
+    //SECTION dashboard review component
+    @import '../components/dashboardReviews/style/dashboardReviews'; 
+
 
     //SECTION  image thumbnail
     @import '../components/image_thumbnail/style/imageThumbnail';
@@ -165,6 +168,7 @@
     @import "../page/admin/styles/admin";
     @import "../page/admin/styles/dashboard";
     @import "../page/admin/styles/dashboardLink";
+    @import '../page/admin/styles/dashBoardUsers';
     //!SECTION =========
 
 

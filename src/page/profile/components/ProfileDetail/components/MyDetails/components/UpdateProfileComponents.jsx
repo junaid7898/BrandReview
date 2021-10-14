@@ -12,7 +12,7 @@ const UpdateProfileComponents = ({ onSubmit }) => {
   const [birthday, setBirthday] = useState(
     new Date().toISOString().split("T")[0]
   );
-//   const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState(null);
 
   const address1 = useRef()
   const address2 = useRef()
@@ -26,12 +26,13 @@ const UpdateProfileComponents = ({ onSubmit }) => {
   };
 
   const handleUpdate = () => {
-      const address = address1.current +' ' + address2.current + ' '  +  address3.current;
+      const addressX = address1.current +' ' + address2.current + ' '  +  address3.current;
+      setAddress(addressX)
       if( isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
           alert('phone number is invalid! please enter a valid phone number....')
           return 0
       }
-      if(address === '' || phone === '' || birthday === null){
+      if(address === null || phone === '' || birthday === null){
           alert('please fill all the entries')
           return 0
       }

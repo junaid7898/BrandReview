@@ -207,7 +207,9 @@ const Header = () => {
                       <button onClick={ () => {
                         dispatch(clientActions.removeClient())
                         localStorage.removeItem('userId')
+                        localStorage.removeItem('brand  Id')
                         localStorage.removeItem('accessToken')
+                        localStorage.removeItem('clientType')
                         history.push('/')
                         }} >Logout</button>
                     </li>

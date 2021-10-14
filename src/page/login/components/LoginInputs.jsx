@@ -85,7 +85,7 @@ const LoginInputs = () => {
   return (
     <div className="login__form__inputs">
       <div className="login__form__inputs__title">
-        <h1>Sign In</h1>
+        <h1>Sign In As User</h1>
         <p className="login__form__inputs__title__noaccount-link">
           Welcome, we missed you
         </p>
@@ -138,6 +138,10 @@ const LoginInputs = () => {
         </Link>
       </div>
 
+      <label className="login__form__inputs__login-link" htmlFor="userSignup">
+          Don't have an account? <Link to="/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Singup</Link>
+        </label>
+
       <button
         className="login__form__inputs__button"
         disabled = {isLoggingIn.email}
@@ -148,10 +152,11 @@ const LoginInputs = () => {
       <p>or continue with</p>
       <div className="login__form__inputs__social-button">
         <div onClick={loginWithGoogle} style={{pointerEvents: isLoggingIn.google ? "none" : "all"}} className="login__form__inputs__social-button__google">
+
           <img src={GoogleIcon} alt="google logo" />
           <p>{isLoggingIn.google ? <LoadingIndicator /> : "Sign in with Google"}</p>
         </div>
-        <div  className="login__form__inputs__social-button__facebook">
+        <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>
           <img src={FacebookIcon} alt="facebook logo" />
           <p>{isLoggingIn.facebook ? <LoadingIndicator /> :  "Sign in with Facebook"}</p>
         </div>

@@ -1,0 +1,66 @@
+.dashboard__users__data{
+    &__user{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0px;
+        &__intro{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0px;
+            & img{
+                width: 50px;
+                border-radius: 50%;
+                margin-right: 10px;
+                cursor: pointer;
+                &:hover{
+                    transform: scale(1.1);
+                }
+            }  
+            & h5{
+                color: $onSurface-primary;
+                font-weight: 500;
+                font-size: 20px;
+                line-height: 30px;
+            }
+        }
+        &__details{
+            display: flex;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            &__phone, &__email, &__address, &__country-code{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                
+                & label{
+                    color: $onSurface-primary;
+                    font-weight: 600;
+                    font-size: 20px;
+                    line-height: 30px;
+                    margin-bottom: 10px;
+                }
+                & p{
+                    color: $onSurface-secondary;
+                    font-weight: normal;
+                    font-size: 15px;
+                    line-height: 30px;
+                }
+            }
+
+            &__address{
+                max-width: 300px;
+                text-align: left;
+            }
+            
+        }
+    }
+}

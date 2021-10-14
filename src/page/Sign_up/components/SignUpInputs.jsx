@@ -12,9 +12,11 @@ const SignUpInputs = () => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   // const [OTP] = useState(null);
+
   const [user, setClient] = useState(null);
   console.log(user)
   const dispatch = useDispatch()
+
 
   const signUp = async () => {
     console.log(username, email, password, phone);
@@ -37,98 +39,55 @@ const SignUpInputs = () => {
       });
       console.log('---->'+data);
       setClient(data);
+
     } catch (err) {
       console.error(err);
     }
   };
 
-  // const verifyPhone = async () => {
-  //   try {
-  //     const { data } = await axios.post(
-  //       "http://localhost:4000/v1/auth/send-verification-sms",
-  //       user,
-  //       {
-  //         headers: {
-  //           Authorization: `bearer ${user.tokens.access.token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // const sendOTP = async () => {
-  //   try {
-  //     const { data } = await axios.post(
-  //       `http://localhost:4000/v1/auth/verify-phone?OTPCode=${OTP}`,
-  //       user,
-  //       {
-  //         headers: {
-  //           Authorization: `bearer ${user.tokens.access.token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  // const verifyEmail = async () => {
-  //   try {
-  //     const { data } = await axios.post(
-  //       "http://localhost:4000/v1/auth/send-verification-email",
-  //       user,
-  //       {
-  //         headers: {
-  //           Authorization: `bearer ${user.tokens.access.token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
   return (
     <div className="signup__form">
-      <RegistrationPageComponent/>
+      <RegistrationPageComponent />
       <div className="signup__form__inputs">
         <div className="signup__form__inputs__title">
-          <h1>Sign Up</h1>
-          <Link className="signup__form__inputs__title__noaccount-link">
+          <h1>Sign Up As User</h1>
+          <p className="signup__form__inputs__title__noaccount-link">
             Don't have an account?
-          </Link>
+          </p>
         </div>
         <div className="signup__form__inputs__username">
-          <label>Full name</label>
+          <label htmlFor = 'userName'>Full name</label>
           <input
+            id = 'userName'
             type="text"
             placeholder="Enter your name"
             value={username}
+            name = 'username'
             onChange={(e) => {
               setClientName(e.target.value);
             }}
           />
         </div>
         <div className="signup__form__inputs__email">
-          <label>Email</label>
+          <label htmlFor = 'userEmail'>Email</label>
           <input
-            type="text"
+            id = 'userEmail'
+            type="text"  
             placeholder="Enter your email address"
             value={email}
+            name = 'email'
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
         </div>
         <div className="signup__form__inputs__password">
-          <label>Password</label>
+          <label htmlFor = 'userPassword'>Password</label>
           <input
-            type="text"
+            id = 'userPassword'
+            type = 'password'
             placeholder="Enter your password"
+            name = 'password'
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -136,22 +95,27 @@ const SignUpInputs = () => {
           />
         </div>
         <div className="signup__form__inputs__phone">
-          <label>Phone number</label>
+          <label htmlFor = 'userPhone'>Phone number</label>
           <input
+            id = 'userPhone'
             type="text"
             placeholder="Enter your phone Number"
             value={phone}
+            name = 'phone number'
             onChange={(e) => {
               setPhone(e.target.value);
             }}
           />
         </div>
+        <label className="signup__form__inputs__login-link" htmlFor="userLogin">
+          Already have an Account? <Link to="/login" id = 'userLogin' className = 'signup__form__inputs__login-link__link'>Login</Link>
+        </label>
         <button
           className="signup__form__inputs__button"
           title="sign up"
           onClick={signUp}
         >
-          Sign UP
+          Signup
         </button>
       </div>
 
@@ -161,8 +125,6 @@ const SignUpInputs = () => {
       </div>
 
       <SignUpOtpVerification sendOTP={sendOTP} value={OTP} setValue={setOTP} /> */}
-
-      
     </div>
   );
 };

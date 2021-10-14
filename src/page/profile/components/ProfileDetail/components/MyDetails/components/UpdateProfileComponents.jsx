@@ -1,13 +1,18 @@
 import React, { useRef, useState } from "react";
 import DatePicker from "react-multi-date-picker";
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput from 'react-phone-number-input';
+import { isPossiblePhoneNumber, formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
+import { useDispatch , useSelector} from "react-redux";
+import {userActions} from '../../../../../../../Redux/user slice/userSlice'
 
 const UpdateProfileComponents = ({ onSubmit }) => {
   const [phone, setPhone] = useState(null);
+  const {user} = useSelector(state => state.user)
+  const dispatch = useDispatch()
   const [birthday, setBirthday] = useState(
     new Date().toISOString().split("T")[0]
   );
-//   const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState(null);
 
   const address1 = useRef()
   const address2 = useRef()
@@ -21,9 +26,30 @@ const UpdateProfileComponents = ({ onSubmit }) => {
   };
 
   const handleUpdate = () => {
-      const address = address1.current + address2.current + address3.current;
-      console.log(address, countryCode, phone, birthday);
+      const addressX = address1.current +' ' + address2.current + ' '  +  address3.current;
+      setAddress(addressX)
+      if( isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
+          alert('phone number is invalid! please enter a valid phone number....')
+          return 0
+      }
+      if(address === null || phone === '' || birthday === null){
+          alert('please fill all the entries')
+          return 0
+      }
+    const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
+      console.log(address, phone, birthday);
+      console.log(countryCallingCode, nationalNumber);
+      const details = {address: address,phoneNumber: phone, birthday: birthday };
+      dispatch(userActions.setUser({
+        ...user, 
+        dateOfBirth: birthday,
+        phoneNumber: nationalNumber,
+        countryCode: `+${countryCallingCode}`,
+        address: address
+      }))
+      alert(JSON.stringify(details))
   }
+ 
 
 
   return (
@@ -46,35 +72,13 @@ const UpdateProfileComponents = ({ onSubmit }) => {
 
             <div className="mydetails__update-details__update__phone">
                  <label htmlFor="phoneNumber">Phone Number </label>
-                {/* <div className="mydetails__update-details__update__phone__phone-number"> */}
-                    {/* <input
-                        id="countryCode"
-                        placeholder="country code"
-                        className = 'mydetails__update-details__update__phone__phone-number__country-code'
-                        value={countryCode}
-                        onChange={(e) => setCountryCode(e.target.value)}
-                        name="country code"
-                    /> */}
                     <PhoneInput
                         id = 'phoneNumber'
                         placeholder="Enter phone number"
                         value={phone}
                         className = 'mydetails__update-details__update__phone__phone-number'
                         name = 'phone number'
-                        onChange={setPhone}/>
-
-                    {/* <input
-                        id="phoneNumber"
-                        placeholder="enter your phone number"
-                        className = 'mydetails__update-details__update__phone__phone-number__number'
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        name="phone number"
-                    /> */}
-                    
-                {/* </div> */}
-                
-                
+                        onChange={setPhone}/>   
             </div>
 
             <div className="mydetails__update-details__update__dob">
@@ -131,7 +135,7 @@ const UpdateProfileComponents = ({ onSubmit }) => {
             <div
             className="mydetails__update-details__update__button"
             onClick={() => {
-                onSubmit(false);
+                // onSubmit(false);
                 handleUpdate()
             }}
             >

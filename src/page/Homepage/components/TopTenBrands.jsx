@@ -22,7 +22,6 @@ function TopTenBrands() {
         <div className="topbrands">
             {
                 topBrands.map((item, index) => {
-                    console.log(index)
                     return(
                              <Link to="/" className="topbrands__list">
                                 {index === 0 || index === 1 || index === 2 ? 

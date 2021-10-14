@@ -16,11 +16,11 @@ const AdminLoginInputs = () => {
     // };
     // try {
     //     axios.post(
-    //     "http://localhost:4000/v1/auth/login",
+    //     "http://localhost:4000/v1/auth/user/login",
     //     req
     //   ).then(res => {
     //     console.log(res)
-    //       dispatch(userActions.setUser(res.data))
+    //       dispatch(userActions.setClient(res.data))
     //   }).catch(err => {
     //     alert(err.response.data.message)
     //   });

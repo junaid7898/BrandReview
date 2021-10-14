@@ -2,7 +2,7 @@ import "./sass/main.scss"
 import TermsAndCondition from './page/terms_and_condition/TermsAndCondition';
 import WriteReview from './page/write_review/WriteReview';
 import Profile from './page/profile/Profile'
-import { BrowserRouter, Route, Switch} from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Admin from './page/admin/Admin';
@@ -22,60 +22,128 @@ import EmailVerificationPage from './page/email_verification_page/EmailVerificat
 
 import { useEffect } from 'react';
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { userActions } from "./Redux/user slice/userSlice";
-
+import { useSelector, useDispatch } from "react-redux";
+import { clientActions } from "./Redux/clientslice/clientSlice";
+import PrivateRoute from "./PrivateRoute";
+import { statusAction } from "./Redux/statusSlice";
 function App() {
   
   const dispatch = useDispatch()
+  const {client} = useSelector(state => state.client)
   useEffect(() => {
     
-    const userId = localStorage.getItem("userId")
-    const accessToken = localStorage.getItem("accessToken")
-    if(userId && accessToken){
-      axios.get(`http://localhost:4000/v1/auth/login/${userId}`,{
-        headers:{
-          'authorization' : `bearer ${accessToken}`
-        }
-      }).then(({data: user}) => {
-        dispatch(userActions.setUser(user))
-        console.log(user);
-      })
+    const type = localStorage.getItem("clientType")
+    if(type === "user"){
+      const userId = localStorage.getItem("userId")
+      const accessToken = localStorage.getItem("accessToken")
+      if(userId && accessToken){
+        dispatch(statusAction.setAttemptingLogin(true))
+        axios.get(`http://localhost:4000/v1/auth/user/login/${userId}`,{
+          headers:{
+            'authorization' : `bearer ${accessToken}`
+          }
+        }).then(({data: user}) => {
+          dispatch(clientActions.setClient(user))
+          dispatch(statusAction.setAttemptingLogin(false))
+          console.log(user);
+        })
+      }
+    }
+    else if(type === "brand"){
+      const brandId = localStorage.getItem("brandId")
+      const accessToken = localStorage.getItem("accessToken")
+      if(brandId && accessToken){
+        dispatch(statusAction.setAttemptingLogin(true))
+        axios.get(`http://localhost:4000/v1/auth/brand/login/${brandId}`,{
+          headers:{
+            'authorization' : `bearer ${accessToken}`
+          }
+        }).then(({data: brand}) => {
+          dispatch(clientActions.setClient(brand))
+          dispatch(statusAction.setAttemptingLogin(false))
+          console.log(brand);
+        })
+      }
     }
 
-  }, [dispatch])
+    
 
-  let user = false;
+  }, [dispatch])
   return (
     <div className="App" >
-    {/* <Profile/> */}
     <BrowserRouter>
     <Header/>
-    {/* <BrandComparison/> */}
-    {/* <BrandComparisonDetail/> */}
       <Switch>
         <Route path="/" exact component={HomePage} />
-        <Route path = '/admin' component = {Admin} />
-        <Route path = '/writereview' component = {WriteReview}/>
-        <Route path = '/profile/:userId' component = {Profile}/>
-        <Route path = '/brandpanel/:brandId' component = {BrandPanel}/>
-        <Route path = '/termsandcondition' component = {TermsAndCondition}/>
-        <Route path = '/comparison' component = {ComparisonPage}/>  
-        <Route path = '/verify-email/:token' component = {EmailVerification}/>  
-        <Route path = '/login' component = {Login}/>
-        <Route path = '/brandsignup' component = {BrandSignUp}/>
-        <Route path = '/brandlogin' component = {BrandLogin}/>
-        <Route path = '/adminlogin' component = {AdminLogin}/>
-        <Route path = '/search' component = {SearchBrand}/>
+        <PrivateRoute 
+              exact 
+              path="/user/login" 
+              component={Login} 
+              type={true}
+              role="user"
+        />
+        <PrivateRoute 
+              exact 
+              path="/user/signup" 
+              component={SignUp} 
+              type={true}
+              role="user"
+        />
+        <PrivateRoute 
+              exact 
+              path="/user/:userId" 
+              component={Profile}
+              type={false}
+              role="user"
+        />
+        <PrivateRoute 
+              exact 
+              path="/review" 
+              component={WriteReview} 
+              type={true}
+              role="user"
+        />
+        <PrivateRoute 
+              exact 
+              path="/brand/login" 
+              component={BrandLogin} 
+              type={true}
+              role="brand"
+        />
+        <PrivateRoute 
+              exact 
+              path="/brand/signup" 
+              component={BrandSignUp} 
+              type={true}
+              role="brand"
+        />
+        <Route path = '/brand/:id' component = {SearchBrand}/>
+        <PrivateRoute 
+              exact 
+              path="/brand/panel/:brandId" 
+              component={BrandPanel} 
+              type={true}
+              role="brand"
+        />
+        <Route path = '/brand/comparison' component = {ComparisonPage}/>  
+        <PrivateRoute 
+              exact 
+              path="/admin/login" 
+              component={AdminLogin} 
+              type={false}
+              role="admin"
+        />
+        <PrivateRoute 
+              exact 
+              path="/admin" 
+              component={Admin} 
+              type={false}
+              role="admin"
+        />
         <Route path = '/phoneverification' component = {PhoneVerification}/>
         <Route path = '/emailverification' component = {EmailVerificationPage}/>
-      
-      {
-        !user ?
-        <Route path = '/signup' component = {SignUp}/> 
-        : 
-        null
-      }
+        <Route path = '/verify-email/:token' component = {EmailVerification}/>  
+        <Route path = '/termsandcondition' component = {TermsAndCondition}/>
       <Route path = '/*' component = {Error404Page}/>
       </Switch>
       <Footer/>

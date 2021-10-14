@@ -4,10 +4,11 @@ import SearchIcon from "../../assests/icons/search_icon.png";
 import { GrClose } from "react-icons/gr";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../Redux/user slice/userSlice";
+import { clientActions } from "../../Redux/clientslice/clientSlice";
+import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
 
 const Header = () => {
   //search bar states
@@ -51,9 +52,9 @@ const Header = () => {
   const [showResult, setShowResult] = useState(false);
 
   const dispatch = useDispatch()
-
-  const { user } = useSelector(state => state.user)
-
+  const history = useHistory()
+  const {client} = useSelector(state => state.client)
+  const {attemptingLoginOnSiteLoad} = useSelector(state => state.status)
 
   const handleSearch = (e) => {
 
@@ -145,39 +146,82 @@ const Header = () => {
         </div>
       </div>
 
-      <div
-        className={`nav__links ${
-          isShowingMenu ? `nav__links-show` : `nav__links-hide`
-        }`}
-      >
-        <ul>
-          {!user ? (
-            <>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/signup">Register</Link>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to={`/profile/${user.user.id}`}>brand</Link>
-              </li>
-              <li>
-                {/* TODO api/logout */}
-                <button onClick={ () => {
-                  dispatch(userActions.removeUser())
-                  localStorage.removeItem('userId')
-                  localStorage.removeItem('accessToken')
-                  }} >Logout</button>
-              </li>
-            </>
-          )}
-        </ul>
-        <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
-      </div>
+      
+        <div
+          className={`nav__links ${
+            isShowingMenu ? `nav__links-show` : `nav__links-hide`
+          }`}
+        >
+          <ul>
+            {
+              !attemptingLoginOnSiteLoad ?
+              (
+              !client ? 
+                (
+                  <>
+                    <li>
+                      Login as
+                      <Link to="/user/login">User</Link>
+                      <Link to="/brand/login">Brand</Link>
+                    </li>
+                    <li>
+                      Signup as
+                      <Link to="/user/signup">User</Link>
+                      <Link to="/brand/signup">Brand</Link>
+                    </li>
+                  </>
+                ) : 
+                (
+                  <>
+                    <li>
+                      {
+                        client.type.includes("user") ?
+                          <Link to={`/user/${client.user.id}`}>Profile</Link>
+                        : client.type === "brand" ?
+                          <Link to={`/brand/panel/${client.user.id}`}>Brand Panel</Link>
+                        : 
+                          null
+                      }
+                    </li>
+                    <li>
+                    {
+                      client.type.includes('brand') && client.brand.role.includes("brand") || 
+                      client.user.role.includes("brandAdmin")  
+                      ?
+                        <Link to={`/brand/panel/${client.brand.id}`}>Brand Panel</Link>
+                      :
+                        null
+                    }
+                    </li>
+                    <li>
+                    {
+                      client.type.includes('admin') ||
+                      ( client.type === "user" && client.user.role.includes("subAdmin") )
+                      ?
+                        <Link to={`/admin`}>Admin Panel</Link>
+                      :
+                        null
+                    }
+                    </li>
+                    <li>
+                      <button onClick={ () => {
+                        dispatch(clientActions.removeClient())
+                        localStorage.removeItem('userId')
+                        localStorage.removeItem('accessToken')
+                        history.push('/')
+                        }} >Logout</button>
+                    </li>
+                  </>
+                )
+              )
+              :
+                <div className="">
+                  <LoadingIndicator className="" style={{color:"blue", fontSize:"100px"}} /> 
+                </div>
+          }
+          </ul>
+          <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
+        </div>
     </nav>
   );
 };

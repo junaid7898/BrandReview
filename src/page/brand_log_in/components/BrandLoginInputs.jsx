@@ -1,46 +1,49 @@
 import React, { useState } from "react";
 import axios from "axios";
-
 import { Link } from "react-router-dom";
-import GoogleIcon from "../../../assests/icons/googleIcon.png";
-import FacebookIcon from "../../../assests/icons/facebookIcon.png";
-
+import { useHistory } from "react-router";
+// import GoogleIcon from "../../../assests/icons/googleIcon.png";
+// import FacebookIcon from "../../../assests/icons/facebookIcon.png";
+import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 import { useDispatch } from "react-redux";
-import { brandActions } from "../../../Redux/brand slice/brandSlice";
-
+import { clientActions } from "../../../Redux/clientslice/clientSlice";
 const BrandLoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
   const dispatch = useDispatch();
-
+  const history = useHistory()
   const login = async () => {
+    setIsLoggingIn(true)
     console.log(email, password);
     const req = {
       email: email,
       password: password,
     };
-    try {
-      await axios
-        .post("http://localhost:4000/v1/brandAuth/login", req)
-        .then((res) => {
-          console.log(res);
-          dispatch(brandActions.setBrand(res.data));
+      axios
+        .post("http://localhost:4000/v1/auth/brand/login", req)
+        .then(({data}) => {
+          const {payload} = dispatch(clientActions.setClient(data));
+          if(rememberMe){
+            console.log(payload)
+            localStorage.setItem('brandId', payload.brand.id )
+            localStorage.setItem('accessToken', payload.tokens.access.token)
+            localStorage.setItem('clientType', payload.type)
+          }
+          setIsLoggingIn(false)
+          history.push('/')
         })
         .catch((err) => {
-          console.log(err.response.data.message);
+          console.log(err);
         });
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   return (
     <div className="brand__login__inputs">
       <div className="brand__login__inputs__title">
-        <h1>Sign In as Brand</h1>
+        <h1>Login as Brand</h1>
         <p className="brand__login__inputs__title__noaccount-link">
           Welcome, we missed you
         </p>
@@ -95,22 +98,14 @@ const BrandLoginInputs = () => {
 
       <button
         className="brand__login__inputs__button"
-        title="sign up"
         onClick={login}
+        disabled = {isLoggingIn}
       >
-        Sign UP
+        {isLoggingIn ? <LoadingIndicator /> : "Login"}
       </button>
-      <p>or continue with</p>
-      <div className="brand__login__inputs__social-button">
-        <div className="brand__login__inputs__social-button__google">
-          <img src={GoogleIcon} alt="google logo" />
-          <p>Sign in with Google</p>
-        </div>
-        <div className="brand__login__inputs__social-button__facebook">
-          <img src={FacebookIcon} alt="facebook logo" />
-          <p>Sign in with Facebook</p>
-        </div>
-      </div>
+      <Link to="/brand/signup">
+            Dont have an account ?
+      </Link>
     </div>
   );
 };

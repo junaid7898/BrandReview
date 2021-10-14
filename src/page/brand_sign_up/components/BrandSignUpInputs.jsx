@@ -3,11 +3,15 @@ import axios from "axios";
 import BrandLogo from '../../../assests/images/brand_icon.png'
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
 import { Link } from "react-router-dom";
+import { clientActions } from "../../../Redux/clientslice/clientSlice";
+import { useDispatch } from "react-redux";
 const BrandSignUpInputs = () => {
-  const [username, setUserName] = useState("");
+  const [username, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+
+  const dispatch = useDispatch()
 
 
   const signup = async() => {
@@ -17,33 +21,26 @@ const BrandSignUpInputs = () => {
       password: password,
       email: email,
       countryCode: "+92",
-      phoneNumber: 3004444444,
-      about: 'hello! this is test brand, we are currently working on our main module.',
+      phoneNumber: phone,
       logo: BrandLogo
-    };
-    try {
-        console.log('here---->')   
-      const { data } = await axios.post(
-        "http://localhost:4000/v1/brandAuth/register",
-        req
-      ).then(res => {
-          console.log('actually---->' + res.data)
-      }).catch(err => {
-        console.log(err.message)
-      });
-      console.log('.....>' + data)
-    } catch (err) {
-      console.error(err);
-    }
+    }; 
+    await axios.post(
+      "http://localhost:4000/v1/brandauth/user/register",
+      req
+    ).then(res => {
+        dispatch(clientActions.setClient(res.data))
+    }).catch(err => {
+      console.log(err.message)
+    });
   };
   return (
     <div className="brand__signup__form">
       <RegistrationPageComponent/>
       <div className="brand__signup__form__inputs">
         <div className="brand__signup__form__inputs__title">
-          <h1>Sign Up as Brand</h1>
-          <Link className="brand__signup__form__inputs__title__noaccount-link">
-            Don't have an account?
+          <h1>Signup as Brand</h1>
+          <Link to="/brand/login" className="brand__signup__form__inputs__title__noaccount-link">
+            Already Have an account?
           </Link>
         </div>
         <div className="brand__signup__form__inputs__username">
@@ -53,7 +50,7 @@ const BrandSignUpInputs = () => {
             placeholder="Enter your name"
             value={username}
             onChange={(e) => {
-              setUserName(e.target.value);
+              setClientName(e.target.value);
             }}
           />
         </div>
@@ -92,10 +89,9 @@ const BrandSignUpInputs = () => {
         </div>
         <button
           className="brand__signup__form__inputs__button"
-          title="sign up"
           onClick={signup}
         >
-          Sign UP
+          Signup
         </button>
       </div>
       </div>

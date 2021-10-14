@@ -1,7 +1,7 @@
 .loadingIndicator{
     color: rgb(52, 195, 252);
     &__icon{
-        font-size: 45px;
+        font-size: inherit;
         @include infiniteRotate(infiniteRotate)
     }
 }

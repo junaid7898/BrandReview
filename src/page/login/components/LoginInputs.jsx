@@ -5,20 +5,25 @@ import GoogleIcon from "../../../assests/icons/googleIcon.png";
 import FacebookIcon from "../../../assests/icons/facebookIcon.png";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { userActions } from "../../../Redux/user slice/userSlice";
+import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import {useGoogleLogin} from 'react-google-login'
+import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 const LoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [isLoggingIn, setIsLoggingIn] = useState({
+    email: false,
+    google: false,
+    facebook: false
+  })
   const dispatch = useDispatch()
   const history = useHistory()
   const clientId = "29070885149-iipqn1acl0b33hh09fi9ns1tasangr9f.apps.googleusercontent.com"
   
     const onSuccess = async({profileObj}) =>{
       console.log(profileObj)  
-      const {data:user} = await axios.post("http://localhost:4000/v1/auth/login/google",{
+      const {data:user} = await axios.post("http://localhost:4000/v1/auth/user/login/google",{
           user:{
             name:profileObj.name,
             password:profileObj.googleId,
@@ -26,35 +31,51 @@ const LoginInputs = () => {
             profileImage:profileObj.imageUrl
           }
       })
-      dispatch(userActions.setUser(user))
+      setIsLoggingIn({...isLoggingIn, google: false})
+      dispatch(clientActions.setClient(user))
       history.push('/')
-  }
+    }
+    const onFailure = () =>{
+      alert("Login Failed")
+      setIsLoggingIn({...isLoggingIn, google: false})
+    }
 
   const {signIn: googleLogin} = useGoogleLogin({
         onSuccess,
+        onFailure,
         clientId,
     })
 
+  const loginWithGoogle =() =>{
+    setIsLoggingIn({...isLoggingIn, google: true})
+    googleLogin()
+  }
+
 
   const login = async () => {
+    console.log("login")
     const req = {
       email,
       password
     };
     try {
+      setIsLoggingIn({...isLoggingIn, email: true})
         axios.post(
-        "http://localhost:4000/v1/auth/login",
+        "http://localhost:4000/v1/auth/user/login",
         req
       ).then(res => {
         console.log(res)
-          const {payload} = dispatch(userActions.setUser(res.data))
+          const {payload} = dispatch(clientActions.setClient(res.data))
           console.log(payload)
           if(rememberMe){
             localStorage.setItem('userId', payload.user.id )
             localStorage.setItem('accessToken', payload.tokens.access.token)
           }
+          setIsLoggingIn({...isLoggingIn, email: false})
+          history.push('/')
       }).catch(err => {
         alert(err.response.data.message)
+        setIsLoggingIn({...isLoggingIn, email: false})
       });
     } catch (err) {
       console.error(err);
@@ -123,20 +144,21 @@ const LoginInputs = () => {
 
       <button
         className="login__form__inputs__button"
-        title="sign up"
+        disabled = {isLoggingIn.email}
         onClick={login}
       >
-        Login
+        {isLoggingIn.email ? <LoadingIndicator /> : "Login"}
       </button>
       <p>or continue with</p>
       <div className="login__form__inputs__social-button">
-        <div onClick={googleLogin} className="login__form__inputs__social-button__google" onClick = {() => alert('sign in with google')}>
+        <div onClick={loginWithGoogle} style={{pointerEvents: isLoggingIn.google ? "none" : "all"}} className="login__form__inputs__social-button__google">
+
           <img src={GoogleIcon} alt="google logo" />
-          <p>Sign in with Google</p>
+          <p>{isLoggingIn.google ? <LoadingIndicator /> : "Sign in with Google"}</p>
         </div>
         <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>
           <img src={FacebookIcon} alt="facebook logo" />
-          <p>Sign in with Facebook</p>
+          <p>{isLoggingIn.facebook ? <LoadingIndicator /> :  "Sign in with Facebook"}</p>
         </div>
       </div>
     </div>

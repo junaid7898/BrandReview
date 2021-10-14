@@ -3,18 +3,20 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
-import { userActions } from "../../../Redux/user slice/userSlice";
+import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import { useDispatch } from "react-redux";
 
 const SignUpInputs = () => {
-  const [username, setUserName] = useState("");
+  const [username, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   // const [OTP] = useState(null);
-  const [user, setUser] = useState(null);
-  console.log(user);
-  const dispatch = useDispatch();
+
+  const [user, setClient] = useState(null);
+  console.log(user)
+  const dispatch = useDispatch()
+
 
   const signUp = async () => {
     console.log(username, email, password, phone);
@@ -26,17 +28,18 @@ const SignUpInputs = () => {
       phoneNumber: 3355114846,
     };
     try {
-      const { data } = await axios
-        .post("http://localhost:4000/v1/auth/register", req)
-        .then((res) => {
-          console.log(res);
-          dispatch(userActions.setUser(res.data));
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-        });
-      console.log("---->" + data);
-      setUser(data);
+      const { data } = await axios.post(
+        "http://localhost:4000/v1/auth/user/register",
+        req
+      ).then(res => {
+        console.log(res)
+          dispatch(clientActions.setClient(res.data))
+      }).catch(err => {
+        alert(err.response.data.message)
+      });
+      console.log('---->'+data);
+      setClient(data);
+
     } catch (err) {
       console.error(err);
     }
@@ -61,7 +64,7 @@ const SignUpInputs = () => {
             value={username}
             name = 'username'
             onChange={(e) => {
-              setUserName(e.target.value);
+              setClientName(e.target.value);
             }}
           />
         </div>

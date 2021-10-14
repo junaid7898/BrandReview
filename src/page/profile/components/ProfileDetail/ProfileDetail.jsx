@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import MyDetails from './components/MyDetails/MyDetails'
 import BrandReviews from "../../../search/components/BrandReviews";
@@ -6,28 +6,23 @@ import BrandImage from "../../../../assests/images/brandcar.png";
 import BrandLogo from "../../../../assests/images/kia_logo.png";
 import Profile from "../../../../assests/images/Profile Image.png";
 
-const ProfileDetail = ({user}) => {
+const ProfileDetail = ({user, visitorIsUser}) => {
   const [showDetails, setShowDetails] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
   const [showReviewFollow, setShowReviewsFollow] = useState(false);   
 
-  const handleShowDetail = () => {
-    setShowDetails(true);
-    setShowReviews(false);
-    setShowReviewsFollow(false);
-  };
+  const [option ,setOption] = useState(0)
 
-  const handleShowReviews = () => {
-    setShowDetails(false);
-    setShowReviews(true);
-    setShowReviewsFollow(false);
-  };
-
-  const handleShowReviewFollow = () => {
-    setShowDetails(false);
-    setShowReviews(false);
-    setShowReviewsFollow(true);
-  };
+  useEffect(() => {
+    if(visitorIsUser){
+      if(visitorIsUser){
+        setOption(1)
+      }
+      else{
+        setOption(2)
+      }
+    }
+  }, [visitorIsUser])
 
   const [testBrand] = useState({
     brandImage: BrandImage,
@@ -117,21 +112,37 @@ const ProfileDetail = ({user}) => {
     ],
   });
 
+  console.log(visitorIsUser)
+
   return (
     <section className="details">
       <ul>
-        <li onClick={handleShowDetail} className = {showDetails ? 'details__list__click': ''}>My Details</li>
-        <li onClick={handleShowReviews} className = {showReviews ? 'details__list__click': ''} >My Reviews</li>
-        <li onClick={handleShowReviewFollow} className = {showReviewFollow ? 'details__list__click': ''}>Reviews | Follow</li>
+        {
+          visitorIsUser &&
+          <li onClick={() => {option === 1 ? setOption(0) : setOption(1)}} className = {option === 1 ? 'details__list__click': ''}>Details</li>
+        }
+        <li onClick={() => {option === 2 ? setOption(0) : setOption(2)}} className = {option === 2 ? 'details__list__click': ''} >Reviews</li>
+        {
+          visitorIsUser &&
+          <li onClick={() => {option === 3 ? setOption(0) : setOption(3)}} className = {option === 3 ? 'details__list__click': ''}>Reviews I Follow</li>
+        }
       </ul>
-            {showDetails ? (
-                <MyDetails user={user}/>
-            ):(
-                showReviews ? 
-                (<BrandReviews comments = {testBrand.comments}/>)
-                :
-                (<h1>hello this is show reviews and followings</h1>)
-            )}
+            {
+              option === 1 ? 
+                (
+                    <MyDetails user={user}/>
+                )
+              : option === 2  ? 
+                (
+                  <BrandReviews comments = {testBrand.comments}/>
+                )
+              : option === 3  ? 
+                (
+                  <h1>hello this is show reviews and followings</h1>
+                )
+              :
+                  null
+            }
     </section>
   );
 };

@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router";
 const PrivateRoute = ({ component: Component, type, role, ...rest }) => {
-    const {user} = useSelector(state => state.user)
+    const {client} = useSelector(state => state.client)
     // console.log(user.role)
     return (
       <Route
         {...rest}
         render={(props) =>
-          (user && type && user.role === role) ? (
+          (client && type && client.type === role) ? (
             <Redirect to='/' />
           ) : (
             <Component {...props} />

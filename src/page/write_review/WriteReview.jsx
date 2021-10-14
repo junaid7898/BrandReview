@@ -10,7 +10,7 @@ const WriteReview = () => {
   const [uploadImage, setUploadImage] = useState([]);
 
 
-  const {user} = useSelector(state => state.user)
+  const {client} = useSelector(state => state.client)
 
 
   const fileSelectHandler = async(e) => {
@@ -56,7 +56,7 @@ const WriteReview = () => {
     
     const review = {
       brand: '614ecb6cad38bb28644f1a1e',
-      user: user.user.id,
+      user: client.user.id,
       title: "asdas",
       message: "Message",
     }

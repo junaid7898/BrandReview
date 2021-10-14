@@ -3,10 +3,10 @@ import {HiCamera} from 'react-icons/hi'
 import { useSelector, useDispatch } from "react-redux";
 import LoadingIndicator from '../../../../components/loadingIndicator/LoadingIndicator'
 import { uploadPhoto } from "../../../../helpers/uploadPhoto";
-import { userActions } from "../../../../Redux/user slice/userSlice";
-const ProfileContent = ({user, setUser}) => {
+import { clientActions } from "../../../../Redux/clientslice/clientSlice";
+const ProfileContent = ({user, setClient}) => {
   const [isImageUploading, setIsImageUploading] = useState(false)
-  const {user:User} = useSelector(state => state.user)
+  const {client:User} = useSelector(state => state.client)
   const dispatch = useDispatch()
   const fileRef = useRef()
   const uploadphoto = async (e) => {
@@ -14,11 +14,11 @@ const ProfileContent = ({user, setUser}) => {
       setIsImageUploading(true)
       const { url: imageUrl } = await uploadPhoto(user,e.target.files[0], fileRef.current)
       console.log(imageUrl)
-      setUser({
+      setClient({
         ...user,
         profileImage: imageUrl
       })
-      dispatch(userActions.setUser({
+      dispatch(clientActions.setClient({
         tokens: {...User.tokens},
         user
       }))

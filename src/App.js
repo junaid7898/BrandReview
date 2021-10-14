@@ -23,26 +23,50 @@ import EmailVerificationPage from './page/email_verification_page/EmailVerificat
 import { useEffect } from 'react';
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { userActions } from "./Redux/user slice/userSlice";
+import { clientActions } from "./Redux/clientslice/clientSlice";
 import PrivateRoute from "./PrivateRoute";
+import { statusAction } from "./Redux/statusSlice";
 function App() {
   
   const dispatch = useDispatch()
-  const {user} = useSelector(state => state.user)
+  const {client} = useSelector(state => state.client)
   useEffect(() => {
     
-    const userId = localStorage.getItem("userId")
-    const accessToken = localStorage.getItem("accessToken")
-    if(userId && accessToken){
-      axios.get(`http://localhost:4000/v1/auth/login/${userId}`,{
-        headers:{
-          'authorization' : `bearer ${accessToken}`
-        }
-      }).then(({data: user}) => {
-        dispatch(userActions.setUser(user))
-        console.log(user);
-      })
+    const type = localStorage.getItem("clientType")
+    if(type === "user"){
+      const userId = localStorage.getItem("userId")
+      const accessToken = localStorage.getItem("accessToken")
+      if(userId && accessToken){
+        dispatch(statusAction.setAttemptingLogin(true))
+        axios.get(`http://localhost:4000/v1/auth/user/login/${userId}`,{
+          headers:{
+            'authorization' : `bearer ${accessToken}`
+          }
+        }).then(({data: user}) => {
+          dispatch(clientActions.setClient(user))
+          dispatch(statusAction.setAttemptingLogin(false))
+          console.log(user);
+        })
+      }
     }
+    else if(type === "brand"){
+      const brandId = localStorage.getItem("brandId")
+      const accessToken = localStorage.getItem("accessToken")
+      if(brandId && accessToken){
+        dispatch(statusAction.setAttemptingLogin(true))
+        axios.get(`http://localhost:4000/v1/auth/brand/login/${brandId}`,{
+          headers:{
+            'authorization' : `bearer ${accessToken}`
+          }
+        }).then(({data: brand}) => {
+          dispatch(clientActions.setClient(brand))
+          dispatch(statusAction.setAttemptingLogin(false))
+          console.log(brand);
+        })
+      }
+    }
+
+    
 
   }, [dispatch])
   return (
@@ -96,7 +120,7 @@ function App() {
         <Route path = '/brand/:id' component = {SearchBrand}/>
         <PrivateRoute 
               exact 
-              path="/brandpanel/:brandId" 
+              path="/brand/panel/:brandId" 
               component={BrandPanel} 
               type={true}
               role="brand"
@@ -111,7 +135,7 @@ function App() {
         />
         <PrivateRoute 
               exact 
-              path="admin" 
+              path="/admin" 
               component={Admin} 
               type={false}
               role="admin"

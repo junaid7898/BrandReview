@@ -23,6 +23,14 @@
   justify-content: space-between;
   width: 500px;
   max-width: 90%;
+  &__login-link{
+    color: $onSurface-secondary;
+    margin-top: 20px;
+    &__link{
+      text-decoration: none;
+      color: $primary;
+    }
+  }
   & p {
     align-self: center;
     font-weight: 500;
@@ -131,7 +139,7 @@
     padding: 25px 0px;
     border: 0px solid;
     border-radius: 10px;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 20px;
     background-color: #357bce;
     color: #ffffff;
@@ -139,6 +147,10 @@
     font-size: 20px;
     box-shadow: rgba(41, 41, 141, 0.25) 0px 2px 5px -1px,
       rgba(82, 36, 167, 0.3) 0px 1px 3px -1px;
+      cursor: pointer;
+    &:hover{
+      opacity: 0.9;
+    }
   }
 
   &__social-button {
@@ -156,6 +168,9 @@
       background: #ffffff;
       border-radius: 10px;
       padding: 12px 30px;
+      &:hover{
+        transform:scale(0.9);
+      }
       @include respond(phone) {
         padding: 10px 15px;
       }
@@ -181,6 +196,9 @@
       background: #ffffff;
       border-radius: 10px;
       padding: 12px 30px;
+      &:hover{
+        transform:scale(0.9);
+      }
       @include respond(phone) {
         padding: 10px 10px;
         margin-left: 10px;

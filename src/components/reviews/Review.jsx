@@ -21,15 +21,16 @@ const [clicked, setClicked] = useState(null)
   //   review.images.filter((img, index) => index !== i)
   // }
   return (
-    <div className="review">
+    
+    <div className="reviewComponent">
       {/* row directioned profile intro and images */}
-      <div className="review__profile">
+      <div className="reviewComponent__profile">
         {/* it containes profile img, name, rating, label, and pictures */}
-        <div className="review__profile__intro">
+        <div className="reviewComponent__profile__intro">
           <img src={review.profileImg} alt="profile Img" />
-          <div className="review__profile__intro__name">
+          <div className="reviewComponent__profile__intro__name">
             <p>{review.name}</p>
-            <div className="review__profile__intro__name__rating">
+            <div className="reviewComponent__profile__intro__name__rating">
               {/* TODO star icon and rating */}
                 <AiFillStar size = {24} color = '#357BCE'/>
                 <h4>{review.rating}</h4>
@@ -38,7 +39,7 @@ const [clicked, setClicked] = useState(null)
           {
               review.isReviewType ? 
               (
-                <div className="review__profile__intro__review-label">
+                <div className="reviewComponent__profile__intro__review-label">
                     {/* TODO wether review is a complaint/thanked/resolved */}
                     <p>{review.reviewType}</p>
                 </div>
@@ -51,7 +52,7 @@ const [clicked, setClicked] = useState(null)
           
         </div>
 
-        <div className="review__profile__pics">
+        <div className="reviewComponent__profile__pics">
           {/* import component image preview */}
           {review.images.map((item, index) =>{
           return (
@@ -75,7 +76,7 @@ const [clicked, setClicked] = useState(null)
 
       </div>
 
-      <div className="review__text">
+      <div className="reviewComponent__text">
           <p>{review.review}</p>
       </div>
     </div>

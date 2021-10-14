@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center; 
+    justify-content: center;  
     position: relative;
     &__details{
         display: flex;
@@ -55,17 +56,6 @@
                 align-items: flex-start;
                 justify-content: flex-start;
                 width: 100%;
-                // &__number{
-                    
-                //     width: 70%;
-                //     padding: 10px 14px;
-                //     border: 0px solid;
-                // }
-                // &__country-code{
-                //     width: 30%;
-                //     padding: 10px 14px;
-                //     border: 0px solid;
-                // }
             }
             
         }
@@ -124,4 +114,31 @@
 }
 .mydetails__update-button{
     width: 300px;
+    margin: auto;
+}
+.PhoneInput{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    // margin-left: 10px;
+}
+
+.PhoneInputCountryIcon{
+    margin-top: 10px;
+    width: 50px;
+}
+.PhoneInputCountrySelect{
+    // display: none;
+    outline: none;
+    border: 0px solid;
+    width: 100px;
+}
+.PhoneInputInput{
+    width: 100%;
+    outline: none;
+    border: 0px solid;
+    border-bottom: 1px solid gray;
+    padding: 10px 14px;
+    // margin: 20px 0px;
 }

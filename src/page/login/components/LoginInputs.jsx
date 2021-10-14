@@ -70,6 +70,7 @@ const LoginInputs = () => {
           if(rememberMe){
             localStorage.setItem('userId', payload.user.id )
             localStorage.setItem('accessToken', payload.tokens.access.token)
+            localStorage.setItem('clientType', "user")
           }
           setIsLoggingIn({...isLoggingIn, email: false})
           history.push('/')

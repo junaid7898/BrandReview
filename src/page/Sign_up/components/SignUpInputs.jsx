@@ -5,126 +5,211 @@ import { Link } from "react-router-dom";
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import { useDispatch } from "react-redux";
+import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
+
+import PhoneInput from "react-phone-number-input";
+import {
+  isPossiblePhoneNumber,
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+  isValidPhoneNumber,
+  parsePhoneNumber,
+} from "react-phone-number-input";
 
 const SignUpInputs = () => {
-  const [username, setClientName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  // const [OTP] = useState(null);
 
+  // ANCHOR form states
+  const [username, setClientName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [repeatPassword, setRepeatPassword] = useState(null);
+  const [phone, setPhone] = useState(null);
+
+  //ANCHOR loading states
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  // ANCHOR states for redux
   const [user, setClient] = useState(null);
-  console.log(user)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  //ANCHOR email validation
+  const validateEmail = () => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
 
 
+  // ANCHOR validation function for form
+  const checkValidation = () => {
+      const emailValidation =  validateEmail();
+    if(emailValidation === false){
+      return 'please enter a valid email'
+    }
+    
+    if(username === null || email === null || password === null || repeatPassword === null || phone === null){
+      return 'please fill all entries'
+    }
+    else if(password !== repeatPassword){
+      return 'password and repeated password must be same'
+    }
+    else if( isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
+      return 'phone number is invalid! please enter a valid phone number....'
+    }
+    else{
+      return 'ok'
+    }
+  }
+
+
+  //ANCHOR signup function 
   const signUp = async () => {
-    console.log(username, email, password, phone);
-    const req = {
-      name: username,
-      password: password,
-      email: email,
-      countryCode: "+92",
-      phoneNumber: 3355114846,
-    };
-    try {
-      const { data } = await axios.post(
-        "http://localhost:4000/v1/auth/user/register",
-        req
-      ).then(res => {
-        console.log(res)
-          dispatch(clientActions.setClient(res.data))
-      }).catch(err => {
-        alert(err.response.data.message)
-      });
-      console.log('---->'+data);
-      setClient(data);
-
-    } catch (err) {
-      console.error(err);
+    const check = checkValidation(); 
+    if (check === 'ok') {
+      const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
+      
+      console.log(countryCallingCode, nationalNumber);
+      setIsSigningIn(true);
+      const req = {
+        name: username,
+        password: password,
+        email: email,
+        countryCode: `+${countryCallingCode}`,
+        phoneNumber: nationalNumber,
+      };
+      try {
+        const { data } = await axios
+          .post("http://localhost:4000/v1/auth/user/register", req)
+          .then((res) => {
+            setIsSigningIn(false);
+            console.log('response' + res);
+            dispatch(clientActions.setClient(res.data));
+          })
+          .catch((err) => {
+            alert(err.response.data.message);
+            setIsSigningIn(false);
+          });
+        console.log("---->" + data);
+        setClient(data);
+      } catch (err) {
+        console.error(err);
+        setIsSigningIn(false);
+      }
+    } else {
+      alert(check)
     }
   };
 
+
+
   return (
     <div className="signup__form">
+
+
       <RegistrationPageComponent />
+
+
       <div className="signup__form__inputs">
+
         <div className="signup__form__inputs__title">
-          <h1>Sign Up As User</h1>
+          <h1>Signup as User</h1>
           <p className="signup__form__inputs__title__noaccount-link">
             Don't have an account?
           </p>
         </div>
+
+
         <div className="signup__form__inputs__username">
-          <label htmlFor = 'userName'>Full name</label>
+          <label htmlFor="userName">Full name</label>
           <input
-            id = 'userName'
-            type="text"
-            placeholder="Enter your name"
-            value={username}
-            name = 'username'
-            onChange={(e) => {
+            id="userName" type="text" placeholder="Enter your name" value={username} name="username"
+            onChange={(e) => 
+            {
               setClientName(e.target.value);
             }}
           />
         </div>
+
+
         <div className="signup__form__inputs__email">
-          <label htmlFor = 'userEmail'>Email</label>
+          <label htmlFor="userEmail">Email</label>
           <input
-            id = 'userEmail'
-            type="text"  
+            id="userEmail"
+            type="text"
             placeholder="Enter your email address"
             value={email}
-            name = 'email'
+            name="email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
         </div>
+
+
         <div className="signup__form__inputs__password">
-          <label htmlFor = 'userPassword'>Password</label>
+          <label htmlFor="userPassword">Password</label>
           <input
-            id = 'userPassword'
-            type = 'password'
+            id="userPassword"
+            type="password"
             placeholder="Enter your password"
-            name = 'password'
+            name="password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
         </div>
-        <div className="signup__form__inputs__phone">
-          <label htmlFor = 'userPhone'>Phone number</label>
+
+
+        <div className="signup__form__inputs__email">
+          <label htmlFor="userPhone">Confirm password</label>
           <input
-            id = 'userPhone'
-            type="text"
-            placeholder="Enter your phone Number"
-            value={phone}
-            name = 'phone number'
+            id="userPhone"
+            type="password"
+            placeholder="Enter your password again"
+            value={repeatPassword}
+            name="confirm password"
             onChange={(e) => {
-              setPhone(e.target.value);
+              setRepeatPassword(e.target.value);
             }}
           />
         </div>
+
+
+        <div className="signup__form__inputs__phone">
+            <label htmlFor="phoneNumber">Phone Number </label>
+              <PhoneInput
+                  id = 'phoneNumber'
+                  defaultCountry = "US"
+                  placeholder="Enter phone number"
+                  value={phone}
+                  className = 'mydetails__update-details__update__phone__phone-number'
+                  name = 'phone number'
+                  onChange={setPhone}/>   
+        </div>
+
+
         <label className="signup__form__inputs__login-link" htmlFor="userLogin">
-          Already have an Account? <Link to="/login" id = 'userLogin' className = 'signup__form__inputs__login-link__link'>Login</Link>
+          Already have an Account?{" "}
+          <Link
+            to="/user/login"
+            id="userLogin"
+            className="signup__form__inputs__login-link__link"
+          >
+            Login
+          </Link>
         </label>
+
+
         <button
           className="signup__form__inputs__button"
           title="sign up"
           onClick={signUp}
         >
-          Signup
+          {isSigningIn ? <LoadingIndicator /> : "Signup"}
         </button>
-      </div>
 
-      {/* <div className="signup__form__verification-buttons">
-        <button onClick={verifyEmail}>Verify Email</button>
-        <button onClick={verifyPhone}>Verify Phone</button>
-      </div>
 
-      <SignUpOtpVerification sendOTP={sendOTP} value={OTP} setValue={setOTP} /> */}
+      </div>
     </div>
   );
 };

@@ -4,6 +4,22 @@
     justify-content: space-between;
     align-items: center;
     width: 300px;
+
+    &__button{
+        background-color: $primary;
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        &:hover{
+            transform: scale(1.1);
+        }
+        & p{
+            color: $onPrimary;
+        }
+    }
     
     &__first-brand{
         display: flex;

@@ -6,9 +6,10 @@ import Profile from "../../assests/images/Profile Image.png";
 import Review from "../../components/reviews/Review";
 import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
 import { useParams } from "react-router";
-import {axios} from "../../axios/axiosInstance";
 
+import {axios} from "../../axios/axiosInstance";
 const SearchBrand = () => {
+  
   const [testBrand] = useState({
     brandImage: BrandImage,
     brandRatings: 4.9,
@@ -119,13 +120,14 @@ const SearchBrand = () => {
 
   return (
     <div>
+
       {
         brandData &&
         <BrandInfo brand={brandData} />
       }
       {/* <BrandReviews comments = {testBrand.comments}/>    */}
       <WriteYourReviewComponent/>
-      <Review/>
+      <Review/> */}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import BrandIcon from "../../../assests/images/brand_icon.png";
 import Stars from '../../../assests/images/Stars.png'
 
 const BrandContent = ({item}) => {
+  console.log('item: ', item);
   const [brand] = useState(
     {
       brandName: "BMW",
@@ -22,8 +23,8 @@ const BrandContent = ({item}) => {
                     </div>
                     <div className="brand__info">
                         <h1 className="brand__info__name"> {item.name} </h1>
-                        <p className="brand__info__para">{brand.brandDetail}</p>
-                    </div>
+                        <p className="brand__info__para">{item.phoneNumber}</p>
+                    </div>    
                     <div className="brand__progress">
                         <div className="brand__progress__reviews">
                             <h1 className="brand__progress__reviews__count">{item.totalReviewCount}</h1>

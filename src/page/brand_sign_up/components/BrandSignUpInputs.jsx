@@ -1,53 +1,122 @@
 import React, { useState } from "react";
 import axios from "axios";
-import BrandLogo from '../../../assests/images/brand_icon.png'
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
 import { Link } from "react-router-dom";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import { useDispatch } from "react-redux";
 import { getImageDetails } from "../../../helpers/getImageDetails";
+
+import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
+
+import PhoneInput from "react-phone-number-input";
+import {
+  isPossiblePhoneNumber,
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+  isValidPhoneNumber,
+  parsePhoneNumber,
+} from "react-phone-number-input";
+
+
 const BrandSignUpInputs = () => {
-  const [username, setClientName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [about, setAbout] = useState("");
-  const [image, setImage] = useState(null)
-  const [imageDetails, setImageDetails] = useState({})
-  let isPasswordMatch = false;
+
   const dispatch = useDispatch()
+  // ANCHOR form states
+  const [username, setClientName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [repeatPassword, setRepeatPassword] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [brandLogo, setBrandLogo] = useState(null);
+  const [about, setAbout] = useState(null)
+  const [characterCount, setCharacterCount] = useState(0)
+
+  //ANCHOR loading states
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  // ANCHOR states for redux
+  const [user, setClient] = useState(null);
+  const dispatch = useDispatch();
+
+  //ANCHOR email validation
+  const validateEmail = () => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+
+  // ANCHOR validation function for form
+  const checkValidation = () => {
+      const emailValidation =  validateEmail();
+     if(username === null || email === null || password === null || repeatPassword === null || phone === null || about === null){
+        return 'please fill all entries'
+      }
+    else if(emailValidation === false){
+      return 'please enter a valid email'
+    }
+
+    else if(brandLogo === null){
+      return 'please upload a brand logo'
+    }
+    
+    
+    else if(password !== repeatPassword){
+      return 'password and repeated password must be same'
+    }
+    else if( isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
+      return 'phone number is invalid! please enter a valid phone number....'
+    }
+    else{
+      return 'ok'
+    }
+  }
+
+
+  //TODO handle logo selection method
+  const handleFileSelect = (e) => {
+
+    const image = e.target.files[0]
+    console.log(image);
+    if (e.target.files && image) {
+      setBrandLogo(URL.createObjectURL(image))
+    }
+    else{
+      alert('please select a logo for your brand')
+    }
+  }
 
 
   const signup = async() => {
-    console.log(username, email, password);
-    if(isPasswordMatch){
-      alert("passowrd dont match")
-      return
-    }
-    const req = {
-      brand: {
+    const check = checkValidation()
+    if(check === 'ok'){
+      const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
+      
+      console.log(countryCallingCode, nationalNumber);
+      setIsSigningIn(true);
+      const req = {
         name: username,
-        password,
-        email,
-        countryCode: "+92",
-        phoneNumber: phone,
-        about
-      },
-      imageDetails
-    }; 
-    await axios.post(
-      "http://localhost:4000/v1/auth/brand/register",
-      req
-    ).then(({data}) => {
-        dispatch(clientActions.setClient(data))
-        axios.put(data.brand.logo, image, {
-          headers:{
-            'Content-Type' : imageDetails.fileType
-          }
+        password: password,
+        email: email,
+        countryCode: `+${countryCallingCode}`,
+        phoneNumber: nationalNumber,
+        logo: brandLogo,
+        about: about,
+      };
+      await axios.post(
+        "http://localhost:4000/v1/auth/brand/register",   
+        req
+      ).then(res => {
+        setIsSigningIn(false)
+          dispatch(clientActions.setClient(res.data))
+          
+      }).catch(err => {
+        alert(err.message)
+        setIsSigningIn(false)
       })
-    }).catch(err => {
-      console.log(err.message)
-    });
+    }
+    else{
+      alert(check)
+    }
   };
 
 
@@ -81,96 +150,144 @@ const BrandSignUpInputs = () => {
 
   }
   return (
-    <div className="brand__signup__form">
-      <RegistrationPageComponent/>
-      <div className="brand__signup__form__inputs">
-        <div className="brand__signup__form__inputs__title">
+    <div className="signup__form">
+
+
+      <RegistrationPageComponent />
+
+
+      <div className="signup__form__inputs">
+
+        <div className="signup__form__inputs__title">
           <h1>Signup as Brand</h1>
-          <Link to="/brand/login" className="brand__signup__form__inputs__title__noaccount-link">
-            Already Have an account?
-          </Link>
+          <p className="signup__form__inputs__title__noaccount-link">
+            Don't have an account?
+          </p>
         </div>
-        <div className="brand__signup__form__inputs__username">
-          <label>Full name</label>
+
+
+        <div className="signup__form__inputs__username">
+          <label htmlFor="userName">Full name</label>
           <input
-            type="text"
-            placeholder="Enter your name"
-            value={username}
-            onChange={(e) => {
+            id="userName" type="text" placeholder="Enter your name" value={username} name="username"
+            onChange={(e) => 
+            {
               setClientName(e.target.value);
             }}
           />
         </div>
-        <div className="brand__signup__form__inputs__email">
-          <label>Email</label>
+
+
+        <div className="signup__form__inputs__email">
+          <label htmlFor="userEmail">Email</label>
           <input
+            id="userEmail"
             type="text"
             placeholder="Enter your email address"
             value={email}
+            name="email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
         </div>
-        <div className="brand__signup__form__inputs__password">
-          <label>Password</label>
+
+
+        <div className="signup__form__inputs__password">
+          <label htmlFor="userPassword">Password</label>
           <input
-            type="text"
+            id="userPassword"
+            type="password"
             placeholder="Enter your password"
+            name="password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
         </div>
-        <div className="brand__signup__form__inputs__password">
-          <label>Confirm Password</label>
+
+
+        <div className="signup__form__inputs__email">
+          <label htmlFor="userPhone">Confirm password</label>
+
           <input
-            type="text"
-            placeholder="Enter your password again to confirm"
+            id="userPhone"
+            type="password"
+            placeholder="Enter your password again"
+            value={repeatPassword}
+            name="confirm password"
             onChange={(e) => {
-              checkPassword(e.target.value);
+              setRepeatPassword(e.target.value);
             }}
           />
         </div>
-        <div className="brand__signup__form__inputs__phone">
-          <label>Phone number</label>
+
+        <div className="signup__form__inputs__email">
+          <label htmlFor="brandLogo">Brand Logo</label>
           <input
-            type="text"
-            placeholder="Enter your phone Number"
-            value={phone}
-            onChange={(e) => {
-              setPhone(e.target.value);
-            }}
-          />
-        </div>
-        <div className="brand__signup__form__inputs__phone">
-          <label>Brand Logo</label>
-          <input
-            type="file"
-            accept="image/*"
+            id="brandLogo"
+            type='file'
+            placeholder="Select a brand logo for your brand"
+            accept = 'image/*'
+            name="image"
             onClick={ (e) => e.target.value=null}
             onChange={handleImage}
           />
+          { brandLogo ? ( <img src = {brandLogo} style = {{width: 100, marginTop: 10}}/> ):(null)}
         </div>
-        <div className="brand__signup__form__inputs__phone">
-          <label>About</label>
-          <textarea
-            type="text"
-            placeholder="Tell people about yourself"
+
+        <div className="signup__form__inputs__email">
+          <label htmlFor="brandAbout">About your Brand {` [100 / ${characterCount}] `}</label>
+          <input
+            id="brandAbout"
+            type='text'
+            placeholder="What is your brand about? maximum of 100 characters"
+            name="about"
+            maxLength = {100}
+            value = {about}
             onChange={(e) => {
-              setAbout(e.target.value);
+              setCharacterCount(e.target.value.length)
+              setAbout(e.target.value)
             }}
           />
         </div>
+
+
+        <div className="signup__form__inputs__phone">
+            <label htmlFor="phoneNumber">Phone Number </label>
+              <PhoneInput
+                  id = 'phoneNumber'
+                  defaultCountry = "US"
+                  placeholder="Enter phone number"
+                  value={phone}
+                  className = 'mydetails__update-details__update__phone__phone-number'
+                  name = 'phone number'
+                  onChange={setPhone}/>   
+        </div>
+
+
+        <label className="signup__form__inputs__login-link" htmlFor="userLogin">
+          Already have an Account?{" "}
+          <Link
+            to="/brand/login"
+            id="userLogin"
+            className="signup__form__inputs__login-link__link"
+          >
+            Login
+          </Link>
+        </label>
         <button
-          className="brand__signup__form__inputs__button"
+          className="signup__form__inputs__button"
+          title="sign up"
           onClick={signup}
         >
-          Signup
+          {isSigningIn ? <LoadingIndicator /> : "Signup"}
         </button>
+
+
       </div>
-      </div>
+    </div>
   );
 };
 

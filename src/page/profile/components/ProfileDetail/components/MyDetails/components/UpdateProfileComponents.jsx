@@ -55,9 +55,10 @@ const UpdateProfileComponents = ({ onSubmit }) => {
         }))
         console.log('payload: ',JSON.stringify(payload));
         axios.patch(`/user/${client.user.id}`, payload.user, {
-        headers:{
-            "role" : "user",
-            "authorization" : `bearer ${client.tokens.access.token}`
+            headers:{
+                "role" : "user",
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
         })   
         alert(JSON.stringify(details)) 
     } 

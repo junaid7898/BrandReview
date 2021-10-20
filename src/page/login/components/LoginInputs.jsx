@@ -63,21 +63,21 @@ const LoginInputs = () => {
         axios.post(
         "http://localhost:4000/v1/auth/user/login",
         req
-      ).then(res => {
-        console.log('response: ' , res)
-          const {payload} = dispatch(clientActions.setClient(res.data))
-          console.log(payload)
-          if(rememberMe){
-            localStorage.setItem('userId', payload.user.id )
-            localStorage.setItem('accessToken', payload.tokens.access.token)
-            localStorage.setItem('clientType', "user")
-          }
+        ).then(res => {
+          console.log('response: ' , res)
+            const {payload} = dispatch(clientActions.setClient(res.data))
+            console.log(payload)
+            if(rememberMe){
+              localStorage.setItem('userId', payload.user.id )
+              localStorage.setItem('accessToken', payload.tokens.access.token)
+              localStorage.setItem('clientType', "user")
+            }
+            setIsLoggingIn({...isLoggingIn, email: false})
+            history.push('/')
+        }).catch(err => {
+          alert(err.response.data.message)
           setIsLoggingIn({...isLoggingIn, email: false})
-          history.push('/')
-      }).catch(err => {
-        alert(err.response.data.message)
-        setIsLoggingIn({...isLoggingIn, email: false})
-      });
+        });
     } catch (err) {
       console.error(err);
     }

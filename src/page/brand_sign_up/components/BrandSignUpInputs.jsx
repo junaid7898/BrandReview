@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import { useDispatch } from "react-redux";
 import { getImageDetails } from "../../../helpers/getImageDetails";
-
+import {useHistory} from 'react-router'
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 
 import PhoneInput from "react-phone-number-input";
@@ -19,7 +19,7 @@ import {
 
 
 const BrandSignUpInputs = () => {
-
+  const history = useHistory();
   const dispatch = useDispatch()
   // ANCHOR form states
   const [username, setClientName] = useState(null);
@@ -28,15 +28,16 @@ const BrandSignUpInputs = () => {
   const [repeatPassword, setRepeatPassword] = useState(null);
   const [phone, setPhone] = useState(null);
   const [brandLogo, setBrandLogo] = useState(null);
+  const [rawLogo, setRawLogo] = useState(null)
   const [about, setAbout] = useState(null)
   const [characterCount, setCharacterCount] = useState(0)
-
+  const [imageDetails, setImageDetails] = useState(null)
   //ANCHOR loading states
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   // ANCHOR states for redux
   const [user, setClient] = useState(null);
-  const dispatch = useDispatch();
+
 
   //ANCHOR email validation
   const validateEmail = () => {
@@ -99,15 +100,24 @@ const BrandSignUpInputs = () => {
         email: email,
         countryCode: `+${countryCallingCode}`,
         phoneNumber: nationalNumber,
-        logo: brandLogo,
         about: about,
       };
+      console.log(imageDetails)
       await axios.post(
-        "http://localhost:4000/v1/auth/brand/register",   
-        req
-      ).then(res => {
-        setIsSigningIn(false)
-          dispatch(clientActions.setClient(res.data))
+        "http://localhost:4000/v1/auth/brand/register",{
+          brand:req,
+          logoDetails: imageDetails
+        }).then(({data}) => {
+          axios.put(data.url, rawLogo, {
+            headers:{
+              'Content-Type' : imageDetails.fileType
+            }
+          })
+          .then((_) => {
+            dispatch(clientActions.setClient(data.brand))
+            history.push("/")
+            setIsSigningIn(false)
+          })
           
       }).catch(err => {
         alert(err.message)
@@ -119,36 +129,33 @@ const BrandSignUpInputs = () => {
     }
   };
 
-
   const handleImage = (e) =>{
-
+    console.log(brandLogo)
     const g = getImageDetails(e.target.files[0])
-    if(g){
+    if(!g){
       e.target.value = null
       return 
     }
     setImageDetails(g)
     if(g){
-      setImage(e.target.files[0])
+      setBrandLogo(URL.createObjectURL(e.target.files[0]))
+      setRawLogo(e.target.files[0])
     }
     else{
-      setImage(null)
+      setBrandLogo(null)
+      setRawLogo(null)
+      setImageDetails(null)
     }
     
   }
 
-  const checkPassword = (e) =>{
-
-    if(e !== password){
-      isPasswordMatch = false
-      console.log("wrong password")
-    }
-    else{
-      isPasswordMatch = true
-      console.log("correct")
-    }
-
+  const handleImageClick = (e) =>{
+    e.target.value = null
+    setRawLogo(null)
+    setBrandLogo(null)
+    setImageDetails(null)
   }
+
   return (
     <div className="signup__form">
 
@@ -231,10 +238,10 @@ const BrandSignUpInputs = () => {
             placeholder="Select a brand logo for your brand"
             accept = 'image/*'
             name="image"
-            onClick={ (e) => e.target.value=null}
+            onClick={ handleImageClick}
             onChange={handleImage}
           />
-          { brandLogo ? ( <img src = {brandLogo} style = {{width: 100, marginTop: 10}}/> ):(null)}
+          { brandLogo ? ( <img src = {brandLogo} style = {{height: 100, marginTop: 10}}/> ):(null)}
         </div>
 
         <div className="signup__form__inputs__email">
@@ -281,8 +288,12 @@ const BrandSignUpInputs = () => {
           className="signup__form__inputs__button"
           title="sign up"
           onClick={signup}
+          style={{position:"relative"}}
         >
-          {isSigningIn ? <LoadingIndicator /> : "Signup"}
+          Signup
+          {
+            isSigningIn && <LoadingIndicator />
+          }
         </button>
 
 

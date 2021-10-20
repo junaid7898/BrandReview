@@ -117,7 +117,7 @@ function App() {
               type={true}
               role="brand"
         />
-        <Route path = '/brand/:brandId' component = {SearchBrand} exact/>
+        
         <PrivateRoute 
               exact 
               path="/brand/panel/:brandId" 
@@ -126,6 +126,7 @@ function App() {
               role="brand"
         />
         <Route path = '/brand/comparison' component = {ComparisonPage}/>  
+        <Route path = '/brand/:brandId' component = {SearchBrand} exact/>
         <PrivateRoute 
               exact 
               path="/admin/login" 

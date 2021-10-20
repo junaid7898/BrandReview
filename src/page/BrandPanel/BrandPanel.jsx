@@ -11,7 +11,7 @@ const BrandPanel = () => {
     const {client} = useSelector(state => state.client)
 
     const [brandDetails, setBrandDetails] = useState(null)
-
+    const [isCurrentBrand, setIsCurrentBrand] = useState(false)
     const { brandId } = useParams()   
 
     const [visitorIsBrand, setVisitorIsBrand] = useState(false)
@@ -25,46 +25,26 @@ const BrandPanel = () => {
         }
     }, [client, brandId])
 
-if(client && brandId){
 
-            if(brandId === client.brand.id){
-                setCurrentBrand(true)
-                // console.log('matched')
-            }
-        }
     useEffect(() => {
-        if(brandId){
-            if(visitorIsBrand){
-                axios.get(`http://localhost:4000/v1/brand/page/${brandId}`, {   
-                    headers:{
-                        "role" : "none",
-                        "Authorization" : `bearer ${client.tokens.access.token}`
-                    }
-                })   
-                .then( res =>{
-                    setBrandDetails(res.data)
-                    console.log('brand setted ');
-                })
-                .catch( err => {
-                    alert(err)
-                })
-            }
-            else{
-                console.log('not working');
-            }
+        if(brandId && client){
+            axios.get(`http://localhost:4000/v1/brand/page/${brandId}`, {   
+                headers:{
+                    "role" : "brand",
+                    "Authorization" : `bearer ${client.tokens.access.token}`
+                }
+            })   
+            .then( res =>{
+                setBrandDetails(res.data)
+                console.log(res.data);
+            })
+            .catch( err => {
+                alert(err)
+            })
         }
-
-        // if(client && brandId){
-
-        //     if(brandId === brand.brand.id){
-        //         setCurrentBrand(true)
-        //         // console.log('matched')
-        //     }
-        // }
     }, [client, brandId])
     return (
         <div>
-        <h1>hello         </h1>
         {
             brandDetails ? 
             (
@@ -77,34 +57,7 @@ if(client && brandId){
             (
                 <LoadingIndicator/>
             )
-        }
-        {/* {console.log(brandDetails)}
-        {brandDetails === null ? 
-        (
-            <LoadingIndicator/>
-        )
-        :
-        (
-            <div>  
-                <h1>hello               </h1>
-            <BrandContent item = {brandDetails}/>
-            
-                 
-               { visitorIsBrand ?           
-                (
-                    <BrandDetail item = {brandDetails}/>      
-                )
-                :
-                (
-                    null
-                )} */}
-
-            {/* </div>
-            
-        )
-        } */}
-            
-            
+        }         
         </div>
     )
 }

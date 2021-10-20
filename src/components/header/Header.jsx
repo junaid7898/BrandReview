@@ -149,7 +149,7 @@ const Header = () => {
         </div>
       </div>
 
-      /*<div
+      <div
         className={`nav__links ${
           isShowingMenu ? `nav__links-show` : `nav__links-hide`
         }`}
@@ -308,14 +308,7 @@ const Header = () => {
                 {/* <li className = 'nav__links__button__after'> */}
                   <button
                    className = 'nav__links__button'
-                    onClick={() => {
-                        dispatch(clientActions.removeClient());
-                        localStorage.removeItem("userId");
-                        localStorage.removeItem("brand  Id");
-                        localStorage.removeItem("accessToken");
-                        localStorage.removeItem("clientType");   
-                        history.push("/");
-                    }}
+                    onClick={() => logout(dispatch, history, client.type, client.tokens.refresh.token)}
                   >
                     Logout
                   </button>
@@ -333,9 +326,8 @@ const Header = () => {
           )}
         </ul>
         <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
-      </div>*/
-      
-        <div
+      </div>      
+        {/* <div
           className={`nav__links ${
             isShowingMenu ? `nav__links-show` : `nav__links-hide`
           }`}
@@ -375,7 +367,7 @@ const Header = () => {
           }
           </ul>
           <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
-        </div>
+        </div> */}
     </nav>
   );
 };

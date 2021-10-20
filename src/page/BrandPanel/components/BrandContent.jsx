@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import BrandIcon from "../../../assests/images/brand_icon.png";
-import Stars from '../../../assests/images/Stars.png'
+import Star from '../../../assests/Star'
 
 const BrandContent = ({item}) => {
   console.log('item: ', item);
@@ -17,25 +17,31 @@ const BrandContent = ({item}) => {
 
   return (
     <section >
-               <div className = 'brand' >
-                    <div className="brand__logo">
-                        <img src = {item.logo} alt={`brand ${item.name} logo`}/>
-                    </div>
-                    <div className="brand__info">
-                        <h1 className="brand__info__name"> {item.name} </h1>
-                        <p className="brand__info__para">{item.phoneNumber}</p>
-                    </div>    
-                    <div className="brand__progress">
-                        <div className="brand__progress__reviews">
-                            <h1 className="brand__progress__reviews__count">{item.totalReviewCount}</h1>
-                            <h3>Reviews</h3>
-                        </div>
-                        <div className = 'brand__progress__ratings'>
-                            <img src = {Stars} alt="stars"/>
-                            <p>{item.ratingCount} Ratings</p>
-                        </div>
-                    </div>
-                </div> 
+      <div className = 'brand' >
+          <div className="brand__logo">
+              <img src = {item.logo} alt={`brand ${item.name} logo`}/>
+          </div>
+          <div className="brand__info">
+              <h1 className="brand__info__name"> {item.name} </h1>
+              <p className="brand__info__para">{item.about}</p>
+          </div>    
+          <div className="brand__progress">
+              <div className="brand__progress__reviews">
+                  <h1 className="brand__progress__reviews__count">{item.totalReviewCount}</h1>
+                  <h3>Reviews</h3>
+              </div>
+              <div className = 'brand__progress__ratings'>
+              <span>
+                {
+                  Array(Math.round(item.ratingCount < 1 ? 1 : item.ratingCount )).fill().map((_)=>(
+                      <Star starGradient1 = "#FFDC64" starGradient2 = "#FFC850" starLines = "#FFF082"/>
+                  ))
+                }
+                </span>
+                <p>{item.ratingCount} Ratings</p>
+              </div>
+          </div>
+      </div> 
     </section>
   );
 };

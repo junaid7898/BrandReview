@@ -143,15 +143,13 @@ const BrandLoginInputs = () => {
 
       <button
         className="login__form__inputs__button"
-        disabled = {isLoggingIn.email}
         onClick={login}
-
-        disabled = {isLoggingIn}
+        disabled = {isLoggingIn.email}
         style={{position:"relative"}}
       >
         Login
         {
-          isLoggingIn && <LoadingIndicator />
+          isLoggingIn.email && <LoadingIndicator />
         }
       </button>
 

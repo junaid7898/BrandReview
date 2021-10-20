@@ -1,22 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BrandIcon from "../../assests/images/brand_icon.png";
 import BrandSearchList from "./components/BrandSearchList";
 
 const BrandComparison = () => {
-  const [testBrands] = useState([
-    { brandName: "KIA", brandIcon: BrandIcon },
-    { brandName: "Totyota", brandIcon: BrandIcon },
-    { brandName: "Apple", brandIcon: BrandIcon },
-    { brandName: "Android", brandIcon: BrandIcon },
-    { brandName: "Lambourgini", brandIcon: BrandIcon },
-    { brandName: "Mosorati", brandIcon: BrandIcon },
-    { brandName: "Polo", brandIcon: BrandIcon },
-    { brandName: "Dawlance", brandIcon: BrandIcon },
-    { brandName: "Gucci", brandIcon: BrandIcon },
-    { brandName: "Beats", brandIcon: BrandIcon },
-    { brandName: "Rolax", brandIcon: BrandIcon },
-  ]);
+  
+
+  const [selectedBrand1, setSelectedBrand1] = useState(null)
+  const [selectedBrand2, setSelectedBrand2] = useState(null)
+
+  const {brands} = useSelector(state => state.brands)
 
   const [searchResults, setSearchResults] = useState([]);
   const [brand1, setBrand1] = useState(null);
@@ -34,9 +28,9 @@ const BrandComparison = () => {
       return;
     }
     setSearchResults(
-      testBrands.filter((item) => {
+      brands.filter((item) => {
         if (
-          item.brandName.toLowerCase().includes(e.trimStart().toLowerCase())
+          item.name.toLowerCase().includes(e.trimStart().toLowerCase())
         ) {
           return item;
         }
@@ -129,6 +123,7 @@ const BrandComparison = () => {
               data={searchResults}
               setValue={setBrand1}
               showlist={setShowResult1}
+              setSelectedBrand = {setSelectedBrand1}
             />
           </>
         ) : null}
@@ -157,11 +152,13 @@ const BrandComparison = () => {
               data={searchResults}
               setValue={setBrand2}
               showlist={setShowResult2}
+              
+              setSelectedBrand = {setSelectedBrand2}
             />
           </>
         ) : null}
       </div>
-      <Link to = '/' className="comparison__button">
+      <Link to={`brand/comparison/${selectedBrand1}/${selectedBrand2}`} className="comparison__button">
           <p>Compare</p>
       </Link>
       

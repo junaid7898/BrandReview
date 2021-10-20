@@ -2,30 +2,30 @@ import React, { useEffect, useState, useRef } from 'react'
 import BrandComparison from '../../components/brand_comparison/BrandComparison'
 import BrandComparisonDetail from '../../components/brand_comparison_detail/BrandComparisonDetail'
 import KiaLogo from '../../assests/images/kia_logo.png';
+import { useParams } from 'react-router';
+import { axios } from '../../axios/axiosInstance';
 const ComparisonPage = () => {
-    const [testBrand, setTestBrand] = useState(
-        {
-          brandLogo: KiaLogo,
-          brandDetail:
-            "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.",
-          reviewCount: 19854,
-          solvedCount: 8765,
-          satisfactionRate: 95,
-          overAllStatus: 54,
-        },
-      );
 
-      const [testBrand1, setTestBrand1] = useState(
-        {
-          brandLogo: KiaLogo,
-          brandDetail:
-            "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.",
-          reviewCount: 1854,
-          solvedCount: 876,
-          satisfactionRate: 89,
-          overAllStatus: 78,
-        },
-      );
+
+    const {brand1Name} = useParams()
+    const {brand2Name} = useParams()
+    const [testBrand, setTestBrand] = useState(null);
+    const [testBrand1, setTestBrand1] = useState(null);
+
+    useEffect(() => {
+        if(brand1Name && brand2Name){
+            axios.post("/brand/compare",{
+                brand1: brand1Name,
+                brand2: brand2Name
+            })
+            .then(({data})=>{
+                setTestBrand(data.brand1)
+                setTestBrand1(data.brand2)
+            })
+        }
+    }, [])
+
+    
 
     const SFR1 = useRef()
     const SFR2 = useRef()
@@ -72,7 +72,7 @@ const ComparisonPage = () => {
                 solvedCountIsGreater: SC2.current
             })   
         } 
-    }, [testBrand, testBrand1])   
+    }, [])   
     
     
 
@@ -84,12 +84,17 @@ const ComparisonPage = () => {
             <div className="comparison__page__inputs">
                 <BrandComparison/>
             </div>
-            <div className="comparison__page__block-1">
-                <BrandComparisonDetail brandDetails = { testBrand } />
-            </div>
-            <div className="comparison__page__block-2">
-                <BrandComparisonDetail brandDetails = {testBrand1}/>  
-            </div>     
+            {
+                testBrand && testBrand1 &&
+                <>
+                    <div className="comparison__page__block-1">
+                        <BrandComparisonDetail brandDetails = { testBrand } />
+                    </div>
+                    <div className="comparison__page__block-2">
+                        <BrandComparisonDetail brandDetails = {testBrand1}/>  
+                    </div>
+                </>
+            }     
         </div>
     )
 }   

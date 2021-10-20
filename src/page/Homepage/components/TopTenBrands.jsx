@@ -4,20 +4,11 @@ import BeatsLogo from '../../../assests/images/beats_logo.png'
 import FirstPosition from '../../../assests/images/1st.png'
 import SecontPosition from '../../../assests/images/2nd.png'
 import ThirdPosition from '../../../assests/images/3rd.png'
+import { useSelector } from 'react-redux'
 
 function TopTenBrands() {
-    const [topBrands] = useState([
-        {brandName: 'gucci', ratting: 5, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'beats', ratting: 5, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'rolax', ratting: 4.8, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'toyota', ratting: 4.7, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'rolax', ratting: 4.6, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'gucci', ratting: 4.6, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'beats', ratting: 4.5, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'gucci', ratting: 4.5, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'gucci', ratting: 4.5, brandlogo: BeatsLogo, category: 'fashion'},
-        {brandName: 'gucci', ratting: 4.4, brandlogo: BeatsLogo, category: 'fashion'},
-    ])
+
+    const {brands: topBrands} = useSelector(state => state.brands)
     return (
         <div className="topbrands">
             {
@@ -30,8 +21,8 @@ function TopTenBrands() {
                                     :
                                     (null)
                                 }
-                                <img alt={`brand ${item.brandName} logo`} className="topbrands__list__img" src = {item.brandlogo}/>
-                                <h1 className="topbrands__list__name">{item.brandName}</h1>
+                                <img alt={`brand ${item.name} logo`} className="topbrands__list__img" src = {item.logo}/>
+                                <h1 className="topbrands__list__name">{item.name}</h1>
                                 <h3 className="topbrands__list__category">{item.category}</h3>
                                 <h3 className="topbrands__list__ratings">
                                 
@@ -45,7 +36,7 @@ function TopTenBrands() {
                                     <path d="M16.7087 3.28461L15.5767 0.65609C15.3587 0.149956 14.6411 0.149956 14.4232 0.65609L11.3104 7.88435L3.47403 8.6112C2.9253 8.66206 2.70358 9.34456 3.11755 9.70825L9.03014 14.9024L7.2998 22.5799C7.17863 23.1175 7.75924 23.5392 8.23303 23.2579L9.13367 22.7231C10.6102 13.1653 14.7611 6.14915 16.7087 3.28461Z" fill="#FFC850"/>
                                 </svg>
 
-                                    <p>{item.ratting}</p>
+                                    <p>{item.ratingCount}</p>
                                 </h3>
                             </Link> 
                         

@@ -5,14 +5,14 @@ const BrandComparisonDetail = ({ brandDetails }) => {
   return (
     <div className="brand__comparison">
       <img
-        src={brandDetails.brandLogo}
+        src={brandDetails.logo}
         alt=""
         className="brand__comparison__logo"
       />
-      <p className="brand__comparison__text">{brandDetails.brandDetail}</p>
+      <p className="brand__comparison__text">{brandDetails.name}</p>
       <div className="brand__comparison__review">
         <h3>Review Count</h3>
-        <h4>{brandDetails.reviewCount}</h4>
+        <h4>{brandDetails.ratingCount}</h4>
       </div>
       <div className="brand__comparison__solved-count">
         <h3>Solved Count</h3>
@@ -23,7 +23,7 @@ const BrandComparisonDetail = ({ brandDetails }) => {
               : "brand__comparison__solved-count__smaller"
           }`}
         >
-          {brandDetails.solvedCount}
+          {brandDetails.resoulutionsCount}
         </h4>
       </div>
       <div className="brand__comparison__satisfaction-rate">
@@ -34,7 +34,7 @@ const BrandComparisonDetail = ({ brandDetails }) => {
               ? "brand__comparison__satisfaction-rate__greater"
               : "brand__comparison__satisfaction-rate__smaller"
           }`}
-        >{brandDetails.satisfactionRate}</h4>
+        >{brandDetails.satisfactionPercentage}%</h4>
       </div>
       <div className="brand__comparison__overall-status">
         <h3

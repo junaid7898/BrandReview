@@ -24,36 +24,7 @@ const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
-  const [data] = useState([
-    {
-      name: "car 1",
-      img: "https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png",
-    },
-    {
-      name: "pewdiepie 69",
-      img: "https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png",
-    },
-    {
-      name: "bike 3",
-      img: "https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png",
-    },
-    {
-      name: "car 4",
-      img: "https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png",
-    },
-    {
-      name: "car 5",
-      img: "https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png",
-    },
-    {
-      name: "fff2 6",
-      img: "https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png",
-    },
-    {
-      name: "toyota 7",
-      img: "https://www.carlogos.org/car-logos/toyota-logo-1989-1400x1200.png",
-    },
-  ]);
+  const {brands: data} = useSelector(state => state.brands)
 
   //states to show and hide nav links and search bar
   const [isShowingMenu, setIsShowingMenu] = useState(false);
@@ -112,10 +83,17 @@ const Header = () => {
           <h1>Review Website</h1>
         </Link>
 
-        <GiHamburgerMenu
-          className="nav__open__icon"
-          onClick={() => showMenu()}
-        />
+        <div className="nav__icon__container">
+        {
+          !attemptingLoginOnSiteLoad ?
+          <GiHamburgerMenu
+            className="nav__open__icon"
+            onClick={() => showMenu()}
+          />
+          :
+            <LoadingIndicator />
+        }
+        </div>
       </div>
 
       <div className="nav__searchdiv" style={{ left: showSearchBar }}>
@@ -154,10 +132,14 @@ const Header = () => {
           isShowingMenu ? `nav__links-show` : `nav__links-hide`
         }`}
       >
-        <ul>
+        {
+          !attemptingLoginOnSiteLoad 
+          ?
+          <>
+          <ul>
           <li><Link to = '/' ><h4 className = 'nav__links__link__h4'>Home</h4></Link></li>
           
-          {!attemptingLoginOnSiteLoad ? (
+          {
             !client ? (
               <>
               {/* ANCHOR Links for headers */}
@@ -315,59 +297,14 @@ const Header = () => {
                 {/* </li> */}
               </>
             )
-          ) : (
-            <div className="loading__indicator__div">
-              <div className="loading__indicator__div__mask">
-              </div>
-              <LoadingIndicator
-                className="login__indicator"
-              />
-            </div>
-          )}
+          }
         </ul>
         <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
+          </>
+        :
+        <LoadingIndicator /> 
+        }
       </div>      
-        {/* <div
-          className={`nav__links ${
-            isShowingMenu ? `nav__links-show` : `nav__links-hide`
-          }`}
-        >
-          <ul>
-            {
-              !attemptingLoginOnSiteLoad ?
-              (
-              !client ? 
-                (
-                  <>
-                    <li>
-                      Login as
-                      <Link to="/user/login">User</Link>
-                      <Link to="/brand/login">Brand</Link>
-                    </li>
-                    <li>
-                      Signup as
-                      <Link to="/user/signup">User</Link>
-                      <Link to="/brand/signup">Brand</Link>
-                    </li>
-                  </>
-                ) : 
-                (
-                  <>
-                    <Links client = {client} />
-                    <li>
-                      <button onClick={ () => {logout(dispatch, history, client.type, client.tokens.refresh.token )}} >Logout</button>
-                    </li>
-                  </>
-                )
-              )
-              :
-                <div className="">
-                  <LoadingIndicator className="" style={{color:"blue", fontSize:"100px"}} /> 
-                </div>
-          }
-          </ul>
-          <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
-        </div> */}
     </nav>
   );
 };

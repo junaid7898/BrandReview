@@ -1,25 +1,20 @@
-import React, { useState } from "react";
-import BrandIcon from "../../../assests/images/brand_icon.png";
+import React, { useEffect, useState } from "react";
 import Star from '../../../assests/Star'
+import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 
 const BrandContent = ({item}) => {
   console.log('item: ', item);
-  const [brand] = useState(
-    {
-      brandName: "BMW",
-      brandIcon: BrandIcon,
-      brandDetail:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      brandReviews: '16m',
-      brandRating: '4.9'
-    }
-  )
+  const [imageIsLoading, setImageIsLoading] = useState(true)
 
   return (
     <section >
       <div className = 'brand' >
           <div className="brand__logo">
-              <img src = {item.logo} alt={`brand ${item.name} logo`}/>
+              <img onLoad={() => setImageIsLoading(false) }src = {item.logo} alt={`brand ${item.name} logo`}/>
+              {
+                imageIsLoading &&
+                <LoadingIndicator />
+              }
           </div>
           <div className="brand__info">
               <h1 className="brand__info__name"> {item.name} </h1>

@@ -22,14 +22,27 @@ import EmailVerificationPage from './page/email_verification_page/EmailVerificat
 
 import { useEffect } from 'react';
 import axios from "axios";
+import { axios as axiosInstance } from "./axios/axiosInstance";
 import { useSelector, useDispatch } from "react-redux";
 import { clientActions } from "./Redux/clientslice/clientSlice";
 import PrivateRoute from "./PrivateRoute";
 import { statusAction } from "./Redux/statusSlice";
+import { brandAction } from "./Redux/brandInfoSlice/brandInfoSlice";
 function App() {
   
   const dispatch = useDispatch()
   const {client} = useSelector(state => state.client)
+
+
+  useEffect(() => {
+    axiosInstance.get("brand/")
+    .then(({data}) => {
+      dispatch(brandAction.setBrands(data))
+    })
+  }, [])
+
+
+
   useEffect(() => {
     
     const type = localStorage.getItem("clientType")
@@ -125,7 +138,7 @@ function App() {
               type={true}
               role="brand"
         />
-        <Route path = '/brand/comparison' component = {ComparisonPage}/>  
+        <Route path = '/brand/comparison/:brand1Name/:brand2Name' component = {ComparisonPage}/>  
         <Route path = '/brand/:brandId' component = {SearchBrand} exact/>
         <PrivateRoute 
               exact 

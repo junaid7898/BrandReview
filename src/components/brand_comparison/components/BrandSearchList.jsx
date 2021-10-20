@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BrandSearchList = ({ data, showlist, setValue}) => {
+const BrandSearchList = ({ data, showlist, setValue, setSelectedBrand}) => {
 
     
 
@@ -9,11 +9,12 @@ const BrandSearchList = ({ data, showlist, setValue}) => {
                 {data.map((item) => {
                     return(
                         <div className = 'comparison__list__item' onClick = {() => {
-                            setValue(item.brandName)
+                            setValue(item.name)
                             showlist(false)
+                            setSelectedBrand(item.name)
                         }}>
-                            <img src = {item.brandIcon} alt={`brand $item.brandName} logo`}/>
-                            <h3>{item.brandName}</h3>
+                            <img src = {item.logo} alt={`brand ${item.name} logo`}/>
+                            <h3>{item.name}</h3>
                         </div>
                     )
                 })}

@@ -16,7 +16,7 @@ const BrandInfo = ({brand}) => {
                     }
                     </div>
                     
-                    <p>{4.3} out of {23423432} ratings</p>
+                    <p>{brand.ratingCount} out of {brand.totalReviewCount} reviews</p>
                 </div>
             </div>
             <div className="brand__information__title-about">

@@ -263,11 +263,24 @@ const Header = () => {
                       client.user.role.includes("brandAdmin") ? 
                       (
                         <Link to={`/brand/panel/${client.brand.id}`}>   
-                          <h4 className = 'nav__links__link__h4'>Panely</h4>    
+                          <h4 className = 'nav__links__link__h4'>Panel</h4>    
                         </Link>
                       )
                       :
                       null
+                  }
+                </li>
+                <li>
+                  {
+                    
+                      client.type.includes('brand') && client.brand.role.includes('brand') ?
+                      (
+                        <Link to = {`/brand/${client.brand.id}`}><h4 className = 'nav__links__link__h4'>brand</h4></Link>
+                      )
+                      :
+                      (
+                        null
+                      )
                   }
                 </li>
                 <li>

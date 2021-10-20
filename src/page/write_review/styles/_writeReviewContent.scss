@@ -69,6 +69,8 @@
     align-items: center;
     width: 300px;
     max-width: 90%;
+    
+    
 }
 
 .review__content__textbox, .review__content__textarea{
@@ -131,4 +133,53 @@
     background-color: #35C9CE;
     color: white;
     margin-left: 10px;
+}
+
+.review__content__tboxes1{
+    // background-color: red;
+    width: 100%;
+    position: relative;
+    &__input{
+        margin-bottom: 20px;
+        width: 100%;
+        border-radius: 5px;
+        padding: 10px 12px;
+        background-color: #F8F8F8;
+        border: 0px solid;
+        box-sizing: border-box;
+    }
+
+    &__search-list__list{
+        display: inline-block;
+        position: absolute;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        top:100%;
+        left: 0;
+        // right: 1%;
+        width: 100%;
+        background-color: #fff;
+        max-height: 300px;
+        overflow-y: auto;   
+        color: #272727;
+        z-index: 2;
+        &__item{
+            &:not(:last-child){
+                border-bottom: 1px solid gray;
+            }
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding:15px 10px;
+            cursor: pointer;
+            transition: 300ms;
+            text-decoration: none;
+            color: inherit;
+            & img{
+                width: 50px;
+            }
+            &:hover{
+                background-color: ghostwhite;
+            }
+        }
+    }
 }

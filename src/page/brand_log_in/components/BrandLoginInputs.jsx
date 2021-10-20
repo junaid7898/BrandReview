@@ -10,7 +10,6 @@ import { clientActions } from "../../../Redux/clientslice/clientSlice";
 const BrandLoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const dispatch = useDispatch();
@@ -36,9 +35,12 @@ const BrandLoginInputs = () => {
           history.push('/')
         })
         .catch((err) => {
-          console.log(err);
+          alert(err.response.data.message);
+          setIsLoggingIn(false)
         });
   };
+
+  
 
   return (
     <div className="brand__login__inputs">
@@ -100,8 +102,12 @@ const BrandLoginInputs = () => {
         className="brand__login__inputs__button"
         onClick={login}
         disabled = {isLoggingIn}
+        style={{position:"relative"}}
       >
-        {isLoggingIn ? <LoadingIndicator /> : "Login"}
+        Login
+        {
+          isLoggingIn && <LoadingIndicator />
+        }
       </button>
       <Link to="/brand/signup">
             Dont have an account ?

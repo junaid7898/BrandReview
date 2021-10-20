@@ -10,11 +10,10 @@ const clientSlice = createSlice({
     reducers:{
         setClient(state, action){
             const getType = Object.keys(action.payload)[0]
-            console.log(getType)
             let type;
             if(getType === "user"){
                 type = ["user"]
-                if(action.payload.user.role === "admin" || action.payload.user.role === "subadmin"){
+                if(action.payload.user.role .includes("admin") || action.payload.user.role .includes("subadmin")){
                     type = [...type, "admin"]
                 }
             }

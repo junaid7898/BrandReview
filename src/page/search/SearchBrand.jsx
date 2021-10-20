@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BrandInfo from "./components/BrandInfo";
 import BrandImage from "../../assests/images/brandcar.png";
 import BrandLogo from "../../assests/images/kia_logo.png";
 import Profile from "../../assests/images/Profile Image.png";
 import Review from "../../components/reviews/Review";
 import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
+import { useParams } from "react-router";
+import {axios} from "../../axios/axiosInstance";
 
 const SearchBrand = () => {
   const [testBrand] = useState({
@@ -95,11 +97,32 @@ const SearchBrand = () => {
     ],
   });
 
-  
+  const {brandId} = useParams()
+
+  const [brandData, setBrandData] = useState(null)
+
+  useEffect(() => {
+    
+    if(brandId){
+      axios
+        .get(`/brand/${brandId}`)
+        .then(({data}) => {
+          setBrandData(data)
+          console.log(data)
+        })
+        .catch(err =>{
+          console.log(err.response.data.message)
+        })
+      }
+
+  }, [brandId])
 
   return (
     <div>
-      <BrandInfo brand={testBrand} />
+      {
+        brandData &&
+        <BrandInfo brand={brandData} />
+      }
       {/* <BrandReviews comments = {testBrand.comments}/>    */}
       <WriteYourReviewComponent/>
       <Review/>

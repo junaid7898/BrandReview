@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {HiCamera} from 'react-icons/hi'
 import { useSelector, useDispatch } from "react-redux";
+import { axios } from "../../../../axios/axiosInstance";
 import LoadingIndicator from '../../../../components/loadingIndicator/LoadingIndicator'
 import { uploadPhoto } from "../../../../helpers/uploadPhoto";
 import { clientActions } from "../../../../Redux/clientslice/clientSlice";
-const ProfileContent = ({user, setClient}) => {
+const ProfileContent = ({user, setClientDetails}) => {
   const [isImageUploading, setIsImageUploading] = useState(false)
   const {client:User} = useSelector(state => state.client)
   const dispatch = useDispatch()
@@ -14,14 +15,20 @@ const ProfileContent = ({user, setClient}) => {
       setIsImageUploading(true)
       const { url: imageUrl } = await uploadPhoto(user,e.target.files[0], fileRef.current)
       console.log(imageUrl)
-      setClient({
+      const newUser = {
         ...user,
         profileImage: imageUrl
-      })
+      }
+      setClientDetails(newUser)
       dispatch(clientActions.setClient({
-        tokens: {...User.tokens},
-        user
+        ...User,
+        user: newUser
       }))
+      axios.patch(`user/${user.id}`,newUser,{
+        headers:{
+          "authorization" : `bearer ${User.tokens.access.token}`
+        }
+      })
       setIsImageUploading(false)
     }
     catch(err){
@@ -30,6 +37,10 @@ const ProfileContent = ({user, setClient}) => {
     }
   }
   
+  useEffect(() => {
+    console.log(user)
+  }, [user])
+
   return (
       user ?
 

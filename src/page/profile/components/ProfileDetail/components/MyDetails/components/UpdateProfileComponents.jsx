@@ -3,11 +3,12 @@ import DatePicker from "react-multi-date-picker";
 import PhoneInput from 'react-phone-number-input';
 import { isPossiblePhoneNumber, formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
 import { useDispatch , useSelector} from "react-redux";
-import {userActions} from '../../../../../../../Redux/user slice/userSlice'
+import { axios } from "../../../../../../../axios/axiosInstance";
+import {clientActions} from '../../../../../../../Redux/clientslice/clientSlice'
 
 const UpdateProfileComponents = ({ onSubmit }) => {
   const [phone, setPhone] = useState(null);
-  const {user} = useSelector(state => state.user)
+  const {client} = useSelector(state => state.client)
   const dispatch = useDispatch()
   const [birthday, setBirthday] = useState(
     new Date().toISOString().split("T")[0]
@@ -22,7 +23,7 @@ const UpdateProfileComponents = ({ onSubmit }) => {
 
 
   const handleDate = (value) => {
-    setBirthday(value);
+    setBirthday(new Date(value).toLocaleDateString());
   };
 
   const handleUpdate = () => {
@@ -40,13 +41,23 @@ const UpdateProfileComponents = ({ onSubmit }) => {
       console.log(address, phone, birthday);
       console.log(countryCallingCode, nationalNumber);
       const details = {address: address,phoneNumber: phone, birthday: birthday };
-      dispatch(userActions.setUser({
-        ...user, 
-        dateOfBirth: birthday,
-        phoneNumber: nationalNumber,
-        countryCode: `+${countryCallingCode}`,
-        address: address
-      }))
+      //FIXME
+        const {payload} = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+            ...client.user,
+            dateOfBirth: birthday,
+            phoneNumber: nationalNumber,
+            countryCode: `+${countryCallingCode}`,
+            address: address
+        } 
+    }))
+    axios.patch(`/user/${client.user.id}`, {...payload.user}, {
+        headers:{
+            "role" : "user",
+            "authorization" : `bearer ${client.tokens.access.token}`
+        }
+    })
       alert(JSON.stringify(details))
   }
  

@@ -9,6 +9,8 @@ import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
 import { clientActions } from "../../Redux/clientslice/clientSlice";
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
+import { logout } from "./logout";
+import Links from "./components/Links";
 
 const Header = () => {
   //search bar states
@@ -173,45 +175,9 @@ const Header = () => {
                 ) : 
                 (
                   <>
+                    <Links client = {client} />
                     <li>
-                      {
-                        client.type.includes("user") ?
-                          <Link to={`/user/${client.user.id}`}>Profile</Link>
-                        : client.type === "brand" ?
-                          <Link to={`/brand/panel/${client.user.id}`}>Brand Panel</Link>
-                        : 
-                          null
-                      }
-                    </li>
-                    <li>
-                    {
-                      client.type.includes('brand') && client.brand.role.includes("brand") || 
-                      client.user.role.includes("brandAdmin")  
-                      ?
-                        <Link to={`/brand/panel/${client.brand.id}`}>Brand Panel</Link>
-                      :
-                        null
-                    }
-                    </li>
-                    <li>
-                    {
-                      client.type.includes('admin') ||
-                      ( client.type === "user" && client.user.role.includes("subAdmin") )
-                      ?
-                        <Link to={`/admin`}>Admin Panel</Link>
-                      :
-                        null
-                    }
-                    </li>
-                    <li>
-                      <button onClick={ () => {
-                        dispatch(clientActions.removeClient())
-                        localStorage.removeItem('userId')
-                        localStorage.removeItem('brand  Id')
-                        localStorage.removeItem('accessToken')
-                        localStorage.removeItem('clientType')
-                        history.push('/')
-                        }} >Logout</button>
+                      <button onClick={ () => {logout(dispatch, history, client.type, client.tokens.refresh.token )}} >Logout</button>
                     </li>
                   </>
                 )

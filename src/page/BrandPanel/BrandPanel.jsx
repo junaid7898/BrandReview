@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const BrandPanel = () => {
 
-    const {brand} = useSelector(state => state.brand)
+    const {client} = useSelector(state => state.client)
 
     const [brandDetails, setBrandDetails] = useState(null)
 
@@ -27,14 +27,14 @@ const BrandPanel = () => {
             })
         }
 
-        if(brand && brandId){
+        if(client && brandId){
 
-            if(brandId === brand.brand.id){
+            if(brandId === client.brand.id){
                 setCurrentBrand(true)
                 // console.log('matched')
             }
         }
-    }, [brand, brandId])
+    }, [client, brandId])
     return (
         <div>
         {brandDetails === null ? 

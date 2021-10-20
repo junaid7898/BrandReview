@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import {useLocation} from "react-router-dom";
 import MyDetails from './components/MyDetails/MyDetails'
 import BrandReviews from "../../../search/components/BrandReviews";
 import BrandImage from "../../../../assests/images/brandcar.png";
@@ -10,7 +10,7 @@ const ProfileDetail = ({user, visitorIsUser}) => {
   const [showDetails, setShowDetails] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
   const [showReviewFollow, setShowReviewsFollow] = useState(false);   
-
+  const location = useLocation()
   const [option ,setOption] = useState(0)
 
   useEffect(() => {
@@ -22,7 +22,18 @@ const ProfileDetail = ({user, visitorIsUser}) => {
         setOption(2)
       }
     }
-  }, [visitorIsUser])
+    // if(isBrands){
+    //   setOption(4)
+    // }
+    if(location){
+      const search = location.search
+      const n = new URLSearchParams(location.search).get('option')
+      console.log(n)
+      if(n === "brands"){
+        setOption(4)
+      }
+    }
+  }, [visitorIsUser, location])
 
   const [testBrand] = useState({
     brandImage: BrandImage,
@@ -126,6 +137,10 @@ const ProfileDetail = ({user, visitorIsUser}) => {
           visitorIsUser &&
           <li onClick={() => {option === 3 ? setOption(0) : setOption(3)}} className = {option === 3 ? 'details__list__click': ''}>Reviews I Follow</li>
         }
+        {
+          visitorIsUser &&
+          <li onClick={() => {option === 4 ? setOption(0) : setOption(4)}} className = {option === 4 ? 'details__list__click': ''}>Manaing Brands</li>
+        }
       </ul>
             {
               option === 1 ? 
@@ -139,6 +154,10 @@ const ProfileDetail = ({user, visitorIsUser}) => {
               : option === 3  ? 
                 (
                   <h1>hello this is show reviews and followings</h1>
+                )
+                : option === 4  ? 
+                (
+                  <h1>Brands Manaing</h1>
                 )
               :
                   null

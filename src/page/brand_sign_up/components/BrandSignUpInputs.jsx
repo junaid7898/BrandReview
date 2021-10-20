@@ -5,34 +5,81 @@ import RegistrationPageComponent from "../../../components/registration_page_com
 import { Link } from "react-router-dom";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import { useDispatch } from "react-redux";
+import { getImageDetails } from "../../../helpers/getImageDetails";
 const BrandSignUpInputs = () => {
   const [username, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-
+  const [about, setAbout] = useState("");
+  const [image, setImage] = useState(null)
+  const [imageDetails, setImageDetails] = useState({})
+  let isPasswordMatch = false;
   const dispatch = useDispatch()
 
 
   const signup = async() => {
     console.log(username, email, password);
+    if(isPasswordMatch){
+      alert("passowrd dont match")
+      return
+    }
     const req = {
-      name: username,
-      password: password,
-      email: email,
-      countryCode: "+92",
-      phoneNumber: phone,
-      logo: BrandLogo
+      brand: {
+        name: username,
+        password,
+        email,
+        countryCode: "+92",
+        phoneNumber: phone,
+        about
+      },
+      imageDetails
     }; 
     await axios.post(
-      "http://localhost:4000/v1/brandauth/user/register",
+      "http://localhost:4000/v1/auth/brand/register",
       req
-    ).then(res => {
-        dispatch(clientActions.setClient(res.data))
+    ).then(({data}) => {
+        dispatch(clientActions.setClient(data))
+        axios.put(data.brand.logo, image, {
+          headers:{
+            'Content-Type' : imageDetails.fileType
+          }
+      })
     }).catch(err => {
       console.log(err.message)
     });
   };
+
+
+  const handleImage = (e) =>{
+
+    const g = getImageDetails(e.target.files[0])
+    if(g){
+      e.target.value = null
+      return 
+    }
+    setImageDetails(g)
+    if(g){
+      setImage(e.target.files[0])
+    }
+    else{
+      setImage(null)
+    }
+    
+  }
+
+  const checkPassword = (e) =>{
+
+    if(e !== password){
+      isPasswordMatch = false
+      console.log("wrong password")
+    }
+    else{
+      isPasswordMatch = true
+      console.log("correct")
+    }
+
+  }
   return (
     <div className="brand__signup__form">
       <RegistrationPageComponent/>
@@ -76,6 +123,16 @@ const BrandSignUpInputs = () => {
             }}
           />
         </div>
+        <div className="brand__signup__form__inputs__password">
+          <label>Confirm Password</label>
+          <input
+            type="text"
+            placeholder="Enter your password again to confirm"
+            onChange={(e) => {
+              checkPassword(e.target.value);
+            }}
+          />
+        </div>
         <div className="brand__signup__form__inputs__phone">
           <label>Phone number</label>
           <input
@@ -84,6 +141,25 @@ const BrandSignUpInputs = () => {
             value={phone}
             onChange={(e) => {
               setPhone(e.target.value);
+            }}
+          />
+        </div>
+        <div className="brand__signup__form__inputs__phone">
+          <label>Brand Logo</label>
+          <input
+            type="file"
+            accept="image/*"
+            onClick={ (e) => e.target.value=null}
+            onChange={handleImage}
+          />
+        </div>
+        <div className="brand__signup__form__inputs__phone">
+          <label>About</label>
+          <textarea
+            type="text"
+            placeholder="Tell people about yourself"
+            onChange={(e) => {
+              setAbout(e.target.value);
             }}
           />
         </div>

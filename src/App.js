@@ -139,7 +139,7 @@ function App() {
               role="brand"
         />
         <Route path = '/brand/comparison/:brand1Name/:brand2Name' component = {ComparisonPage}/>  
-        <Route path = '/brand/:brandId' component = {SearchBrand} exact/>
+        <Route path = '/brand/:brandId' component = {SearchBrand} />
         <PrivateRoute 
               exact 
               path="/admin/login" 

@@ -10,6 +10,11 @@ import Compare from './components/Compare'
 
 
 function HomePage() {
+
+    
+
+
+
     return (
         <div className="homepage">
             <div className="homepage__header-container">

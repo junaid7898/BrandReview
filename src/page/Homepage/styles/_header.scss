@@ -2,9 +2,15 @@
     &-container{
         position: relative;
         top: -80px;
+        @include respond(phone){
+            top: -30px;
+        }
     }
     display: flex;
     flex-direction: row;
+    @include respond(phone){
+        flex-direction: column;
+    }
     &__left{
         background-color: #E8FFFE;
         width: 50%;
@@ -12,20 +18,23 @@
         flex-direction: column;
         align-items: flex-start;
         padding: 50px;
+        @include respond(phone){
+            width: 100%;
+        }
         &__sub{
-            //width: 100%;
             width: 500px;
+            @include respond(phone){
+                width: 100%;
+            }
             margin: auto;
         }
     }
     &__infoHeading{
-        width: 450px;
         margin-bottom: 50px;
         font-size: 50px;
         font-size: 900;
     }
     &__infoText{
-        width: 450px;
         margin-bottom: 50px;
         color: $onSurface-secondary;
         font-size: 20px;
@@ -46,16 +55,36 @@
         background-color: white;
         width: 50%;
         margin-top: 200px;
+        @include respond(phone){
+            margin-top: 100px;
+            width: 100%;
+        }
     }
     overflow: hidden;
     &__brand{
         display: flex;
         align-items: center;
         transform: rotate(30deg) translate(50px, 50px);
+        @include respond(phone){
+            transform: none;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
         &__col1{
             display: flex;
             flex-direction: column;
             margin:20px;
+            @include respond(phone){
+                flex-direction: column;
+                justify-content: space-around;
+                width: 90%;
+            }
+        }
+        &__col2{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 90%;
         }
         &__item{
             display: flex;
@@ -66,17 +95,24 @@
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             background-color: white;
             border-radius: 10px;
+            width: 260px;
+            @include respond(phone){
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0px;
+                text-align: center;
+            }
             &__logo{
-                max-width: 250px;
                 max-height: 302px;
-                &-container{
-                    width: 259px;
-                    height: 302px;
-                }
+                width: 100%;
+                object-fit: contain;
             }
             &__rating{
                 display: flex;
                 flex-direction: row;
+                @include respond(phone){
+                    flex-direction: column;
+                }
                 align-items: center;
                 margin: 20px 0;
             }

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import BrandIcon from "../../assests/images/brand_icon.png";
 import BrandSearchList from "./components/BrandSearchList";
 
@@ -160,6 +161,10 @@ const BrandComparison = () => {
           </>
         ) : null}
       </div>
+      <Link to = '/' className="comparison__button">
+          <p>Compare</p>
+      </Link>
+      
     </section>
   );
 };

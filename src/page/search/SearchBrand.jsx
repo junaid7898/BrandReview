@@ -5,8 +5,10 @@ import BrandLogo from "../../assests/images/kia_logo.png";
 import Profile from "../../assests/images/Profile Image.png";
 import Review from "../../components/reviews/Review";
 import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
+import { useParams } from "react-router";
 
 const SearchBrand = () => {
+  
   const [testBrand] = useState({
     brandImage: BrandImage,
     brandRatings: 4.9,
@@ -99,10 +101,10 @@ const SearchBrand = () => {
 
   return (
     <div>
-      <BrandInfo brand={testBrand} />
-      {/* <BrandReviews comments = {testBrand.comments}/>    */}
+    <h1>hello! this is brand comparison </h1>
+      {/* <BrandInfo brand={testBrand} />
       <WriteYourReviewComponent/>
-      <Review/>
+      <Review/> */}
     </div>
   );
 };

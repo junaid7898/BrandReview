@@ -1,11 +1,25 @@
-import React, {useState}from 'react'
+import React, {useRef, useState}from 'react'
 import {FaSortAmountDownAlt} from 'react-icons/fa'
+import { GiCogLock } from 'react-icons/gi'
+import UpdateProfile from '../../../components/update_profile_button/UpdateProfile'
+import PhoneInput from 'react-phone-number-input';
+import Chart from '../../../components/charts/Chart';
 
-const BrandDetail = () => {
+const BrandDetail = ({item}) => {
     const [showDashBoard , setShowDashBoard] = useState(true)
     const [showReviews , setShowReviews] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
     const [showReport, setShowReport] = useState(false)
+
+
+    const [phone, setPhone] = useState(null)
+    const [address, setAddress] = useState(null)
+    const address1 = useRef()
+    const address2 = useRef()
+    const address3 = useRef()
+
+    const [updateProfile, setUpdateProfile] = useState(false)
+    const [isLoadingUpdate, setIsloadingUpdate] = useState(false);
 
     const handleShowDashBoard = () => {
         setShowDashBoard(true)
@@ -35,6 +49,13 @@ const BrandDetail = () => {
         setShowReport(true)
     }
 
+
+    const handleUpdate = () => {
+        setUpdateProfile(false)
+        setIsloadingUpdate(true)
+
+    }
+
     return (
         
             <div className = 'dashboard__list'>
@@ -44,10 +65,165 @@ const BrandDetail = () => {
                     <li onClick = {handleShowSettings} className = {showSettings ? 'list__click': ''}>Settings</li>
                     <li onClick = {handleShowReport} className = {showReport ? 'list__click': ''}>Reports</li>
                 </ul>
-                <div className="dashboard__list__filter">
-                    <input type = 'text' placeholder = 'Filter and Sort'/>
-                    <FaSortAmountDownAlt className = 'dashboard__list__filter__icon'/>
-                </div>
+                {
+                    showDashBoard === true && item ? 
+                    (
+                        <div className="dashboard__list__chart">
+                            <Chart/>
+                        </div>
+                    ):
+                    (
+                        null
+                    )
+                }
+
+                {
+                    showSettings === true && item ?    
+                    (
+                        <>
+                        <div className="dashboard__list__settings">   
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Brand Name</h3>
+                                    <h4>{item.name}</h4>
+                                </div>
+                            </div>
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Category</h3>
+                                    <h4>{item.name}</h4>
+                                </div>
+                            </div>
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Name</h3>
+                                    <h4>{item.name}</h4>
+                                </div>
+                            </div>
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Email</h3>
+                                    <h4>{item.email}</h4>
+                                </div>
+                            </div>
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Phone</h3>
+                                    <h4>{item.phoneNumber}</h4>
+                                </div>
+                            </div>
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Country Code</h3>
+                                    <h4>{item.name}</h4>
+                                </div>
+                            </div>
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Address</h3>
+                                    <h4>{item.name}</h4>
+                                </div>
+                            </div>
+
+                            <div className="dashboard__list__settings__items">
+                                <div className="dashboard__list__settings__items__name">
+                                    <h3>Language</h3>
+                                    <h4>{item.name}</h4>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className="dashboard__list__update-settings">
+                            <UpdateProfile setUpdateProfile = {setUpdateProfile}/>
+                        </div>
+
+                        {
+                            updateProfile ?
+                            (
+                                <>
+                                <div className="mydetails__update-details">
+
+
+                                    <div
+                                        className="mydetails__update-details__mask"
+                                        onClick={() => setUpdateProfile(false)}
+                                    >
+                                    </div>
+
+
+                                    
+
+
+                                    <div className="mydetails__update-details__update">
+                                        
+
+                                        <div className="mydetails__update-details__update__phone">
+                                            <label htmlFor="phoneNumber">Phone Number </label>
+                                                <PhoneInput
+                                                    id = 'phoneNumber'
+                                                    placeholder="Enter phone number"
+                                                    value={phone}
+                                                    className = 'mydetails__update-details__update__phone__phone-number'
+                                                    name = 'phone number'
+                                                    onChange={setPhone}/>   
+                                        </div>
+
+
+                                        <div className="mydetails__update-details__update__address">
+                                            <label htmlFor="address">Address </label>
+                                            <input
+                                                id="address"
+                                                placeholder="enter your address"
+                                                onChange={(e) => address1.current = e.target.value}
+                                                name="address"
+                                            />
+                                            <input
+                                                id="addressLine1"
+                                                placeholder="line 1"
+                                                onChange={(e) => address2.current = e.target.value}
+                                                name="address"
+                                            />
+                                            <input
+                                                id="addressLine2"
+                                                placeholder="line 2"
+                                                onChange={(e) => address3.current = e.target.value}
+                                                name="address"
+                                            />
+                                        </div>
+
+
+                                        <div
+                                        className="mydetails__update-details__update__button"
+                                        onClick={() => {
+                                            handleUpdate()
+                                        }}
+                                        >
+                                            <h1>Ok</h1>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </>
+                            )
+                            :
+                            (
+                                null
+                            )
+                        }
+                        </>
+                    )
+                    :
+                    (
+                        null
+                    )
+                }
                 
             </div>
     )

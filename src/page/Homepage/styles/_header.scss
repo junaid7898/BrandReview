@@ -27,21 +27,19 @@
     &__infoText{
         width: 450px;
         margin-bottom: 50px;
-        color: rgba(163, 154, 154, 0.5);
+        color: $onSurface-secondary;
         font-size: 20px;
     }
     &__link{
         border: none;
         outline: none;
-        background-color: #35C9CE;
+        background-color: $primary;
         border-radius: 8px;
         padding: 20px 30px;
         font-size: 20px;
-        color: #FFFFFF;
         cursor: pointer;
-        text-decoration: none;
         &:hover{
-            background-color: #2eb0b5;
+            background-color: $primaryHover;
         }
     }
     &__right{

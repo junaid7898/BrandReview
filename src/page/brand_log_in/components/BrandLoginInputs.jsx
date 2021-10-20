@@ -2,19 +2,58 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-// import GoogleIcon from "../../../assests/icons/googleIcon.png";
-// import FacebookIcon from "../../../assests/icons/facebookIcon.png";
-import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
+
+import GoogleIcon from "../../../assests/icons/googleIcon.png";
+import FacebookIcon from "../../../assests/icons/facebookIcon.png";
 import { useDispatch } from "react-redux";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
+import {useGoogleLogin} from 'react-google-login'
+import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 const BrandLoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [rememberMe, setRememberMe] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false)
-  const dispatch = useDispatch();
+
+  const [isLoggingIn, setIsLoggingIn] = useState({
+    email: false,
+    google: false,
+    facebook: false
+  })
+  const dispatch = useDispatch()
   const history = useHistory()
+  const clientId = "29070885149-iipqn1acl0b33hh09fi9ns1tasangr9f.apps.googleusercontent.com"
+  
+    const onSuccess = async({profileObj}) =>{
+      console.log(profileObj)  
+      const {data:user} = await axios.post("http://localhost:4000/v1/auth/brand/login/google",{
+          user:{
+            name:profileObj.name,
+            password:profileObj.googleId,
+            email:profileObj.email,
+            profileImage:profileObj.imageUrl
+          }
+      })
+      setIsLoggingIn({...isLoggingIn, google: false})
+      dispatch(clientActions.setClient(user))
+      history.push('/')
+    }
+    const onFailure = () =>{
+      alert("Login Failed")
+      setIsLoggingIn({...isLoggingIn, google: false})
+    }
+
+  const {signIn: googleLogin} = useGoogleLogin({
+        onSuccess,
+        onFailure,
+        clientId,
+    })
+
+  const loginWithGoogle =() =>{
+    setIsLoggingIn({...isLoggingIn, google: true})
+    googleLogin()
+  }
+
   const login = async () => {
     setIsLoggingIn(true)
     console.log(email, password);
@@ -96,16 +135,33 @@ const BrandLoginInputs = () => {
         </Link>
       </div>
 
+      <label className="login__form__inputs__login-link" htmlFor="userSignup">
+          Don't have an account? <Link to="/brand/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Signup</Link>
+      </label>
+
       <button
-        className="brand__login__inputs__button"
+        className="login__form__inputs__button"
+        disabled = {isLoggingIn.email}
         onClick={login}
-        disabled = {isLoggingIn}
       >
-        {isLoggingIn ? <LoadingIndicator /> : "Login"}
+        {isLoggingIn.email ? <LoadingIndicator /> : "Login"}
       </button>
-      <Link to="/brand/signup">
-            Dont have an account ?
-      </Link>
+
+      <p>or continue with</p>
+      <div className="login__form__inputs__social-button">
+        <div onClick={loginWithGoogle} style={{pointerEvents: isLoggingIn.google ? "none" : "all"}} className="login__form__inputs__social-button__google">
+
+          <img src={GoogleIcon} alt="google logo" />
+          <p>{isLoggingIn.google ? <LoadingIndicator/> : "Login with Google"}</p>
+
+        </div>
+        <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>
+          <img src={FacebookIcon} alt="facebook logo" />
+          <p>{isLoggingIn.facebook ? <LoadingIndicator /> :  "Login with Facebook"}</p>
+        </div>
+      </div>
+
+
     </div>
   );
 };

@@ -1,53 +1,65 @@
+import axios from "axios";
 import React, { useRef, useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import PhoneInput from 'react-phone-number-input';
 import { isPossiblePhoneNumber, formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
 import { useDispatch , useSelector} from "react-redux";
-import {userActions} from '../../../../../../../Redux/user slice/userSlice'
+import {clientActions} from '../../../../../../../Redux/clientslice/clientSlice'
 
 const UpdateProfileComponents = ({ onSubmit }) => {
   const [phone, setPhone] = useState(null);
-  const {user} = useSelector(state => state.user)
+  const {client} = useSelector(state => state.client)
   const dispatch = useDispatch()
   const [birthday, setBirthday] = useState(
     new Date().toISOString().split("T")[0]
   );
   const [address, setAddress] = useState(null);
 
-  const address1 = useRef()
-  const address2 = useRef()
-  const address3 = useRef()
-  const [countryCode, setCountryCode] = useState(null);
-  const [email, setEmail] = useState(null);
 
 
   const handleDate = (value) => {
     setBirthday(value);
   };
 
+  const checkValidation = () => {
+      let response;
+      if(address === null || phone === null){
+          response = 'please fill all entries'
+          return response
+      }
+      else if(isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
+          response = 'phone number is invalid! please enter a valid phone number'
+          return response
+      }
+      else{
+          response = 'ok'
+          return response
+      }
+  }
+
   const handleUpdate = () => {
-      const addressX = address1.current +' ' + address2.current + ' '  +  address3.current;
-      setAddress(addressX)
-      if( isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
-          alert('phone number is invalid! please enter a valid phone number....')
-          return 0
-      }
-      if(address === null || phone === '' || birthday === null){
-          alert('please fill all the entries')
-          return 0
-      }
-    const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
-      console.log(address, phone, birthday);
-      console.log(countryCallingCode, nationalNumber);
-      const details = {address: address,phoneNumber: phone, birthday: birthday };
-      dispatch(userActions.setUser({
-        ...user, 
-        dateOfBirth: birthday,
-        phoneNumber: nationalNumber,
-        countryCode: `+${countryCallingCode}`,
-        address: address
-      }))
-      alert(JSON.stringify(details))
+      const validation = checkValidation();
+      if(validation === 'ok'){
+        const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
+        const details = {address: address,phoneNumber: phone, birthday: birthday };
+        const {payload} = dispatch(clientActions.setClient({
+            ...client, 
+            user: {
+                ...client.user,
+                dateOfBirth: birthday,
+                phoneNumber: nationalNumber,
+                countryCode: `+${countryCallingCode}`,
+                address: address
+            },
+            
+        }))
+        console.log('payload: ',JSON.stringify(payload));
+        axios.patch(`http://localhost:4000/v1/user/${client.user.id}`, payload)   
+        alert(JSON.stringify(details)) 
+    } 
+    else{
+        alert(validation)
+    }
   }
  
 
@@ -99,23 +111,13 @@ const UpdateProfileComponents = ({ onSubmit }) => {
 
             <div className="mydetails__update-details__update__address">
                 <label htmlFor="address">Address </label>
-                <input
-                    id="address"
-                    placeholder="enter your address"
-                    onChange={(e) => address1.current = e.target.value}
-                    name="address"
-                />
-                <input
-                    id="addressLine1"
-                    placeholder="line 1"
-                    onChange={(e) => address2.current = e.target.value}
-                    name="address"
-                />
-                <input
-                    id="addressLine2"
-                    placeholder="line 2"
-                    onChange={(e) => address3.current = e.target.value}
-                    name="address"
+                <textarea
+                    id = 'address'
+                    placeholder = 'please enter your address'
+                    value = {address}
+                    name = 'address'
+                    onChange = {(e) => setAddress(e.target.value)}
+                    maxLength = {100}
                 />
             </div>
 

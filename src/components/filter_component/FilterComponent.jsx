@@ -48,7 +48,7 @@ const FilterComponent = () => {
             }
             else{
                 setFilterOption([...filterOption, option])
-                return 0
+                return 0 
             }
         }
 

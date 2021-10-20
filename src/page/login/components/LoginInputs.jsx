@@ -64,7 +64,7 @@ const LoginInputs = () => {
         "http://localhost:4000/v1/auth/user/login",
         req
       ).then(res => {
-        console.log(res)
+        console.log('response: ' , res)
           const {payload} = dispatch(clientActions.setClient(res.data))
           console.log(payload)
           if(rememberMe){
@@ -86,7 +86,7 @@ const LoginInputs = () => {
   return (
     <div className="login__form__inputs">
       <div className="login__form__inputs__title">
-        <h1>Sign In As User</h1>
+        <h1>Login as User</h1>
         <p className="login__form__inputs__title__noaccount-link">
           Welcome, we missed you
         </p>
@@ -134,13 +134,13 @@ const LoginInputs = () => {
           />
           <label htmlFor="saveUserInfo">Remember me</label>
         </div>
-        <Link to="" className="login__form__inputs__after__link">
+        <Link to="/" className="login__form__inputs__after__link">
           Forgot Password?
         </Link>
       </div>
 
       <label className="login__form__inputs__login-link" htmlFor="userSignup">
-          Don't have an account? <Link to="/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Singup</Link>
+          Don't have an account? <Link to="/user/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Singup</Link>
         </label>
 
       <button
@@ -155,11 +155,12 @@ const LoginInputs = () => {
         <div onClick={loginWithGoogle} style={{pointerEvents: isLoggingIn.google ? "none" : "all"}} className="login__form__inputs__social-button__google">
 
           <img src={GoogleIcon} alt="google logo" />
-          <p>{isLoggingIn.google ? <LoadingIndicator /> : "Sign in with Google"}</p>
+          <p>{isLoggingIn.google ? <LoadingIndicator/> : "Login with Google"}</p>
+
         </div>
         <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>
           <img src={FacebookIcon} alt="facebook logo" />
-          <p>{isLoggingIn.facebook ? <LoadingIndicator /> :  "Sign in with Facebook"}</p>
+          <p>{isLoggingIn.facebook ? <LoadingIndicator /> :  "Login with Facebook"}</p>
         </div>
       </div>
     </div>

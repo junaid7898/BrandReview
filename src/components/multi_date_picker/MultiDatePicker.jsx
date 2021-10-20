@@ -1,10 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-multi-date-picker";
 import { AiOutlineCalendar } from "react-icons/ai";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { GiCogLock } from "react-icons/gi";
 
 function CustomButton({ direction, handleClick, disabled }) {
   return (
@@ -37,17 +38,22 @@ function CustomHeader() {
   );
 }
 
-const MultiDatePicker = () => {
+const MultiDatePicker = ({date, setDate}) => {
   // TODO take this value state as a prop, there will be two attributes value, setvalue
-  const [value, setValue] = useState(new Date().toISOString().split("T")[0]);
-  const handleDate = (value) => {
-    let dateFrom, dateTo;
-    dateFrom = value.toString().split(",", 1).toString();
-    console.log("from: " + dateFrom);
-    dateTo = value.toString().split(",")[1];
-    console.log("to: " + dateTo);
-    setValue(dateFrom, dateTo);
+
+  const handleDate = (value1) => {
+    if(value1.length > 1){
+      setDate(value1)
+      return 
+    }
+    return
   };
+
+  useEffect(() => {
+    setDate(date)
+  }, [date])
+
+
   return (
     <div className="date__picker">
       <DatePicker
@@ -55,8 +61,10 @@ const MultiDatePicker = () => {
         placeholder="click to open"
         className="date__picker__custom-calender"
         title="Select Date"
-        value={value}
-        onChange={(value) => handleDate(value)}
+        value={date}
+        onChange={(value) => {
+          handleDate(value)
+          }}
         multiple={true}
         range={true}
         containerClassName="date__picker__picked-dates"

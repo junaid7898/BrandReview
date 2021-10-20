@@ -40,7 +40,7 @@ const Profile = () => {
                     setClientDetails(res.data)
                 })
                 .catch( err => {
-                    alert(err)
+                    alert(err)    
                 })
             }
             else{

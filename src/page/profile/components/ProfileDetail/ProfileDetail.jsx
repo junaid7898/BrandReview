@@ -130,7 +130,7 @@ const ProfileDetail = ({user, visitorIsUser}) => {
             {
               option === 1 ? 
                 (
-                    <MyDetails user={user}/>
+                    <MyDetails user={user}/>      
                 )
               : option === 2  ? 
                 (

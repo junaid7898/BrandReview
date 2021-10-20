@@ -1,22 +1,16 @@
 import axios from "axios"
+import { getImageDetails } from "./getImageDetails"
 
 
 
 export const uploadPhoto = async(user, image, ref) =>{
-    if(image.size > 264000){
+    if(image.size > 2640000){
         ref.value = null
         throw Error("File is too large")
     }
     console.log(image)
     try{
-        const nameSplit = image.name.split('.')
-
-    
-
-    const fileExtension = image.name.split('.')[nameSplit.length - 1]
-    nameSplit.pop()
-    const fileName = nameSplit.join('.')
-    console.log(fileName, fileExtension)
+    const {fileExtension, fileName} = getImageDetails(image)
 
     const file = {
         name: fileName,

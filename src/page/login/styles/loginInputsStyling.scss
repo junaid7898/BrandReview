@@ -135,6 +135,7 @@
     }
   }
   &__button {
+    position: relative;
     width: 100%;
     padding: 25px 0px;
     border: 0px solid;
@@ -168,7 +169,11 @@
       background: #ffffff;
       border-radius: 10px;
       padding: 12px 30px;
+
       width: 49%;
+
+      position: relative;
+
       &:hover{
         transform:scale(0.9);
       }
@@ -190,6 +195,7 @@
     }
 
     &__facebook {
+      position: relative;
       display: flex;
       flex-direction: row;
       align-items: center;

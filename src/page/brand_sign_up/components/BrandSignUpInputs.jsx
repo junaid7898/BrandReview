@@ -4,6 +4,7 @@ import RegistrationPageComponent from "../../../components/registration_page_com
 import { Link } from "react-router-dom";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import { useDispatch } from "react-redux";
+import { getImageDetails } from "../../../helpers/getImageDetails";
 
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 
@@ -19,7 +20,7 @@ import {
 
 const BrandSignUpInputs = () => {
 
-
+  const dispatch = useDispatch()
   // ANCHOR form states
   const [username, setClientName] = useState(null);
   const [email, setEmail] = useState(null);
@@ -117,6 +118,37 @@ const BrandSignUpInputs = () => {
       alert(check)
     }
   };
+
+
+  const handleImage = (e) =>{
+
+    const g = getImageDetails(e.target.files[0])
+    if(g){
+      e.target.value = null
+      return 
+    }
+    setImageDetails(g)
+    if(g){
+      setImage(e.target.files[0])
+    }
+    else{
+      setImage(null)
+    }
+    
+  }
+
+  const checkPassword = (e) =>{
+
+    if(e !== password){
+      isPasswordMatch = false
+      console.log("wrong password")
+    }
+    else{
+      isPasswordMatch = true
+      console.log("correct")
+    }
+
+  }
   return (
     <div className="signup__form">
 
@@ -178,6 +210,7 @@ const BrandSignUpInputs = () => {
 
         <div className="signup__form__inputs__email">
           <label htmlFor="userPhone">Confirm password</label>
+
           <input
             id="userPhone"
             type="password"
@@ -198,7 +231,8 @@ const BrandSignUpInputs = () => {
             placeholder="Select a brand logo for your brand"
             accept = 'image/*'
             name="image"
-            onChange={(e) => {handleFileSelect(e)}}
+            onClick={ (e) => e.target.value=null}
+            onChange={handleImage}
           />
           { brandLogo ? ( <img src = {brandLogo} style = {{width: 100, marginTop: 10}}/> ):(null)}
         </div>
@@ -243,8 +277,6 @@ const BrandSignUpInputs = () => {
             Login
           </Link>
         </label>
-
-
         <button
           className="signup__form__inputs__button"
           title="sign up"

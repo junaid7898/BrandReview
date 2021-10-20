@@ -25,7 +25,7 @@ const MyDetails = ({ user }) => {
             <DetailTag
               class1="tag "
               label="Birthday"
-              value={user.dateOfBirth}
+              value={new Date(user.dateOfBirth).toDateString()}
             />
             <DetailTag
               class1="tag tag__address"

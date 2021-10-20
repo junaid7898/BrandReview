@@ -1,9 +1,9 @@
-import axios from "axios";
 import React, { useRef, useState } from "react";
 import DatePicker from "react-multi-date-picker";
 import PhoneInput from 'react-phone-number-input';
 import { isPossiblePhoneNumber, formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
 import { useDispatch , useSelector} from "react-redux";
+import { axios } from "../../../../../../../axios/axiosInstance";
 import {clientActions} from '../../../../../../../Redux/clientslice/clientSlice'
 
 const UpdateProfileComponents = ({ onSubmit }) => {
@@ -18,7 +18,7 @@ const UpdateProfileComponents = ({ onSubmit }) => {
 
 
   const handleDate = (value) => {
-    setBirthday(value);
+    setBirthday(new Date(value).toLocaleDateString());
   };
 
   const checkValidation = () => {
@@ -54,13 +54,17 @@ const UpdateProfileComponents = ({ onSubmit }) => {
             
         }))
         console.log('payload: ',JSON.stringify(payload));
-        axios.patch(`http://localhost:4000/v1/user/${client.user.id}`, payload)   
+        axios.patch(`/user/${client.user.id}`, payload.user, {
+        headers:{
+            "role" : "user",
+            "authorization" : `bearer ${client.tokens.access.token}`
+        })   
         alert(JSON.stringify(details)) 
     } 
     else{
         alert(validation)
     }
-  }
+ }
  
 
 

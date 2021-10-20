@@ -148,19 +148,27 @@ const LoginInputs = () => {
         disabled = {isLoggingIn.email}
         onClick={login}
       >
-        {isLoggingIn.email ? <LoadingIndicator /> : "Login"}
+        Login
+        {
+          isLoggingIn.email &&
+          <LoadingIndicator />
+        }
       </button>
       <p>or continue with</p>
       <div className="login__form__inputs__social-button">
         <div onClick={loginWithGoogle} style={{pointerEvents: isLoggingIn.google ? "none" : "all"}} className="login__form__inputs__social-button__google">
-
           <img src={GoogleIcon} alt="google logo" />
-          <p>{isLoggingIn.google ? <LoadingIndicator/> : "Login with Google"}</p>
 
+          <p>Sign in with Google</p>
+          
         </div>
         <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>
           <img src={FacebookIcon} alt="facebook logo" />
-          <p>{isLoggingIn.facebook ? <LoadingIndicator /> :  "Login with Facebook"}</p>
+          <p>Sign in with Facebook</p>
+          {
+            isLoggingIn.facebook &&
+            <LoadingIndicator />
+          }
         </div>
       </div>
     </div>

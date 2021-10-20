@@ -25,8 +25,13 @@ const BrandPanel = () => {
         }
     }, [client, brandId])
 
+if(client && brandId){
 
-
+            if(brandId === client.brand.id){
+                setCurrentBrand(true)
+                // console.log('matched')
+            }
+        }
     useEffect(() => {
         if(brandId){
             if(visitorIsBrand){

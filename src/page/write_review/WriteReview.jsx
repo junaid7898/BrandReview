@@ -3,42 +3,42 @@ import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import ImagePreview from "../../components/image_preview/ImagePreview"
 import { uploadMultiPhotos } from "../../helpers/uploadMultiplePhotos";
+import {getImageDetails} from "../../helpers/getImageDetails";
+import { useHistory } from "react-router";
 const WriteReview = () => {
+  const history = useHistory()
   let title = ''
   let message = ''
   const ref = useRef()
   const [uploadImage, setUploadImage] = useState([]);
-
-
+  const [imageDetails, setImageDetails] = useState([])
+  const [rawImages, setRawImages] = useState([])
   const {client} = useSelector(state => state.client)
 
 
   const fileSelectHandler = async(e) => {
-
-    console.log(e.target.value)
-
     const images = e.target.files
     if((images.length + uploadImage.length) > 5){
       alert("Only 5 Images Allowed")
       return 0
     }
     let loadedImages = [];
-
-    const selectedImages = [];
-
-    for(let index= 0; index < images.length ; index++){
-      if(images[index].size > 2500000){
+    let imageInfo = [];
+    let saveImages = [];
+    for(let index = 0; index < images.length ; index++){
+      const g = getImageDetails(images[index])
+      if( !g ){
         continue
       }
-
-      console.log(URL.createObjectURL(images[index]))
-      loadedImages = [...loadedImages, URL.createObjectURL(images[index])]
+      else{
+        imageInfo = [...imageInfo,getImageDetails(images[index])]
+        loadedImages = [...loadedImages, URL.createObjectURL(images[index])]
+        saveImages = [...saveImages, images[index]]
+      }
     }
-
-
-
+    setRawImages([...rawImages, saveImages ])
+    setImageDetails([...imageDetails, ...imageInfo])
     setUploadImage([...uploadImage, ...loadedImages])
-    
   };
   
   const removeImage = (i) => {
@@ -55,23 +55,31 @@ const WriteReview = () => {
 
     
     const review = {
-      brand: '614ecb6cad38bb28644f1a1e',
+      brand: '6155976cbfb62b39dc24e876',
       user: client.user.id,
-      title: "asdas",
-      message: "Message",
+      title: "This is a test review",
+      message: "This is a test Message",
     }
-
-    axios.post('http://localhost:4000/v1/review/', {review, uploadImage})
-
-    
-
-
-    // const urls = await uploadMultiPhotos(review, user, uploadImage)
-    // alert(JSON.stringify(review, null, 2))
-    // ref.current.reset()
-    // setUploadImage([])
-    
-    //NOTE Commented for testing purposes history.push('/')
+    const {data: imageArray} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
+      headers:{
+        "authorization" : `bearer ${client.tokens.access.token}`,
+        "role" : Object.keys(client)[0]
+      }
+    })
+    axios.all(imageArray.map( (_, index) => {
+      console.log(imageArray[index], "\n", rawImages[0][index], "\n", imageDetails[index].fileType, "\n")
+      axios.put(imageArray[index], rawImages[0][index],{
+        headers:{
+          "Content-Type": imageDetails[index].fileType
+        }
+      })
+      .then( (_) => {
+        history.push("/")
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }))
   }
 
   return (

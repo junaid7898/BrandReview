@@ -12,7 +12,6 @@ import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndica
 const BrandLoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [rememberMe, setRememberMe] = useState(false);
 
   const [isLoggingIn, setIsLoggingIn] = useState({
@@ -75,9 +74,12 @@ const BrandLoginInputs = () => {
           history.push('/')
         })
         .catch((err) => {
-          console.log(err);
+          alert(err.response.data.message);
+          setIsLoggingIn(false)
         });
   };
+
+  
 
   return (
     <div className="brand__login__inputs">
@@ -143,8 +145,14 @@ const BrandLoginInputs = () => {
         className="login__form__inputs__button"
         disabled = {isLoggingIn.email}
         onClick={login}
+
+        disabled = {isLoggingIn}
+        style={{position:"relative"}}
       >
-        {isLoggingIn.email ? <LoadingIndicator /> : "Login"}
+        Login
+        {
+          isLoggingIn && <LoadingIndicator />
+        }
       </button>
 
       <p>or continue with</p>

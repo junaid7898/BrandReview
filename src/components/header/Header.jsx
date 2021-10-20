@@ -9,9 +9,14 @@ import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
 import { clientActions } from "../../Redux/clientslice/clientSlice";
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
+
 import { AiFillCaretDown, AiFillCar } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 import {BiUser} from 'react-icons/bi'
+
+import { logout } from "./logout";
+import Links from "./components/Links";
+
 
 const Header = () => {
   //search bar states
@@ -144,7 +149,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div
+      /*<div
         className={`nav__links ${
           isShowingMenu ? `nav__links-show` : `nav__links-hide`
         }`}
@@ -328,7 +333,49 @@ const Header = () => {
           )}
         </ul>
         <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
-      </div>
+      </div>*/
+      
+        <div
+          className={`nav__links ${
+            isShowingMenu ? `nav__links-show` : `nav__links-hide`
+          }`}
+        >
+          <ul>
+            {
+              !attemptingLoginOnSiteLoad ?
+              (
+              !client ? 
+                (
+                  <>
+                    <li>
+                      Login as
+                      <Link to="/user/login">User</Link>
+                      <Link to="/brand/login">Brand</Link>
+                    </li>
+                    <li>
+                      Signup as
+                      <Link to="/user/signup">User</Link>
+                      <Link to="/brand/signup">Brand</Link>
+                    </li>
+                  </>
+                ) : 
+                (
+                  <>
+                    <Links client = {client} />
+                    <li>
+                      <button onClick={ () => {logout(dispatch, history, client.type, client.tokens.refresh.token )}} >Logout</button>
+                    </li>
+                  </>
+                )
+              )
+              :
+                <div className="">
+                  <LoadingIndicator className="" style={{color:"blue", fontSize:"100px"}} /> 
+                </div>
+          }
+          </ul>
+          <GrClose className="nav__close__icon" onClick={() => hideMenu()} />
+        </div>
     </nav>
   );
 };

@@ -37,9 +37,8 @@
             &__uploading{
                 pointer-events: none;
             }
-            & img {
+            &__img {
                 width: 100px;
-                aspect-ratio: 1;
                 object-fit: cover;
                 object-position: top center;
             }

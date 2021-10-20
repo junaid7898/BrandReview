@@ -11,6 +11,8 @@ const BrandDetail = ({item}) => {
     const [showSettings, setShowSettings] = useState(false)
     const [showReport, setShowReport] = useState(false)
 
+    const [option, setOption] = useState(1)
+
 
     const [phone, setPhone] = useState(null)
     const [address, setAddress] = useState(null)
@@ -22,31 +24,35 @@ const BrandDetail = ({item}) => {
     const [isLoadingUpdate, setIsloadingUpdate] = useState(false);
 
     const handleShowDashBoard = () => {
-        setShowDashBoard(true)
-        setShowReviews(false)
-        setShowSettings(false)
-        setShowReport(false)
+        setOption(1)
+        // setShowDashBoard(true)
+        // setShowReviews(false)
+        // setShowSettings(false)
+        // setShowReport(false)
     }
 
     const handleShowReviews = () => {
-        setShowDashBoard(false)
-        setShowReviews(true)
-        setShowSettings(false)
-        setShowReport(false)
+        setOption(2)
+        // setShowDashBoard(false)
+        // setShowReviews(true)
+        // setShowSettings(false)
+        // setShowReport(false)
     }
 
     const handleShowSettings = () => {
-        setShowDashBoard(false)
-        setShowReviews(false)
-        setShowSettings(true)
-        setShowReport(false)
+        setOption(3)
+        // setShowDashBoard(false)
+        // setShowReviews(false)
+        // setShowSettings(true)
+        // setShowReport(false)
     }
 
     const handleShowReport = () => {
-        setShowDashBoard(false)
-        setShowReviews(false)
-        setShowSettings(false)
-        setShowReport(true)
+        setOption(4)
+        // setShowDashBoard(false)
+        // setShowReviews(false)
+        // setShowSettings(false)
+        // setShowReport(true)
     }
 
 
@@ -60,13 +66,13 @@ const BrandDetail = ({item}) => {
         
             <div className = 'dashboard__list'>
                 <ul>
-                    <li onClick = {handleShowDashBoard} className = {showDashBoard ? 'list__click': ''}>Dashboard</li>
-                    <li onClick = {handleShowReviews} className = {showReviews ? 'list__click': ''}>Reviews</li>
-                    <li onClick = {handleShowSettings} className = {showSettings ? 'list__click': ''}>Settings</li>
-                    <li onClick = {handleShowReport} className = {showReport ? 'list__click': ''}>Reports</li>
+                    <li onClick = {handleShowDashBoard} className = {option === 1 ? 'list__click': ''}>Dashboard</li>
+                    <li onClick = {handleShowReviews} className = {option === 2 ? 'list__click': ''}>Reviews</li>
+                    <li onClick = {handleShowSettings} className = {option === 3 ? 'list__click': ''}>Settings</li>
+                    <li onClick = {handleShowReport} className = {option === 4 ? 'list__click': ''}>Reports</li>
                 </ul>
                 {
-                    showDashBoard === true && item ? 
+                    option === 1 && item ? 
                     (
                         <div className="dashboard__list__chart">
                             <Chart/>
@@ -78,7 +84,7 @@ const BrandDetail = ({item}) => {
                 }
 
                 {
-                    showSettings === true && item ?    
+                    option === 3 && item ?    
                     (
                         <>
                         <div className="dashboard__list__settings">   
@@ -224,6 +230,15 @@ const BrandDetail = ({item}) => {
                         null
                     )
                 }
+                {
+                    option === 2 ?
+                    (<h1>option 2</h1>):(null)
+                }
+                {
+                    option === 4 ? 
+                    (<h1>option 4</h1>):(null)
+                }
+
                 
             </div>
     )

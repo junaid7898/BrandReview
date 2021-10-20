@@ -127,7 +127,7 @@ const SearchBrand = () => {
       }
       {/* <BrandReviews comments = {testBrand.comments}/>    */}
       <WriteYourReviewComponent/>
-      <Review/> */}
+      <Review/> 
     </div>
   );
 };

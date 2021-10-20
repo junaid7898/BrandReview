@@ -48,10 +48,16 @@ const BrandPanel = () => {
         {
             brandDetails ? 
             (
-                <>
-                    <BrandContent item = {brandDetails}/>
-                    <BrandDetail item = {brandDetails}/>
-                </>   
+                <div className = 'brand__main'>
+                
+                    <div className="brand__main__brand-content">
+                        <BrandContent item = {brandDetails}/>
+                    </div>
+
+                    <div className="brand__main__brand-details">
+                        <BrandDetail item = {brandDetails}/>
+                    </div>
+                </div>   
             )
             :
             (

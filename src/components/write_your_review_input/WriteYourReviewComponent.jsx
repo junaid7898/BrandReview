@@ -1,58 +1,113 @@
 import React, { useState } from 'react'
 import { IoMdAttach } from "react-icons/io";
 import { FaTelegramPlane } from "react-icons/fa";
-import { computeHeadingLevel } from '@testing-library/react';
-import ImageThumbnail from '../image_thumbnail/ImageThumbnail';
-import ImageViewer from '../image_viewer/ImageViewer';
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
+import ImagePreview from '../image_preview/ImagePreview';
+import { getImageDetails } from '../../helpers/getImageDetails';
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import axios from 'axios';
+const WriteYourReviewComponent = ({setPage, brandId}) => {
+    const history = useHistory()
 
-const WriteYourReviewComponent = ({setPage}) => {
-    const [imgObj, setImgObj] = useState([])
     const [imgArray, setImgArray] = useState([])
-    const [clicked, setClicked] = useState(null)
+    const [imageDetails, setImageDetails] = useState([])
+    const [rawImages, setRawImages] = useState([])
+
     const [message, setMessage] = useState("")
     const [isPublishing, setIsPublishing] = useState(false)
-    const addImage = (e) => {
-        console.log('here 1111111');
-        let imgObj1 = [e.target.files]
-        for(let i = 0; i < imgObj1[0].length; i++){
-            setImgArray((state) => [...state,URL.createObjectURL(imgObj1[0][i]) ])
+
+    const {client} = useSelector(state => state.client)
+
+    const fileSelectHandler = async(e) => {
+        const images = e.target.files
+        if((images.length + imgArray.length) > 5){
+          alert("Only 5 Images Allowed")
+          return 0
         }
+
+        let loadedImages = [];
+        let imageInfo = [];
+        let saveImages = [];
+        for(let index = 0; index < images.length ; index++){
+          const g = getImageDetails(images[index])
+          if( !g ){
+            continue
+          }
+          else{
+            imageInfo = [...imageInfo,getImageDetails(images[index])]
+            loadedImages = [...loadedImages, URL.createObjectURL(images[index])]
+            saveImages = [...saveImages, images[index]]
+          }
+        }
+        setRawImages([...rawImages, saveImages ])
+        setImageDetails([...imageDetails, ...imageInfo])
+        setImgArray([...imgArray, ...loadedImages])
     }
 
-    const handlePublish = () =>{
+    const handlePublish = async () =>{
       setIsPublishing(true)
       // setImgArray([])
       // setMessage("")
       // setPage(1)
+    const review = {
+      brand: brandId,
+      user: client.user.id,
+      message: message,
     }
+    const {data: imageArray} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
+      headers:{
+        "authorization" : `bearer ${client.tokens.access.token}`,
+        "role" : Object.keys(client)[0]
+      }
+    })
+    axios.all(imageArray.map( (_, index) => {
+      // console.log(imageArray[index], "\n", rawImages[0][index], "\n", imageDetails[index].fileType, "\n")
+      axios.put(imageArray[index], rawImages[0][index],{
+        headers:{
+          "Content-Type": imageDetails[index].fileType
+        }
+      })
+      .then( (_) => {
+        setIsPublishing(false)
+        history.push("/")  
+      })
+      .catch(err => {
+        setIsPublishing(false)
+        alert(JSON.stringify(err))
+      })
+    }))
+    }
+
+    const removeImage = (i) => {
+      setImgArray( imgArray.filter((img , index) => index !== i) )
+    }
+
     return (
         <div className = 'review1'>
         <div className="review1__img-thumb">
         {
           imgArray.length > 0 ? 
             (
-              imgArray.map(
-                  (item, index) => {
+              <div className="review1__img-thumb__array">
+              {
+                imgArray.map(
+                  (item, index) => 
+                  {
                       return(
-                          <div className="review1__img-thumb__div" id = {index} onClick = {() => {
-                              setClicked(item)
-                          }}>
-                              <ImageThumbnail image = {item}/>
+                          <div className="review1__img-thumb__div" id = {item.id}>
+                              <ImagePreview image = {item} index = {index} removeImage = {removeImage}/>
                           </div>
                       )
-              })
+                  }
+                )
+              }
+              </div>
             )
             :
             (
                 null
             )
-        }
-        {
-        clicked !== null ?  
-          <ImageViewer image={clicked} setImage={setClicked} />
-        :
-          null
         }
         </div>
         <div className="review1__your-review">   
@@ -70,9 +125,7 @@ const WriteYourReviewComponent = ({setPage}) => {
               name="picUpload"
               accept="image/*"
               multiple
-              onChange = {(e) => {
-                  addImage(e)
-              }}
+              onChange = {fileSelectHandler}
             />
             <FaTelegramPlane onClick={handlePublish} className="review1__your-review__icons__send-icon" size={24} color = 'rgba(0, 0, 0, 0.5)' />
           </div>

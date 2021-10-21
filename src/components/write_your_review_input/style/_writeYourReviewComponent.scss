@@ -1,8 +1,12 @@
 .review1{
     &__img-thumb{
-        display: flex;
-        flex-direction: row;
         padding: 10px 14px;
+        &__array{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+        }
     }
     &__your-review{
         position: relative;
@@ -32,6 +36,7 @@
             }
             &__upload-icon{
                 cursor: pointer;
+                fill: $onSurface-secondary;
             }
             &__send-icon{
                 margin: 0 10px;

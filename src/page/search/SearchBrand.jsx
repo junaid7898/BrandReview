@@ -68,7 +68,7 @@ const SearchBrand = () => {
         <BrandInfo brand={brandData} />
       }
       <div className="brandMain__writeReview">
-        <WriteYourReviewComponent setPage = { setPage }/>
+        <WriteYourReviewComponent setPage = { setPage } brandId = {brandId}/>
       </div>
       <div className="brandMain__reviews-container">
       

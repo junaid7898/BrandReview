@@ -46,7 +46,7 @@ const MyDetails = ({ user }) => {
           {
               updateProfile ? 
               (
-                    <UpdateProfileComponents onSubmit = {setUpdateProfile}/>
+                    <UpdateProfileComponents onSubmit = {setUpdateProfile} user = {user}/>
             ) 
                 : 
                 null

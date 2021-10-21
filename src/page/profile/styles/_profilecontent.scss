@@ -38,9 +38,11 @@
                 pointer-events: none;
             }
             &__img {
-                width: 100px;
-                object-fit: cover;
-                object-position: top center;
+                & img{
+                    max-height: 100px;
+                    object-fit: cover;
+                    aspect-ratio: 1;
+                }
             }
             &__upload{
                 position: absolute;

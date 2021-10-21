@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect, useRef} from "react";
 import HeaderIcon from "../../assests/icons/header_icon1.png";
 import SearchIcon from "../../assests/icons/search_icon.png";
 import { GrClose } from "react-icons/gr";
@@ -26,6 +26,8 @@ const Header = () => {
 
   const {brands: data} = useSelector(state => state.brands)
 
+
+
   //states to show and hide nav links and search bar
   const [isShowingMenu, setIsShowingMenu] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(-1000);
@@ -36,6 +38,39 @@ const Header = () => {
   const history = useHistory();
   const { client } = useSelector((state) => state.client);
   const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
+
+
+    //ANCHOR search ref to close on click
+    const searchRef = useRef(null);
+
+    //ANCHOR useEffect
+    useEffect(() => {
+      if (showResult) {
+        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('keydown', handleEsc)
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('keydown', handleEsc)
+      }
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('keydown', handleEsc)
+      };
+    }, [searchRef, showResult]);
+
+    //ANCHOR handling use effect listeners
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowResult(false);
+      }
+    }
+
+    const handleEsc = (e) => {
+      if(e.keyCode === 27){
+          setShowResult(false)
+      }
+    }
+
 
   const handleSearch = (e) => {
     if (e.trimStart() === "") {
@@ -68,7 +103,7 @@ const Header = () => {
     setShowSearchBar(-1000);
   };
   return (
-    <nav className="nav">
+    <nav className="nav" >
       <div className="nav__innerContainer">
         <BsSearch
           src={SearchIcon}
@@ -80,7 +115,7 @@ const Header = () => {
 
         <Link to="/" className="nav__icon">
           <img src={HeaderIcon} alt="site logo" />
-          <h1>Review Website</h1>
+          <h1>SikayetBox</h1>
         </Link>
 
         <div className="nav__icon__container">
@@ -96,7 +131,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="nav__searchdiv" style={{ left: showSearchBar }}>
+      <div ref = {searchRef} className="nav__searchdiv" style={{ left: showSearchBar }} >
         <div className="nav__searchBar">
           <GrClose
             className="searchBar__close__icon"

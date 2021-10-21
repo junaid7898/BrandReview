@@ -6,10 +6,7 @@ import PhoneInput from 'react-phone-number-input';
 import Chart from '../../../components/charts/Chart';
 
 const BrandDetail = ({item}) => {
-    const [showDashBoard , setShowDashBoard] = useState(true)
-    const [showReviews , setShowReviews] = useState(false)
-    const [showSettings, setShowSettings] = useState(false)
-    const [showReport, setShowReport] = useState(false)
+    console.log("item update: ", item);
 
     const [option, setOption] = useState(1)
 
@@ -25,34 +22,18 @@ const BrandDetail = ({item}) => {
 
     const handleShowDashBoard = () => {
         setOption(1)
-        // setShowDashBoard(true)
-        // setShowReviews(false)
-        // setShowSettings(false)
-        // setShowReport(false)
     }
 
     const handleShowReviews = () => {
         setOption(2)
-        // setShowDashBoard(false)
-        // setShowReviews(true)
-        // setShowSettings(false)
-        // setShowReport(false)
     }
 
     const handleShowSettings = () => {
         setOption(3)
-        // setShowDashBoard(false)
-        // setShowReviews(false)
-        // setShowSettings(true)
-        // setShowReport(false)
     }
 
     const handleShowReport = () => {
         setOption(4)
-        // setShowDashBoard(false)
-        // setShowReviews(false)
-        // setShowSettings(false)
-        // setShowReport(true)
     }
 
 
@@ -105,13 +86,6 @@ const BrandDetail = ({item}) => {
 
                             <div className="dashboard__list__settings__items">
                                 <div className="dashboard__list__settings__items__name">
-                                    <h3>Name</h3>
-                                    <h4>{item.name}</h4>
-                                </div>
-                            </div>
-
-                            <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
                                     <h3>Email</h3>
                                     <h4>{item.email}</h4>
                                 </div>
@@ -127,7 +101,7 @@ const BrandDetail = ({item}) => {
                             <div className="dashboard__list__settings__items">
                                 <div className="dashboard__list__settings__items__name">
                                     <h3>Country Code</h3>
-                                    <h4>{item.name}</h4>
+                                    <h4>{item.phoneNumber.countryCode}</h4>
                                 </div>
                             </div>
 

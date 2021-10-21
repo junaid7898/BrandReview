@@ -48,14 +48,21 @@ const ProfileContent = ({user, setClientDetails}) => {
         <div className="profile__intro">
           <div className="profile__intro__infoSection">
             <div className="profile__intro__displayImage">
+
               <div className={`profile__intro__displayImage__content ${isImageUploading && `profile__intro__displayImage__content__uploading`}`}>
-                <img src={user.profileImage} alt="profileasdasdsa" className = 'profile__intro__displayImage__content__img' />
+                
+                <div className="profile__intro__displayImage__content__img">
+                  <img src={user.profileImage} alt="profileasdasdsa"  />
+                </div>
+
                 <div className="profile__intro__displayImage__content__upload">
                   <HiCamera className="profile__intro__displayImage__content__upload__icon"/>
                   <p className="profile__intro__displayImage__content__upload__text">upload</p>
                   <input ref={fileRef} type="file" accept="image/*" className="profile__intro__displayImage__content__upload__file" onChange={uploadphoto} />
                 </div>
+
               </div>
+              
               {
                 isImageUploading &&
                 <div className="profile__intro__displayImage__loadingIndicator">

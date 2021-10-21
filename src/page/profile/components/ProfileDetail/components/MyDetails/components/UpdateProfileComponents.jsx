@@ -4,22 +4,19 @@ import PhoneInput from 'react-phone-number-input';
 import { isPossiblePhoneNumber, formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
 import { useDispatch , useSelector} from "react-redux";
 import { axios } from "../../../../../../../axios/axiosInstance";
+import LoadingIndicator from "../../../../../../../components/loadingIndicator/LoadingIndicator";
 import {clientActions} from '../../../../../../../Redux/clientslice/clientSlice'
 
-const UpdateProfileComponents = ({ onSubmit }) => {
-  const [phone, setPhone] = useState(null);
+const UpdateProfileComponents = ({ onSubmit, user }) => {
+  const [phone, setPhone] = useState(user.countryCode + user.phoneNumber);
   const {client} = useSelector(state => state.client)
   const dispatch = useDispatch()
   const [birthday, setBirthday] = useState(
-    new Date().toISOString().split("T")[0]
+    new Date(user.dateOfBirth)
   );
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState( user.address);
+  const [isUpdating, setIsUpdating] = useState(false)
 
-
-
-  const handleDate = (value) => {
-    setBirthday(new Date(value).toLocaleDateString());
-  };
 
   const checkValidation = () => {
       let response;
@@ -40,6 +37,7 @@ const UpdateProfileComponents = ({ onSubmit }) => {
   const handleUpdate = () => {
       const validation = checkValidation();
       if(validation === 'ok'){
+        setIsUpdating(true)
         const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
         const details = {address: address,phoneNumber: phone, birthday: birthday };
         const {payload} = dispatch(clientActions.setClient({
@@ -53,14 +51,18 @@ const UpdateProfileComponents = ({ onSubmit }) => {
             },
             
         }))
-        console.log('payload: ',JSON.stringify(payload));
         axios.patch(`/user/${client.user.id}`, payload.user, {
             headers:{
                 "role" : "user",
                 "authorization" : `bearer ${client.tokens.access.token}`
             }
-        })   
-        alert(JSON.stringify(details)) 
+        }).then((res) => {
+            onSubmit(false)
+            setIsUpdating(false)
+        }).catch(err => {
+            setIsUpdating(false)
+            alert(JSON.stringify(err))
+        })
     } 
     else{
         alert(validation)
@@ -104,7 +106,7 @@ const UpdateProfileComponents = ({ onSubmit }) => {
                     id="birthDate"
                     placeholder="click to open"
                     value={birthday}
-                    onChange={(value) => handleDate(value)}
+                    onChange={setBirthday}
                     multiple={false}
                     range={false}
                     containerClassName="mydetails__update-details__update__dob__container"
@@ -142,11 +144,10 @@ const UpdateProfileComponents = ({ onSubmit }) => {
             <div
             className="mydetails__update-details__update__button"
             onClick={() => {
-                // onSubmit(false);
                 handleUpdate()
             }}
             >
-                <h1>Ok</h1>
+                <h1>{isUpdating? (<LoadingIndicator/>): 'ok'}</h1>
             </div>
         </div>
     </div>

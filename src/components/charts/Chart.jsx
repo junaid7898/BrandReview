@@ -82,58 +82,58 @@ const Chart = () => {
             (
                 <div className = 'chart__div'>
              
-            <div className="chart__div__first-chart">
-                <div className="chart__div__first-chart__intro">
-                    <h3>Reviews</h3>
-                    <h4>1.5</h4>
-                </div>
-                <div>
-                <Bar
-                    data = {{
-                        labels: x,
-                        datasets: [{  
-                            data: [10, 20, 30, 40, 50, 60, 70, 80, 20, 10, 20, 30, 40, 50, 5, 10, 20, 30 , 40 , 50, 20, 10, 45],
-                            barPercentage: 0.5,
-                            barThickness: 15,
-                            maxBarThickness:20,
-                            minBarLength: 2,
-                            borderWidth: 2,   
-                        }]
-                    }}
-                    height = {300}
-                    width = {500}
-                    options = {{maintainAspectRatio: false, backgroundColor: 'red', scales: {x: {beginAtZero: true}}}}
-                />
-                </div>
-            </div>
-            
+                    <div className="chart__div__first-chart">
+                        <div className="chart__div__first-chart__intro">
+                            <h3>Reviews</h3>
+                            <h4>1.5</h4>
+                        </div>
+                        <div className = 'chart__div__first__chart__bar'>
+                            <Bar
+                                data = {{
+                                    labels: x,
+                                    datasets: [{  
+                                        data: [10, 20, 30, 40, 50, 60, 70, 80, 20, 10, 20, 30, 40, 50, 5, 10, 20, 30 , 40 , 50, 20, 10, 45],
+                                        barPercentage: 0.5,
+                                        barThickness: 15,
+                                        maxBarThickness:20,
+                                        minBarLength: 2,
+                                        borderWidth: 2,   
+                                    }]
+                                }}
+                                height = {300}
+                                width = {500}
+                                options = {{maintainAspectRatio: false, backgroundColor: 'red', scales: {x: {beginAtZero: true}}}}
+                            />
+                        </div>
+                    </div>
+                    
 
-            <div className="chart__div__second-chart">
-            <div className="chart__div__second-chart__intro">
-                    <h3>Ratings</h3>
-                    <h4>1.5</h4>
-            </div>
-            <div>
-            <Line
-                    data = {{
-                        labels: x,
-                        datasets: [{    
-                            data: data,
-                            barPercentage: 0.5,
-                            barThickness: 6,
-                            maxBarThickness: 8,   
-                            minBarLength: 2,
-                            borderWidth: 2,
-                        }]
-                    }}
-                    height = {300}
-                    width = {500}
-                    options = {{maintainAspectRatio: true, backgroundColor: 'red'}}
-                />
-                </div>
-            </div>
+                    <div className="chart__div__second-chart">
+                        <div className="chart__div__second-chart__intro">
+                                <h3>Ratings</h3>
+                                <h4>1.5</h4>
+                        </div>
+                        <div className = 'chart__div__first__chart__bar'>
+                            <Line
+                                    data = {{
+                                        labels: x,
+                                        datasets: [{    
+                                            data: data,
+                                            barPercentage: 0.5,
+                                            barThickness: 6,
+                                            maxBarThickness: 8,   
+                                            minBarLength: 2,
+                                            borderWidth: 2,
+                                        }]
+                                    }}
+                                    height = {300}
+                                    width = {500}
+                                    options = {{maintainAspectRatio: true, backgroundColor: 'red'}}
+                                />
+                            </div>
+                    </div>
             
-        </div>
+                </div>
             )
             :
             (

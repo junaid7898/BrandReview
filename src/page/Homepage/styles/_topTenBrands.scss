@@ -57,35 +57,33 @@
         &__img{
             margin-left: auto;
             // background-color: blue;
-            width: 70px;
+            max-height: 70px;
             @include respond(phone){
                 width: 50px;
             }
         }
         &__name{
             margin-right: auto;
-            width: 100px;
+            flex: 0.5;
             @include respond(phone){
                 font-size: 20px;
+                flex: 1;
             }
             // background-color: green;
         }
         &__category{
             margin-right: auto;
-            width: 100px;
+            // width: 100px;
             // background-color: red;
         }
         &__ratings{
             margin-right: auto;
             display: flex;
             align-items: center;
-            width: 100px;
-            // background-color: pink;
+            justify-content: center;
             & p{
                 line-height: 15px;
                 margin-left: 10px;
-                width: 50px;
-                // background-color: purple;
             }
         }
         

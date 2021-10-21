@@ -130,9 +130,10 @@
     display: none;
 }
 .review__content__publishButton{
-    background-color: #35C9CE;
-    color: white;
+    background-color: $primary;
+    color: $onPrimary;
     margin-left: 10px;
+    position: relative;
 }
 
 .review__content__tboxes1{

@@ -6,13 +6,96 @@ import ImageViewer from "../image_viewer/ImageViewer";
 import {AiFillLike, AiOutlineLike} from "react-icons/ai"
 import {IoMdNotifications, IoMdNotificationsOutline} from "react-icons/io"
 import {FiSend} from 'react-icons/fi'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {axios} from "../../axios/axiosInstance";
+import {clientActions} from "../../Redux/clientslice/clientSlice"
 const Review = ({review}) => {
   const [clikedImage, setClickedImage] = useState(null)
   const {client} = useSelector(state => state.client) 
   const [showComments, setShowComments] = useState(false)
   const [commentText, setCommentText] = useState('')
   const commentsAllowed = true
+  const dispatch = useDispatch()
+
+  const handleComment = () =>{
+    alert(commentText)
+  }
+
+  const handleLike = () =>{
+    
+    axios.post(`/review/like/${review.id}`, client.user,{
+      headers:{
+        'role' : client.type,
+        'authorization' : `bearer ${client.tokens.access.token}`
+      }
+    })
+    .then(({data}) => {
+
+      console.log(data)
+
+    })
+
+    let updated = null
+
+    if(client.user.likedReviews.find( id => id === review.id )){
+      updated = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          likedReviews:[...client.user.likedReviews.filter(id => id !== review.id)]
+        }
+      }))
+    }
+    else{
+      updated = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          likedReviews:[...client.user.likedReviews, review.id]
+        }
+      }))
+    }
+
+  }
+
+
+  const handleFollow = () =>{
+    
+    let updated = null
+
+    if(client.user.followedReviews.find( id => id === review.id )){
+      updated = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          followedReviews:[...client.user.followedReviews.filter(id => id !== review.id)]
+        }
+      }))
+    }
+    else{
+      updated = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          followedReviews:[...client.user.followedReviews, review.id]
+        }
+      }))
+    }
+
+    axios.post(`/review/follow/${review.id}`, updated.payload.user,{
+      headers:{
+        'role' : client.type,
+        'authorization' : `bearer ${client.tokens.access.token}`
+      }
+    })
+    .then(({data}) => {
+
+      console.log(data)
+
+    })
+
+  }
+
 
   return (
     review ?
@@ -59,8 +142,6 @@ const Review = ({review}) => {
                     null
                   }
           </div>
-
-
         </div>
 
         <div className="reviewComponent__text">
@@ -71,9 +152,9 @@ const Review = ({review}) => {
             {
               client && client.type.includes("user") && client.user.likedReviews.includes(review.id) 
               ?
-                <AiFillLike className="reviewComponent__buttons__button-liked"/>
+                <AiFillLike onClick= {handleLike} className="reviewComponent__buttons__button-liked"/>
               :
-                <AiOutlineLike className="reviewComponent__buttons__button-like"/>
+                <AiOutlineLike onClick= {handleLike} className="reviewComponent__buttons__button-like"/>
             }
               
           </div>
@@ -81,9 +162,9 @@ const Review = ({review}) => {
             {
               client && client.type.includes("user") && client.user.followedReviews.includes(review.id)
               ?
-                <IoMdNotifications className="reviewComponent__buttons__button-following" />
+                <IoMdNotifications onClick={handleFollow} className="reviewComponent__buttons__button-following" />
               :
-                <IoMdNotificationsOutline className="reviewComponent__buttons__button-follow" />
+                <IoMdNotificationsOutline onClick={handleFollow} className="reviewComponent__buttons__button-follow" />
             }  
           </div>
           <div className="reviewComponent__buttons__likeCount">
@@ -96,29 +177,30 @@ const Review = ({review}) => {
       {
         commentsAllowed && client
         ?
+          showComments 
+          ?
           <div className="reviewComponent__comments">
             <div className="reviewComponent__comments__writeComment">
               <Link to={`/user/${client.user.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.user.profileImage} alt="" /></Link>
               <div className="reviewComponent__comments__writeComment__input">
                 <input onChange={(e) => setCommentText(e.target.value)} className="" type="text" placeholder="Enter Comment" />
-                <FiSend className={`reviewComponent__comments__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__comments__writeComment__sendIcon-hide`}`}/>
+                <FiSend onClick={handleComment} className={`reviewComponent__comments__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__comments__writeComment__sendIcon-hide`}`}/>
               </div>
             </div>
             {
               review.comments.length > 0 
               ?
-                showComments ?
                 <div className="reviewComponent__comments__array">
                   hello
                 </div>
                 :
-                <button onClick={() => setShowComments(true)}>
-                  Show Comments
-                </button>
-              :
-                null
+                  null
             }
           </div>
+          :
+            <button onClick={() => setShowComments(true)}>
+              Show Comments
+            </button>
         :
           null
       }

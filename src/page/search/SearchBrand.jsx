@@ -70,28 +70,29 @@ const SearchBrand = () => {
       <div className="brandMain__writeReview">
         <WriteYourReviewComponent setPage = { setPage } brandId = {brandId}/>
       </div>
+
       <div className="brandMain__reviews-container">
       
-      <div className="brandMain__reviews">
-        {
-          reviewData.length > 0 && areReviewsLoading ?
-          reviewData.map(review =>{
-          return <Review review = {review} /> 
-        })
-        :
-          <LoadingIndicator />
-        }
-
-      </div>
-        <div className="brandMain__pagination">
+        <div className="brandMain__reviews">
           {
-            Array(Math.round(totalPages)).fill().map((_, index) =>
-              <div key={index} onClick={ () => handlePageination(index + 1)} className="brandMain__pagination__item">
-                <p>{ index + 1 }</p>
-              </div>
-            )
+            reviewData.length > 0 && areReviewsLoading ?
+            reviewData.map(review =>{
+            return <Review review = {review} /> 
+          })
+          :
+            <LoadingIndicator />
           }
+
         </div>
+          <div className="brandMain__pagination">
+            {
+              Array(Math.round(totalPages)).fill().map((_, index) =>
+                <div key={index} onClick={ () => handlePageination(index + 1)} className="brandMain__pagination__item">
+                  <p>{ index + 1 }</p>
+                </div>
+              )
+            }
+          </div>
       </div>
     </div>
   );

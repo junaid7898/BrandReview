@@ -54,22 +54,22 @@
                 top: 0;
             }
         }
-        &__img{
-            margin-left: auto;
-            // background-color: blue;
-            max-height: 70px;
-            @include respond(phone){
-                width: 50px;
-            }
+        &__icon{
+          width: 100px;
+          margin-left: 20px;
+          &__img{
+              // margin-left: auto;
+              max-height: 50px;
+              min-height: 50px;
+              @include respond(phone){
+                  width: 50px;
+              }
+          }
         }
         &__name{
-            margin-right: auto;
-            flex: 0.5;
-            @include respond(phone){
-                font-size: 20px;
-                flex: 1;
-            }
-            // background-color: green;
+          width: 500px;
+          & h1{
+          }
         }
         &__category{
             margin-right: auto;

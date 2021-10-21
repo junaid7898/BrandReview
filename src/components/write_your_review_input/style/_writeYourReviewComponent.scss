@@ -39,9 +39,21 @@
                 fill: $onSurface-secondary;
             }
             &__send-icon{
+                // margin: 0 10px;
+                cursor: pointer;
+                fill: $onSurface-secondary;
+                opacity: 0;
+                transition: 300ms;
+                margin: 0 10px;
+                pointer-events: none;
+            }
+            &__show-send{
+                opacity: 1;
+                transition: 300ms;
                 margin: 0 10px;
                 cursor: pointer;
-                color: rgba(0, 0, 0, 0.5)
+                fill: $onSurface-secondary;
+                pointer-events: all;
             }
         }
     }

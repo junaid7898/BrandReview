@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import axios from 'axios';
 const WriteYourReviewComponent = ({setPage, brandId}) => {
+    const [showSubmitIcon, setShowSubmitIcon] = useState(false)
+
     const history = useHistory()
 
     const [imgArray, setImgArray] = useState([])
@@ -111,7 +113,15 @@ const WriteYourReviewComponent = ({setPage, brandId}) => {
         }
         </div>
         <div className="review1__your-review">   
-          <textarea value={message} onChange={(e) => setMessage(e.target.value)} type="text" placeholder="Write Your Review" name="review" />
+          <textarea value={message} onChange={(e) => {
+            setMessage(e.target.value)
+            if(e.target.value.length > 0){
+              setShowSubmitIcon(true)
+            }
+            else{
+              setShowSubmitIcon(false)
+            }
+          }} type="text" placeholder="Write Your Review" name="review" />
           <div className="review1__your-review__icons">
             <label htmlFor="picUpload">
               <IoMdAttach
@@ -127,7 +137,9 @@ const WriteYourReviewComponent = ({setPage, brandId}) => {
               multiple
               onChange = {fileSelectHandler}
             />
-            <FaTelegramPlane onClick={handlePublish} className="review1__your-review__icons__send-icon" size={24} color = 'rgba(0, 0, 0, 0.5)' />
+
+              <FaTelegramPlane  onClick={handlePublish} className={showSubmitIcon ? 'review1__your-review__icons__show-send' : 'review1__your-review__icons__send-icon'} size={24} color = 'rgba(0, 0, 0, 0.5)' />
+            
           </div>
           {
             isPublishing &&

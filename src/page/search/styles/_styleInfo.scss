@@ -11,23 +11,32 @@
     padding: 10px 14px;
     &__img-ratings{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        justify-content: space-around;
+        flex: 1;
         @include respond(phone){
             margin-bottom: 20px;
         }
         // background-color: red;
         &__img{
-            width: 300px;
-            @include respond(phone){
-                width: 300px;
-            }
+            max-height: 200px;
+            min-height:200px;
         }
         &__info{
             display: flex;
             flex-direction: column;
             align-items: center;
+            & p{
+                color: $onSurface-secondary;
+                font-weight: 600;
+                font-size: 28px;
+                line-height: 42px;
+            }
 
+            &__stars{
+                margin-top: 10px;
+            }
         }
     }
     &__title-about{
@@ -37,8 +46,18 @@
         @include respond(phone){
             margin-bottom: 20px;
         }
+        & h3{
+            color: $primary;
+            font-weight: bold;
+            font-size: 22px;
+            line-height: 33px;
+        }
         &__para{
             max-width: 350px;
+            color: $onSurface-secondary;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 31px;
         }
     }
 }

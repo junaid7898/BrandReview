@@ -7,6 +7,7 @@ import {getImageDetails} from "../../helpers/getImageDetails";
 import { useHistory } from "react-router";
 import BrandSearchList from "../../components/brand_comparison/components/BrandSearchList";
 import Star from "../../assests/Star";
+import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 const WriteReview = () => {
   const history = useHistory()
 
@@ -21,6 +22,7 @@ const WriteReview = () => {
   const [rawImages, setRawImages] = useState([])
   const [showList, setShowList] = useState(false)
   const [searchResults, setSearchResults] = useState([])
+  const [isPublishing, setIsPublishing] = useState(false)
 
   const starGradient1 = "#FFDC64" 
   const starGradiet2 = "#FFC850" 
@@ -69,6 +71,7 @@ const WriteReview = () => {
 
 
   const onPublish = async(e) => {
+    setIsPublishing(true)
     e.preventDefault()
 
     console.log(title, message);
@@ -77,7 +80,7 @@ const WriteReview = () => {
       user: client.user.id,
       title: title,
       message: message,
-      ratingCount: 3.5,
+      ratingCount: 1.4,
     }
     const {data: imageArray} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
       headers:{
@@ -93,10 +96,12 @@ const WriteReview = () => {
         }
       })
       .then( (_) => {
-        history.push("/")
+        setIsPublishing(false)
+        history.push("/")  
       })
       .catch(err => {
-        console.log(err)
+        setIsPublishing(false)
+        alert(JSON.stringify(err))
       })
     }))
   }
@@ -245,7 +250,13 @@ const WriteReview = () => {
                 onClick = { (e) => {e.target.value = null}}
               />
             </div>
-            <button type = 'submit' className="review__content__publishButton" >Publish</button>
+            <button type = 'submit' className="review__content__publishButton" disabled = {isPublishing} >
+              publish
+              {
+                isPublishing &&
+                <LoadingIndicator/>
+              }
+            </button>
           </div>
         </form>
       </section>

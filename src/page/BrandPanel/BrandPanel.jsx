@@ -44,7 +44,7 @@ const BrandPanel = () => {
         }
     }, [client, brandId])
     return (
-        <div>
+        <div style = {{position: 'relative'}}>
         {
             brandDetails ? 
             (

@@ -107,6 +107,12 @@
                 width: 100%;
                 object-fit: contain;
             }
+            &__logo-container{
+                transition: 300ms;
+                &:hover{
+                    transform: scale(1.1);
+                }
+            }
             &__rating{
                 display: flex;
                 flex-direction: row;

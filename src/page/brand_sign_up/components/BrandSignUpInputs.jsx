@@ -174,9 +174,9 @@ const BrandSignUpInputs = () => {
 
 
         <div className="signup__form__inputs__username">
-          <label htmlFor="userName">Full name</label>
+          <label htmlFor="userName">Brand name</label>
           <input
-            id="userName" type="text" placeholder="Enter your name" value={username} name="username"
+            id="userName" type="text" placeholder="Enter Brand Name" value={username} name="brand name"
             onChange={(e) => 
             {
               setClientName(e.target.value);
@@ -245,13 +245,13 @@ const BrandSignUpInputs = () => {
         </div>
 
         <div className="signup__form__inputs__email">
-          <label htmlFor="brandAbout">About your Brand {` [100 / ${characterCount}] `}</label>
+          <label htmlFor="brandAbout">About your Brand {` [${characterCount} / 200] `}</label>
           <input
             id="brandAbout"
             type='text'
-            placeholder="What is your brand about? maximum of 100 characters"
+            placeholder="What is your brand about? maximum of 200 characters"
             name="about"
-            maxLength = {100}
+            maxLength = {200}
             value = {about}
             onChange={(e) => {
               setCharacterCount(e.target.value.length)

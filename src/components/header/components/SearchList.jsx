@@ -11,7 +11,7 @@ const SearchList = ({styling ,divStyling,  data, setShowResult}) => {
                 data ?
                 data.map((item) => {
                 return(
-                    <Link to ={`${"/"}`} className = {divStyling} onClick = { () => setShowResult(false)}>
+                    <Link to ={`/brand/${item.id}`} className = {divStyling} onClick = { () => setShowResult(false)}>
                         <img alt={`brand ${item.name} logo`} src = {item.logo} style = {{width: 50, borderRadius: 2  }}/>
                         <h1>{item.name}</h1>
                     </Link>

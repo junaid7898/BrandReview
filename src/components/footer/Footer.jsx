@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer__content__intro">
           <div>
             <img src={logo} alt="site logo" />
-            <h1>Review Website</h1>
+            <h1>SikayetBox</h1>
           </div>
 
           <p>
@@ -71,7 +71,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer__rights">
-        <h1>Review Website</h1>
+        <h1>SikayetBox</h1>
         <p>© 2021Reviewwebsite, All rights reserved </p>
         <p> Impressum Datenschutz Glossar</p>
       </div>

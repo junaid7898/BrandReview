@@ -8,100 +8,18 @@ import WriteYourReviewComponent from "../../components/write_your_review_input/W
 import { useParams } from "react-router";
 
 import {axios} from "../../axios/axiosInstance";
+import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator";
+import { useSelector } from "react-redux";
 const SearchBrand = () => {
   
-  const [testBrand] = useState({
-    brandImage: BrandImage,
-    brandRatings: 4.9,
-    brandTotalRatings: 1200,
-    brandLogo: BrandLogo,
-    brandName: "Kia sportage",
-    brandAbout:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. ",
-    comments: [
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      },
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      },
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      },
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      }
-    ],
-  });
 
   const {brandId} = useParams()
-
+  const {client} = useSelector(state => state.client)
   const [brandData, setBrandData] = useState(null)
-
+  const [reviewData, setReviewData] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
+  const [areReviewsLoading, setAreReviewsLoading] = useState(true)
   useEffect(() => {
     
     if(brandId){
@@ -109,25 +27,72 @@ const SearchBrand = () => {
         .get(`/brand/${brandId}`)
         .then(({data}) => {
           setBrandData(data)
-          console.log(data)
+          let num = data.reviews.length/10
+          if(num > Math.round(num)){
+            num = Math.round(num + 1)
+          }
+          setTotalPages(num)
         })
         .catch(err =>{
-          console.log(err.response.data.message)
+          console.log(err)
+          // console.log(err.response.data.message)
         })
       }
-
   }, [brandId])
 
+  useEffect(() => {
+    if(brandId){
+      axios
+      .get(`review/brand/${brandId}?page=${page}`)
+      .then(({data}) =>{
+        setReviewData(data)
+        console.log(data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  }, [brandId, page])
+
+
+  const handlePageination = (index) => {
+    setPage(index)
+    setReviewData([])
+  }
+
   return (
-    <div>
+    <div className="brandMain">
 
       {
         brandData &&
         <BrandInfo brand={brandData} />
       }
-      {/* <BrandReviews comments = {testBrand.comments}/>    */}
-      <WriteYourReviewComponent/>
-      <Review/> 
+      <div className="brandMain__writeReview">
+        <WriteYourReviewComponent setPage = { setPage }/>
+      </div>
+      <div className="brandMain__reviews-container">
+      
+      <div className="brandMain__reviews">
+        {
+          reviewData.length > 0 && areReviewsLoading ?
+          reviewData.map(review =>{
+          return <Review review = {review} /> 
+        })
+        :
+          <LoadingIndicator />
+        }
+
+      </div>
+        <div className="brandMain__pagination">
+          {
+            Array(Math.round(totalPages)).fill().map((_, index) =>
+              <div key={index} onClick={ () => handlePageination(index + 1)} className="brandMain__pagination__item">
+                <p>{ index + 1 }</p>
+              </div>
+            )
+          }
+        </div>
+      </div>
     </div>
   );
 };

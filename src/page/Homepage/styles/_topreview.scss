@@ -41,7 +41,9 @@
                 margin-right: 10px;
                 & img{
                     height: 50px;
+                    aspect-ratio: 1;
                     border-radius: 50%;
+                    object-fit: cover;
                 }
             }
         }

@@ -21,8 +21,15 @@ function TopTenBrands() {
                                     :
                                     (null)
                                 }
-                                <img alt={`brand ${item.name} logo`} className="topbrands__list__img" src = {item.logo}/>
-                                <h1 className="topbrands__list__name">{item.name}</h1>
+
+                                <div className="topbrands__list__icon">
+                                    <img alt={`brand ${item.name} logo`} className="topbrands__list__icon__img" src = {item.logo}/>
+                                </div>
+
+                                <div className="topbrands__list__name">
+                                    <h1>{item.name}</h1>
+                                </div>
+
                                 <h3 className="topbrands__list__category">{item.category}</h3>
                                 <h3 className="topbrands__list__ratings">
                                         <svg width="30" height="29" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">

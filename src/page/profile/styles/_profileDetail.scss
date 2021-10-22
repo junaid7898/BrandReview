@@ -2,6 +2,13 @@
     max-width: 90%;
     margin: auto;
     margin-bottom: 50px;
+    &__reviews{
+        &__comment{
+            width: 1100px;
+            max-width: 90%;
+            margin: auto;
+        }
+    }
 }
 .details ul{
     padding: 0px;

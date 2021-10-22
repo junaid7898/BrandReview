@@ -31,6 +31,9 @@ const SearchBrand = () => {
           if(num > Math.round(num)){
             num = Math.round(num + 1)
           }
+          else{
+            num = Math.round(num)
+          }
           setTotalPages(num)
         })
         .catch(err =>{

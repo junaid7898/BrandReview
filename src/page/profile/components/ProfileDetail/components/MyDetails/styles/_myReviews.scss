@@ -123,8 +123,25 @@
     }
 }
 .mydetails__update-button{
-    width: 300px;
+    width: 100%;
     margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    @include respond(phone){
+        flex-direction: column;
+        justify-content: center;
+    }
+    &__button1{
+        min-width: 30%;
+        @include respond(phone){
+            margin-bottom: 20px;
+
+        }  
+    }
+    &__button2{
+        min-width: 30%;
+    }
 }
 .PhoneInput{
     display: flex;

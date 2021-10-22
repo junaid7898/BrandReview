@@ -11,11 +11,10 @@ import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndica
 import PhoneInput from "react-phone-number-input";
 import {
   isPossiblePhoneNumber,
-  formatPhoneNumber,
-  formatPhoneNumberIntl,
   isValidPhoneNumber,
   parsePhoneNumber,
 } from "react-phone-number-input";
+import Select from "react-select";
 
 
 const BrandSignUpInputs = () => {
@@ -32,6 +31,7 @@ const BrandSignUpInputs = () => {
   const [about, setAbout] = useState(null)
   const [characterCount, setCharacterCount] = useState(0)
   const [imageDetails, setImageDetails] = useState(null)
+  const [category, setCategory] = useState({value: null , label: null})
   //ANCHOR loading states
   const [isSigningIn, setIsSigningIn] = useState(false);
 
@@ -49,9 +49,12 @@ const BrandSignUpInputs = () => {
   // ANCHOR validation function for form
   const checkValidation = () => {
       const emailValidation =  validateEmail();
-     if(username === null || email === null || password === null || repeatPassword === null || phone === null || about === null){
-        return 'please fill all entries'
-      }
+    if(username === null || email === null || password === null || repeatPassword === null || phone === null || about === null){
+      return 'please fill all entries'
+    }
+    else if(category.value === null){
+      return 'please select a category for your product...'
+    }
     else if(emailValidation === false){
       return 'please enter a valid email'
     }
@@ -72,19 +75,15 @@ const BrandSignUpInputs = () => {
     }
   }
 
+  //ANCHOR category selection
+  const options = [
+    { value: 'fashion', label: 'Fashion' },
+    { value: 'automobile', label: 'Auto Mobile' },
+    { value: 'gadgets', label: 'Gadgets' },
+  ];
 
-  //TODO handle logo selection method
-  const handleFileSelect = (e) => {
 
-    const image = e.target.files[0]
-    console.log(image);
-    if (e.target.files && image) {
-      setBrandLogo(URL.createObjectURL(image))
-    }
-    else{
-      alert('please select a logo for your brand')
-    }
-  }
+
 
 
   const signup = async() => {
@@ -92,7 +91,6 @@ const BrandSignUpInputs = () => {
     if(check === 'ok'){
       const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
       
-      console.log(countryCallingCode, nationalNumber);
       setIsSigningIn(true);
       const req = {
         name: username,
@@ -101,8 +99,9 @@ const BrandSignUpInputs = () => {
         countryCode: `+${countryCallingCode}`,
         phoneNumber: nationalNumber,
         about: about,
+        category: category.value,
       };
-      console.log(imageDetails)
+      
       await axios.post(
         "http://localhost:4000/v1/auth/brand/register",{
           brand:req,
@@ -181,6 +180,20 @@ const BrandSignUpInputs = () => {
             {
               setClientName(e.target.value);
             }}
+          />
+        </div>
+
+        <div className="signup__form__inputs__username">
+          <label htmlFor="categoryBrand">Category</label>
+          <Select
+            id = 'categoryBrand'
+            value = {category}
+            onChange = {setCategory}
+            options = {options}
+            className = 'signup__form__inputs__username__select'
+            placeholder = 'select a category for your brand'  
+            classNamePrefix = 'signup__form__inputs__username__select__input'
+            isSearchable = {true}
           />
         </div>
 

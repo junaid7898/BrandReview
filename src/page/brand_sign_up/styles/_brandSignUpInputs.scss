@@ -7,9 +7,6 @@
     align-items: center;
     margin-top: 50px;
     margin-bottom: 50px;
-  //   @include respond(phone){
-  //       flex-direction: row-reverse;
-  //   }
   
     &__inputs {
       display: flex;
@@ -51,6 +48,7 @@
           &:focus {
             border-color: green;
           }
+          
         }
   
         & label {
@@ -147,4 +145,12 @@
       }
     }
   }
+
+.signup__form__inputs__username__select{
+  width: 100%;
+  margin-top: 10px;
+  border: 0px solid;
+  outline: none;
+  
+}
   

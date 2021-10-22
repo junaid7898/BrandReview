@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     padding: 10px 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     width: 400px;
@@ -31,4 +31,48 @@
 }
 .tag__address label{
     margin-right: 20px;
+}
+
+.detail__tag__phone{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    position: relative;
+    cursor: default ;
+    &:after{
+        position: absolute;
+        content: 'no phone';
+        top: -100%;   
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        width: fit-content;
+        border: 1px solid black;
+        background-color: yellow;
+        color: black;
+        display: none;
+        white-space: nowrap;
+    }
+    &-verified{
+        color: green;
+        &:hover{
+            &::after{
+                display: block;
+            }
+        }
+        &::after{
+            content: "phone verified";
+        }
+    }
+    &-unverified{
+        color: red;
+        &:hover{
+            &::after{
+                display: block;
+            }
+        }
+        &::after{
+            content: "phone unverified";
+        }
+    }
 }

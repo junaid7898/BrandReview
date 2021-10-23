@@ -1,11 +1,11 @@
 import React from 'react'
 
-const UpdateProfile = ({setUpdateProfile}) => {
+const UpdateProfile = ({ value, ...rest} ) => {
     
     return (
-        <div className="update__profile">
-            <div className="update__profile__button" onClick = {() => setUpdateProfile(true)}>
-                <p>Update Profile</p>
+        <div className="update__profile" {...rest}>
+            <div className="update__profile__button" >
+                <p>{value}</p>
             </div>
         </div>
     )

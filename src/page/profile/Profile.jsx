@@ -28,6 +28,7 @@ const Profile = () => {
 
     useEffect(() => {
 
+        
         if(userId){
             if(visitorIsUser){
                 axios.get(`http://localhost:4000/v1/user/detail/${userId}`,{
@@ -59,6 +60,8 @@ const Profile = () => {
         }
     }, [client, userId])
 
+    
+
 
     return (
         <div >
@@ -66,7 +69,7 @@ const Profile = () => {
                 userDetails ?
                 <>
                     <ProfileContent user = {userDetails} setClientDetails = {setClientDetails}/>
-                    <ProfileDetail visitorIsUser = {visitorIsUser} user = {userDetails}/>
+                    <ProfileDetail visitorIsUser = {visitorIsUser} user = {userDetails} userId = {userId}/>
                 </>
                 :
                     <LoadingIndicator />

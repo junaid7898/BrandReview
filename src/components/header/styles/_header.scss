@@ -1,3 +1,4 @@
+//ANCHOR Navbar styling
 .nav{
     display: flex; 
     flex-flow: row nowrap;
@@ -5,10 +6,61 @@
     justify-content: space-between;
     position: relative;
     padding: 20px 50px;
+    width: 100%;
     z-index: 1;
 
 }
-.nav__links ul li::after{
+
+//SECTION inner container
+.nav__innerContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+//ANCHOR search bar container
+.nav__searchdiv{
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: center;
+    // align-items: center;
+}
+
+.nav__searchBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F8F8F8;
+    padding: 10px 0;
+    position: relative;
+    width: 300px;
+}
+
+.nav__searchBar input, .nav__searchBar img{
+    display: inline-block;
+}
+.nav__searchBar input{
+    background-color: transparent;
+    border: 0px solid;
+    flex: 1;
+    padding: 0 10px;
+}
+.nav__searchBar input:focus{
+    outline: none;
+}
+
+.nav__searchBar img{
+    margin: 0 10px;
+}
+
+
+
+.searchBar__close__icon{
+    display: none;
+}
+
+.nav__links ul li:not(:last-child)::after{
     content: '';
     width: 0%;
     height: 2px;
@@ -24,13 +76,7 @@
     width: 0%;
 }
 
-.nav__innerContainer{
-    display: flex;
-    flex-direction: row;
-    /* justify-content: flex-end; */
-    align-items: center;
-    width: 100%;
-}
+
 
 /* nav icon and website name */
 .nav__icon{
@@ -60,44 +106,9 @@
 
 
 /* nav Search Bar */
-.nav__searchdiv{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 
-}
-.nav__searchBar{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #F8F8F8;
-    padding: 10px 0;
-    position: relative;
-    width: 300px;
-}
-.nav__searchBar-show{
 
-}
-.nav__searchBar-hide{
 
-}
-.nav__searchBar input, .nav__searchBar img{
-    display: inline-block;
-}
-.nav__searchBar input{
-    background-color: transparent;
-    border: 0px solid;
-    flex: 1;
-    padding: 0 10px;
-}
-.nav__searchBar input:focus{
-    outline: none;
-}
-
-.nav__searchBar img{
-    margin: 0 10px;
-}
 
 .nav__search__results{
     display: inline-block;
@@ -140,7 +151,7 @@
     justify-content: space-between;
     position: relative;
     @include respond(desktop){
-        min-width: 300px;
+        // min-width: 300px;
     }
     &__button{
         padding: 10px 20px;
@@ -159,7 +170,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    /* text-align: right; */
+    
 }
 .nav__links ul li{
     
@@ -167,7 +178,11 @@
     padding: 8px 12px;
     position: relative;
     cursor: pointer;
-
+    text-align: center;
+    // min-width: 100px;
+    @include respond(phone){
+        padding: 8px 8px;
+    }
 }
 .nav__links__link{
     display: flex;
@@ -177,7 +192,6 @@
     margin-right: 10px;
     position: relative;
     &__h4{
-        margin-right: 5px;
         color: $onSurface-secondary;
         font-weight: 700;
     }
@@ -263,9 +277,7 @@
 .nav__close__icon{
     display: none;
 }
-.searchBar__close__icon{
-    display: none;
-}
+
 
 .login__indicator{
     font-size: 100px;
@@ -320,10 +332,6 @@
     .nav__links-hide{
         width: 0;
     }
-    .nav__links ul{
-        padding: 10px;
-        
-    }
     .nav__open__icon{
         display: block;
         cursor: pointer;
@@ -340,22 +348,22 @@
         /* position: absolute; */
         cursor: pointer;
         color: black;
-        width: 30px;
-        height: 30px;
-        margin-left: auto;
+        // width: 30px;
+        // height: 30px;
+        // margin-left: auto;
         margin-right: 10px;
+        // font-size: 20px;
         /* top: 10px;
         right: 40px; */
     }
     .searchBar__close__icon{
         display: inline-block;
         align-self: flex-start;
-        margin: 0 10px;
         cursor: pointer;
-        color: black;
-        width: 20px;
-        height: 20px;
-        
+        color: $onSurface-secondary;
+        // width: 20px;
+        // height: 20px;
+        font-size: 25px;
     }
     .nav__icon{
         flex: 0 1 auto;

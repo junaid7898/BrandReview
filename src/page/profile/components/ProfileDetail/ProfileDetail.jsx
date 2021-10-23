@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from "react";
 import {useLocation} from "react-router-dom";
 import MyDetails from './components/MyDetails/MyDetails'
-import BrandReviews from "../../../search/components/BrandReviews";
-import BrandImage from "../../../../assests/images/brandcar.png";
-import BrandLogo from "../../../../assests/images/kia_logo.png";
-import Profile from "../../../../assests/images/Profile Image.png";
+import { axios } from "../../../../axios/axiosInstance";
+import Review from "../../../../components/reviews/Review";
 
-const ProfileDetail = ({user, visitorIsUser}) => {
-  const [showDetails, setShowDetails] = useState(true);
-  const [showReviews, setShowReviews] = useState(false);
-  const [showReviewFollow, setShowReviewsFollow] = useState(false);   
+const ProfileDetail = ({user, visitorIsUser, userId}) => {
+  console.log('user:>', user);
   const location = useLocation()
   const [option ,setOption] = useState(0)
+  const [page, setPage] = useState(1)
+  const [totalfollowPage, setTotalFollowPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+
+  const [reviewData, setReviewData] = useState([])
+  const [followData, setFollowData] = useState([])
+  const [areReviewsLoading, setAreReviewsLoading] = useState(true)
+
+
+  const handlePageination = (index) => {
+    setPage(index)
+    setReviewData([])
+  }
 
   useEffect(() => {
     if(visitorIsUser){
@@ -22,9 +31,6 @@ const ProfileDetail = ({user, visitorIsUser}) => {
         setOption(2)
       }
     }
-    // if(isBrands){
-    //   setOption(4)
-    // }
     if(location){
       const search = location.search
       const n = new URLSearchParams(location.search).get('option')
@@ -35,93 +41,60 @@ const ProfileDetail = ({user, visitorIsUser}) => {
     }
   }, [visitorIsUser, location])
 
-  const [testBrand] = useState({
-    brandImage: BrandImage,
-    brandRatings: 4.9,
-    brandTotalRatings: 1200,
-    brandLogo: BrandLogo,   
-    brandName: "Kia sportage",
-    brandAbout:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. ",
-    comments: [
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      },
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      },
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      },
-      {
-        userName: 'junaid',
-        userImg: Profile,
-        userRatings: 5.0,
-        comment:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        commentReplies: [
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-          {
-            userImg: Profile,
-            reply:
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          },
-        ],
-      }
-    ],
-  });
+
+  //ANCHOR use effect for getting user reviews from api
+
+  useEffect(() => {
+        let num = user.reviews.length/10;
+        
+        if(num > Math.round(num)){
+          num = Math.round(num + 1)
+        }
+        else{
+          num = Math.round(num)
+        }
+        setTotalPages(num)
+      axios
+      .get(`review/user/${userId}?page=${page}`)
+      .then(({data}) =>{
+        setReviewData(data)
+        setAreReviewsLoading(false)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    
+  }, [page])
+
+  //ANCHOR use effect for getting user reviews|follows
+
+  useEffect(() => {
+    let num = user.followedReviews.length/10;
+    if(num > Math.round(num)){
+      num = Math.round(num + 1)
+    }
+    else{
+      num = Math.round(num)
+    }
+    console.log('followed NUM:', num);
+    setTotalFollowPage(num)
+
+
+    axios
+    .get(`review/user/follow/${userId}?page=${totalfollowPage}`)
+    .then(({data}) =>{ 
+      console.log('follow data: ', data);
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  
+}, [totalfollowPage])
+
+
+
+  
+
 
   console.log(visitorIsUser)
 
@@ -149,7 +122,34 @@ const ProfileDetail = ({user, visitorIsUser}) => {
                 )
               : option === 2  ? 
                 (
-                  <BrandReviews comments = {testBrand.comments}/>
+
+                  <div className="details__reviews">
+                    <div className="details__reviews__comment">
+                      {
+                        reviewData.length > 0  ?
+                          (reviewData.map(review =>
+                            {
+                              return <Review review = {review} /> 
+                            }
+                          ))
+                      :
+                        /* <LoadingIndicator /> */
+                        <h1>oops no reviews yet.....</h1>
+                      }
+                    </div>
+                    <div className="brandMain__pagination">
+                      {
+                        Array(Math.round(totalPages)).fill().map((_, index) =>
+                          <div key={index} onClick={ () => handlePageination(index + 1)} className="brandMain__pagination__item">
+                            <p>{ index + 1 }</p>
+                          </div>
+                        )
+                      }
+                    </div>
+                  </div>
+          
+                  
+
                 )
               : option === 3  ? 
                 (

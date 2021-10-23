@@ -1,0 +1,85 @@
+.verifyOtp{
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $onSurface-secondary;
+    z-index: 10;
+    &__container{
+        background-color: $background;
+        padding: 26px 30px;
+        width: 700px;
+        max-width: 90%;
+        box-shadow: 0px 20px 80px rgba(0, 0, 0, 0.07);
+        border-radius: 20px;
+        border-top-right-radius: 0px;
+        position: relative;
+        &__header{
+            font-weight: bold;
+            font-size: 36px;
+            line-height: 140%;
+            color: $onSurface-primary;
+        }
+
+        &__input-button{
+            margin: 20px 0px;
+            width: 70%;
+            &__input{
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                width: 100%;
+                margin-bottom: 10px;
+                & label{
+                    font-weight: 500;
+                    font-size: 20px;
+                    line-height: 110%;
+                    color: $onSurface-secondary;
+                }
+                & input{
+                    padding: 20px 6px;
+                    border: none;
+                    border-bottom: 2px solid $onSurface-secondary;
+                    font-size: 25px;
+                    &::placeholder{
+                        font-size: 15px;
+                    }
+                    &:focus{
+                        outline: none;
+                    }
+                }
+            }
+            &__button{
+                background-color: $primary;
+                color: $onPrimary;
+                text-align: center;
+                padding: 10px 0px;
+                border-radius: 10px;
+                cursor: pointer;
+                &:hover{
+                    background-color: $primaryHover;
+                }
+            }
+        }
+        
+    }
+
+    &__cross{
+        background-color: $primary;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        border-radius: 50%; 
+        display: flex; 
+        justify-content: center;
+        cursor: pointer;
+        &__icon{
+            margin-top: 14px;
+            margin-right: 2px;
+        }
+    }
+}

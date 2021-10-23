@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import ImagePreview from "../../components/image_preview/ImagePreview"
 import { uploadMultiPhotos } from "../../helpers/uploadMultiplePhotos";
 import {getImageDetails} from "../../helpers/getImageDetails";
@@ -8,9 +7,12 @@ import { useHistory } from "react-router";
 import BrandSearchList from "../../components/brand_comparison/components/BrandSearchList";
 import Star from "../../assests/Star";
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
+import { useDispatch, useSelector } from "react-redux";
+
+import { clientActions } from "../../Redux/clientslice/clientSlice";
 const WriteReview = () => {
   const history = useHistory()
-
+  const dispatch = useDispatch()
   const ref = useRef()
   const [title, setTitle] = useState(null)
   const [message, setMessage] = useState(null)
@@ -82,15 +84,22 @@ const WriteReview = () => {
       message: message,
       ratingCount: 1.4,
     }
-    const {data: imageArray} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
+    const {data} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
       headers:{
         "authorization" : `bearer ${client.tokens.access.token}`,
         "role" : Object.keys(client)[0]
       }
     })
-    axios.all(imageArray.map( (_, index) => {
-      console.log(imageArray[index], "\n", rawImages[0][index], "\n", imageDetails[index].fileType, "\n")
-      axios.put(imageArray[index], rawImages[0][index],{
+    
+    dispatch(clientActions.setClient({
+      ...client,
+      user: data.user
+    }))
+
+    
+    axios.all(data.imageArray.map( (_, index) => {
+      console.log(data.imageArray[index], "\n", rawImages[0][index], "\n", imageDetails[index].fileType, "\n")
+      axios.put(data.imageArray[index], rawImages[0][index],{
         headers:{
           "Content-Type": imageDetails[index].fileType
         }

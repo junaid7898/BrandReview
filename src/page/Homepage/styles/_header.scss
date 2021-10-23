@@ -95,7 +95,8 @@
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             background-color: white;
             border-radius: 10px;
-            width: 260px;
+            aspect-ratio: 1;
+            width: 200px;
             @include respond(phone){
                 width: 100%;
                 padding: 10px;
@@ -103,9 +104,9 @@
                 text-align: center;
             }
             &__logo{
-                max-height: 302px;
-                width: 100%;
-                object-fit: contain;
+                max-height: 120px;
+                // width: 100%;
+                // object-fit: contain;
             }
             &__logo-container{
                 transition: 300ms;

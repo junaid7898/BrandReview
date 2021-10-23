@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 
-const SearchList = ({styling ,divStyling,  data, setShowResult}) => {
+const SearchList = ({styling ,divStyling,  data, setShowResult, event}) => {
     
     
     return (
@@ -11,9 +11,9 @@ const SearchList = ({styling ,divStyling,  data, setShowResult}) => {
                 data ?
                 data.map((item) => {
                 return(
-                    <Link to ={`/brand/${item.id}`} className = {divStyling} onClick = { () => setShowResult(false)}>
-                        <img alt={`brand ${item.name} logo`} src = {item.logo} style = {{width: 50, borderRadius: 2  }}/>
-                        <h1>{item.name}</h1>
+                    <Link to ={`/brand/${item.id}`} className = {divStyling} onClick = { () => {setShowResult(false); event.current.value = null}}>
+                        <img alt={`brand ${item.name} logo`} src = {item.logo} style = {{width: 50, height: 50, objectFit:"contain", borderRadius: 2  }}/>
+                        <p>{item.name}</p>
                     </Link>
                     
                 )

@@ -189,6 +189,10 @@
                     opacity: 0;
                     pointer-events: none;
                 }
+                &-loader{
+                    position: static;
+                    color: rgb(22, 176, 236);
+                }
             }
         }
     }

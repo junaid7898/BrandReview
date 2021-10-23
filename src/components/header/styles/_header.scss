@@ -88,6 +88,12 @@
     &__container{
         position: relative;
         min-width: 30px;
+        &__mobile{
+            display: none;
+            @include respond(phone){
+                display: block;
+            }
+        }
     }
 }
 .nav__icon h1{
@@ -121,7 +127,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding:15px 10px;
+    padding:5px 10px;
+    height: 60px;
     cursor: pointer;
     transition: 300ms;
     text-decoration: none;
@@ -131,7 +138,7 @@
     background-color: ghostwhite;
 }
 .nav__search__result__item:not(:last-child){
-    border-bottom: 1px solid #d8d8d8;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 

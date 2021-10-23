@@ -6,6 +6,7 @@ import FilterComponent from '../filter_component/FilterComponent'
 import MultiDatePicker from '../multi_date_picker/MultiDatePicker'
 
 import Star from '../../assests/Star'
+import ImageThumbnail from '../image_thumbnail/ImageThumbnail'
 export const DashboardReviews = () => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -52,61 +53,72 @@ export const DashboardReviews = () => {
 
     return (
         <div className = 'dashboard__review__component'>
-            { reviewData && reviewData.map(item => console.log('review item::: ========>',item))}
-            <FilterComponent tab = "review" setFilters= {setFilters} setSortOptions = {setSortOptions}/>
+            <div className="dashboard__review__component__filter">
+                <FilterComponent tab = "review" setFilters= {setFilters} setSortOptions = {setSortOptions}/>
+            </div>
+            <div className="dashboard__review__component__picker"></div>
             <MultiDatePicker date = {date}  setDate={setDate} />
-            {
-                reviewData &&
-                reviewData.map(review =>
 
-                    <div>
-                    <div className = 'dashboard__panel__reports'>
-                        
-                        <table className="dashboard__panel__reports__table">
-                            <tr>
-                                <th>User Name</th>
-                                <th>Ratings</th>
-                                <th>Comment</th>
-                                <th>Date</th>
-                            </tr>
-                            {
-                                reviewData && reviewData.map((item) => {
-                                    return(
-                                        <tr className = 'dashboard__panel__reports__table__data-rows' id = {item.id}>
-                                            <td className = 'dashboard__panel__reports__table__data-rows__name'>{item.user.name}</td>
-                                            <td>
-                                                <div className="dashboard__panel__reports__table__data-rows__ratings">
-                                                    <h4>{item.ratingCount}</h4>
-                                                    <span className ='dashboard__panel__reports__table__data-rows__ratings__stars'>
-                                                        {
-                                                            Array(Math.round(item.ratingCount < 1 ? 1 : item.ratingCount )).fill().map((_)=>(
-                                                                <Star starGradient1 = "#FFDC64" starGradient2 = "#FFC850" starLines = "#FFF082"/>
-                                                            ))
-                                                        }
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className = 'dashboard__panel__reports__table__comment'>{item.message}</td>
-                                            <td>{ new Date(item.createdOn).toDateString()}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </table>
-                    </div>
-                        {/* <p>
-                            {
-                                new Date(review.createdOn).toLocaleString()
-                            }
-                        </p>
-                        {
-                            // JSON.stringify(review)    
-                        } */}
-                    </div>
-                
             
-
-            <Pagination totalPages={totalPages} handlePageination={handlePageination} />
+            <div className = 'dashboard__panel__reports'>
+                
+                <table className="dashboard__panel__reports__table">
+                    <tr>
+                        <th>User Name</th>
+                        <th>Ratings</th>
+                        <th></th>
+                        <th>Comment</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                    {
+                        reviewData && reviewData.map((item) => {
+                            return(
+                                <>
+                                <tr className = 'dashboard__panel__reports__table__data-rows' id = {item.id}>
+                                    <td className = 'dashboard__panel__reports__table__data-rows__name'>{item.user.name}</td>
+                                    <td>
+                                        <div className="dashboard__panel__reports__table__data-rows__ratings">
+                                            <h4>{item.ratingCount}</h4>
+                                            <span className ='dashboard__panel__reports__table__data-rows__ratings__stars'>
+                                                {
+                                                    Array(Math.round(item.ratingCount < 1 ? 1 : item.ratingCount )).fill().map((_)=>(
+                                                        <Star starGradient1 = "#FFDC64" starGradient2 = "#FFC850" starLines = "#FFF082"/>
+                                                    ))
+                                                }
+                                            </span>
+                                        </div>
+                                    </td>
+                                    
+                                    <td className = 'dashboard__panel__reports__table__comment'>{item.message}
+                                    <div className = 'dashboard__panel__reports__images'>
+                                    
+                                
+                                        {
+                                            item.images.map(img => {
+                                                return(
+                                                    <ImageThumbnail image = {img}/>
+                                                )
+                                            })
+                                        }
+                                </div></td>
+                                    <td>{ new Date(item.createdOn).toDateString()}</td>
+                                    <td>
+                                    {
+                                            !item.isVerified && 
+                                            <button>verify</button>
+                                    }
+                                    </td>
+                                </tr>
+                                    </>
+                            )
+                        }
+                        )
+                    }
+                </table>
+            </div>
+            
+    <Pagination totalPages={totalPages} handlePageination={handlePageination} />
 
         </div>
     )

@@ -7,15 +7,13 @@ import { BsSearch } from "react-icons/bs";
 import { Link, useHistory } from "react-router-dom";
 import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
-import { clientActions } from "../../Redux/clientslice/clientSlice";
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
 
-import { AiFillCaretDown, AiFillCar } from "react-icons/ai";
+import { AiFillCar } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 import {BiUser} from 'react-icons/bi'
 
 import { logout } from "./logout";
-import Links from "./components/Links";
 
 
 const Header = () => {
@@ -23,7 +21,7 @@ const Header = () => {
   const [searchKey] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-
+  const searchValueRef = useRef()
   const {brands: data} = useSelector(state => state.brands)
 
 
@@ -33,7 +31,7 @@ const Header = () => {
   const [showSearchBar, setShowSearchBar] = useState(-1000);
   const [searchResults, setSearchResults] = useState([]);
   const [showResult, setShowResult] = useState(false);
-
+  
   const dispatch = useDispatch();
   const history = useHistory();
   const { client } = useSelector((state) => state.client);
@@ -126,7 +124,9 @@ const Header = () => {
             onClick={() => showMenu()}
           />
           :
-            <LoadingIndicator />
+            <div className="nav__icon__container__mobile">
+              <LoadingIndicator />
+            </div>
         }
         </div>
       </div>
@@ -145,6 +145,8 @@ const Header = () => {
               handleSearch(e.target.value);
               setShowResult(true);
             }}
+            onClick={() => setShowResult(!showResult)}
+            ref = {searchValueRef}
           />
           <img src={SearchIcon} alt="search icon" />
 
@@ -156,6 +158,7 @@ const Header = () => {
                 showResult={showResult}
                 data={searchResults}
                 setShowResult={setShowResult}
+                event = {searchValueRef}
               />
             </>
           ) : null}

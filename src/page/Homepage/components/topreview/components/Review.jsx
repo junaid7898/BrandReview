@@ -18,11 +18,11 @@ function Review({review}) {
         review &&
         <div className="topReview__item">
             <div className="topReview__item__heading">
-                <Link to="/" className="topReview__item__heading__userImage"><img src={review.user.profileImage} alt="idk"/></Link>
-                <Link to="/" className="topReview__item__heading__userName"><p className="topReview__item__heading__name">{review.user.name}</p></Link>
+                <Link to={`/user/${review.user.id}`} className="topReview__item__heading__userImage"><img src={review.user.profileImage} alt="idk"/></Link>
+                <Link to={`/user/${review.user.id}`}className="topReview__item__heading__userName"><p className="topReview__item__heading__name">{review.user.name}</p></Link>
             </div>
             <div className="topReview__item__body">
-                <Link to="/" className="topReview__item__body__brandName"><p>Toyota</p></Link>
+                <Link to={`brand/${review.brand.id}`} className="topReview__item__body__brandName"><p>{review.brand.name}</p></Link>
                 <p className="topReview__item__body__reviewText">"{truncateString(review.message,250)}"</p>
             </div>
             <div className="topReview__item__footer">

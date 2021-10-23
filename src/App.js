@@ -10,7 +10,6 @@ import HomePage from './page/Homepage/HomePage';
 import BrandPanel from './page/BrandPanel/BrandPanel';
 import ComparisonPage from './page/Comparison/ComparisonPage';
 import SignUp from './page/Sign_up/SignUp';
-import EmailVerification from './page/Email Verification/EmailVerification';
 import Login from './page/login/Login';
 import BrandSignUp from './page/brand_sign_up/BrandSignUp';
 import BrandLogin from './page/brand_log_in/BrandLogin';
@@ -155,8 +154,7 @@ function App() {
               role="admin"
         />
         <Route path = '/phoneverification' component = {PhoneVerification}/>
-        <Route path = '/emailverification' component = {EmailVerificationPage}/>
-        <Route path = '/verify-email/:token' component = {EmailVerification}/>  
+        <Route path = '/verify-email/:token' component = {EmailVerificationPage}/>  
         <Route path = '/termsandcondition' component = {TermsAndCondition}/>
       <Route path = '/*' component = {Error404Page}/>
       </Switch>

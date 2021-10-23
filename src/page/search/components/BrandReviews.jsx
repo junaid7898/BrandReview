@@ -24,6 +24,8 @@ const BrandReviews = ({ comments }) => {
 
   };
 
+
+
   useEffect(() => {
     console.log(uploadImage)
   }, [uploadImage])

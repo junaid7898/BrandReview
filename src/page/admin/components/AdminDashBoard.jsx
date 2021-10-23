@@ -136,7 +136,7 @@ const AdminDashBoard = () => {
                     </div>
 
                     <div className="dashboard__filter__input__picker">
-                        <MultiDatePicker/>
+                        {/* <MultiDatePicker/> */}
                     </div>
                     
                 </div>

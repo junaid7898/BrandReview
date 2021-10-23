@@ -28,7 +28,7 @@ const BrandPanel = () => {
 
     useEffect(() => {
         if(brandId && client){
-            axios.get(`http://localhost:4000/v1/brand/page/${brandId}`, {   
+            axios.get(`http://localhost:4000/v1/brand/${brandId}`, {   
                 headers:{
                     "role" : "brand",
                     "Authorization" : `bearer ${client.tokens.access.token}`

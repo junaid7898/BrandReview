@@ -20,6 +20,7 @@ const SearchBrand = () => {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [areReviewsLoading, setAreReviewsLoading] = useState(true)
+  const [updatedReview, setUpdatedReview] = useState(null)
   useEffect(() => {
     
     if(brandId){
@@ -60,6 +61,22 @@ const SearchBrand = () => {
     setReviewData([])
   }
 
+
+  useEffect(() => {
+    if(updatedReview){
+      setReviewData(
+        reviewData.map(review => {
+          if(review.id === updatedReview.id){
+            return updatedReview
+          }
+          return review
+        })
+      )
+      setUpdatedReview(null)
+    }
+  }, [updatedReview])
+
+
   return (
     <div className="brandMain">
 
@@ -77,7 +94,7 @@ const SearchBrand = () => {
           {
             reviewData.length > 0 && areReviewsLoading ?
             reviewData.map(review =>{
-            return <Review review = {review} /> 
+            return <Review review = {review} setUpdatedReview = {setUpdatedReview} /> 
           })
           :
             <LoadingIndicator />

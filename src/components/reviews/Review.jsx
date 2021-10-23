@@ -9,21 +9,84 @@ import {FiSend} from 'react-icons/fi'
 import { useDispatch, useSelector } from "react-redux";
 import {axios} from "../../axios/axiosInstance";
 import {clientActions} from "../../Redux/clientslice/clientSlice"
-const Review = ({review}) => {
+import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
+const Review = ({review, setUpdatedReview}) => {
   const [clikedImage, setClickedImage] = useState(null)
   const {client} = useSelector(state => state.client) 
   const [showComments, setShowComments] = useState(false)
   const [commentText, setCommentText] = useState('')
-  const commentsAllowed = true
+  const [commentIsSending, setCommentIsSending] = useState(false)
+  const commentsAllowed = false
   const dispatch = useDispatch()
-
   const handleComment = () =>{
-    alert(commentText)
+    setCommentIsSending(true)
+    const reqObj = {
+      message: commentText,
+      review: review.id,
+      user: client.user.id,
+      depth: 0,
+    }
+    axios.post("/comment",reqObj,{
+      headers:{
+        "role" : client.type,
+        "authorization" : `bearer ${client.tokens.access.token}`
+      }
+    })
+    .then(({data})=>{
+      setCommentIsSending(false)
+      console.log(data)
+      setCommentText("")
+    })
+    .catch(err => {
+      console.log(err)
+      setCommentIsSending(false)
+    })
   }
 
   const handleLike = () =>{
+
+    let updatedUser = null
+    let updatedReview = null
+    if(client.user.likedReviews.find( id => id === review.id )){
+      updatedUser = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          likedReviews:[...client.user.likedReviews.filter(id => id !== review.id)]
+        }
+      }))
+      updatedReview = {
+        ...review,
+        likedByUsers: [...review.likedByUsers.filter(item => item.user !== client.user.id)]
+      }
+    }
+    else{
+      updatedUser = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          likedReviews:[...client.user.likedReviews, review.id]
+        }
+      }))
+
+      const newEntry = {
+        user: client.user.id,
+        time: new Date()
+      }
+
+      updatedReview = {
+        ...review,
+        likedByUsers: [...review.likedByUsers, newEntry]
+      }
+    }
+
     
-    axios.post(`/review/like/${review.id}`, client.user,{
+    setUpdatedReview(updatedReview)
+    console.log(updatedUser.payload.user)
+    axios.post(`/review/like/${review.id}`, {
+      user: updatedUser.payload.user,
+      review: updatedReview
+    },{
       headers:{
         'role' : client.type,
         'authorization' : `bearer ${client.tokens.access.token}`
@@ -35,54 +98,41 @@ const Review = ({review}) => {
 
     })
 
-    let updated = null
-
-    if(client.user.likedReviews.find( id => id === review.id )){
-      updated = dispatch(clientActions.setClient({
-        ...client,
-        user:{
-          ...client.user,
-          likedReviews:[...client.user.likedReviews.filter(id => id !== review.id)]
-        }
-      }))
-    }
-    else{
-      updated = dispatch(clientActions.setClient({
-        ...client,
-        user:{
-          ...client.user,
-          likedReviews:[...client.user.likedReviews, review.id]
-        }
-      }))
-    }
-
   }
 
 
   const handleFollow = () =>{
     
-    let updated = null
-
+    let updatedUser = null
+    let updatedReview = null
     if(client.user.followedReviews.find( id => id === review.id )){
-      updated = dispatch(clientActions.setClient({
+      updatedUser = dispatch(clientActions.setClient({
         ...client,
         user:{
           ...client.user,
           followedReviews:[...client.user.followedReviews.filter(id => id !== review.id)]
         }
       }))
+      updatedReview = {
+        ...review,
+        followed:[...client.user.followedReviews, review.id]
+      }
     }
     else{
-      updated = dispatch(clientActions.setClient({
+      updatedUser = dispatch(clientActions.setClient({
         ...client,
         user:{
           ...client.user,
           followedReviews:[...client.user.followedReviews, review.id]
         }
       }))
+      updatedReview = {
+        ...review,
+        followedByUsers: [...review.followedByUsers, client.user.id]
+      }
     }
-
-    axios.post(`/review/follow/${review.id}`, updated.payload.user,{
+    setUpdatedReview(updatedReview)
+    axios.post(`/review/follow/${review.id}`, updatedUser.payload.user,{
       headers:{
         'role' : client.type,
         'authorization' : `bearer ${client.tokens.access.token}`
@@ -168,7 +218,7 @@ const Review = ({review}) => {
             }  
           </div>
           <div className="reviewComponent__buttons__likeCount">
-            <p>{review.likeCount}</p>
+            <p>{review.likedByUsers.length}</p>
           </div>
 
         </div>
@@ -183,8 +233,14 @@ const Review = ({review}) => {
             <div className="reviewComponent__comments__writeComment">
               <Link to={`/user/${client.user.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.user.profileImage} alt="" /></Link>
               <div className="reviewComponent__comments__writeComment__input">
-                <input onChange={(e) => setCommentText(e.target.value)} className="" type="text" placeholder="Enter Comment" />
-                <FiSend onClick={handleComment} className={`reviewComponent__comments__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__comments__writeComment__sendIcon-hide`}`}/>
+                <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Enter Comment" />
+                  {
+                    !commentIsSending 
+                    ?
+                      <FiSend onClick={handleComment} className={`reviewComponent__comments__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__comments__writeComment__sendIcon-hide`}`}/>
+                    : 
+                      <LoadingIndicator className="reviewComponent__comments__writeComment__sendIcon-loader" />
+                  }
               </div>
             </div>
             {

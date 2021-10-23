@@ -145,11 +145,10 @@ const AdminDashBoard = () => {
                     </div>
                     <ul className = {`dashboard__links__list ${showDashboardPhone === true ? `dashboard__links__show`:`dashboard__links__hide`}` }>
                         <li onClick = {handleShowDashBoard} className = {showDashBoard ? 'dashboard__list__click': ''}>Dashboard</li>
-                        <li onClick = {handleShowReviews} className = {showReviews ? 'dashboard__list__click': ''}>Reviews</li>
+                        <li onClick = {handleShowReviews} className = {showReviews ? 'dashboard__list__click': ''}>Report</li>
                         <li onClick = {handleShowUsers} className = {showUsers ? 'dashboard__list__click': ''}>Users</li>
                         <li onClick = {handleShowBrands} className = {showBrands ? 'dashboard__list__click': ''}>Brands</li>
                         <li onClick = {handleShowSettings} className = {showSettings ? 'dashboard__list__click': ''}>Settings</li>
-                        <li onClick = {handleShowReport} className = {showReport ? 'dashboard__list__click': ''}>Report</li>
                     </ul>
 
                 </div>
@@ -202,47 +201,6 @@ const AdminDashBoard = () => {
                     :
                     (null)
             }
-            {
-                showReport ? 
-                    <div className = 'dashboard__panel__reports'>
-                        {/* <DashBoardLink/> */}
-                        <table className="dashboard__panel__reports__table">
-                            <tr>
-                                <th>User Name</th>
-                                <th>Ratings</th>
-                                <th>Comment</th>
-                                <th>Date</th>
-                            </tr>
-                            {
-                                allReviews.map((item, index) => {
-                                    return(
-                                        <tr className = 'dashboard__panel__reports__table__data-rows'>
-                                            <td className = 'dashboard__panel__reports__table__data-rows__name'>{item.name}</td>
-                                            <td>
-                                                <div className="dashboard__panel__reports__table__data-rows__ratings">
-                                                    <h4>{item.ratings}</h4>
-                                                    <span className ='dashboard__panel__reports__table__data-rows__ratings__stars'>
-                                                        {
-                                                            Array(Math.round(item.ratingCount < 1 ? 1 : item.ratings )).fill().map((_)=>(
-                                                                <Star starGradient1 = "#FFDC64" starGradient2 = "#FFC850" starLines = "#FFF082"/>
-                                                            ))
-                                                        }
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td className = 'dashboard__panel__reports__table__comment'>{item.comment}</td>
-                                            <td>{item.date}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </table>
-                    </div>
-                    :
-                    (null)
-            }
-            
-
         </section>
     )
 }

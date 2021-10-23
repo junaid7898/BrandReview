@@ -4,6 +4,7 @@ import ImageViewer from '../../../components/image_viewer/ImageViewer'
 import Pagination from '../../../components/Pagination/Pagination'
 import {axios} from '../../../axios/axiosInstance'
 import FilterComponent from '../../../components/filter_component/FilterComponent'
+import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator'
 
 const DashBoardUsers = () => {
     const [showImage, setShowImage] = useState(null)
@@ -13,6 +14,7 @@ const DashBoardUsers = () => {
     const [userData, setUserData] = useState(null)
     const [filters, setFilters] = useState({})
     const [sort, setSort] = useState({})
+    const [blackListing, setBlackListng] = useState([])
     const handlePageination = (index) =>{
         setPage(index)
     }
@@ -33,6 +35,13 @@ const DashBoardUsers = () => {
         
     }, [page, filters, sort])
 
+    const handleBlackListing = (userId) =>{
+        setBlackListng([...blackListing, userId])
+    }
+    const handleRemoveBlackListing = (userId) => {
+        setBlackListng([...blackListing, userId])
+    } 
+
     return (
         <div className="dashboard__users">
             <FilterComponent tab = "user" setFilters = {setFilters} setSortOptions = {setSort}/>
@@ -51,24 +60,43 @@ const DashBoardUsers = () => {
                             <div className="dashboard__users__data__user__details">
 
 
-                                <div className="dashboard__users__data__user__details__email">
+                                <div className="dashboard__users__data__user__item dashboard__users__data__user__details__email">
                                     <label>Email</label>
                                     <p>{user.email}</p>
                                 </div>
 
-                                <div className="dashboard__users__data__user__details__address">
+                                <div className="dashboard__users__data__user__item dashboard__users__data__user__details__address">
                                     <label>Address</label>
                                     <p>{user.address}</p>
                                 </div>
 
-                                <div className="dashboard__users__data__user__details__phone">
+                                <div className="dashboard__users__data__user__item dashboard__users__data__user__details__phone">
                                     <label>Phone</label>
                                     <p>{user.countryCode + " " + user.phoneNumber}</p>
                                 </div>
 
-                                <div className="dashboard__users__data__user__details__phone">
-                                    <button>BlackList</button>
-                                </div>
+                                {
+                                    !user.blackListed ?
+                                        <div className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
+                                            <button onClick={() => handleBlackListing(user.id)}>
+                                                BlackList
+                                                {
+                                                    blackListing.includes(user.id) &&
+                                                    <LoadingIndicator />
+                                                }
+                                            </button>
+                                        </div>
+                                    :
+                                        <div className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
+                                            <button onClick={() => handleRemoveBlackListing(user.id)}>
+                                                Remove from Blacklist
+                                                {
+                                                    blackListing.includes(user.id) &&
+                                                    <LoadingIndicator />
+                                                }
+                                            </button>
+                                        </div>
+                                }
 
                             </div>
                             {showImage ? ( <ImageViewer image = {showImage} setImage = {setShowImage}/> ) : ( null ) }

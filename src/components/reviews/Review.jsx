@@ -132,7 +132,10 @@ const Review = ({review, setUpdatedReview}) => {
       }
     }
     setUpdatedReview(updatedReview)
-    axios.post(`/review/follow/${review.id}`, updatedUser.payload.user,{
+    axios.post(`/review/follow/${review.id}`, {
+      user: updatedUser.payload.user,
+      review: updatedReview
+    },{
       headers:{
         'role' : client.type,
         'authorization' : `bearer ${client.tokens.access.token}`

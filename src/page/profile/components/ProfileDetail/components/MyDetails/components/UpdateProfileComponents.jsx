@@ -143,11 +143,12 @@ const UpdateProfileComponents = ({ onSubmit, user }) => {
             </div> */}
             <div
             className="mydetails__update-details__update__button"
+            style = {{position: 'relative'}}
             onClick={() => {
                 handleUpdate()
             }}
             >
-                <h1>{isUpdating? (<LoadingIndicator/>): 'ok'}</h1>
+                <h1 > Update {isUpdating && <LoadingIndicator/>}</h1>
             </div>
         </div>
     </div>

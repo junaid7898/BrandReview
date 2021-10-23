@@ -23,6 +23,22 @@ const Header = () => {
   const [showRegister, setShowRegister] = useState(false);
   const searchValueRef = useRef()
   const {brands: data} = useSelector(state => state.brands)
+  const [isEmailVerified, setIsEmailVerified] = useState(true)
+  const { client } = useSelector((state) => state.client);
+
+  useEffect(() => {
+    if(client){
+      if(client.type.includes('user')){
+          setIsEmailVerified(client.user.isEmailVerified)
+          console.log('verification==========> : ', client.user.isEmailVerified);
+        
+      }
+      else if(client.type.includes('brand')){
+          setIsEmailVerified(client.brand.isEmailVerified)
+          console.log('b verification==========> : ', client.brand.isEmailVerified);
+      }
+    }
+  }, [client])
 
 
 
@@ -34,7 +50,7 @@ const Header = () => {
   
   const dispatch = useDispatch();
   const history = useHistory();
-  const { client } = useSelector((state) => state.client);
+  
   const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
 
 
@@ -365,7 +381,8 @@ const Header = () => {
         :
         <LoadingIndicator /> 
         }
-      </div>      
+      </div>
+      
     </nav>
   );
 };

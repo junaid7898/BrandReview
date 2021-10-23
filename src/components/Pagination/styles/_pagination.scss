@@ -1,0 +1,31 @@
+.pagination{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    max-width: inherit;
+    &__item{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin:10px;
+        aspect-ratio: 1;
+        width: 40px;
+        border-radius: 2px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        cursor: pointer;
+        transition: 300ms;
+        backface-visibility: hidden;
+        &:hover{
+            background-color: rgb(223, 223, 223);
+        }
+        &-selected{
+            background-color: ghostwhite;
+            transform: scale(1.2);
+            &:hover{
+                background-color: ghostwhite;
+            }
+        }
+    }
+}

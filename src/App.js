@@ -34,7 +34,7 @@ function App() {
 
 
   useEffect(() => {
-    axiosInstance.get("brand/")
+    axiosInstance.get("brand/getAllBrands")
     .then(({data}) => {
       dispatch(brandAction.setBrands(data))
     })

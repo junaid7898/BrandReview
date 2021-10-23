@@ -10,6 +10,7 @@ import { useParams } from "react-router";
 import {axios} from "../../axios/axiosInstance";
 import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator";
 import { useSelector } from "react-redux";
+import Pagination from "../../components/Pagination/Pagination";
 const SearchBrand = () => {
   
 
@@ -104,15 +105,7 @@ const SearchBrand = () => {
           }
 
         </div>
-          <div className="brandMain__pagination">
-            {
-              Array(Math.round(totalPages)).fill().map((_, index) =>
-                <div key={index} onClick={ () => handlePageination(index + 1)} className="brandMain__pagination__item">
-                  <p>{ index + 1 }</p>
-                </div>
-              )
-            }
-          </div>
+          <Pagination totalPages = {totalPages} handlePageination= {handlePageination} />
       </div>
     </div>
   );

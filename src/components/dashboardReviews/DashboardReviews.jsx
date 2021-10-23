@@ -56,8 +56,9 @@ export const DashboardReviews = () => {
             <div className="dashboard__review__component__filter">
                 <FilterComponent tab = "review" setFilters= {setFilters} setSortOptions = {setSortOptions}/>
             </div>
-            <div className="dashboard__review__component__picker"></div>
-            <MultiDatePicker date = {date}  setDate={setDate} />
+            <div className="dashboard__review__component__picker">
+                <MultiDatePicker date = {date}  setDate={setDate} />
+            </div>
 
             
             <div className = 'dashboard__panel__reports'>

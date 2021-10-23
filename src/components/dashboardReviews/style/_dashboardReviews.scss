@@ -1,6 +1,10 @@
 .dashboard__review__component{
     width: 100%;
     max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     // margin-left: 5%;
     @include respond(phone){
         margin-left: 0;

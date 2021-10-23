@@ -3,7 +3,7 @@ import {useLocation} from "react-router-dom";
 import MyDetails from './components/MyDetails/MyDetails'
 import { axios } from "../../../../axios/axiosInstance";
 import Review from "../../../../components/reviews/Review";
-
+import Pagination from "../../../../components/Pagination/Pagination"
 const ProfileDetail = ({user, visitorIsUser, userId}) => {
   console.log('user:>', user);
   const location = useLocation()
@@ -143,15 +143,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
                         <h1>oops no reviews yet.....</h1>
                       }
                     </div>
-                    <div className="brandMain__pagination">
-                      {
-                        Array(Math.round(totalPages)).fill().map((_, index) =>
-                          <div key={index} onClick={ () => handlePageination(index + 1)} className="brandMain__pagination__item">
-                            <p>{ index + 1 }</p>
-                          </div>
-                        )
-                      }
-                    </div>
+                    <Pagination handlePageination = {handlePageination} totalPages={totalPages}/>
                   </div>
           
                   
@@ -173,15 +165,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
                         <h1>you hav not follow any review yet.....</h1>
                       }
                     </div>
-                    <div className="brandMain__pagination">
-                      {
-                        Array(Math.round(totalfollowPage)).fill().map((_, index) =>
-                          <div key={index} onClick={ () => handlePageinationForFollow(index + 1)} className="brandMain__pagination__item">
-                            <p>{ index + 1 }</p>
-                          </div>
-                        )
-                      }
-                    </div>
+                    <Pagination handlePageination = {handlePageinationForFollow} totalPages={totalfollowPage}/>
                   </div>
                 )
                 : option === 4  ? 

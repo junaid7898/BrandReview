@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 function Pagination({totalPages, handlePageination}) {
-    const [selectedPage, setSelectedPage] = useState(1)
+    const [selectedPage, setSelectedPage] = useState(0)
     return (
         <div className="pagination">
             {

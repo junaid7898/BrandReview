@@ -7,6 +7,7 @@ import MultiDatePicker from '../multi_date_picker/MultiDatePicker'
 
 import Star from '../../assests/Star'
 import ImageThumbnail from '../image_thumbnail/ImageThumbnail'
+import LoadingIndicator from '../loadingIndicator/LoadingIndicator'
 export const DashboardReviews = () => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -14,6 +15,7 @@ export const DashboardReviews = () => {
     const [filters, setFilters] = useState({})
     const [sortOptions, setSortOptions] = useState()
     const [date, setDate] = useState(null)
+    const [isVerifing, setIsVerifing] = useState([])
     const handlePageination = (index) =>{
         setPage(index)
     }
@@ -50,14 +52,20 @@ export const DashboardReviews = () => {
         
     }, [page,filters, sortOptions, date])
 
+    const handleVerification = (reviewId) =>{
+        setIsVerifing([...isVerifing, reviewId])
+    }
 
     return (
         <div className = 'dashboard__review__component'>
-            <div className="dashboard__review__component__filter">
-                <FilterComponent tab = "review" setFilters= {setFilters} setSortOptions = {setSortOptions}/>
+            <div className="dashboard__review__component__container">
+                <div className="dashboard__review__component__item">
+                    <FilterComponent tab = "review" setFilters= {setFilters} setSortOptions = {setSortOptions}/>
+                </div>
+                <div className="dashboard__review__component__item">
+                    <MultiDatePicker date = {date}  setDate={setDate} />
+                </div>
             </div>
-            <div className="dashboard__review__component__picker"></div>
-            <MultiDatePicker date = {date}  setDate={setDate} />
 
             
             <div className = 'dashboard__panel__reports'>
@@ -66,8 +74,7 @@ export const DashboardReviews = () => {
                     <tr>
                         <th>User Name</th>
                         <th>Ratings</th>
-                        <th></th>
-                        <th>Comment</th>
+                        <th>Review</th>
                         <th>Date</th>
                         <th></th>
                     </tr>
@@ -103,10 +110,16 @@ export const DashboardReviews = () => {
                                         }
                                 </div></td>
                                     <td>{ new Date(item.createdOn).toDateString()}</td>
-                                    <td>
+                                    <td className = "dashboard__panel__reports__button">
                                     {
                                             !item.isVerified && 
-                                            <button>verify</button>
+                                            <button onClick={() => handleVerification(item.id)}>
+                                                Verify
+                                                {
+                                                    isVerifing.includes(item.id) &&
+                                                    <LoadingIndicator />
+                                                }
+                                            </button>
                                     }
                                     </td>
                                 </tr>

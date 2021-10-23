@@ -1,5 +1,5 @@
-.dashboard__users__data{
-    &__user{
+.dashboard__brands__data{
+    &__brand{
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -9,7 +9,7 @@
         margin: 10px 0px;
         border-bottom: 1px solid rgb(240, 240, 240);
         &__item{
-            flex: 1 1 25%;
+            flex: 1 1 20%;
         }
         &__intro{
             display: flex;
@@ -85,5 +85,11 @@
             }
             
         }
+    }
+    &__brands{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 }

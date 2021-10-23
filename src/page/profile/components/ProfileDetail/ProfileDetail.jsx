@@ -9,6 +9,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
   const location = useLocation()
   const [option ,setOption] = useState(0)
   const [page, setPage] = useState(1)
+  const [followPage, setFollowPage] = useState(1)
   const [totalfollowPage, setTotalFollowPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
@@ -20,6 +21,11 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
   const handlePageination = (index) => {
     setPage(index)
     setReviewData([])
+  }
+
+  const handlePageinationForFollow = (index) => {
+    setFollowPage(index)
+    setFollowData([])
   }
 
   useEffect(() => {
@@ -53,12 +59,12 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
         else{
           num = Math.round(num)
         }
+        console.log('total reviews:', num);
         setTotalPages(num)
       axios
       .get(`review/user/${userId}?page=${page}`)
       .then(({data}) =>{
         setReviewData(data)
-        setAreReviewsLoading(false)
       })
       .catch(err => {
         console.log(err)
@@ -81,15 +87,15 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
 
 
     axios
-    .get(`review/user/follow/${userId}?page=${totalfollowPage}`)
+    .get(`review/user/follow/${userId}?page=${followPage}`)
     .then(({data}) =>{ 
-      console.log('follow data: ', data);
+      setFollowData(data)
     })
     .catch(err => {
       console.log(err)
     })
   
-}, [totalfollowPage])
+}, [followPage])
 
 
 
@@ -153,7 +159,30 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
                 )
               : option === 3  ? 
                 (
-                  <h1>hello this is show reviews and followings</h1>
+                  <div className="details__reviews">
+                    <div className="details__reviews__comment">
+                      {
+                        followData.length > 0  ?
+                          (followData.map(follow =>
+                            {
+                              return <Review review = {follow} /> 
+                            }
+                          ))
+                      :
+                        /* <LoadingIndicator /> */
+                        <h1>you hav not follow any review yet.....</h1>
+                      }
+                    </div>
+                    <div className="brandMain__pagination">
+                      {
+                        Array(Math.round(totalfollowPage)).fill().map((_, index) =>
+                          <div key={index} onClick={ () => handlePageinationForFollow(index + 1)} className="brandMain__pagination__item">
+                            <p>{ index + 1 }</p>
+                          </div>
+                        )
+                      }
+                    </div>
+                  </div>
                 )
                 : option === 4  ? 
                 (

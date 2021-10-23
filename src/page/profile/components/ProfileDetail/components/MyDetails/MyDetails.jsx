@@ -5,13 +5,10 @@ import DetailTag from "./components/DetailTag";
 import { axios } from "../../../../../../axios/axiosInstance";
 
 import UpdateProfileComponents from "./components/UpdateProfileComponents";
+import LoadingIndicator from "../../../../../../components/loadingIndicator/LoadingIndicator";
 const MyDetails = ({ user }) => {
 
-  const [phone, setPhone] = useState(null);
-  const [birthday, setBirthday] = useState(new Date().toISOString().split("T")[0]);
-  const [address, setAddress] = useState(null);
-  const [countryCode, setCountryCode] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [isSendingOtp, setIsSendingOtp] = useState(false)
 
 
   const [updateProfile, setUpdateProfile] = useState(false);
@@ -22,11 +19,16 @@ const MyDetails = ({ user }) => {
 
   const handleOtpVerification = () => {
     const phoneNumber = user.countryCode + user.phoneNumber;
+    setIsSendingOtp(true)
     axios.post('/auth/user/send-verification-sms', {user}).then(() => {
-      console.log('rres')
+      setIsSendingOtp(false)
       setVerifyPhoneNumber(true)
+      
     }
-    )
+    ).catch(err => {
+      setIsSendingOtp(false)
+      alert(JSON.stringify(err.response.data.message))
+    })
   }
 
   return (
@@ -56,8 +58,13 @@ const MyDetails = ({ user }) => {
              user.isPhoneVerified ?
               null
               :
-              <div className="mydetails__update-button__button2">
-                <UpdateProfile onClick = {() => handleOtpVerification()} value = 'Verify Phone'/>
+              <div className="mydetails__update-button__button2" style = {{position: 'relative'}}>
+                {
+                  isSendingOtp ? 
+                  <LoadingIndicator/>
+                  :
+                  <UpdateProfile onClick = {() => handleOtpVerification()} value = 'Verify Phone'/>
+                }
               </div>
             
           }

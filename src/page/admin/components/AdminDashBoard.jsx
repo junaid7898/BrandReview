@@ -7,6 +7,7 @@ import { DashboardReviews } from '../../../components/dashboardReviews/Dashboard
 import DashBoardUsers from './DashBoardUsers'
 import Star from '../../../assests/Star'
 import { useSelector } from 'react-redux'
+import Chart from '../../../components/charts/Chart'
 
 const AdminDashBoard = () => {
 
@@ -168,7 +169,7 @@ const AdminDashBoard = () => {
                     <>
                         {/* <DashBoardLink/> */}
                         {/* TODO give a prop like reviews = {data from api} to display */}
-                        <h1>admin charts</h1>
+                        <Chart/>
                     </>
                     :
                     (null)

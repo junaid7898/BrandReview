@@ -6,22 +6,35 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        padding: 13px 25px;
         width: 100%;
         background-color: $surface;
+        height: 50px;
         border-radius: 10px;
-        cursor: pointer;
-        & h1{
-            font-weight: normal;
-            font-size: 15px;
-            line-height: 24px;
-            font-weight: 600;
-            color: $onSurface-primary;
+        position: relative;
+        &__div{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding-left:25px;
+            & h1{
+                font-weight: normal;
+                font-size: 15px;
+                line-height: 24px;
+                font-weight: 600;
+                color: $onSurface-primary;
+            }
         }
 
         &__icon{
-            & :hover{
-                transform: scale(1.1);
+            padding-right: 25px;
+            cursor: pointer;
+            &__svg{
+                transition: all 300ms;
+                &-asc{
+                    transform: rotate(180deg);
+                }
             }
         }
     }

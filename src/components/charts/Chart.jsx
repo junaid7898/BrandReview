@@ -1,37 +1,38 @@
+import {axios} from '../../axios/axiosInstance';
 import React, {useState, useEffect} from 'react'
 import {Bar, Line} from 'react-chartjs-2'
 import MultiDatePicker from '../multi_date_picker/MultiDatePicker';
 
 const Chart = () => {
-    const [fromDate, setFromDate] = useState(null)
+    const [date, setDate] = useState(null)
     var date1, date2, diff1, diff2, diff, x;
-    if(fromDate !== null){ 
-        fromDate.map((item, index) => {
+    if(date !== null){ 
+        date.map((item, index) => {
             if(index === 0)
             {
                 date1 = new Date(item)
                 diff1 = item.dayOfYear
-                console.log('date1: ', date1, item.dayOfYear)
+                // console.log('date1: ', date1, item.dayOfYear)
             }
             else if(index === 1){
                 date2 = new Date(item)
-                console.log('date2: ',date2, item.dayOfYear);
+                // console.log('date2: ',date2, item.dayOfYear);
                 diff2 = item.dayOfYear
             }
         })
         diff = Math.abs(diff1 - diff2)
-        console.log('diff: ', diff);
+        // console.log('diff: ', diff);
         if(diff > 100){
             x = getArray(diff)
-            console.log('x1,100: ', x);
+            // console.log('x1,100: ', x);
         }
         else if(diff < 5){
             x = getMinorArray(diff)
-            console.log('x1, 5: ', x);
+            // console.log('x1, 5: ', x);
         }
         else if (diff < 100){
             x = getMiniArray(diff)
-            console.log('x1, <100: ', x)
+            // console.log('x1, <100: ', x)
         }
     }
     
@@ -60,8 +61,8 @@ const Chart = () => {
 
     function getMinorArray (day){
         let x = []
-        for(let y = 0; y < day; y = y + 1){   
-            x.push(y)
+        for(let y = 69; y <100; y = y + 1){   
+            x.push(y+"gada")
         }
         
         return x;   
@@ -71,28 +72,91 @@ const Chart = () => {
 
     //TODO get data from api
     const data = [ 2.4 , 3 , 4 , 5 , 3.4 , 5 , 3 , 2 , 4 , 4.5 , 5 , 3.4, 5 , 3]
+    const [chartData, setChartData] = useState(null)
+    useEffect(() => {
+        if(date){
+
+            let newFilter
+
+            newFilter = {
+                ...newFilter,
+                createdOn: JSON.stringify({
+                    $gt: new Date(date[0]),
+                    $lt: new Date(date[1])
+                })
+            }
+            const options = {
+                limit: 100000,
+            }
+
+            console.log(newFilter)
+            axios.post('/review/query',{filters: newFilter, options})
+            .then(({data}) => {
+                console.log(data)
+                let newObj = {}
+                data.results.map( item => {
+                    const g = new Date(item.createdOn).toDateString()
+                    console.log(g)
+                    if(newObj[g]){
+                        newObj[g]++
+                    }
+                    else {
+                        newObj[g] = 1
+                    }
+                })
+
+                const user = ["sadsa"];
+                
+
+
+
+                console.log(user)
+
+
+                console.log(newObj)
+                setChartData({
+                    label:Object.keys(newObj),
+                    value: Object.values(newObj)
+                })
+
+
+
+
+
+
+
+            })
+        }
+    }, [date])
+
+
     
+
+
+
+
+
     return (
         <>
         <div className="chart__div__date-picker">
-                <MultiDatePicker date = {fromDate} setDate = {setFromDate} />
+                <MultiDatePicker date = {date} setDate = {setDate} />
         </div>
         {
-            fromDate ? 
+            date ? 
             (
                 <div className = 'chart__div'>
              
                     <div className="chart__div__first-chart">
                         <div className="chart__div__first-chart__intro">
                             <h3>Reviews</h3>
-                            <h4>1.5</h4>
                         </div>
                         <div className = 'chart__div__first__chart__bar'>
                             <Bar
                                 data = {{
-                                    labels: x,
+                                    labels: chartData && chartData.label,
                                     datasets: [{  
-                                        data: [10, 20, 30, 40, 50, 60, 70, 80, 20, 10, 20, 30, 40, 50, 5, 10, 20, 30 , 40 , 50, 20, 10, 45],
+                                        label:"Total Reviews",
+                                        data: chartData && chartData.value,
                                         barPercentage: 0.5,
                                         barThickness: 15,
                                         maxBarThickness:20,

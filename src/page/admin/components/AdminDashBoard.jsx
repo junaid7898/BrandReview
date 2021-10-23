@@ -7,7 +7,9 @@ import { DashboardReviews } from '../../../components/dashboardReviews/Dashboard
 import DashBoardUsers from './DashBoardUsers'
 import Star from '../../../assests/Star'
 import { useSelector } from 'react-redux'
+
 import DashBoardBrands from './DashBoardBrands'
+
 import Chart from '../../../components/charts/Chart'
 
 const AdminDashBoard = () => {
@@ -167,7 +169,7 @@ const AdminDashBoard = () => {
             {
                 showDashBoard ? 
                     <>
-                        <Chart />
+                       <Chart />
                     </>
                     :
                     (null)

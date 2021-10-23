@@ -66,6 +66,10 @@ export const DashboardReviews = () => {
                     <MultiDatePicker date = {date}  setDate={setDate} />
                 </div>
             </div>
+            <div className="dashboard__review__component__picker">
+                <MultiDatePicker date = {date}  setDate={setDate} />
+            </div>
+
 
             
             <div className = 'dashboard__panel__reports'>

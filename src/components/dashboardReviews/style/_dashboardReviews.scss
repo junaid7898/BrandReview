@@ -1,6 +1,7 @@
 .dashboard__review__component{
     width: 100%;
     margin: auto;
+
     @include respond(phone){
         margin-left: 0;
     }

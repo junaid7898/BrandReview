@@ -8,6 +8,13 @@
     margin: auto;
     margin-bottom: 50px;
 
+    &__panel__review{
+        background-color: red;
+        width: 1100px;
+        max-width: 98%;
+        margin: auto;
+    }
+
     &__panel__user{
         max-width: 1200px;
         margin: auto;
@@ -17,8 +24,7 @@
 
     &__panel__reports{
         // background-color: red;
-        width: 1100px;
-        max-width: 98%;
+        width: 100%;
         margin: auto;
         padding-bottom: 50px;
         &__table{

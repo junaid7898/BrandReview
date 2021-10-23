@@ -48,6 +48,7 @@ const MultiDatePicker = ({date, setDate}) => {
     }
     return
   };
+  
 
   useEffect(() => {
     setDate(date)

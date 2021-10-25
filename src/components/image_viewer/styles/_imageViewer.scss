@@ -7,7 +7,8 @@
     justify-content: center;
     align-items: center;
     &__mask{
-        background-color: rgba(0, 0, 0, 0.247);
+        background-color: ghostwhite;
+        opacity: 0.2;
         position: fixed;
         inset: 0;
     }

@@ -7,6 +7,8 @@ import ImageThumbnail from "../../../components/image_thumbnail/ImageThumbnail";
 import Pagination from "../../../components/Pagination/Pagination";
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import ImageViewer from "../../../components/image_viewer/ImageViewer";
 
 const BrandReviews = ({ brandId }) => {
   const [page, setPage] = useState(1);
@@ -17,6 +19,9 @@ const BrandReviews = ({ brandId }) => {
   const [date, setDate] = useState(null);
   const [isBlackListing, setIsBlacklisting] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const {client} = useSelector(state => state.client) 
+  const [previewImage, setPreviewImage] = useState(null)
+
   const handlePageination = (index) => {
     setPage(index);
   };
@@ -57,6 +62,7 @@ const BrandReviews = ({ brandId }) => {
       });
   }, [page, filters, sortOptions, date]);
 
+  //FIXME for admin blacklist user
   const handleBlacklist = (id) => {
     setIsBlacklisting([...isBlackListing, id]);
   };
@@ -125,28 +131,45 @@ const BrandReviews = ({ brandId }) => {
                       {item.message}
                       <div className="dashboard__panel__reports__images">
                         {item.images.map((img) => {
-                          return <ImageThumbnail image={img} />;
+                          return (
+                            <div onClick = {() => setPreviewImage(img)}>
+                              <ImageThumbnail image={img} />
+                            </div>
+                          );
                         })}
+                        <>
+                          {
+                            previewImage ?
+                              <ImageViewer image = {previewImage} setImage = {setPreviewImage}/>
+                              :
+                              null
+                          }
+                        </>
                       </div>
                     </td>
                     <td>{new Date(item.createdOn).toDateString()}</td>
-                    <td className="dashboard__panel__reports__button">
-                      {!item.blackListed ? (
-                        <button onClick={() => handleBlacklist(item.id)}>
-                          Blacklist
-                          {isBlackListing.includes(item.id) && (
-                            <LoadingIndicator />
-                          )}
-                        </button>
-                      ) : (
-                        <button onClick={() => handleRemoveBlacklist(item.id)}>
-                          Remove from Blacklist
-                          {isBlackListing.includes(item.id) && (
-                            <LoadingIndicator />
-                          )}
-                        </button>
-                      )}
-                    </td>
+
+                    
+                        <td className="dashboard__panel__reports__button">
+                        {!item.isVerified ? (
+                          <button onClick={() => handleBlacklist(item.id)}>
+                            Resolve
+                            {isBlackListing.includes(item.id) && (
+                              <LoadingIndicator />
+                            )}
+                          </button>
+                        ) : (
+                          <button onClick={() => handleRemoveBlacklist(item.id)}>
+                            Revert
+                            {
+                              isBlackListing.includes(item.id) && (
+                              <LoadingIndicator />
+                            )
+                            }
+                          </button>
+                        )}
+                      </td>
+                    
                   </tr>
                 </>
               );

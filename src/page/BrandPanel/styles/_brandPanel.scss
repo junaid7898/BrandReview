@@ -17,5 +17,7 @@
 
     &__brand-details{
         margin-bottom: 50px;
+        max-width: $maxwidth;
+        width: 100%;
     }
 }

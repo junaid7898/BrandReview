@@ -30,6 +30,7 @@
     justify-content: space-around;
     padding: 8px 12px;
     width: 100%;
+    margin: 50px 0px;
     &__inputs{
         @include respond(phone){
             margin: 50px 0px;

@@ -149,7 +149,7 @@ function App() {
               type={true}
               role="brand"
         />
-        <Route path = '/brand/comparison/:brand1Name/:brand2Name' component = {ComparisonPage}/>  
+        <Route path = '/brand/comparison/:brand1Id/:brand2Id' component = {ComparisonPage}/>  
         <Route path = '/brand/:brandId' component = {SearchBrand} />
         <PrivateRoute 
               exact 

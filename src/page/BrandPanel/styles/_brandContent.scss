@@ -63,6 +63,10 @@
                 line-height: 105px;
                 color: $primary;
             }
+            &__count-zero{
+                font-weight: bold;
+                font-size: 20px;
+            }
             h3{
                 color: $primary;
             }

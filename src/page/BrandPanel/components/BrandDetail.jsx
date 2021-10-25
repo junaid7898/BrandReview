@@ -1,22 +1,40 @@
-import React, {useRef, useState}from 'react'
+import React, {useEffect, useRef, useState}from 'react'
 import UpdateProfile from '../../../components/update_profile_button/UpdateProfile'
-import PhoneInput from 'react-phone-number-input';
+
 import Chart from '../../../components/charts/Chart';
 import {ImCross} from 'react-icons/im';
 import { axios } from '../../../axios/axiosInstance';
 import BrandReviews from './BrandReviews';
+import UpdateBrandProfile from './UpdateBrandProfile';
+import { clientActions } from '../../../Redux/clientslice/clientSlice';
+import { useDispatch , useSelector} from "react-redux";
+import { isPossiblePhoneNumber, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
+import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator';
+import VerifyOTP from '../../../components/verify-otp/VerifyOTP';
+import BrandChart from './BrandChart';
 
-const BrandDetail = ({item, brandId}) => {
-    console.log("item update: ", item);   
+
+const BrandDetail = ({item, brandId}) => { 
 
     const [option, setOption] = useState(1)
+    const {client} = useSelector(state => state.client)
 
+    const [phone, setPhone] = useState(null)
+    const [about, setAbout] = useState(null)
+    const [isUpdatingBrand, setIsUpdatingBrand] = useState(false)
 
-    const [phone, setPhone] = useState(item.countryCode+item.phoneNumber)
-    const [about, setAbout] = useState(item.about)
+    useEffect(() => {
+        if(item){
+            setPhone(item.countryCode + item.phoneNumber)
+            setAbout(item.about)
+        }
+    }, [item])
+
+    const dispatch = useDispatch()
 
     const [updateProfile, setUpdateProfile] = useState(false)
-    const [isLoadingUpdate, setIsloadingUpdate] = useState(false);
+    const [verifyPhone, setVerifyPhone] = useState(false)
+    const [isSendingOtp, setIsSendingOtp] = useState(false)
 
     const handleShowDashBoard = () => {
         setOption(1)
@@ -35,11 +53,73 @@ const BrandDetail = ({item, brandId}) => {
     }
 
 
-    const handleUpdate = () => {
-        setUpdateProfile(!updateProfile)
-        setIsloadingUpdate(true)
-
+    const checkValidation = () => {
+        let response;
+        if(about === item.about && phone === item.countryCode + item.phoneNumber){
+            response = 'nothing is changed'
+            return response
+        }
+        else if(about === null || phone === null){
+            response = 'please fill all the entries'
+            return response
+        }
+        else if(isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
+            response = 'phone number is invalid! please enter a valid phone number'
+            return response
+        }
+        else{
+            response = 'ok'
+            return response
+        }
     }
+  
+    const handleUpdate = () => {
+        const validation = checkValidation();
+        if(validation === 'ok'){
+          setIsUpdatingBrand(true)
+          const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
+          const {payload} = dispatch(clientActions.setClient({
+              ...client, 
+              brand: {
+                  ...client.brand,
+                  about: about,
+                  phoneNumber: nationalNumber,
+                  countryCode: `+${countryCallingCode}`,
+              },
+              
+          }))
+          axios.patch(`/brand/${brandId}`, payload.brand, {
+              headers:{
+                  "role" : client.type,
+                  "authorization" : `bearer ${client.tokens.access.token}`
+              }
+          }).then((res) => {
+            setIsUpdatingBrand(false)
+            alert('Your information is changed...')
+            setUpdateProfile(false)
+            
+          }).catch(err => {
+            //   setIsUpdating(false)
+              alert(JSON.stringify(err))
+          })
+      } 
+      else{
+          alert(validation)
+      }
+   }
+
+   const handleOtpVerification = () => {
+    setIsSendingOtp(true)
+    axios.post('/auth/brand/send-verification-sms', {item}).then(() => {
+      setIsSendingOtp(false)
+      setVerifyPhone(true)
+    }
+    ).catch(err => {
+      setIsSendingOtp(false)
+      alert(JSON.stringify(err.response.data.message))
+    })
+  }
+   
 
 
     return (
@@ -54,7 +134,7 @@ const BrandDetail = ({item, brandId}) => {
                     option === 1 && item ? 
                     (
                         <div className="dashboard__list__chart">
-                            <Chart/>
+                            <BrandChart brandId = {brandId}/>
                         </div>
                     ):
                     (
@@ -109,7 +189,7 @@ const BrandDetail = ({item, brandId}) => {
                             :
                             <div className="mydetails__update-button__button2" style = {{position: 'relative'}}>
                                 {
-                                <UpdateProfile onClick = {() => console.log('hello')} value = 'Verify Phone'/>
+                                <UpdateProfile onClick = {() => handleOtpVerification()} value = 'Verify Phone'/>
                                 }
                             </div>
                             
@@ -121,65 +201,26 @@ const BrandDetail = ({item, brandId}) => {
                         {
                             updateProfile ?
                             (
-                                <>
-                                <div className="mydetails__update-details" style = {{position: 'relative'}}>
-
-                                <div
-                                    className="mydetails__update-details__mask"
-                                    
-                                >
+                                <div className="update__brand">
+                                    <UpdateBrandProfile phone = {phone} setPhone = {setPhone} about = {about} setAbout = {setAbout} handleUpdate = {handleUpdate}
+                                    setUpdateProfile = {setUpdateProfile}
+                                    />
+                                    {
+                                        isUpdatingBrand && <LoadingIndicator/>
+                                    }
                                 </div>
-                                    <div className="mydetails__update-details__update">
-                                        
-
-                                        <div className="mydetails__update-details__update__phone">
-                                            <label htmlFor="phoneNumber">Phone Number </label>
-                                                <PhoneInput
-                                                    id = 'phoneNumber'
-                                                    placeholder="Enter phone number"
-                                                    value={phone}
-                                                    className = 'mydetails__update-details__update__phone__phone-number'
-                                                    name = 'phone number'
-                                                    onChange={setPhone}/>   
-                                        </div>
-
-                                        <div className="mydetails__update-details__update__phone">
-                                            <label htmlFor="aboutBrand">About</label>
-                                                <input
-                                                    type = 'text'
-                                                    maxLength = {200}
-                                                    id = 'aboutBrand'
-                                                    placeholder="About Your brand[max of 200 chars]"
-                                                    value={about}
-                                                    className = 'mydetails__update-details__update__phone__phone-number'
-                                                    name = 'about'
-                                                    onChange={setAbout}/>   
-                                        </div>
-
-
-
-
-                                        <div
-                                        className="mydetails__update-details__update__button"
-                                        onClick={() => {
-                                            handleUpdate()
-                                        }}
-                                        >
-                                            <h1>Ok</h1>
-                                        </div>
-                                        <div className="cancel__button__brand" onClick = {() => setUpdateProfile(false)}>
-                                            <ImCross size = {24} color = 'white' className = 'cancel__button__brand__icon'/>
-                                        </div>
-                                    </div>
-
-                                    
-                                    </div>
-                                </>
+                                
                             )
                             :
                             (
                                 null
                             )
+                        }
+                        {
+                            verifyPhone ?
+                                <VerifyOTP onCut = {setVerifyPhone} user = {item}/>
+                            :
+                            null
                         }
                         </>
                     )

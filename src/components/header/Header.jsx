@@ -395,22 +395,25 @@ const Header = () => {
         }
       </div>
       </div>
-      <div className="nav__emailVerification">
+      
       {
         client ?
           client.type.includes("user")
           ?
             !client.user.isEmailVerified ?
-              <button onClick = {handleUserVerification}>verifiy email</button>
+              <div className="nav__emailVerification">
+                <button onClick = {handleUserVerification}>verifiy email</button>
+              </div>
               : null
           : client.type.includes("brand") ?
             !client.brand.isEmailVerified ?
-            <button onClick = {handleBrandVerification}>verifiy email</button>
+              <div className="nav__emailVerification">
+                <button onClick = {handleBrandVerification}>verifiy email</button>
+              </div>
             : null
           : null
         : null
       }
-      </div>
       
     </nav>
   );

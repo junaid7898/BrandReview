@@ -1,0 +1,75 @@
+.update__brand{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+    background-color: $onSurface-secondary;
+    z-index: 200;
+    @include respond(phone){ 
+    }
+    &__profile{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        width: 500px;
+        
+        padding: 30px 10px;
+        background-color: $background;
+        border-radius: 10px;
+        position: relative;
+        @include respond(phone){
+            width: 350px;
+        }
+        &__inputs{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            &__phone{
+                margin-bottom: 20px;
+                width: 100%;
+                &-input{
+                    width: 100%;
+                }
+            }
+            &__about{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                &__input{
+                    width: 100%;
+                    outline: none;
+                    border: 0px solid;
+                    padding: 10px 6px;
+                    border-bottom: 1px solid $onSurface-secondary;
+                }
+            }
+            &__submit-button{
+                margin-top: 20px;
+                width: 100%;
+                background-color: $primary;
+                text-align: center;
+                color: white;
+                padding: 10px;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: 300ms;
+                &:hover{
+                    transform: scale(1.01);
+                }
+            }
+            &__cancel-button{
+                background-color: $primary;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}

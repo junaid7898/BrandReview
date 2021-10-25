@@ -4,19 +4,25 @@ import MyDetails from './components/MyDetails/MyDetails'
 import { axios } from "../../../../axios/axiosInstance";
 import Review from "../../../../components/reviews/Review";
 import Pagination from "../../../../components/Pagination/Pagination"
+import LoadingIndicator from "../../../../components/loadingIndicator/LoadingIndicator";
 const ProfileDetail = ({user, visitorIsUser, userId}) => {
-  console.log('user:>', user);
+  // console.log('user:>', user);
   const location = useLocation()
   const [option ,setOption] = useState(0)
   const [page, setPage] = useState(1)
   const [followPage, setFollowPage] = useState(1)
   const [totalfollowPage, setTotalFollowPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-
+  const [updatedReview, setUpdatedReview] = useState(null)
   const [reviewData, setReviewData] = useState([])
   const [followData, setFollowData] = useState([])
   const [areReviewsLoading, setAreReviewsLoading] = useState(true)
-
+  const [currentPage, setCurrentPage] = useState(1)
+  const [followCurrentPage, setFollowCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = useState({
+    review: true,
+    follow: true
+  })
 
   const handlePageination = (index) => {
     setPage(index)
@@ -51,7 +57,9 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
   //ANCHOR use effect for getting user reviews from api
 
   useEffect(() => {
-        let num = user.reviews.length/10;
+        if(option === 2){
+          setIsLoading({...isLoading, review: true})
+          let num = user.reviews.length/10;
         
         if(num > Math.round(num)){
           num = Math.round(num + 1)
@@ -59,50 +67,91 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
         else{
           num = Math.round(num)
         }
-        console.log('total reviews:', num);
+        // console.log('total reviews:', num);
         setTotalPages(num)
       axios
-      .get(`review/user/${userId}?page=${page}`)
+      .post(`review/query/`,{
+        filters:{
+          user: user.id
+        },
+        options:{
+          page,
+          limit: 10,
+          populate:"user.User"
+      }
+      })
       .then(({data}) =>{
-        setReviewData(data)
+        setReviewData(data.results)
+        setTotalPages(data.totalPages)
+        setIsLoading({...isLoading, review: false})
+        setCurrentPage(data.page)
       })
       .catch(err => {
+        setIsLoading({...isLoading, review: false})
         console.log(err)
       })
+      }
+      else{
+        setReviewData([])
+      }
     
-  }, [page])
+  }, [page, option])
 
   //ANCHOR use effect for getting user reviews|follows
 
   useEffect(() => {
-    let num = user.followedReviews.length/10;
-    if(num > Math.round(num)){
-      num = Math.round(num + 1)
-    }
-    else{
-      num = Math.round(num)
-    }
-    console.log('followed NUM:', num);
-    setTotalFollowPage(num)
-
+    if(option === 3){
+      setIsLoading({...isLoading, follow: true})
 
     axios
-    .get(`review/user/follow/${userId}?page=${followPage}`)
+    .post(`/review/query`,{
+      filters:{
+        followedByUsers:JSON.stringify({
+          $in: user.id
+        })
+      },
+      options:{
+        page,
+        limit: 10,
+        populate:"user.User"
+    }
+    })
     .then(({data}) =>{ 
-      setFollowData(data)
+      setIsLoading({...isLoading, follow: false})
+      setFollowData(data.results)
+      setTotalFollowPage(data.totalPages)
+      setFollowCurrentPage(data.page)
     })
     .catch(err => {
+      setIsLoading({...isLoading, follow: false})
       console.log(err)
     })
+    }
+    else{
+      setFollowData([])
+    }
   
-}, [followPage])
+}, [followPage, option])
 
 
+useEffect(() => {
+  if(updatedReview){
+    setReviewData(
+      reviewData.map(review => {
+        if(review.id === updatedReview.id){
+          return updatedReview
+        }
+        return review
+      })
+    )
+    setUpdatedReview(null)
+  }
+}, [updatedReview])
 
   
 
 
-  console.log(visitorIsUser)
+  // console.log(visitorIsUser)
 
   return (
     <section className="details">
@@ -130,20 +179,26 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
                 (
 
                   <div className="details__reviews">
-                    <div className="details__reviews__comment">
+                    <div className="details__reviews__comment" style = {{position: 'relative'}}>
                       {
                         reviewData.length > 0  ?
                           (reviewData.map(review =>
                             {
-                              return <Review review = {review} /> 
+                              return <Review setUpdatedReview ={setUpdatedReview} review = {review} /> 
                             }
                           ))
                       :
-                        /* <LoadingIndicator /> */
-                        <h1>oops no reviews yet.....</h1>
+                        isLoading.review 
+                        ?
+                            <LoadingIndicator />
+                        :
+                          <h1>oops no reviews yet.....</h1>
                       }
                     </div>
-                    <Pagination handlePageination = {handlePageination} totalPages={totalPages}/>
+                    {
+                      totalPages > 1 &&
+                      <Pagination currentPage ={currentPage} handlePageination = {handlePageination} totalPages={totalPages}/>
+                    }
                   </div>
           
                   
@@ -152,7 +207,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
               : option === 3  ? 
                 (
                   <div className="details__reviews">
-                    <div className="details__reviews__comment">
+                    <div className="details__reviews__comment" style = {{position: 'relative'}}>
                       {
                         followData.length > 0  ?
                           (followData.map(follow =>
@@ -161,11 +216,17 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
                             }
                           ))
                       :
-                        /* <LoadingIndicator /> */
-                        <h1>you hav not follow any review yet.....</h1>
+                      isLoading.follow 
+                        ?
+                            <LoadingIndicator />
+                        :
+                          <h1>oops no ff yet.....</h1>
                       }
                     </div>
-                    <Pagination handlePageination = {handlePageinationForFollow} totalPages={totalfollowPage}/>
+                    {
+                      followData.length > 9 &&
+                      <Pagination handlePageination = {handlePageinationForFollow} totalPages={totalfollowPage}/>
+                    }
                   </div>
                 )
                 : option === 4  ? 

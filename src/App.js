@@ -59,6 +59,12 @@ function App() {
           dispatch(statusAction.setAttemptingLogin(false))
           console.log(user);
         })
+        .catch(err =>{
+          console.log(err);
+          localStorage.removeItem("userId")
+          localStorage.removeItem("accessToken")
+          localStorage.removeItem("clientType")
+        })
       }
     }
     else if(type === "brand"){
@@ -74,6 +80,12 @@ function App() {
           dispatch(clientActions.setClient(brand))
           dispatch(statusAction.setAttemptingLogin(false))
           console.log(brand);
+        })
+        .catch(err =>{
+          console.log(err);
+          localStorage.removeItem("brandId")
+          localStorage.removeItem("accessToken")
+          localStorage.removeItem("clientType")
         })
       }
     }

@@ -1,21 +1,19 @@
 import React, {useRef, useState}from 'react'
-import {FaSortAmountDownAlt} from 'react-icons/fa'
-import { GiCogLock } from 'react-icons/gi'
 import UpdateProfile from '../../../components/update_profile_button/UpdateProfile'
 import PhoneInput from 'react-phone-number-input';
 import Chart from '../../../components/charts/Chart';
+import {ImCross} from 'react-icons/im';
+import { axios } from '../../../axios/axiosInstance';
+import BrandReviews from './BrandReviews';
 
-const BrandDetail = ({item}) => {
-    console.log("item update: ", item);
+const BrandDetail = ({item, brandId}) => {
+    console.log("item update: ", item);   
 
     const [option, setOption] = useState(1)
 
 
-    const [phone, setPhone] = useState(null)
-    const [address, setAddress] = useState(null)
-    const address1 = useRef()
-    const address2 = useRef()
-    const address3 = useRef()
+    const [phone, setPhone] = useState(item.countryCode+item.phoneNumber)
+    const [about, setAbout] = useState(item.about)
 
     const [updateProfile, setUpdateProfile] = useState(false)
     const [isLoadingUpdate, setIsloadingUpdate] = useState(false);
@@ -38,19 +36,19 @@ const BrandDetail = ({item}) => {
 
 
     const handleUpdate = () => {
-        setUpdateProfile(false)
+        setUpdateProfile(!updateProfile)
         setIsloadingUpdate(true)
 
     }
+
 
     return (
         
             <div className = 'dashboard__list'>
                 <ul>
                     <li onClick = {handleShowDashBoard} className = {option === 1 ? 'list__click': ''}>Dashboard</li>
-                    <li onClick = {handleShowReviews} className = {option === 2 ? 'list__click': ''}>Reviews</li>
+                    <li onClick = {handleShowReviews} className = {option === 2 ? 'list__click': ''}>Reports</li>
                     <li onClick = {handleShowSettings} className = {option === 3 ? 'list__click': ''}>Settings</li>
-                    <li onClick = {handleShowReport} className = {option === 4 ? 'list__click': ''}>Reports</li>
                 </ul>
                 {
                     option === 1 && item ? 
@@ -94,54 +92,43 @@ const BrandDetail = ({item}) => {
                             <div className="dashboard__list__settings__items">
                                 <div className="dashboard__list__settings__items__name">
                                     <h3>Phone</h3>
-                                    <h4>{item.phoneNumber}</h4>
+                                    <h4>{item.countryCode + item.phoneNumber}</h4>
                                 </div>
                             </div>
 
-                            <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
-                                    <h3>Country Code</h3>
-                                    <h4>{item.phoneNumber.countryCode}</h4>
-                                </div>
-                            </div>
-
-                            <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
-                                    <h3>Address</h3>
-                                    <h4>{item.name}</h4>
-                                </div>
-                            </div>
-
-                            <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
-                                    <h3>Language</h3>
-                                    <h4>{item.name}</h4>
-                                </div>
-                            </div>
                         </div>
 
 
-                        <div className="dashboard__list__update-settings">
-                            <UpdateProfile setUpdateProfile = {setUpdateProfile}/>
+                        <div className="mydetails__update-button">
+                            <div className="mydetails__update-button__button1">
+                                <UpdateProfile onClick={() => setUpdateProfile(true)} value = 'Update Profile' />
+                            </div>
+                        {
+                            item.isPhoneVerified ?
+                            null
+                            :
+                            <div className="mydetails__update-button__button2" style = {{position: 'relative'}}>
+                                {
+                                <UpdateProfile onClick = {() => console.log('hello')} value = 'Verify Phone'/>
+                                }
+                            </div>
+                            
+                        }
+                        
+
                         </div>
 
                         {
                             updateProfile ?
                             (
                                 <>
-                                <div className="mydetails__update-details">
+                                <div className="mydetails__update-details" style = {{position: 'relative'}}>
 
-
-                                    <div
-                                        className="mydetails__update-details__mask"
-                                        onClick={() => setUpdateProfile(false)}
-                                    >
-                                    </div>
-
-
+                                <div
+                                    className="mydetails__update-details__mask"
                                     
-
-
+                                >
+                                </div>
                                     <div className="mydetails__update-details__update">
                                         
 
@@ -156,28 +143,20 @@ const BrandDetail = ({item}) => {
                                                     onChange={setPhone}/>   
                                         </div>
 
-
-                                        <div className="mydetails__update-details__update__address">
-                                            <label htmlFor="address">Address </label>
-                                            <input
-                                                id="address"
-                                                placeholder="enter your address"
-                                                onChange={(e) => address1.current = e.target.value}
-                                                name="address"
-                                            />
-                                            <input
-                                                id="addressLine1"
-                                                placeholder="line 1"
-                                                onChange={(e) => address2.current = e.target.value}
-                                                name="address"
-                                            />
-                                            <input
-                                                id="addressLine2"
-                                                placeholder="line 2"
-                                                onChange={(e) => address3.current = e.target.value}
-                                                name="address"
-                                            />
+                                        <div className="mydetails__update-details__update__phone">
+                                            <label htmlFor="aboutBrand">About</label>
+                                                <input
+                                                    type = 'text'
+                                                    maxLength = {200}
+                                                    id = 'aboutBrand'
+                                                    placeholder="About Your brand[max of 200 chars]"
+                                                    value={about}
+                                                    className = 'mydetails__update-details__update__phone__phone-number'
+                                                    name = 'about'
+                                                    onChange={setAbout}/>   
                                         </div>
+
+
 
 
                                         <div
@@ -188,7 +167,12 @@ const BrandDetail = ({item}) => {
                                         >
                                             <h1>Ok</h1>
                                         </div>
+                                        <div className="cancel__button__brand" onClick = {() => setUpdateProfile(false)}>
+                                            <ImCross size = {24} color = 'white' className = 'cancel__button__brand__icon'/>
+                                        </div>
                                     </div>
+
+                                    
                                     </div>
                                 </>
                             )
@@ -206,11 +190,13 @@ const BrandDetail = ({item}) => {
                 }
                 {
                     option === 2 ?
-                    (<h1>option 2</h1>):(null)
-                }
-                {
-                    option === 4 ? 
-                    (<h1>option 4</h1>):(null)
+                        <div className="brand__reviews__container">
+                            <BrandReviews brandId = {brandId} />
+                        </div>
+                    :
+                    
+                        null
+                    
                 }
 
                 

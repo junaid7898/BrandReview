@@ -64,7 +64,7 @@ const LoginInputs = () => {
         "http://localhost:4000/v1/auth/user/login",
         req
         ).then(res => {
-          console.log('response: ' , res)
+          console.log('response: ' , res.data)
             const {payload} = dispatch(clientActions.setClient(res.data))
             console.log(payload)
             if(rememberMe){

@@ -19,7 +19,8 @@ const SearchBrand = () => {
   const [brandData, setBrandData] = useState(null)
   const [reviewData, setReviewData] = useState([])
   const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
   const [areReviewsLoading, setAreReviewsLoading] = useState(true)
   const [updatedReview, setUpdatedReview] = useState(null)
   useEffect(() => {
@@ -29,14 +30,6 @@ const SearchBrand = () => {
         .get(`/brand/${brandId}`)
         .then(({data}) => {
           setBrandData(data)
-          let num = data.reviews.length/10
-          if(num > Math.round(num)){
-            num = Math.round(num + 1)
-          }
-          else{
-            num = Math.round(num)
-          }
-          setTotalPages(num)
         })
         .catch(err =>{
           console.log(err)
@@ -46,11 +39,27 @@ const SearchBrand = () => {
   }, [brandId])
 
   useEffect(() => {
+    const options = {
+      page,
+      limit: 10,
+      populate:"user.User"
+    }
+    const filters={
+      brand: brandId
+    }
     if(brandId){
+
+      
       axios
-      .get(`review/brand/${brandId}?page=${page}`)
+      .post(`/review/query`,{
+        options,
+        filters
+      })
       .then(({data}) =>{
-        setReviewData(data)
+        console.log(data)
+        setCurrentPage(data.page)
+        setTotalPages(data.totalPages)
+        setReviewData(data.results)
         console.log(data)
       })
       .catch(err => {
@@ -98,14 +107,14 @@ const SearchBrand = () => {
           {
             reviewData.length > 0 && areReviewsLoading ?
             reviewData.map(review =>{
-            return <Review review = {review} setUpdatedReview = {setUpdatedReview} /> 
+            return <Review review = {review} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
           })
           :
             <LoadingIndicator />
           }
 
         </div>
-          <Pagination totalPages = {totalPages} handlePageination= {handlePageination} />
+          <Pagination currentPage={currentPage} totalPages = {totalPages} handlePageination= {handlePageination} />
       </div>
     </div>
   );

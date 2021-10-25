@@ -84,12 +84,29 @@ const WriteReview = () => {
       message: message,
       ratingCount: 1.4,
     }
-    const {data} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
+
+    let data;
+    const g = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
       headers:{
         "authorization" : `bearer ${client.tokens.access.token}`,
         "role" : Object.keys(client)[0]
       }
     })
+    .then(({data:gg}) => {
+      console.log(gg)
+      data = {...gg}
+      return true
+    })
+    .catch(err =>{
+      setIsPublishing(false)
+      alert(err.response.data.message)
+      return false
+    })
+    
+    if(!g){
+      return 
+    }
+    console.log(data)
     
     dispatch(clientActions.setClient({
       ...client,
@@ -110,9 +127,10 @@ const WriteReview = () => {
       })
       .catch(err => {
         setIsPublishing(false)
-        alert(JSON.stringify(err))
+        console.log(err)
       })
     }))
+    history.push("/")  
   }
 
   const handleSearch = (e) => {

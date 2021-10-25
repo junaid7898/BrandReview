@@ -35,6 +35,7 @@
                 flex-direction: column;
                 align-items: flex-start;
                 justify-content: flex-start;
+                text-transform: capitalize;
                 margin-right: 15px;
                 & a{
                     font-weight: 500;
@@ -87,11 +88,11 @@
         color: $onSurface-secondary;
         width: 100%;
         max-width: 100%;
+        max-width: 95%;
+        margin: auto;
         // margin-left: 30px;
-
         text-align: left;
         align-self: flex-end;
-        
         // margin-left: 50px;
         padding: 8px 12px;
         @include respond(phone){
@@ -162,10 +163,27 @@
                     color: grey;
                 }
             }
+            &-resolve{
+                transition: all 300ms;
+                color: grey;
+                &:hover{
+                    color: teal;
+                }
+            }
+            &-resolved{
+                transition: all 300ms;
+                color: teal;
+                &:hover{
+                    color: grey;
+                }
+            }
         }
     }
     &__comments{
         &__writeComment{
+            &-container{
+
+            }
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -189,6 +207,7 @@
                 border: 15px;
                 width: 100%;
                 margin-left: 10px;
+                border-radius: 3px;
                 & input{
                     width: 100%;
                     outline: none;
@@ -212,6 +231,80 @@
                     position: static;
                     color: rgb(22, 176, 236);
                 }
+            }
+        }
+        &__array{
+            position: relative;
+            padding: 5px;
+            &__item{
+                display: flex;
+                flex-direction: column;
+                width: 95%;
+                float: right;
+                // box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+                border: 1px solid rgb(243, 243, 243);
+                border-radius: 3px;
+                margin: 10px 0;
+                padding: 10px;
+                &__upper{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
+                &__img{
+                    max-width: 50px;
+                    max-height: 50px;
+                    min-width: 50px;
+                    min-height: 50px;
+                    object-fit: contain;
+                    border-radius: 50%;
+                    margin-right: 20px;
+                }
+                &__lower{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    margin-top: 15px;
+                    border-top: 1px solid rgb(240, 240, 240);
+                }
+                &__likeCount{
+                    padding: 5px;
+                    margin: 0 10px;
+                }
+                &__button{
+                    &-liked{
+
+                    }
+                    &-like{
+
+                    }
+                }
+            }
+        }
+        &__moreComments{
+            position: relative;
+            & button{
+                background-color: transparent;
+                outline: 0;
+                border: 0;
+                text-decoration: underline;
+                cursor: pointer;
+                color: rgb(67, 67, 255);
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+        &__showComments{
+            position: relative;
+            & button{
+                background-color: transparent;
+                outline: 0;
+                border: 0;
+                text-decoration: underline;
+                cursor: pointer;
+                color: rgb(67, 67, 255);
+                font-size: 14px;
+                padding: 10px;
             }
         }
     }

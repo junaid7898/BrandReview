@@ -20,8 +20,14 @@ const ComparisonPage = () => {
     const [thankedCount1, setThankedCount1] = useState(null)
     const [thankedCount2, setThankedCount2] = useState(null)
 
+    const [solvedCount1, setSolvedCount1] = useState(null)
+    const [solvedCount2, setSolvedCount2] = useState(null)
+
     const [satisfactionRate1, setSatisfactionRate1] = useState(null)
     const [satisfactionRate2, setSatisfactionRate2] = useState(null)
+
+    const [averageRating1, setAverageRating1] = useState(null)
+    const [averageRating2, setAverageRating2] = useState(null)
 
     useEffect(() => {
         if(brand1Id && brand2Id){
@@ -62,57 +68,84 @@ const ComparisonPage = () => {
                 brand2: brand2Id
             })
             .then(({data})=>{
-                let reviewCount1 = 0;
-                let thankCount1 = 0;
-                let reviewCount2 = 0;
-                let thankCount2 = 0;
 
-                let solvedCount1 = 0;
-                let solvedCount2 = 0;
-                let satisfactionRate = 0;
+                let thankCount11 = 0;
+                let thankCount22 = 0;
+
+                let solvedCount11 = 0;
+                let solvedCount22 = 0;
+
+                let averageRating11 = 0;
+                let averageRating22 = 0;
+
+                
                 data.brand1.reviews.map(item => {
-                    if(item.isThanked === true){
-                        thankCount1 = thankCount1 + 1
-                    }
-                    if(item.isResolved === true){
-                        solvedCount1 = solvedCount1 + 1
-                    }
-                    reviewCount1 = reviewCount1 + item.ratingCount
-                })
-                let rk1 = 0
-                if(data.brand1.reviews.length > 0){
 
-                    rk1 = Math.round(reviewCount1 / data.brand1.reviews.length)
+                    if(item.isThanked){
+                        thankCount11 = thankCount11 + 1
+                    }
+
+                    if(item.isResolved){
+                        solvedCount11 = solvedCount11 + 1
+                    }
+                    averageRating11 = averageRating11 + item.ratingCount
+                })
+
+                if(data.brand1.reviews.length === 0){
+                    averageRating11 = 1
                 }
-                else {
-                    rk1 = 0 + 1
-                }
+                else{
+                averageRating11 = averageRating11/ data.brand1.reviews.length
+                console.log(averageRating11);}
+
+
                 data.brand2.reviews.map(item => {
                     if(item.isThanked === true){
-                        thankCount2 = thankCount2 + 1
+                        thankCount22 = thankCount22 + 1
                     }
                     if(item.isResolved === true){
-                        solvedCount2 = solvedCount2 + 1
+                        solvedCount22 = solvedCount22 + 1
                     }
-                    reviewCount2 = reviewCount2 + item.ratingCount
+                    averageRating22 = averageRating22 + item.ratingCount
                 })
-                let rk2 = 0
-                if(data.brand2.reviews.length > 0){
 
-                    rk2 = Math.round(reviewCount1 / data.brand1.reviews.length)
+                if(data.brand2.reviews.length === 0){
+                    averageRating22 = 1
                 }
-                else {
-                    rk2 = 0 + 1
-                }
-                console.log('rk1:', rk1, 'rk2:', rk2, 'thankCount1:', thankCount1, 'thankCount2:', thankCount2, 'solvedCount1:', solvedCount1, 'solvedCount2', solvedCount2);
+                else{
+                averageRating22 = averageRating22/ data.brand2.reviews.length
+                console.log(averageRating22);}
+                
+                console.log( 'thankCount1:', thankCount11, 'thankCount2:', thankCount22, 'solvedCount1:', solvedCount11, 'solvedCount2', solvedCount22, );
                 setTestBrand(data.brand1)
                 setTestBrand1(data.brand2)
-                setReviewCount1(rk1)
-                setReviewCount2(rk2)
-                setThankedCount1(thankCount1)
-                setThankedCount2(thankCount2)
-                setSatisfactionRate1((thankCount1/rk1) * 100)
-                setSatisfactionRate2((thankCount2/rk2) * 100)
+
+                setReviewCount1(data.brand1.reviews.length)
+                setReviewCount2(data.brand2.reviews.length)
+
+
+                setThankedCount1(thankCount11)
+                setThankedCount2(thankCount22)
+
+                setSolvedCount1( solvedCount11)
+                setSolvedCount2( solvedCount22)
+
+                setAverageRating1((averageRating11 ).toFixed(1))
+                setAverageRating2((averageRating22).toFixed(1))
+                if(solvedCount11 === 0){
+                    setSatisfactionRate1(0)
+                }
+                else{
+
+                    setSatisfactionRate1(((thankCount11/solvedCount11) * 100).toFixed(1))
+                }
+
+                if(solvedCount2 === 0){
+                    setSatisfactionRate2(0)
+                }
+                else{
+                    setSatisfactionRate2(((thankCount22/solvedCount22) * 100).toFixed(1))
+                }
                 
             })
         }
@@ -181,10 +214,10 @@ const ComparisonPage = () => {
                 testBrand && testBrand1 &&
                 <>
                     <div className="comparison__page__block-1">
-                        <BrandComparisonDetail brandDetails = { testBrand } thankCount = {thankedCount1} reviewCount = {reviewCount1} satisfactionRate = {satisfactionRate1}/>
+                        <BrandComparisonDetail brandDetails = { testBrand } thankCount = {thankedCount1} reviewCount = {reviewCount1} satisfactionRate = {satisfactionRate1} solvedCount = {solvedCount1} averageRating = {averageRating1}/>
                     </div>
                     <div className="comparison__page__block-2">
-                        <BrandComparisonDetail brandDetails = {testBrand1} thankCount = {thankedCount2} reviewCount = {reviewCount2} satisfactionRate = {satisfactionRate2}/>  
+                        <BrandComparisonDetail brandDetails = {testBrand1} thankCount = {thankedCount2} reviewCount = {reviewCount2} satisfactionRate = {satisfactionRate2} solvedCount = {solvedCount2} averageRating = {averageRating2}/>  
                     </div>
                 </>
             }     

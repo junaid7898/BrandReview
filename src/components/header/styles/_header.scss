@@ -13,18 +13,24 @@
         position: relative;
         padding: 20px 50px;
         width: 100%;
+        @include respond(phone){
+            padding: 20px 0px;
+        }
     }
     &__emailVerification{
         z-index: 100;
         width: 100%;
-        background-color: teal;
+        background-color: $primary;
+        color: $onPrimary;
         text-align: center;
+        padding: 5px 0px;
         & button{
             border: none;
             text-decoration: underline;
             background-color: transparent;
             outline: none;
             cursor: pointer;
+            color: $onPrimary;
         }
     }
 

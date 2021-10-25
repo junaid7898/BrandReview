@@ -1,13 +1,17 @@
 .dashboard__review__component{
     width: 100%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     @include respond(phone){
         margin-left: 0;
     }
     &__container{
         display: flex;
-        flex-direction: row;
+        flex-flow: row wrap;
         width: 100%;
         justify-content: flex-end;
         align-items: center;
@@ -15,6 +19,9 @@
     }
     &__item{
         margin-left: 50px;
+        @include respond(phone){
+            margin-bottom: 10px;
+        }
     }
 }
 

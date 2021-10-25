@@ -23,7 +23,20 @@ const BrandComparisonDetail = (props) => {
               : "brand__comparison__solved-count__smaller"
           }`}
         >
-          {props.thankCount}
+          {props.solvedCount}
+        </h4>
+      </div>
+
+      <div className="brand__comparison__solved-count">
+        <h3>Average Ratings</h3>
+        <h4
+          className={`${
+            props.brandDetails.solvedCountIsGreater
+              ? "brand__comparison__solved-count__greater"
+              : "brand__comparison__solved-count__smaller"
+          }`}
+        >
+          {props.averageRating}
         </h4>
       </div>
       <div className="brand__comparison__satisfaction-rate">
@@ -34,7 +47,7 @@ const BrandComparisonDetail = (props) => {
               ? "brand__comparison__satisfaction-rate__greater"
               : "brand__comparison__satisfaction-rate__smaller"
           }`}
-        >{props.satisfactionRate}%</h4>
+        >{  props.satisfactionRate }%</h4>
       </div>
       {/* <div className="brand__comparison__overall-status">
         <h3

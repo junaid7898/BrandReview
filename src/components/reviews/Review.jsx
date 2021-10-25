@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {axios} from "../../axios/axiosInstance";
 import {clientActions} from "../../Redux/clientslice/clientSlice"
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
+import {TiTick} from 'react-icons/ti'
 const Review = ({review, setUpdatedReview}) => {
   const [clikedImage, setClickedImage] = useState(null)
   const {client} = useSelector(state => state.client) 
@@ -42,9 +43,9 @@ const Review = ({review, setUpdatedReview}) => {
       setCommentIsSending(false)
     })
   }
+ 
 
   const handleLike = () =>{
-
     let updatedUser = null
     let updatedReview = null
     if(client.user.likedReviews.find( id => id === review.id )){
@@ -113,9 +114,10 @@ const Review = ({review, setUpdatedReview}) => {
           followedReviews:[...client.user.followedReviews.filter(id => id !== review.id)]
         }
       }))
+      console.log(review);
       updatedReview = {
         ...review,
-        followed:[...client.user.followedReviews, review.id]
+        followedByUsers:[...review.followedByUsers.filter(id => id !== client.user.id)]
       }
     }
     else{
@@ -131,6 +133,7 @@ const Review = ({review, setUpdatedReview}) => {
         followedByUsers: [...review.followedByUsers, client.user.id]
       }
     }
+    console.log(updatedUser.payload.user.followedReviews);
     setUpdatedReview(updatedReview)
     axios.post(`/review/follow/${review.id}`, {
       user: updatedUser.payload.user,
@@ -147,6 +150,52 @@ const Review = ({review, setUpdatedReview}) => {
 
     })
 
+  }
+
+  const handleThank = () => {
+    let updatedUser = null
+    let updatedReview = null
+    if(client.user.thankedReviews.find( id => id === review.id )){
+      updatedUser = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          thankedReviews:[...client.user.thankedReviews.filter(id => id !== review.id)]
+        }
+      }))
+      updatedReview = {
+        ...review,
+        isThanked: false
+      }
+    }
+    else{
+      updatedUser = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          thankedReviews:[...client.user.thankedReviews, review.id]
+        }
+      }))
+      updatedReview = {
+        ...review,
+        isThanked: true
+      }
+    }
+    setUpdatedReview(updatedReview)
+    axios.post(`/review/thank/${review.id}`, {
+      user: updatedUser.payload.user,
+      review: updatedReview
+    },{
+      headers:{
+        'role' : client.type,
+        'authorization' : `bearer ${client.tokens.access.token}`
+      }
+    })
+    .then(({data}) => {
+
+      console.log(data)
+
+    })
   }
 
 
@@ -168,10 +217,17 @@ const Review = ({review, setUpdatedReview}) => {
               </div>
             </div>
             {
-              !review.isResolved &&
+              review.isResolved &&
               <div className="reviewComponent__profile__intro__review-label">
                   {/* TODO wether review is a complaint/thanked/resolved */}
                   <p>Resolved</p>
+              </div>
+            }
+            {
+              review.isThanked &&
+              <div className="reviewComponent__profile__intro__thank-label">
+                  {/* TODO wether review is a complaint/thanked/resolved */}
+                  <p>Thanked</p>
               </div>
             }
           </div>
@@ -201,6 +257,9 @@ const Review = ({review, setUpdatedReview}) => {
             <p>{review.message}</p>
         </div>
         <div className="reviewComponent__buttons">
+          <div className="reviewComponent__buttons__likeCount">
+            <p>{review.likedByUsers.length}</p>
+          </div>
           <div className="reviewComponent__buttons__button ">
             {
               client && client.type.includes("user") && client.user.likedReviews.includes(review.id) 
@@ -220,10 +279,18 @@ const Review = ({review, setUpdatedReview}) => {
                 <IoMdNotificationsOutline onClick={handleFollow} className="reviewComponent__buttons__button-follow" />
             }  
           </div>
-          <div className="reviewComponent__buttons__likeCount">
-            <p>{review.likedByUsers.length}</p>
+          <div className="reviewComponent__buttons__button " onClick = {handleThank}>
+            {
+              client && client.type.includes("user") && review.isResolved &&
+                (
+                review.isThanked ?
+                <TiTick  className = 'reviewComponent__buttons__button-thanked' />
+                :
+                <TiTick  className = 'reviewComponent__buttons__button-thank' />
+                )
+              
+            }
           </div>
-
         </div>
       </div>
       

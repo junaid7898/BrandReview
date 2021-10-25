@@ -17,11 +17,15 @@ const Profile = () => {
 
     
     useEffect(() => {
-        if(client && userId && client.user.id === userId){
-            setVisitorIsUser(true)
-        }
-        else{
-            setVisitorIsUser(false)
+        if(client && userId ){
+            if(client.type.includes("user")){
+                if(client.user.id === userId){
+                    setVisitorIsUser(true)
+                }
+                else{
+                    setVisitorIsUser(false)
+                }
+            }
         }
     }, [client, userId])
 

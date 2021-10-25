@@ -55,7 +55,7 @@ const BrandPanel = () => {
                     </div>
 
                     <div className="brand__main__brand-details">
-                        <BrandDetail item = {brandDetails}/>
+                        <BrandDetail item = {brandDetails} brandId = {brandId}/>
                     </div>
                 </div>   
             )

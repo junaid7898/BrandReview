@@ -8,7 +8,7 @@ const EmailVerificationPage = () => {
 
     useEffect(() =>{
         const fetcher = async(token) => {
-            await axios.post(`http://localhost:4000/v1/auth/verify-email?token=${token}`)
+            await axios.post(`http://localhost:4000/v1/auth/user/verify-email?token=${token}`)
         }
         if(token){
            fetcher(token) 

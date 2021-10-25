@@ -12,7 +12,7 @@ import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
 import { AiFillCar } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 import {BiUser} from 'react-icons/bi'
-
+import { axios } from "../../axios/axiosInstance";
 import { logout } from "./logout";
 
 
@@ -116,8 +116,20 @@ const Header = () => {
   const hideBar = () => {
     setShowSearchBar(-1000);
   };
+
+  const handleUserVerification = async () => {
+    await axios.post('/auth/user/send-verification-email', {user: client.user})
+    console.log('email sent.....');
+  }
+
+  const handleBrandVerification = async () => {
+    await axios.post('/auth/brand/send-verification-email', {brand: client.brand})
+    console.log('email sent for brand....')
+  }
   return (
     <nav className="nav" >
+      
+      <div className="nav-container">
       <div className="nav__innerContainer">
         <BsSearch
           src={SearchIcon}
@@ -381,6 +393,23 @@ const Header = () => {
         :
         <LoadingIndicator /> 
         }
+      </div>
+      </div>
+      <div className="nav__emailVerification">
+      {
+        client ?
+          client.type.includes("user")
+          ?
+            !client.user.isEmailVerified ?
+              <button onClick = {handleUserVerification}>verifiy email</button>
+              : null
+          : client.type.includes("brand") ?
+            !client.brand.isEmailVerified ?
+            <button onClick = {handleBrandVerification}>verifiy email</button>
+            : null
+          : null
+        : null
+      }
       </div>
       
     </nav>

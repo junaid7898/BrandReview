@@ -48,7 +48,7 @@
                         line-height: 15px;
                     }
                 }
-                &:hover{
+                &:not(:first-child):hover{
                     background-color: ghostwhite;
                 }
             }

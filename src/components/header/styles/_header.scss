@@ -4,8 +4,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 50;
     &-container{
-        z-index: 100;
+        // z-index: 50;
         display: flex; 
         flex-flow: row nowrap;
         align-items: center;
@@ -18,7 +19,7 @@
         }
     }
     &__emailVerification{
-        z-index: 100;
+        // z-index: 50;
         width: 100%;
         background-color: $primary;
         color: $onPrimary;
@@ -146,6 +147,7 @@
     max-height: 300px;
     overflow-y: auto;   
     color: #272727;
+    z-index: 100;
 }
 
 .nav__search__result__item{
@@ -346,7 +348,7 @@
         background: #F8F8F8;
         width: 100%;
         text-align: left;
-        z-index: 2;
+        // z-index: 2;
         transition: 300ms;
         right: 0;
         overflow:hidden;

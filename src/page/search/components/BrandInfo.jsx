@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Star from '../../../assests/Star'
 import BrandComparison from '../../../components/brand_comparison/BrandComparison'
+import { axios } from '../../../axios/axiosInstance'
 
 const BrandInfo = ({brand}) => {
+    const [averageRatings, setAverageRatings] = useState(null)
+    const [numberOfRatings, setNumberOfRatings] = useState(null)
+    useEffect(() => {
+        if(brand){
+            const filters = { brand: brand.id }
+            const options = {limit: 100000}
+            axios.post('/review/query', {filters, options})
+            .then(({data}) => {
+              console.log('brand review: ', data);
+              let avgRatings = 0;
+              data.results.map(item => {
+                avgRatings = avgRatings + item.ratingCount
+              })
+              setAverageRatings((avgRatings / data.results.length).toFixed(1))
+              setNumberOfRatings(data.results.length)
+            })
+        }
+    }, [brand])
     return (
         <div className="brand__information">
             <div className="brand__information__img-ratings">
@@ -17,7 +36,7 @@ const BrandInfo = ({brand}) => {
                     }
                     </div>
                     
-                    <p>{brand.ratingCount} out of {brand.totalReviewCount} reviews</p>
+                    <p>{averageRatings && numberOfRatings ? `${averageRatings} ratings out of ${numberOfRatings} reviews`: 'no reviews'} </p> 
                 </div>
 
                 <div className="brand__information__title-about">

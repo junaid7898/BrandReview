@@ -2,7 +2,7 @@ import "./sass/main.scss"
 import TermsAndCondition from './page/terms_and_condition/TermsAndCondition';
 import WriteReview from './page/write_review/WriteReview';
 import Profile from './page/profile/Profile'
-import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect, Link} from 'react-router-dom'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Admin from './page/admin/Admin';
@@ -97,10 +97,18 @@ function App() {
         })
       }
     }
-
     
-
+    
   }, [dispatch])
+  const handleRedirectBrand = () => {
+    dispatch(statusAction.setNotification({
+      message: "brand cant give reviews",
+      type: "error"
+    }))
+    return(
+      <Redirect to = '/'/>
+    )
+  }
   return (
     <div className="App" >
     <BrowserRouter>
@@ -116,7 +124,7 @@ function App() {
                     ? 
                       <Login />
                     :
-                      <Redirect to='/' />
+                      <Redirect to='/' exact />
                   }
             </Route>
             <Route exact path="/user/signup" > 
@@ -125,7 +133,7 @@ function App() {
                     ? 
                       <SignUp />
                     :
-                      <Redirect to='/' />
+                      <Redirect to='/' exact />
                   }
             </Route>
             <Route 
@@ -137,10 +145,12 @@ function App() {
                   {
                     client 
                     ? 
-                      client.type.includes("user") &&
-                      <WriteReview />
+                      client.type.includes("user") ?
+                        <WriteReview />
+                        :
+                          () => handleRedirectBrand()
                     :
-                      <Redirect to='/' />
+                    <Redirect to='/'  />
                   }
                   
             </Route>
@@ -150,17 +160,17 @@ function App() {
                     ? 
                       <BrandLogin />
                     :
-                      <Redirect to='/' />
+                      <Redirect to='/' exact />
                   }
                   
             </Route>
-            <Route exact path="/brand/login" > 
+            <Route exact path="/brand/signup" > 
                   {
                     !client 
                     ? 
                       <BrandSignUp />
                     :
-                      <Redirect to='/' />
+                      <Redirect to='/' exact />
                   }
             </Route>
 
@@ -171,7 +181,7 @@ function App() {
                       client.type.includes("brand") &&
                       <BrandPanel />
                     :
-                      <Redirect to='/' />
+                      <Redirect to='/' exact />
                   }
             </Route>
             
@@ -185,7 +195,7 @@ function App() {
                       client.type.includes("admin") &&
                       <Admin />
                     :
-                      <Redirect to='/' />
+                      <Redirect to='/' exact />
                   }
             </Route>
             <Route exact path="/admin/login" exact > 
@@ -194,7 +204,7 @@ function App() {
                     ? 
                       <Admin />
                     :
-                      <Redirect to='/' />
+                      <Redirect to='/' exact />
                   }
             </Route>
             <Route path = '/phoneverification' component = {PhoneVerification}/>

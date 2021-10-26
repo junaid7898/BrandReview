@@ -8,6 +8,7 @@ import BrandSearchList from "../../components/brand_comparison/components/BrandS
 import Star from "../../assests/Star";
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 import { useDispatch, useSelector } from "react-redux";
+import { statusAction } from "../../Redux/statusSlice";
 
 import { clientActions } from "../../Redux/clientslice/clientSlice";
 const WriteReview = () => {
@@ -78,7 +79,9 @@ const WriteReview = () => {
       if(client.user){
         if(client.type.includes('user')){
           if(client.user.isEmailVerified && client.user.isPhoneVerified){
-            return 'ok'
+            if(brand){
+              return 'ok'
+            }
           }
           else{
             return 'verify both email address and phone number to publish review.....'
@@ -100,12 +103,16 @@ const WriteReview = () => {
 
 
   const onPublish = async(e) => {
-
+    
+    e.preventDefault()
     const valid = validationCheck()
     if(valid === 'ok'){
+      dispatch(statusAction.setNotification({
+        message: 'review publishing....',
+        type: "loading"
+      }))
 
     setIsPublishing(true)
-    e.preventDefault()
 
     console.log(title, message);
     const review = {
@@ -124,49 +131,43 @@ const WriteReview = () => {
       }
     })
     .then(({data:gg}) => {
+      dispatch(statusAction.setNotification({
+        message: 'review published....',
+        type: "success"
+      }))
       console.log(gg)
       data = {...gg}
       return true
     })
     .catch(err =>{
+      dispatch(statusAction.setNotification({
+        message: err.response.data.message,
+        type: "error"
+      }))
       setIsPublishing(false)
-      alert(err.response.data.message)
       return false
     })
     
     if(!g){
       return 
     }
-    console.log(data)
-    
     dispatch(clientActions.setClient({
       ...client,
       user: data.user
     }))
 
 
-        console.log(title, message);
-        const review = {
-          brand: brandId,
-          user: client.user.id,
-          title: title,
-          message: message,
-          ratingCount: 1.4,
-        }
-        const {data} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
-          headers:{
-            "authorization" : `bearer ${client.tokens.access.token}`,
-            "role" : Object.keys(client)[0]
-          }
-        })
-        
-        dispatch(clientActions.setClient({
-          ...client,
-          user: data.user
-        }))
+      if(data.imageArray.length < 1){
+        history.push("/") 
+      }
+
 
         
         axios.all(data.imageArray.map( (_, index) => {
+          dispatch(statusAction.setNotification({
+            message: 'publishing selected images......',
+            type: "loading"
+          }))
           console.log(data.imageArray[index], "\n", rawImages[0][index], "\n", imageDetails[index].fileType, "\n")
           axios.put(data.imageArray[index], rawImages[0][index],{
             headers:{
@@ -174,29 +175,30 @@ const WriteReview = () => {
             }
           })
           .then( (_) => {
+            dispatch(statusAction.setNotification({
+              message: 'images published',
+              type: "success"
+            }))
             setIsPublishing(false)
+            
             history.push("/")  
           })
           .catch(err => {
+            dispatch(statusAction.setNotification({
+              message: err.response.data.message,
+              type: "error"
+            }))
             setIsPublishing(false)
-            alert(JSON.stringify(err))
           })
         }))
+           
   }
   else{
-    alert(valid)
-  }
-      })
-      .then( (_) => {
-        setIsPublishing(false)
-        history.push("/")  
-      })
-      .catch(err => {
-        setIsPublishing(false)
-        console.log(err)
-      })
+    dispatch(statusAction.setNotification({
+      message: valid,
+      type: "error"
     }))
-    history.push("/")  
+  } 
 
   }
 
@@ -218,8 +220,8 @@ const WriteReview = () => {
   };
 
   const handleBrandChange = (e) => {
-    setBrand(e.target.value)
     handleSearch(e.target.value)
+    setBrand(null)
     // setShowList(true)
   }
 
@@ -242,7 +244,7 @@ const WriteReview = () => {
                 type="text"
                 placeholder="Select the Brand"
                 className="review__content__tboxes1__input"
-                value = {brand}
+                id="brandInput"
                 onFocus = {() => {
                   setShowList(true)}}
                 onChange = {(e) => handleBrandChange(e)}
@@ -256,9 +258,10 @@ const WriteReview = () => {
                     searchResults.map((item) => {
                       return(
                           <div className = 'review__content__tboxes1__search-list__list__item' onClick = {() => {
-                              setBrand(item.name)
+                              setBrand(item)
                               setBrandId(item.id)
                               setShowList(!showList)
+                              document.getElementById("brandInput").value = item.name
                               // setSelectedBrand(item.name)
                           }}>
                               <img src = {item.logo} alt={`brand ${item.name} logo`}/>

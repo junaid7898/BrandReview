@@ -9,7 +9,7 @@
     max-height: 300px;
     overflow-y: auto;   
     color: #272727;
-    z-index: 2;
+    z-index: 75;
     &__item{
         &:not(:last-child){
             border-bottom: 1px solid gray;

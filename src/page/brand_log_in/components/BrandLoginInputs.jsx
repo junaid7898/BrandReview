@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import {useGoogleLogin} from 'react-google-login'
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
+import { statusAction } from "../../../Redux/statusSlice";
 const BrandLoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,6 +55,10 @@ const BrandLoginInputs = () => {
   }
 
   const login = async () => {
+    dispatch(statusAction.setNotification({
+      message: "Logging in Please wait",
+      type: "loading"
+    }))
     setIsLoggingIn(true)
     console.log(email, password);
     const req = {

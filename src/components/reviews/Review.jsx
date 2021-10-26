@@ -317,6 +317,63 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
 
   }
 
+  const handleCommentLike = (comment) =>{
+    let updatedUser = null
+    let updatedComment = null
+    if(client.user.likedComments.find( id => id === comment.id )){
+      updatedUser = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          likedComments:[...client.user.likedComments.filter(id => id !== comment.id)]
+        }
+      }))
+      updatedComment = {
+        ...comment,
+        likeCount: comment.likeCount - 1
+      }
+    }
+    else{
+      updatedUser = dispatch(clientActions.setClient({
+        ...client,
+        user:{
+          ...client.user,
+          likedComments:[...client.user.likedComments, comment.id]
+        }
+      }))
+      updatedComment = {
+        ...comment,
+        likeCount: comment.likeCount + 1
+      }
+    }
+
+
+    setComments([...comments.map(item =>{
+      if(item.id === comment.id){
+        return updatedComment
+      }
+      return item
+    })])
+
+
+
+
+    axios.post('/comment/like' ,{
+      user: updatedUser.payload.user,
+      comment: updatedComment
+    },{
+      headers:{
+        'role' : client.type,
+        'authorization' : `bearer ${client.tokens.access.token}`
+      }
+    })
+    .then(({data}) => {
+
+      console.log(data)
+
+    })
+  }
+
   
   return (
     review ?
@@ -470,13 +527,13 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
                             </div>
                             <div className="reviewComponent__comments__array__item__lower">
                                 <div className="reviewComponent__comments__array__item__likeCount">
-                                  Likes: {comment.likedByUsers.length}
+                                  Likes: {comment.likeCount}
                                 </div>
-                                <Button className="reviewComponent__buttons__button" client={client} type={"user"} onClick= {() => null}>
+                                <Button className="reviewComponent__buttons__button" client={client} type={"user"} onClick= {() => handleCommentLike(comment)}>
                                 {
                                   client.type.includes("user") 
                                   ?
-                                    client.user.likedReviews.includes(review.id) 
+                                    client.user.likedComments.includes(comment.id) 
                                     ?
                                       <AiFillLike  className="reviewComponent__buttons__button-liked"/>
                                     :
@@ -498,11 +555,11 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
                                 <div className="reviewComponent__comments__array__item__likeCount">
                                   Likes: {comment.likedByUsers.length}
                                 </div>
-                                <Button className="reviewComponent__buttons__button" client={client} type={"user"} onClick= {() => null}>
+                                <Button className="reviewComponent__buttons__button" client={client} type={"user"} onClick= {() => handleCommentLike}>
                                 {
                                   client.type.includes("user") 
                                   ?
-                                    client.user.likedReviews.includes(review.id) 
+                                    client.user.likedComments.includes(comment.id) 
                                     ?
                                       <AiFillLike  className="reviewComponent__buttons__button-liked"/>
                                     :

@@ -118,7 +118,7 @@ const Header = () => {
   };
 
   const handleUserVerification = async () => {
-    await axios.post('/auth/user/send-verification-email', {user: client.user})
+    await axios.post('/auth/user/send-verification-email', {user: client.user, type:"user"})
     console.log('email sent.....');
   }
 

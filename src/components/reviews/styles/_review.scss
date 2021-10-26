@@ -282,8 +282,9 @@
             }
         }
         &__moreComments{
-            position: relative;
+            position: static;
             & button{
+                position: relative;
                 background-color: transparent;
                 outline: 0;
                 border: 0;

@@ -19,7 +19,7 @@ import PhoneVerification from './page/phone_verification_page/PhoneVerification'
 import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import axios from "axios";
 import { axios as axiosInstance } from "./axios/axiosInstance";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,18 +27,26 @@ import { clientActions } from "./Redux/clientslice/clientSlice";
 import PrivateRoute from "./PrivateRoute";
 import { statusAction } from "./Redux/statusSlice";
 import { brandAction } from "./Redux/brandInfoSlice/brandInfoSlice";
+import Notification from "./components/notification/Notification";
+
 function App() {
   
   const dispatch = useDispatch()
   const {client} = useSelector(state => state.client)
-
-
+  const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
+  const isStateSet = useRef(false)
   useEffect(() => {
     axiosInstance.get("brand/getAllBrands")
     .then(({data}) => {
       dispatch(brandAction.setBrands(data))
     })
   }, [])
+
+  useEffect(() => {
+    if(attemptingLoginOnSiteLoad !== null && attemptingLoginOnSiteLoad !== undefined){
+      isStateSet.current=true
+    }
+  }, [attemptingLoginOnSiteLoad])
 
 
 
@@ -96,80 +104,105 @@ function App() {
   return (
     <div className="App" >
     <BrowserRouter>
+    <Notification /> 
     <Header/>
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <PrivateRoute 
-              exact 
-              path="/user/login" 
-              component={Login} 
-              type={true}
-              role="user"
-        />
-        <PrivateRoute 
-              exact 
-              path="/user/signup" 
-              component={SignUp} 
-              type={true}
-              role="user"
-        />
-        <PrivateRoute 
-              exact 
-              path="/user/:userId" 
-              component={Profile}
-              type={false}
-              role="user"
-        />
-        <PrivateRoute 
-              exact 
-              path="/review" 
-              component={WriteReview} 
-              type={true}
-              role="user"
-        />
-        <PrivateRoute 
-              exact 
-              path="/brand/login" 
-              component={BrandLogin} 
-              type={true}
-              role="brand"
-        />
-        <PrivateRoute 
-              exact 
-              path="/brand/signup" 
-              component={BrandSignUp} 
-              type={true}
-              role="brand"
-        />
-        
-        <PrivateRoute 
-              exact 
-              path="/brand/panel/:brandId" 
-              component={BrandPanel} 
-              type={true}
-              role="brand"
-        />
-        <Route path = '/brand/comparison/:brand1Id/:brand2Id' component = {ComparisonPage}/>  
-        <Route path = '/brand/:brandId' component = {SearchBrand} />
-        <PrivateRoute 
-              exact 
-              path="/admin/login" 
-              component={AdminLogin} 
-              type={false}
-              role="admin"
-        />
-        <PrivateRoute 
-              exact 
-              path="/admin" 
-              component={Admin} 
-              type={false}
-              role="admin"
-        />
-        <Route path = '/phoneverification' component = {PhoneVerification}/>
-        <Route path = '/verify-email/:token' component = {EmailVerificationPage}/>  
-        <Route path = '/termsandcondition' component = {TermsAndCondition}/>
-      <Route path = '/*' component = {Error404Page}/>
-      </Switch>
+      {
+        !attemptingLoginOnSiteLoad &&
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <Route exact path="/user/login" > 
+                  {
+                    !client 
+                    ? 
+                      <Login />
+                    :
+                      <Redirect to='/' />
+                  }
+            </Route>
+            <Route exact path="/user/signup" > 
+                  {
+                    !client 
+                    ? 
+                      <SignUp />
+                    :
+                      <Redirect to='/' />
+                  }
+            </Route>
+            <Route 
+                  exact 
+                  path="/user/:userId" 
+                  component={Profile}
+            />
+            <Route exact path="/review" > 
+                  {
+                    client 
+                    ? 
+                      client.type.includes("user") &&
+                      <WriteReview />
+                    :
+                      <Redirect to='/' />
+                  }
+                  
+            </Route>
+            <Route exact path="/brand/login" > 
+                  {
+                    !client 
+                    ? 
+                      <BrandLogin />
+                    :
+                      <Redirect to='/' />
+                  }
+                  
+            </Route>
+            <Route exact path="/brand/login" > 
+                  {
+                    !client 
+                    ? 
+                      <BrandSignUp />
+                    :
+                      <Redirect to='/' />
+                  }
+            </Route>
+
+            <Route exact path="/brand/panel/:brandId" > 
+                  {
+                    client 
+                    ? 
+                      client.type.includes("brand") &&
+                      <BrandPanel />
+                    :
+                      <Redirect to='/' />
+                  }
+            </Route>
+            
+            <Route path = '/brand/comparison/:brand1Id/:brand2Id' component = {ComparisonPage}/>  
+            <Route path = '/brand/:brandId' component = {SearchBrand} />
+
+            <Route exact path="/admin" exact > 
+                  {
+                    client 
+                    ? 
+                      client.type.includes("admin") &&
+                      <Admin />
+                    :
+                      <Redirect to='/' />
+                  }
+            </Route>
+            <Route exact path="/admin/login" exact > 
+                  {
+                    !client 
+                    ? 
+                      <Admin />
+                    :
+                      <Redirect to='/' />
+                  }
+            </Route>
+            <Route path = '/phoneverification' component = {PhoneVerification}/>
+            <Route path = '/verify-email/:token/:type' component = {EmailVerificationPage}/>  
+            <Route path = '/termsandcondition' component = {TermsAndCondition}/>
+            <Route path = '/*' component = {Error404Page}/>
+        </Switch>
+      }
       <Footer/>
     </BrowserRouter>
     

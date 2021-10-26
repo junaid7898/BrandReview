@@ -30,38 +30,6 @@ const ComparisonPage = () => {
     const [averageRating2, setAverageRating2] = useState(null)
 
     useEffect(() => {
-        if(brand1Id && brand2Id){
-            console.log('brand1Name');
-            const filters1 = { id: brand1Id }
-            const filters2 = {id: brand2Id}
-            const options = {limit: 100000}
-            // axios.post('/review/query', {filters: filters1, options})
-            // .then(({data}) => {
-            //     console.log('brand1:----->', data);
-            //     let totalCount = 0;
-
-            //     data.results.map(item => {
-            //         totalCount = totalCount + item.ratingCount
-            //         console.log('rating: ', item.ratingCount, 'totalCount: ', totalCount);
-            //     })
-
-            //     console.log('brand1reviewCount: ', totalCount/ data.results.length);
-            //     setBrand1ReviewCount(Math.round(totalCount / data.results.length))
-            // }).then(
-            //     axios.post('review/query', {filters: filters2, options})
-            //     .then(({data}) => {
-            //         let totalCount = 0;
-            //         console.log('brand2:----->', data);
-            //         data.results.map(item => {
-            //             totalCount = totalCount + item.ratingCount
-            //         })
-
-            //         console.log('brand222reviewCount: ', totalCount/ data.results.length);
-            //         setBrand1ReviewCount(Math.round(totalCount / data.results.length))
-            //     })
-            // )
-
-        }
         if(brand1Id && brand1Id){
             axios.post("/brand/compare",{
                 brand1: brand1Id,
@@ -208,16 +176,16 @@ const ComparisonPage = () => {
     return (
         <div className = 'comparison__page'>
             <div className="comparison__page__inputs">
-                <BrandComparison/>
+                <BrandComparison selectedBrand1 = {testBrand && testBrand.name} selectedBrand2 = {testBrand1 &&testBrand1.name}/>
             </div>
             {
                 testBrand && testBrand1 &&
                 <>
                     <div className="comparison__page__block-1">
-                        <BrandComparisonDetail brandDetails = { testBrand } thankCount = {thankedCount1} reviewCount = {reviewCount1} satisfactionRate = {satisfactionRate1} solvedCount = {solvedCount1} averageRating = {averageRating1}/>
+                        <BrandComparisonDetail  brandDetails = { testBrand } thankCount = {thankedCount1} reviewCount = {reviewCount1} satisfactionRate = {satisfactionRate1} solvedCount = {solvedCount1} averageRating = {averageRating1}/>
                     </div>
                     <div className="comparison__page__block-2">
-                        <BrandComparisonDetail brandDetails = {testBrand1} thankCount = {thankedCount2} reviewCount = {reviewCount2} satisfactionRate = {satisfactionRate2} solvedCount = {solvedCount2} averageRating = {averageRating2}/>  
+                        <BrandComparisonDetail  brandDetails = {testBrand1} thankCount = {thankedCount2} reviewCount = {reviewCount2} satisfactionRate = {satisfactionRate2} solvedCount = {solvedCount2} averageRating = {averageRating2}/>  
                     </div>
                 </>
             }     

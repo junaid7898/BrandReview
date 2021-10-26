@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BrandIcon from "../../assests/images/brand_icon.png";
 import BrandSearchList from "./components/BrandSearchList";
-
-const BrandComparison = () => {
+import { useHistory } from "react-router";
+const BrandComparison = (props) => {
   
-
+  const history = useHistory()
   const [selectedBrand1, setSelectedBrand1] = useState(null)
   const [selectedBrand2, setSelectedBrand2] = useState(null)
 
@@ -97,19 +97,41 @@ const BrandComparison = () => {
             setShowDropdown2(false)
         }
     }
-  
+    
+    const handleCompare = () => {
+      console.log(selectedBrand1)
+      console.log(selectedBrand2)
 
+      if(!selectedBrand1 && !selectedBrand2){
+        return
+      }
+
+      if(selectedBrand1 && !selectedBrand2){
+        history.push(`/brand/${selectedBrand1.id}`)
+        return 
+      } 
+      else if(!selectedBrand1 && selectedBrand2){
+        history.push(`/brand/${selectedBrand2.id}`)
+        return
+      }
+      else if(selectedBrand1.id === selectedBrand2.id){
+        history.push(`/brand/${brand1.id}`)
+      }
+      history.push(`brand/comparison/${selectedBrand1.name}/${selectedBrand2.name}`)
+
+    }
+  
+console.log(props.selectedBrand1)
   return (
     <section className="comparison">
       <div ref={searchRef} className="comparison__first-brand">
         <input
           type="text"
           placeholder="select a brand"
-          value={brand1}
+          defaultValue={props.selectedBrand1}
           onClick = { () => setShowDropdown(!showDropdown)}
           onChange={(e) => {
             setShowResult2(false);
-            setBrand1(e.target.value);
             handleSearch(e.target.value);
             setShowResult1(true);
             setShowDropdown(true)
@@ -135,9 +157,8 @@ const BrandComparison = () => {
         <input
           type="text"
           placeholder="select a brand"
-          value={brand2} 
+          defaultValue={props.selectedBrand2}
           onChange={(e) => {
-            setBrand2(e.target.value);
             handleSearch(e.target.value);
             setShowResult2(true);
             setShowResult1(false);
@@ -152,15 +173,14 @@ const BrandComparison = () => {
               data={searchResults}
               setValue={setBrand2}
               showlist={setShowResult2}
-              
               setSelectedBrand = {setSelectedBrand2}
             />
           </>
         ) : null}
       </div>
-      <Link to={`brand/comparison/${selectedBrand1}/${selectedBrand2}`} className="comparison__button">
+      <div onClick={() => handleCompare()} className="comparison__button">
           <p>Compare</p>
-      </Link>
+      </div>
       
     </section>
   );

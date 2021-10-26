@@ -1,0 +1,14 @@
+.notification{
+    &-container{
+        z-index: 1000;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+    & p{
+        text-transform: capitalize;
+    }
+}

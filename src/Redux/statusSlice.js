@@ -6,6 +6,12 @@ const initialClientState = {
     isUserLoggedIn: false,
     isBrandLoggedIn: false,
     isUserAdmin: false,
+    notification:{
+        message:"",
+        type: "",
+        color: "",
+        show: false
+    }
 }
 
 const statusSlice = createSlice({
@@ -37,6 +43,23 @@ const statusSlice = createSlice({
                 isUserAdmin: action.payload
             }
         },
+        setNotification(state, action){
+            action.payload.show = true
+            console.log(action.payload)
+            if(action.payload.type === "error"){
+                action.payload.color = "#FF5151"
+            }
+            else if(action.payload.type === "success"){
+                action.payload.color = "#49FF00"
+            }
+            else if(action.payload.type === "loading"){
+                action.payload.color = "#EDEDED"
+            }
+            state.notification = action.payload
+        },
+        removeNotification(state){
+            state.notification.show = false
+        }
     }
 })
 

@@ -100,10 +100,50 @@ const WriteReview = () => {
 
 
   const onPublish = async(e) => {
+
     const valid = validationCheck()
     if(valid === 'ok'){
-        setIsPublishing(true)
-        e.preventDefault()
+
+    setIsPublishing(true)
+    e.preventDefault()
+
+    console.log(title, message);
+    const review = {
+      brand: brandId,
+      user: client.user.id,
+      title: title,
+      message: message,
+      ratingCount: 1.4,
+    }
+
+    let data;
+    const g = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
+      headers:{
+        "authorization" : `bearer ${client.tokens.access.token}`,
+        "role" : Object.keys(client)[0]
+      }
+    })
+    .then(({data:gg}) => {
+      console.log(gg)
+      data = {...gg}
+      return true
+    })
+    .catch(err =>{
+      setIsPublishing(false)
+      alert(err.response.data.message)
+      return false
+    })
+    
+    if(!g){
+      return 
+    }
+    console.log(data)
+    
+    dispatch(clientActions.setClient({
+      ...client,
+      user: data.user
+    }))
+
 
         console.log(title, message);
         const review = {
@@ -146,6 +186,18 @@ const WriteReview = () => {
   else{
     alert(valid)
   }
+      })
+      .then( (_) => {
+        setIsPublishing(false)
+        history.push("/")  
+      })
+      .catch(err => {
+        setIsPublishing(false)
+        console.log(err)
+      })
+    }))
+    history.push("/")  
+
   }
 
   const handleSearch = (e) => {

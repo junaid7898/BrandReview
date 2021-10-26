@@ -49,22 +49,6 @@ const BrandComparisonDetail = (props) => {
           }`}
         >{  props.satisfactionRate }%</h4>
       </div>
-      {/* <div className="brand__comparison__overall-status">
-        <h3
-        className={`${
-            props.brandDetails.overAllStatusIsGreater
-              ? "brand__comparison__overall-status__greater"
-              : "brand__comparison__overall-status__smaller"
-          }`}
-        >Overall Status</h3>
-        <h4
-        className={`${
-            props.brandDetails.overAllStatusIsGreater
-              ? "brand__comparison__overall-status__greater"
-              : "brand__comparison__overall-status__smaller"
-          }`}
-        >{props.brandDetails.overAllStatus}</h4>
-      </div> */}
     </div>
   );
 };

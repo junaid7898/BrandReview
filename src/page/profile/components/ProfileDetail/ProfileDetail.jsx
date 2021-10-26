@@ -94,7 +94,6 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
       else{
         setReviewData([])
       }
-    
   }, [page, option])
 
   //ANCHOR use effect for getting user reviews|follows
@@ -184,7 +183,7 @@ useEffect(() => {
                         reviewData.length > 0  ?
                           (reviewData.map(review =>
                             {
-                              return <Review setUpdatedReview ={setUpdatedReview} review = {review} /> 
+                              return <Review setUpdatedReview ={setUpdatedReview} review = {review} commentsAllowed={true} /> 
                             }
                           ))
                       :
@@ -212,7 +211,7 @@ useEffect(() => {
                         followData.length > 0  ?
                           (followData.map(follow =>
                             {
-                              return <Review review = {follow} /> 
+                              return <Review review = {follow} setUpdatedReview ={setUpdatedReview} commentsAllowed={true} /> 
                             }
                           ))
                       :

@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import {useGoogleLogin} from 'react-google-login'
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
+import {statusAction} from "../../../Redux/statusSlice"
+
 const LoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +55,10 @@ const LoginInputs = () => {
 
 
   const login = async () => {
+    dispatch(statusAction.setNotification({
+      message: "Logging in",
+      type: "loading"
+    }))
     console.log("login")
     const req = {
       email,
@@ -64,6 +70,10 @@ const LoginInputs = () => {
         "http://localhost:4000/v1/auth/user/login",
         req
         ).then(res => {
+          dispatch(statusAction.setNotification({
+            message: "Logged in",
+            type: "success"
+          }))
           console.log('response: ' , res.data)
             const {payload} = dispatch(clientActions.setClient(res.data))
             console.log(payload)
@@ -75,7 +85,10 @@ const LoginInputs = () => {
             setIsLoggingIn({...isLoggingIn, email: false})
             history.push('/')
         }).catch(err => {
-          alert(err.response.data.message)
+          dispatch(statusAction.setNotification({
+            message: err.response.data.message,
+            type: "error"
+          }))
           setIsLoggingIn({...isLoggingIn, email: false})
         });
     } catch (err) {

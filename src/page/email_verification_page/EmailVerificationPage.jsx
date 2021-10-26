@@ -14,6 +14,7 @@ const EmailVerificationPage = () => {
         console.log("Request Sent: " + reqSent.current)
         const fetcher = async(token, type) => {
             if(type === "user"){
+                console.log("req sent for user===============")
                 axios.post(`http://localhost:4000/v1/auth/user/verify-email?token=${token}`)
                 .then(({data}) =>{
                     if(client){
@@ -28,8 +29,10 @@ const EmailVerificationPage = () => {
                 })
             }
             else if(type === "brand"){
+                console.log("req sent for brand===============")
                 axios.post(`http://localhost:4000/v1/auth/brand/verify-email?token=${token}`)
                 .then(({data}) =>{
+                    console.log(data)
                     if(client){
                         dispatch(clientActions.setClient({
                             ...client,
@@ -42,13 +45,14 @@ const EmailVerificationPage = () => {
                 })
             }
         }
-        if(token && !reqSent.current){
+        if(token && type && !reqSent.current){
             reqSent.current = true
-           fetcher(token) 
+           fetcher(token, type) 
         }
         console.log(token)
+        console.log(type)
         console.log("Request Sent: " + reqSent.current)
-    },[])
+    },[token, type])
 
     return (
         <div className="email__verification">

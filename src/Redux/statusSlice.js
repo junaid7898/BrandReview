@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialClientState = { 
     loading: false,
-    attemptingLoginOnSiteLoad: false,
+    attemptingLoginOnSiteLoad: null,
     isUserLoggedIn: false,
     isBrandLoggedIn: false,
     isUserAdmin: false,

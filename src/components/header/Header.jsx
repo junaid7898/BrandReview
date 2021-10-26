@@ -123,7 +123,7 @@ const Header = () => {
   }
 
   const handleBrandVerification = async () => {
-    await axios.post('/auth/brand/send-verification-email', {brand: client.brand})
+    await axios.post('/auth/brand/send-verification-email', {brand: client.brand, type:"brand"})
     console.log('email sent for brand....')
   }
   return (

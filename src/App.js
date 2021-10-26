@@ -19,7 +19,7 @@ import PhoneVerification from './page/phone_verification_page/PhoneVerification'
 import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import { axios as axiosInstance } from "./axios/axiosInstance";
 import { useSelector, useDispatch } from "react-redux";
@@ -35,6 +35,7 @@ function App() {
   const {client} = useSelector(state => state.client)
   const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
   const isStateSet = useRef(false)
+  const [isState, setIsState] = useState(false)
   useEffect(() => {
     axiosInstance.get("brand/getAllBrands")
     .then(({data}) => {
@@ -43,9 +44,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if(attemptingLoginOnSiteLoad !== null && attemptingLoginOnSiteLoad !== undefined){
-      isStateSet.current=true
+    console.log(attemptingLoginOnSiteLoad)
+    if(attemptingLoginOnSiteLoad === null || attemptingLoginOnSiteLoad === undefined){
+      setIsState(true)
     }
+    console.error("opuside if")
   }, [attemptingLoginOnSiteLoad])
 
 
@@ -115,7 +118,7 @@ function App() {
     <Notification /> 
     <Header/>
       {
-        !attemptingLoginOnSiteLoad && isStateSet.current &&
+        isState ?
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route exact path="/user/login" > 
@@ -212,6 +215,8 @@ function App() {
             <Route path = '/termsandcondition' component = {TermsAndCondition}/>
             <Route path = '/*' component = {Error404Page}/>
         </Switch>
+        :
+          null
       }
       <Footer/>
     </BrowserRouter>

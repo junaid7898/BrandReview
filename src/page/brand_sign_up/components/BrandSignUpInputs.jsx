@@ -85,8 +85,6 @@ const BrandSignUpInputs = () => {
 
 
 
-
-
   const signup = async() => {
     const check = checkValidation()
     if(check === 'ok'){
@@ -133,6 +131,7 @@ const BrandSignUpInputs = () => {
           message: err.response.data.message,
           type: "error"
         }))
+        console.log(err.response.data.message)
         setIsSigningIn(false)
       })
     }

@@ -6,7 +6,7 @@ import RegistrationPageComponent from "../../../components/registration_page_com
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import { useDispatch } from "react-redux";
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
-
+import { statusAction } from "../../../Redux/statusSlice";
 import PhoneInput from "react-phone-number-input";
 import {
   isPossiblePhoneNumber,
@@ -42,13 +42,16 @@ const SignUpInputs = () => {
   // ANCHOR validation function for form
   const checkValidation = () => {
       const emailValidation =  validateEmail();
-    if(emailValidation === false){
-      return 'please enter a valid email'
-    }
-    
     if(username === null || email === null || password === null || repeatPassword === null || phone === null){
       return 'please fill all entries'
     }
+    else if(emailValidation === false){
+      return 'please enter a valid email'
+    }
+    else if (password.length < 8){
+      return 'password must be 8 characters long....'
+    }
+    
     else if(password !== repeatPassword){
       return 'password and repeated password must be same'
     }
@@ -65,6 +68,10 @@ const SignUpInputs = () => {
   const signUp = async () => {
     const check = checkValidation(); 
     if (check === 'ok') {
+      dispatch(statusAction.setNotification({
+        message: 'signing up please wait',
+        type: "loading"
+      }))
       const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
       
       console.log(countryCallingCode, nationalNumber);
@@ -80,11 +87,19 @@ const SignUpInputs = () => {
         const { data } = await axios
           .post("http://localhost:4000/v1/auth/user/register", req)
           .then((res) => {
+            dispatch(statusAction.setNotification({
+              message: 'signed in successful',
+              type: "success"
+            }))
             setIsSigningIn(false);
             console.log('response' + res);
             dispatch(clientActions.setClient(res.data));
           })
           .catch((err) => {
+            dispatch(statusAction.setNotification({
+              message: err.response.data.message,
+              type: "error"
+            }))
             alert(err.response.data.message);
             setIsSigningIn(false);
           });
@@ -95,7 +110,10 @@ const SignUpInputs = () => {
         setIsSigningIn(false);
       }
     } else {
-      alert(check)
+      dispatch(statusAction.setNotification({
+        message: check,
+        type: "error"
+      }))
     }
   };
 

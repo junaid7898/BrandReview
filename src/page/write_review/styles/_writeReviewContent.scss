@@ -1,11 +1,11 @@
 .review{
     display: flex;
-    flex-flow: row;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
     margin: auto;
     margin-bottom: 50px;
-    z-index: 2;
+    // z-index: 2;
 }
 .review__img{
     width: 500px;
@@ -162,7 +162,7 @@
         max-height: 300px;
         overflow-y: auto;   
         color: #272727;
-        z-index: 2;
+        z-index: 75;
         &__item{
             &:not(:last-child){
                 border-bottom: 1px solid gray;

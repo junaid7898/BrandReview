@@ -164,10 +164,7 @@ useEffect(() => {
           visitorIsUser &&
           <li onClick={() => {option === 3 ? setOption(0) : setOption(3)}} className = {option === 3 ? 'details__list__click': ''}>Reviews I Follow</li>
         }
-        {
-          visitorIsUser &&
-          <li onClick={() => {option === 4 ? setOption(0) : setOption(4)}} className = {option === 4 ? 'details__list__click': ''}>Manaing Brands</li>
-        }
+        
       </ul>
             {
               option === 1 ? 

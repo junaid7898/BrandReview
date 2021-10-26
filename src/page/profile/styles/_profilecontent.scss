@@ -98,6 +98,12 @@
     align-items: flex-start;
     text-align: left;
     padding: 10px;
+    & h1{
+        text-transform: capitalize;
+    }
+    & h3{
+        text-transform: lowercase;
+    }
 }
 
 .profile__intro__nameAndAddress h1{

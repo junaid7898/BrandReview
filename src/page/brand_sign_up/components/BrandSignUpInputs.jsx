@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { getImageDetails } from "../../../helpers/getImageDetails";
 import {useHistory} from 'react-router'
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
+import { statusAction } from "../../../Redux/statusSlice";
 
 import PhoneInput from "react-phone-number-input";
 import {
@@ -89,6 +90,10 @@ const BrandSignUpInputs = () => {
   const signup = async() => {
     const check = checkValidation()
     if(check === 'ok'){
+      dispatch(statusAction.setNotification({
+        message: 'signing up please wait',
+        type: "loading"
+      }))
       const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
       
       setIsSigningIn(true);
@@ -113,18 +118,29 @@ const BrandSignUpInputs = () => {
             }
           })
           .then((_) => {
+            dispatch(statusAction.setNotification({
+              message: 'signed up successfull',
+              type: "success"
+            }))
             dispatch(clientActions.setClient(data.brand))
             history.push("/")
             setIsSigningIn(false)
+
           })
           
       }).catch(err => {
-        alert(err.message)
+        dispatch(statusAction.setNotification({
+          message: err.response.data.message,
+          type: "error"
+        }))
         setIsSigningIn(false)
       })
     }
     else{
-      alert(check)
+      dispatch(statusAction.setNotification({
+        message: check,
+        type: "error"
+      }))
     }
   };
 

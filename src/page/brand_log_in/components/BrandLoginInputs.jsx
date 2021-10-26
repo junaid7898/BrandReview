@@ -68,6 +68,10 @@ const BrandLoginInputs = () => {
       axios
         .post("http://localhost:4000/v1/auth/brand/login", req)
         .then(({data}) => {
+          dispatch(statusAction.setNotification({
+            message: "Logged in successfully",
+            type: "success"
+          }))
           const {payload} = dispatch(clientActions.setClient(data));
           if(rememberMe){
             console.log(payload)
@@ -79,7 +83,11 @@ const BrandLoginInputs = () => {
           history.push('/')
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          dispatch(statusAction.setNotification({
+            message: err.response.data.message,
+            type: "error"
+          }))
+          // alert(err.response.data.message);
           setIsLoggingIn(false)
         });
   };

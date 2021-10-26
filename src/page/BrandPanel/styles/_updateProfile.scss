@@ -5,7 +5,7 @@
     align-items: center;
     inset: 0;
     background-color: $onSurface-secondary;
-    z-index: 200;
+    z-index: 100;
     @include respond(phone){ 
     }
     &__profile{

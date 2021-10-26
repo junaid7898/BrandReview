@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { statusAction } from '../../Redux/statusSlice'
 
@@ -14,7 +14,7 @@ function Notification() {
         }
         firstRender.current = true
     }, [notification])
-
+    console.error("rerender");
     return (
         !!notification ?
         notification.show ?
@@ -30,4 +30,4 @@ function Notification() {
     )
 }
 
-export default Notification
+export default memo(Notification)

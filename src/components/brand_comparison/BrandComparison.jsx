@@ -117,7 +117,7 @@ const BrandComparison = (props) => {
       else if(selectedBrand1.id === selectedBrand2.id){
         history.push(`/brand/${brand1.id}`)
       }
-      history.push(`brand/comparison/${selectedBrand1.name}/${selectedBrand2.name}`)
+      history.push(`/brand/comparison/${selectedBrand1.name}/${selectedBrand2.name}`)
 
     }
   

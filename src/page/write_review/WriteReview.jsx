@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ImagePreview from "../../components/image_preview/ImagePreview"
 import { uploadMultiPhotos } from "../../helpers/uploadMultiplePhotos";
 import {getImageDetails} from "../../helpers/getImageDetails";
@@ -36,7 +36,11 @@ const WriteReview = () => {
 
   const {client} = useSelector(state => state.client)
   const {brands} = useSelector(state => state.brands)
+  const [isEmailVerified, setIsEmailVerified] = useState(false)
+  const firstHandler = useRef(true)
+  const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
 
+  
 
   const fileSelectHandler = async(e) => {
     const images = e.target.files
@@ -69,50 +73,79 @@ const WriteReview = () => {
 
   }
 
+  const validationCheck = () => {
+    if(client){
+      if(client.user){
+        if(client.type.includes('user')){
+          if(client.user.isEmailVerified && client.user.isPhoneVerified){
+            return 'ok'
+          }
+          else{
+            return 'verify both email address and phone number to publish review.....'
+          }
+          
+        }
+      }
 
+      else if(client.brand){
+        return 'brand cannot publish reviews...'
+      }
+      
+      
+    }
+    else{
+      return 'must login to publish a review'
+    }
+  }
 
 
   const onPublish = async(e) => {
-    setIsPublishing(true)
-    e.preventDefault()
+    const valid = validationCheck()
+    if(valid === 'ok'){
+        setIsPublishing(true)
+        e.preventDefault()
 
-    console.log(title, message);
-    const review = {
-      brand: brandId,
-      user: client.user.id,
-      title: title,
-      message: message,
-      ratingCount: 1.4,
-    }
-    const {data} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
-      headers:{
-        "authorization" : `bearer ${client.tokens.access.token}`,
-        "role" : Object.keys(client)[0]
-      }
-    })
-    
-    dispatch(clientActions.setClient({
-      ...client,
-      user: data.user
-    }))
-
-    
-    axios.all(data.imageArray.map( (_, index) => {
-      console.log(data.imageArray[index], "\n", rawImages[0][index], "\n", imageDetails[index].fileType, "\n")
-      axios.put(data.imageArray[index], rawImages[0][index],{
-        headers:{
-          "Content-Type": imageDetails[index].fileType
+        console.log(title, message);
+        const review = {
+          brand: brandId,
+          user: client.user.id,
+          title: title,
+          message: message,
+          ratingCount: 1.4,
         }
-      })
-      .then( (_) => {
-        setIsPublishing(false)
-        history.push("/")  
-      })
-      .catch(err => {
-        setIsPublishing(false)
-        alert(JSON.stringify(err))
-      })
-    }))
+        const {data} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
+          headers:{
+            "authorization" : `bearer ${client.tokens.access.token}`,
+            "role" : Object.keys(client)[0]
+          }
+        })
+        
+        dispatch(clientActions.setClient({
+          ...client,
+          user: data.user
+        }))
+
+        
+        axios.all(data.imageArray.map( (_, index) => {
+          console.log(data.imageArray[index], "\n", rawImages[0][index], "\n", imageDetails[index].fileType, "\n")
+          axios.put(data.imageArray[index], rawImages[0][index],{
+            headers:{
+              "Content-Type": imageDetails[index].fileType
+            }
+          })
+          .then( (_) => {
+            setIsPublishing(false)
+            history.push("/")  
+          })
+          .catch(err => {
+            setIsPublishing(false)
+            alert(JSON.stringify(err))
+          })
+        }))
+  }
+  else{
+    alert(valid)
+  }
   }
 
   const handleSearch = (e) => {
@@ -139,15 +172,9 @@ const WriteReview = () => {
   }
 
   const handleMouseEnter = (i) =>{
-
-    
-
   }
 
   const handleMouseLeave = (i) =>{
-
-    
-
   }
 
   return (
@@ -259,7 +286,7 @@ const WriteReview = () => {
                 onClick = { (e) => {e.target.value = null}}
               />
             </div>
-            <button type = 'submit' className="review__content__publishButton" disabled = {isPublishing} >
+            <button type = 'submit' className="review__content__publishButton" disabled = {isEmailVerified} >
               publish
               {
                 isPublishing &&

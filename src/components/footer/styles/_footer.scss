@@ -47,11 +47,14 @@
 }
 .footer__content__links__title{
     text-decoration: none;
-    cursor: pointer;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 21px;
+    & h4{
+        cursor: pointer;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 21px;
+        color: $primary;
+    }
 /* identical to box height */
 
 
@@ -61,10 +64,17 @@ color: #000000;
 .footer__content__social__links{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     margin-top: 30px;
     color: $primary;
+    &-facebook, &-twitter, &-instagram{
+        cursor: pointer;
+        &__icon{
+            color: $primary;
+            font-size: 30px;
+        }
+    }
 }
 
 
@@ -77,11 +87,13 @@ color: #000000;
     align-items: center;
     padding: 20px 50px
 }
-.footer__rights h1{
-    color: $primary;
-    font-size: 20px;
-    font-weight: 600;
-    font-style: normal;
+.footer__rights__link{
+    & h4{
+        color: $primary;
+        font-size: 20px;
+        font-weight: 600;
+        font-style: normal;
+    }
 }
 .footer__rights p{
     font-size: 14px;

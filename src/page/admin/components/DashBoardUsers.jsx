@@ -5,10 +5,13 @@ import Pagination from '../../../components/Pagination/Pagination'
 import {axios} from '../../../axios/axiosInstance'
 import FilterComponent from '../../../components/filter_component/FilterComponent'
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator'
-
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import {statusAction} from "../../../Redux/statusSlice"
 const DashBoardUsers = () => {
     const [showImage, setShowImage] = useState(null)
-
+    const {client} = useSelector(state => state.client)
+    const dispatch = useDispatch()
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
     const [userData, setUserData] = useState(null)
@@ -37,9 +40,61 @@ const DashBoardUsers = () => {
 
     const handleBlackListing = (userId) =>{
         setBlackListng([...blackListing, userId])
+        axios.patch(`/user/${userId}`, {blackListed: true}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "user blacklisted",
+                type: "success"
+            }))
+            setUserData([...userData.map(item => {
+                if(item.id === userId){
+                    return data
+                }
+                return item
+            })])
+            setBlackListng([...blackListing.filter(item => item.id !== userId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== userId)])
+        })
     }
     const handleRemoveBlackListing = (userId) => {
         setBlackListng([...blackListing, userId])
+        axios.patch(`/user/${userId}`, {blackListed: false}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "user removed from blacklist",
+                type: "success"
+            }))
+            setUserData([...userData.map(item => {
+                if(item.id === userId){
+                    return data
+                }
+                return item
+            })])
+            setBlackListng([...blackListing.filter(item => item.id !== userId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== userId)])
+        })
     } 
 
     return (
@@ -78,7 +133,7 @@ const DashBoardUsers = () => {
                                 {
                                     !user.blackListed ?
                                         <div className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
-                                            <button onClick={() => handleBlackListing(user.id)}>
+                                            <button disabled={!!blackListing.find(item => item.id === user.id)} onClick={() => handleBlackListing(user.id)}>
                                                 BlackList
                                                 {
                                                     blackListing.includes(user.id) &&
@@ -88,7 +143,7 @@ const DashBoardUsers = () => {
                                         </div>
                                     :
                                         <div className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
-                                            <button onClick={() => handleRemoveBlackListing(user.id)}>
+                                            <button disabled={!!blackListing.find(item => item.id === user.id)} onClick={() => handleRemoveBlackListing(user.id)}>
                                                 Remove from Blacklist
                                                 {
                                                     blackListing.includes(user.id) &&

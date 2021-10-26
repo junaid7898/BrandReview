@@ -115,7 +115,7 @@ function App() {
     <Notification /> 
     <Header/>
       {
-        !attemptingLoginOnSiteLoad &&
+        !attemptingLoginOnSiteLoad && isStateSet.current &&
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route exact path="/user/login" > 

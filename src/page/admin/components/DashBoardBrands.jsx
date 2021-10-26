@@ -4,6 +4,8 @@ import Pagination from '../../../components/Pagination/Pagination'
 import FilterComponent from "../../../components/filter_component/FilterComponent"
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator'
 import ImageViewer from '../../../components/image_viewer/ImageViewer'
+import { statusAction } from '../../../Redux/statusSlice'
+import { useDispatch, useSelector } from 'react-redux'
 function DashBoardBrands() {
 
     const [page, setPage] = useState(1)
@@ -13,16 +15,11 @@ function DashBoardBrands() {
     const [sort, setSort] = useState({})
     const [blackListing, setBlackListng] = useState([])
     const [showImage, setShowImage] = useState(null)
+    const dispatch = useDispatch()
+    const {client} = useSelector(state => state.client)
     const handlePageination = (index) =>{
         setPage(index)
     }
-
-    const handleBlackListing = (userId) =>{
-        setBlackListng([...blackListing, userId])
-    }
-    const handleRemoveBlackListing = (userId) => {
-        setBlackListng([...blackListing, userId])
-    } 
     useEffect(() => {
         setBrandData(null)
         const options = {
@@ -38,6 +35,65 @@ function DashBoardBrands() {
         })
         
     }, [page, filters, sort])
+
+    const handleBlackListing = (brandId) =>{
+        setBlackListng([...blackListing, brandId])
+        axios.patch(`/brand/${brandId}`, {blackListed: true}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "brand blacklisted",
+                type: "success"
+            }))
+            setBrandData([...brandData.map(item => {
+                if(item.id === brandId){
+                    return data
+                }
+                return item
+            })])
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        })
+    }
+    const handleRemoveBlackListing = (brandId) => {
+        setBlackListng([...blackListing, brandId])
+        axios.patch(`/brand/${brandId}`, {blackListed: false}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "brand removed from blacklist",
+                type: "success"
+            }))
+            setBrandData([...brandData.map(item => {
+                if(item.id === brandId){
+                    return data
+                }
+                return item
+            })])
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        })
+    } 
 
     return (
         <div className="dashboard__brands">

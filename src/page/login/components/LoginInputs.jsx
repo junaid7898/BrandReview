@@ -9,6 +9,7 @@ import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import {useGoogleLogin} from 'react-google-login'
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 import {statusAction} from "../../../Redux/statusSlice"
+import ForgotPassword from "../../../components/forgot_password/ForgotPassword";
 
 const LoginInputs = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,8 @@ const LoginInputs = () => {
     google: false,
     facebook: false
   })
+
+  const [forgotPassword, setForgotPassword] = useState(false)
   const dispatch = useDispatch()
   const history = useHistory()
   const clientId = "29070885149-iipqn1acl0b33hh09fi9ns1tasangr9f.apps.googleusercontent.com"
@@ -96,6 +99,12 @@ const LoginInputs = () => {
     }
   };
 
+  //ANCHOR handle forgot password here
+  const handleForgotPassword = (emailAddress) => {
+    //emailAddress contains the email
+    alert(`forgot password with ${emailAddress}...`)  
+  }
+
   return (
     <div className="login__form__inputs">
       <div className="login__form__inputs__title">
@@ -147,9 +156,18 @@ const LoginInputs = () => {
           />
           <label htmlFor="saveUserInfo">Remember me</label>
         </div>
-        <Link to="/" className="login__form__inputs__after__link">
-          Forgot Password?
-        </Link>
+        <div className = 'login__form__inputs__after__forgot-password' onClick = {() => setForgotPassword(true)}>
+          <p>Forgot Password?</p>
+        </div>
+        {
+          forgotPassword ? 
+            <div className="login__form__inputs__after__forgot-component">
+              <ForgotPassword onCancel = {setForgotPassword} onSubmit = {(emailAddress) => handleForgotPassword(emailAddress)}/>
+            </div>
+          :
+            null
+        }
+       
       </div>
 
       <label className="login__form__inputs__login-link" htmlFor="userSignup">
@@ -175,14 +193,14 @@ const LoginInputs = () => {
           <p>Sign in with Google</p>
           
         </div>
-        <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>
+        {/* <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>
           <img src={FacebookIcon} alt="facebook logo" />
           <p>Sign in with Facebook</p>
           {
             isLoggingIn.facebook &&
             <LoadingIndicator />
           }
-        </div>
+        </div> */}
       </div>
     </div>
   );

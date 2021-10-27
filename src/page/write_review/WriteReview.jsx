@@ -1,14 +1,13 @@
 import axios from "axios";
 import React, { useRef, useState, useEffect } from "react";
 import ImagePreview from "../../components/image_preview/ImagePreview"
-import { uploadMultiPhotos } from "../../helpers/uploadMultiplePhotos";
 import {getImageDetails} from "../../helpers/getImageDetails";
 import { useHistory } from "react-router";
-import BrandSearchList from "../../components/brand_comparison/components/BrandSearchList";
 import Star from "../../assests/Star";
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 import { useDispatch, useSelector } from "react-redux";
 import { statusAction } from "../../Redux/statusSlice";
+import ReactStars from "react-rating-stars-component";
 
 import { clientActions } from "../../Redux/clientslice/clientSlice";
 const WriteReview = () => {
@@ -26,20 +25,12 @@ const WriteReview = () => {
   const [showList, setShowList] = useState(false)
   const [searchResults, setSearchResults] = useState([])
   const [isPublishing, setIsPublishing] = useState(false)
+  const [ratings, setRatings] = useState(0)
 
-  const starGradient1 = "#FFDC64" 
-  const starGradiet2 = "#FFC850" 
-  const starLines = "#FFF082"
-
-  const [sg1, setsg1] = useState("#000")
-  const [sg2, setsg2] = useState("#000")
-  const [lines, setlines] = useState("#000")
 
   const {client} = useSelector(state => state.client)
   const {brands} = useSelector(state => state.brands)
   const [isEmailVerified, setIsEmailVerified] = useState(false)
-  const firstHandler = useRef(true)
-  const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
 
   
 
@@ -79,12 +70,19 @@ const WriteReview = () => {
       if(client.user){
         if(client.type.includes('user')){
           if(client.user.isEmailVerified && client.user.isPhoneVerified){
-            if(brand){
+            if(ratings === 0){
+              return 'ratings must be greater than zero'
+            }
+            else if(brand){
               return 'ok'
+            }
+            else if(!brand){
+              setBrand(null)
+              return 'please select a valid brand'
             }
           }
           else{
-            return 'verify both email address and phone number to publish review.....'
+            return 'both email address and phone number needed to be verified....'
           }
           
         }
@@ -120,7 +118,7 @@ const WriteReview = () => {
       user: client.user.id,
       title: title,
       message: message,
-      ratingCount: 1.4,
+      ratingCount: ratings,
     }
 
     let data;
@@ -225,12 +223,6 @@ const WriteReview = () => {
     // setShowList(true)
   }
 
-  const handleMouseEnter = (i) =>{
-  }
-
-  const handleMouseLeave = (i) =>{
-  }
-
   return (
     <div className="review-container">
       <section className="review">
@@ -293,13 +285,18 @@ const WriteReview = () => {
             />
 
             <div className = 'review__star__container'>
-              {
-                  Array(Math.round(5)).fill().map((_, index)=>(
-                      <span onMouseEnter={(index) => handleMouseEnter} onMouseLeave={(index) => handleMouseLeave} >
-                      <Star  starGradient1={sg1} starGradiet2={sg2} starLines={lines} />
-                      </span>
-                  ))
-              }
+              <div className="review__star__container__stars">
+                <label>Ratings: {ratings}</label>
+                <div className="review__star__container__stars__selector">
+                  <ReactStars
+                    count = {5}
+                    onChange = {setRatings}
+                    size = {40}  
+                    isHalf = {true}
+                    activeColor="#ffd700"
+                  />
+                </div>
+              </div>
             </div>
 
             <textarea

@@ -1,7 +1,7 @@
 .dashboard__users__data{
     &__user{
         display: flex;
-        flex-direction: column;
+        flex-direction: column ;
         align-items: flex-start;
         justify-content: space-between;
         width: 100%;
@@ -13,7 +13,7 @@
         }
         &__intro{
             display: flex;
-            flex-direction: row;
+            flex-flow: row wrap;
             align-items: center;
             justify-content: center;
             margin: 20px 0px;
@@ -29,10 +29,14 @@
                 }
             }  
             & h5{
+                
+            }
+            &__name{
                 color: $onSurface-primary;
                 font-weight: 500;
                 font-size: 20px;
                 line-height: 30px;
+                text-transform: capitalize;
             }
         }
         &__details{
@@ -41,6 +45,9 @@
             align-items: flex-start;
             justify-content: space-between;
             width: 100%;
+            @include respond(phone){
+                flex-direction: column;
+            }
             &__button{
                 & button{
                     background-color: tomato;
@@ -70,6 +77,9 @@
                     font-size: 20px;
                     line-height: 30px;
                     margin-bottom: 10px;
+                    @include respond(phone){
+                        margin-bottom: 0;
+                    }
                 }
                 & p{
                     color: $onSurface-secondary;
@@ -85,5 +95,13 @@
             }
             
         }
+    }
+}
+.dashboard__users__filter-component{
+    width: 30%;
+    margin-left: auto;
+    @include respond(phone){
+        margin-left: 0;
+        margin-top: 20px;
     }
 }

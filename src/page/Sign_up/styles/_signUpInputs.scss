@@ -7,9 +7,20 @@
   align-items: center;
   margin-top: 50px;
   margin-bottom: 50px;
-//   @include respond(phone){
-//       flex-direction: row-reverse;
-//   }
+  &__component{
+    @include respond(phone){
+      display: none;
+    }
+    @include respond(tab){
+      display: none;
+    }
+    @include respond(desktop){
+      display: none;
+    }
+    @include respond(big-tab){
+      display: none;
+    }
+  }
 
   &__inputs {
     display: flex;
@@ -149,14 +160,14 @@
       border: 0px solid;
       border-radius: 10px;
       margin-top: 20px;
-      background-color: #357bce;
+      background-color: $primary;
       color: #ffffff;
       font-weight: 600;
       font-size: 20px;
       box-shadow: rgba(41, 41, 141, 0.25) 0px 2px 5px -1px, rgba(82, 36, 167, 0.3) 0px 1px 3px -1px;   
       cursor: pointer;
       &:hover{
-        opacity: 0.9;
+        background-color: $primaryHover;
       }
     }
   }

@@ -7,7 +7,7 @@
     align-items: center;
 
     @include respond(phone){
-        margin-left: 0;
+
     }
     &__container{
         display: flex;
@@ -15,7 +15,7 @@
         width: 100%;
         justify-content: flex-end;
         align-items: center;
-        margin-bottom: 20px;
+        margin: 20px 20px;
     }
     &__item{
         margin-left: 50px;
@@ -40,4 +40,8 @@
             transform: scale(0.98);
         }
     }
+}
+
+.admin__dashboard__name-tag{
+    text-transform: capitalize;
 }

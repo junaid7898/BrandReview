@@ -1,0 +1,30 @@
+.dashboard1__settings{
+    width: 500px;
+    max-width: 90%;
+    background-color: $background;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 30px 24px;
+    margin: 30px 0px;
+    border-radius: 10px;
+    &__option1{
+        & label{
+        }
+        &__dropdown{
+            margin: 10px 0px;
+        }
+    }
+    &__button{
+        background-color: $primary;
+        width: 50%;
+        text-align: center;
+        padding: 10px 0px;
+        color: white;
+        border-radius: 10px;
+        margin: 0px auto;
+        margin-top: 30px;
+        cursor: pointer;
+        &:hover{
+            background-color: $primaryHover;
+        }
+    }
+}

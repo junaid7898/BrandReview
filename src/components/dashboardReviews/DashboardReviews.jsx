@@ -8,6 +8,9 @@ import MultiDatePicker from '../multi_date_picker/MultiDatePicker'
 import Star from '../../assests/Star'
 import ImageThumbnail from '../image_thumbnail/ImageThumbnail'
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator'
+import { Link } from 'react-router-dom'
+import ImagePreview from '../image_preview/ImagePreview'
+import ImageViewer from '../image_viewer/ImageViewer'
 export const DashboardReviews = () => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -16,6 +19,7 @@ export const DashboardReviews = () => {
     const [sortOptions, setSortOptions] = useState()
     const [date, setDate] = useState(null)
     const [isVerifing, setIsVerifing] = useState([])
+    const [previewImage, setPreviewImage] = useState(null)
     const handlePageination = (index) =>{
         setPage(index)
     }
@@ -66,9 +70,6 @@ export const DashboardReviews = () => {
                     <MultiDatePicker date = {date}  setDate={setDate} />
                 </div>
             </div>
-            <div className="dashboard__review__component__picker">
-                <MultiDatePicker date = {date}  setDate={setDate} />
-            </div>
 
 
             
@@ -84,10 +85,15 @@ export const DashboardReviews = () => {
                     </tr>
                     {
                         reviewData && reviewData.map((item) => {
+                            console.log('itemData: ', item)
                             return(
                                 <>
                                 <tr className = 'dashboard__panel__reports__table__data-rows' id = {item.id}>
-                                    <td className = 'dashboard__panel__reports__table__data-rows__name'>{item.user.name}</td>
+                                    <td className = 'dashboard__panel__reports__table__data-rows__name'>
+                                        <Link to ={`user/${item.user.id}`} >
+                                            <h4 className = 'admin__dashboard__name-tag'>{item.user.name}</h4>
+                                        </Link>
+                                    </td>
                                     <td>
                                         <div className="dashboard__panel__reports__table__data-rows__ratings">
                                             <h4>{item.ratingCount}</h4>
@@ -108,9 +114,18 @@ export const DashboardReviews = () => {
                                         {
                                             item.images.map(img => {
                                                 return(
-                                                    <ImageThumbnail image = {img}/>
+                                                    <div className="dashboard__panel__reports__images__item" onClick = {() => setPreviewImage(img)}>
+                                                        <ImageThumbnail image = {img}/>
+                                                    </div>
                                                 )
                                             })
+                                            
+                                        }
+                                        {
+                                            previewImage? 
+                                                <ImageViewer image = {previewImage} setImage = {setPreviewImage}/>
+                                            :
+                                                null
                                         }
                                 </div></td>
                                     <td>{ new Date(item.createdOn).toDateString()}</td>

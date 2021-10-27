@@ -1,8 +1,5 @@
 import React, {useEffect, useRef, useState}from 'react'
 import UpdateProfile from '../../../components/update_profile_button/UpdateProfile'
-
-import Chart from '../../../components/charts/Chart';
-import {ImCross} from 'react-icons/im';
 import { axios } from '../../../axios/axiosInstance';
 import BrandReviews from './BrandReviews';
 import UpdateBrandProfile from './UpdateBrandProfile';
@@ -12,6 +9,7 @@ import { isPossiblePhoneNumber, isValidPhoneNumber , parsePhoneNumber} from 'rea
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator';
 import VerifyOTP from '../../../components/verify-otp/VerifyOTP';
 import BrandChart from './BrandChart';
+import { statusAction } from "../../../Redux/statusSlice";
 
 
 const BrandDetail = ({item, brandId}) => { 
@@ -76,6 +74,10 @@ const BrandDetail = ({item, brandId}) => {
     const handleUpdate = () => {
         const validation = checkValidation();
         if(validation === 'ok'){
+            dispatch(statusAction.setNotification({
+                message: 'updating info please wait....',
+                type: "loading"
+              }))
           setIsUpdatingBrand(true)
           const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
           const {payload} = dispatch(clientActions.setClient({
@@ -94,17 +96,25 @@ const BrandDetail = ({item, brandId}) => {
                   "authorization" : `bearer ${client.tokens.access.token}`
               }
           }).then((res) => {
+            dispatch(statusAction.setNotification({
+                message: 'your information is updated...',
+                type: "success"
+              }))
             setIsUpdatingBrand(false)
-            alert('Your information is changed...')
             setUpdateProfile(false)
             
           }).catch(err => {
-            //   setIsUpdating(false)
-              alert(JSON.stringify(err))
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+              }))
           })
       } 
       else{
-          alert(validation)
+        dispatch(statusAction.setNotification({
+            message: validation,
+            type: "error"
+          }))
       }
    }
 
@@ -181,7 +191,7 @@ const BrandDetail = ({item, brandId}) => {
 
                         <div className="mydetails__update-button">
                             <div className="mydetails__update-button__button1">
-                                <UpdateProfile onClick={() => setUpdateProfile(true)} value = 'Update Profile' />
+                                <UpdateProfile onClick={() => setUpdateProfile(true)}  value = 'Update Profile' />
                             </div>
                         {
                             item.isPhoneVerified ?
@@ -217,6 +227,7 @@ const BrandDetail = ({item, brandId}) => {
                             )
                         }
                         {
+                            //FIXME while sending otp show loading indicator
                             verifyPhone ?
                                 <VerifyOTP onCut = {setVerifyPhone} user = {item}/>
                             :

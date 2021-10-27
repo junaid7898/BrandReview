@@ -136,6 +136,28 @@
     position: relative;
 }
 
+.review__star__container{
+    width: 100%;
+    background-color: $surface;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 5px 5px;
+    &__stars{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;   
+        align-items: flex-start;
+        & label{
+            font-size: 15px;
+            font-weight: bold;
+            align-self: center;
+        }
+        &__selector{
+            align-self: center;
+        }
+    }
+}
+
 .review__content__tboxes1{
     // background-color: red;
     width: 100%;

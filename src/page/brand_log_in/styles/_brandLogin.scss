@@ -4,4 +4,9 @@
     align-items: center;
     justify-content: space-around;
     margin: 50px 0px;
+    &__component{
+        @include respond(phone){
+            display: none;
+        }
+    }
 }     

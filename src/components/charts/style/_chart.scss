@@ -4,15 +4,22 @@
     justify-content: space-evenly;
     align-items: flex-start;
     width: 100%;
+    margin: 20px 0px;
+    padding: 3px 3px;
+    overflow-x: auto;
     @include respond(phone){
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: center;  
     }
-    &__date-picker{
+    &__date-picker1{
         width: 30%;
-        margin: auto;
-        margin-bottom: 30px;
+        margin: 30px 0px;
+        margin-left: 50px;
+        @include respond(phone){
+            margin-left: 0;
+
+        }
     }
     &__first-chart{
         // margin-right: 50px;
@@ -20,6 +27,9 @@
         padding: 12px 16px;
         box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
         border-radius: 20px;
+        @include respond(phone){
+            margin-bottom: 20px;
+        }
         &__intro{
             display: flex;
             flex-direction: row;

@@ -1,16 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {FaSortAmountDownAlt} from 'react-icons/fa'
-import FilterComponent from '../../../components/filter_component/FilterComponent'
-import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker'
-import {AiFillCaretDown, AiFillCaretUp} from 'react-icons/ai'
 import { DashboardReviews } from '../../../components/dashboardReviews/DashboardReviews'
 import DashBoardUsers from './DashBoardUsers'
-import Star from '../../../assests/Star'
 import { useSelector } from 'react-redux'
 
 import DashBoardBrands from './DashBoardBrands'
+import {AiFillCaretDown} from 'react-icons/ai'
 
 import Chart from '../../../components/charts/Chart'
+import Select from "react-select";
 
 const AdminDashBoard = () => {
 
@@ -26,6 +23,10 @@ const AdminDashBoard = () => {
     const [date, setDate] = useState(null)
     const [dashboardPhone, setDashBoardPhone] = useState('Dashboard')
     const [showDashboardPhone, setShowDashboardPhone] = useState(null)
+
+    const [option1, setOption1] = useState(null)
+    const [option2, setOption2] = useState(null)
+    const [option3, setOption3] = useState(null)
 
     const allReviews = [{name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
     {name: 'nadeem khan', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf asddd aaaaaaaa ddddd ffffff ddddddd dddddd ddddddd ddddddd  dddddd ddddd', date: '1/25/2021'},
@@ -130,10 +131,24 @@ const AdminDashBoard = () => {
         }
     }
 
-    useEffect(() => {
-        //TODO get all reviews from api
-    }, [])
+    const settingOptions1 = [
+        {value: 'y', label: 'Yes'},
+        {value: 'n', label: 'No'},
+    ]
 
+    const settingOptions2 = [
+        {value: 'y', label: 'Yes'},
+        {value: 'n', label: 'No'},
+    ]
+
+    const settingOptions3 = [
+        {value: 'y', label: 'Yes'},
+        {value: 'n', label: 'No'},
+    ]
+
+    const handleAdminSettingsChange = () => {
+        alert(`${option1.value}, ${option2.value}, ${option3.value}`)
+    }
 
     return (
         <section >
@@ -152,24 +167,11 @@ const AdminDashBoard = () => {
                     </ul>
 
                 </div>
-                
-                <div className = 'dashboard__filter__input'>
-
-                    <div className="dashboard__filter__input__filter">
-                        {/* <FilterComponent/> */}
-                    </div>
-
-                    <div className="dashboard__filter__input__picker">
-                        {/* <MultiDatePicker date = {date} setDate = {setDate}/> */}
-                    </div>
-                    
-                </div>
-            </div>
             {
                 showDashBoard ? 
-                    <>
+                    <div className = 'dashboard__panel__chart'>
                        <Chart />
-                    </>
+                    </div>
                     :
                     (null)
             }
@@ -195,12 +197,54 @@ const AdminDashBoard = () => {
             {
                 showSettings ? 
                     <>
-                        {/* <DashBoardLink/> */}
-                        <h1>hello 5</h1>
+                        <div className="dashboard1__settings">
+                            <div className="dashboard1__settings__option1">
+                                <label htmlFor="reviewVerify">Allow Verify Review</label>
+                                <Select
+                                    id = 'reviewVerify'
+                                    value = {option1}
+                                    onChange = {setOption1}
+                                    options = {settingOptions1}
+                                    className = 'dashboard1__settings__option1__dropdown'
+                                    placeholder = 'Do you want brand to verify reviews?'    
+                                />
+                            </div>
+
+                            <div className="dashboard1__settings__option1">
+                                <label htmlFor="reviewVerify">Email Verification settings</label>
+                                <Select
+                                    id = 'reviewVerify'
+                                    value = {option2}
+                                    onChange = {setOption2}
+                                    options = {settingOptions2}
+                                    className = 'dashboard1__settings__option1__dropdown'
+                                    placeholder = 'Email verification must require to post review?'    
+                                />
+                            </div>
+
+                            <div className="dashboard1__settings__option1">
+                                <label htmlFor="reviewVerify">
+                                    Phone Verification settings
+                                </label>
+                                <Select
+                                    id = 'reviewVerify'
+                                    value = {option3}
+                                    options = {settingOptions3}
+                                    onChange = {setOption3}
+                                    className = 'dashboard1__settings__option1__dropdown'
+                                    placeholder = 'Phone verification must require to post review?'    
+                                />
+                            </div>
+
+                            <div className = 'dashboard1__settings__button' onClick = {handleAdminSettingsChange}>
+                                <h3>Ok</h3>
+                            </div>
+                        </div>
                     </>
                     :
                     (null)
             }
+            </div>
         </section>
     )
 }

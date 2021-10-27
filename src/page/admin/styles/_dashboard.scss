@@ -1,20 +1,28 @@
 .dashboard{
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin: auto;
-    margin-bottom: 50px;
+    max-width: 100%;
 
     &__panel__review{
+        max-width: 1100px;
         margin: auto;
+        max-width: 90%;
+    }
+
+    &__panel__chart{
+        width: 100%;
+        max-width: 100%;
     }
 
     &__panel__user{
+        width: 1100px;
+        max-width: 90%;
         margin: auto;
-        padding: 10px 14px;
-        margin-bottom: 50px;
+        // padding: 10px 14px;
+        // margin-bottom: 50px;
     }
 
     &__panel__reports{
@@ -88,14 +96,12 @@
     }
 }
 .dashboard__links{
-    flex: 0.5;
-    @include respond(phone){
-        flex: 1;
-    }
-
+    width: 100%;
+    max-width: 100%;  
 }
 .dashboard__links__header{
     display: none;
+    align-self: center;
     @include respond(phone){
         display: flex;
         flex-direction: row;
@@ -114,14 +120,16 @@
 .dashboard__links__list{
     display: flex;
     flex-flow: row wrap;
-    align-items: center;
-    justify-content: space-between;
+    align-self: flex-start;
+    justify-content: space-evenly;
     padding: 10px 14px;
-    
+    width: 50%;  
+    // margin: auto;
+    z-index: 75;
     @include respond(phone){
         display: none;
         flex-direction: column;
-        width: 90%;
+        width: 100%;
         position: absolute;
         // z-index: 2;
         background-color: $surface;
@@ -143,6 +151,7 @@
     margin: 8px 0px;
     cursor: pointer;
     padding-bottom: 10px;
+    
     @include respond(phone){
         display: block;
         padding: 10px 0px;
@@ -211,6 +220,9 @@
             min-height: 50px;
         }
     }
+}
+
+.dashboard1__settings{
 }
 
 @media(max-width: 700px){

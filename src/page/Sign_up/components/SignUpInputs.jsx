@@ -38,20 +38,31 @@ const SignUpInputs = () => {
     return re.test(String(email).toLowerCase());
   }
 
+    //ANCHOR password validation
+    const CheckPassword = () => { 
+      var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+      if(password.match(paswd)){
+           return true;
+      }
+      else{ 
+          return false;
+      }
+    }
+
 
   // ANCHOR validation function for form
   const checkValidation = () => {
       const emailValidation =  validateEmail();
+      const validPassword = CheckPassword()
     if(username === null || email === null || password === null || repeatPassword === null || phone === null){
       return 'please fill all entries'
     }
     else if(emailValidation === false){
       return 'please enter a valid email'
     }
-    else if (password.length < 8){
-      return 'password must be 8 characters long....'
+    else if(!validPassword){
+      return 'password must be between 7-15 characters long and contain at least one numeric digit and special character'
     }
-    
     else if(password !== repeatPassword){
       return 'password and repeated password must be same'
     }
@@ -122,8 +133,9 @@ const SignUpInputs = () => {
   return (
     <div className="signup__form">
 
-
-      <RegistrationPageComponent />
+      <div className="signup__form__component">
+        <RegistrationPageComponent />
+      </div>
 
 
       <div className="signup__form__inputs">
@@ -175,6 +187,7 @@ const SignUpInputs = () => {
               setPassword(e.target.value);
             }}
           />
+          <h5 className = 'password__warning__validation'>Password must be 7 to 15 characters which contain at least one numeric digit and a special character</h5>
         </div>
 
 

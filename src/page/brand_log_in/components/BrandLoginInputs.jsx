@@ -10,10 +10,12 @@ import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import {useGoogleLogin} from 'react-google-login'
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 import { statusAction } from "../../../Redux/statusSlice";
+import ForgotPassword from "../../../components/forgot_password/ForgotPassword";
 const BrandLoginInputs = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState(false)
 
   const [isLoggingIn, setIsLoggingIn] = useState({
     email: false,
@@ -91,6 +93,11 @@ const BrandLoginInputs = () => {
           setIsLoggingIn(false)
         });
   };
+//ANCHOR here handle forgot password
+  const handleForgotPassword = (emailAddress) => {
+    //emailAddress contains the email
+    alert(`forgot password with ${emailAddress}...`)  
+  }
 
   
 
@@ -145,9 +152,17 @@ const BrandLoginInputs = () => {
           />
           <label htmlFor="saveUserInfo">Remember me</label>
         </div>
-        <Link to="" className="brand__login__inputs__after__link">
-          Forgot Password?
-        </Link>
+        <div className = 'login__form__inputs__after__forgot-password' onClick = {() => setForgotPassword(true)}>
+          <p>Forgot Password?</p>
+        </div>
+        {
+          forgotPassword ? 
+            <div className="login__form__inputs__after__forgot-component">
+              <ForgotPassword onCancel = {setForgotPassword} onSubmit = {(emailAddress) => handleForgotPassword(emailAddress)}/>
+            </div>
+          :
+            null
+        }
       </div>
 
       <label className="login__form__inputs__login-link" htmlFor="userSignup">
@@ -166,7 +181,7 @@ const BrandLoginInputs = () => {
         }
       </button>
 
-      <p>or continue with</p>
+      {/* <p>or continue with</p>
       <div className="login__form__inputs__social-button">
         <div onClick={loginWithGoogle} style={{pointerEvents: isLoggingIn.google ? "none" : "all"}} className="login__form__inputs__social-button__google">
 
@@ -178,7 +193,7 @@ const BrandLoginInputs = () => {
           <img src={FacebookIcon} alt="facebook logo" />
           <p>{isLoggingIn.facebook ? <LoadingIndicator /> :  "Login with Facebook"}</p>
         </div>
-      </div>
+      </div> */}
 
 
     </div>

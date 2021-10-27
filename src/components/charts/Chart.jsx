@@ -2,6 +2,7 @@ import {axios} from '../../axios/axiosInstance';
 import React, {useState, useEffect} from 'react'
 import {Bar, Line} from 'react-chartjs-2'
 import MultiDatePicker from '../multi_date_picker/MultiDatePicker';
+import EmptyData from '../EmptyDataComponent/EmptyData';
 
 const Chart = () => {
     const [date, setDate] = useState(null)
@@ -138,7 +139,7 @@ const Chart = () => {
 
     return (
         <>
-        <div className="chart__div__date-picker">
+        <div className="chart__div__date-picker1">
                 <MultiDatePicker date = {date} setDate = {setDate} />
         </div>
         {
@@ -166,7 +167,7 @@ const Chart = () => {
                                 }}
                                 height = {300}
                                 width = {500}
-                                options = {{maintainAspectRatio: false, backgroundColor: 'red', scales: {x: {beginAtZero: true}}}}
+                                options = {{maintainAspectRatio: false, backgroundColor: '#357BCE', scales: {x: {beginAtZero: true}}}}
                             />
                         </div>
                     </div>
@@ -175,13 +176,13 @@ const Chart = () => {
                     <div className="chart__div__second-chart">
                         <div className="chart__div__second-chart__intro">
                                 <h3>Ratings</h3>
-                                <h4>1.5</h4>
                         </div>
                         <div className = 'chart__div__first__chart__bar'>
                             <Line
                                     data = {{
                                         labels: x,
-                                        datasets: [{    
+                                        datasets: [{  
+                                            label: 'Total Ratings',  
                                             data: data,
                                             barPercentage: 0.5,
                                             barThickness: 6,
@@ -192,7 +193,7 @@ const Chart = () => {
                                     }}
                                     height = {300}
                                     width = {500}
-                                    options = {{maintainAspectRatio: true, backgroundColor: 'red'}}
+                                    options = {{maintainAspectRatio: true, backgroundColor: '#357BCE'}}
                                 />
                             </div>
                     </div>
@@ -201,7 +202,9 @@ const Chart = () => {
             )
             :
             (
-                <h1>select date range to view charts</h1>
+                <div className="no__data__warning">
+                    <EmptyData value = 'Please select a date range from above to view charts'/>
+                </div>
             )
         } 
         

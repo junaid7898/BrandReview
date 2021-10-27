@@ -2,6 +2,7 @@ import { axios } from '../../../axios/axiosInstance';
 import React, {useState, useEffect} from 'react'
 import {Bar, Line} from 'react-chartjs-2'
 import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker';
+import EmptyData from '../../../components/EmptyDataComponent/EmptyData';
 
 const BrandChart = ({brandId}) => {
     const [date, setDate] = useState(null)
@@ -150,73 +151,75 @@ const BrandChart = ({brandId}) => {
 
     return (
         <>
-        <div className="chart__div__date-picker">
+        <div className="brand__chart__container">
+            <div className="brand__chart__container__date-picker">
                 <MultiDatePicker date = {date} setDate = {setDate} />
-        </div>
-        {
-            date ? 
-            (
-                <div className = 'chart__div'>
-             
-                    <div className="chart__div__first-chart">
-                        <div className="chart__div__first-chart__intro">
-                            <h3>Reviews</h3>
-                        </div>
-                        <div className = 'chart__div__first__chart__bar'>
-                            <Bar
-                                data = {{
-                                    labels: chartData && chartData.label,
-                                    datasets: [{  
-                                        label:"Total Reviews",
-                                        data: chartData && chartData.value,
-                                        barPercentage: 0.5,
-                                        barThickness: 15,
-                                        maxBarThickness:20,
-                                        minBarLength: 2,
-                                        borderWidth: 2,   
-                                    }]
-                                }}
-                                height = {300}
-                                width = {500}
-                                options = {{maintainAspectRatio: false, backgroundColor: '#357BCE', scales: {x: {beginAtZero: true}}}}
-                            />
-                        </div>
-                    </div>
-                    
-
-                    <div className="chart__div__second-chart">
-                        <div className="chart__div__second-chart__intro">
-                                <h3>Review Ratings</h3>
-                        </div>
-                        <div className = 'chart__div__first__chart__bar'>
-                            <Line
+            </div>
+            {
+                date ? 
+                (
+                    <div className = 'chart__div'>
+                
+                        <div className="chart__div__first-chart">
+                            <div className="chart__div__first-chart__intro">
+                                <h3>Reviews</h3>
+                            </div>
+                            <div className = 'chart__div__first__chart__bar'>
+                                <Bar
                                     data = {{
-                                        labels: chartData2 && chartData2.label,
+                                        labels: chartData && chartData.label,
                                         datasets: [{  
-                                            label: 'total ratings',  
-                                            data: chartData2 && chartData2.value,
+                                            label:"Total Reviews",
+                                            data: chartData && chartData.value,
                                             barPercentage: 0.5,
-                                            barThickness: 6,
-                                            maxBarThickness: 8,   
+                                            barThickness: 15,
+                                            maxBarThickness:20,
                                             minBarLength: 2,
-                                            borderWidth: 2,
+                                            borderWidth: 2,   
                                         }]
                                     }}
                                     height = {300}
                                     width = {500}
-                                    options = {{maintainAspectRatio: true, backgroundColor: '#357BCE'}}
+                                    options = {{maintainAspectRatio: false, backgroundColor: '#357BCE', scales: {x: {beginAtZero: true}}}}
                                 />
                             </div>
+                        </div>
+                        
+
+                        <div className="chart__div__second-chart">
+                            <div className="chart__div__second-chart__intro">
+                                    <h3>Review Ratings</h3>
+                            </div>
+                            <div className = 'chart__div__first__chart__bar'>
+                                <Line
+                                        data = {{
+                                            labels: chartData2 && chartData2.label,
+                                            datasets: [{  
+                                                label: 'total ratings',  
+                                                data: chartData2 && chartData2.value,
+                                                barPercentage: 0.5,
+                                                barThickness: 6,
+                                                maxBarThickness: 8,   
+                                                minBarLength: 2,
+                                                borderWidth: 2,
+                                            }]
+                                        }}
+                                        height = {300}
+                                        width = {500}
+                                        options = {{maintainAspectRatio: true, backgroundColor: '#357BCE'}}
+                                    />
+                                </div>
+                        </div>
+                
                     </div>
+                )
+                :
+                (
+                    <EmptyData value = 'please select date range from above'/>
+                )
+            } 
             
-                </div>
-            )
-            :
-            (
-                <h1>select date range to view charts</h1>
-            )
-        } 
-        
+        </div>
         </>
     )
 }

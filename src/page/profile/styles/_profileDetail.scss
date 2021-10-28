@@ -27,11 +27,11 @@
     
 }
 .details ul li:active{
-    color: #35C9CE
+    color: $primary
 }
 
 .details__list__click{
-    border-bottom: 2px solid #35C9CE;
+    border-bottom: 2px solid $primary;
     border-collapse: collapse;
-    color: #35C9CE;
+    color: $primary;  
 }

@@ -14,6 +14,7 @@ const Profile = () => {
     const { userId } = useParams()
 
     const [visitorIsUser, setVisitorIsUser] = useState(false)
+    console.log('visitor is user: ',visitorIsUser);
 
     
     useEffect(() => {
@@ -72,7 +73,7 @@ const Profile = () => {
             {
                 userDetails ?
                 <>
-                    <ProfileContent user = {userDetails} setClientDetails = {setClientDetails}/>
+                    <ProfileContent user = {userDetails} setClientDetails = {setClientDetails} visitorIsUser = {visitorIsUser}/>
                     <ProfileDetail visitorIsUser = {visitorIsUser} user = {userDetails} userId = {userId}/>
                 </>
                 :

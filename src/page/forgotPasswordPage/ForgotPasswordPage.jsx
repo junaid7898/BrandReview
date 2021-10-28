@@ -18,7 +18,7 @@ const ForgotPasswordPage = () => {
         }
     }
     const validationCheck = () => {
-        const validPassword = CheckPassword()
+        let validPassword = CheckPassword()
         if(password === null || confirmPassword === null){
             return 'please fill all the entries....'
         }

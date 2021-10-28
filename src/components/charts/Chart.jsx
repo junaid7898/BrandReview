@@ -74,6 +74,7 @@ const Chart = () => {
     //TODO get data from api
     const data = [ 2.4 , 3 , 4 , 5 , 3.4 , 5 , 3 , 2 , 4 , 4.5 , 5 , 3.4, 5 , 3]
     const [chartData, setChartData] = useState(null)
+    const [chartData2, setChartData2] = useState(null)
     useEffect(() => {
         if(date){
 
@@ -95,6 +96,7 @@ const Chart = () => {
             .then(({data}) => {
                 console.log(data)
                 let newObj = {}
+                let ratingAvg = {}
                 data.results.map( item => {
                     const g = new Date(item.createdOn).toDateString()
                     console.log(g)
@@ -103,6 +105,16 @@ const Chart = () => {
                     }
                     else {
                         newObj[g] = 1
+                    }
+
+                    if(ratingAvg[g]){
+                        ratingAvg[g].sum = ratingAvg[g].sum + item.ratingCount
+                        ratingAvg[g].avg = ratingAvg[g].sum / newObj[g]
+                    }
+                    else {
+                        ratingAvg[g] = {}
+                        ratingAvg[g].sum = item.ratingCount
+                        ratingAvg[g].avg = item.ratingCount
                     }
                 })
 
@@ -118,6 +130,14 @@ const Chart = () => {
                 setChartData({
                     label:Object.keys(newObj),
                     value: Object.values(newObj)
+                })
+
+                const labelA = Object.keys(ratingAvg)
+                const valueA = labelA.map(item => ratingAvg[item].avg)
+
+                setChartData2({
+                    label: labelA,
+                    value: valueA
                 })
 
 
@@ -180,10 +200,10 @@ const Chart = () => {
                         <div className = 'chart__div__first__chart__bar'>
                             <Line
                                     data = {{
-                                        labels: x,
+                                        labels: chartData2 && chartData2.label,
                                         datasets: [{  
                                             label: 'Total Ratings',  
-                                            data: data,
+                                            data: chartData2 && chartData2.value,
                                             barPercentage: 0.5,
                                             barThickness: 6,
                                             maxBarThickness: 8,   

@@ -4,14 +4,15 @@ import { FaTelegramPlane } from "react-icons/fa";
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
 import ImagePreview from '../image_preview/ImagePreview';
 import { getImageDetails } from '../../helpers/getImageDetails';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import axios from 'axios';
+import { statusAction } from '../../Redux/statusSlice';
 const WriteYourReviewComponent = ({setPage, brandId}) => {
     const [showSubmitIcon, setShowSubmitIcon] = useState(false)
 
     const history = useHistory()
-
+    const dispatch = useDispatch()
     const [imgArray, setImgArray] = useState([])
     const [imageDetails, setImageDetails] = useState([])
     const [rawImages, setRawImages] = useState([])
@@ -49,14 +50,16 @@ const WriteYourReviewComponent = ({setPage, brandId}) => {
 
     const handlePublish = async () =>{
       setIsPublishing(true)
-      // setImgArray([])
-      // setMessage("")
-      // setPage(1)
+      dispatch(statusAction.setNotification({
+        message: 'publishing....',
+        type: "loading"
+      }))
     const review = {
       brand: brandId,
       user: client.user.id,
       message: message,
     }
+
     const {data: imageArray} = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
       headers:{
         "authorization" : `bearer ${client.tokens.access.token}`,
@@ -72,11 +75,18 @@ const WriteYourReviewComponent = ({setPage, brandId}) => {
       })
       .then( (_) => {
         setIsPublishing(false)
+        dispatch(statusAction.setNotification({
+          message: 'published...',
+          type: "success"
+        }))
         history.push("/")  
       })
       .catch(err => {
         setIsPublishing(false)
-        alert(JSON.stringify(err))
+        dispatch(statusAction.setNotification({
+          message: err.response.data.message,
+          type: "error"
+        }))
       })
     }))
     }

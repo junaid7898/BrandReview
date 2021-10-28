@@ -161,9 +161,9 @@
 } 
 
 .dashboard__list__click{
-    border-bottom: 5px solid #35C9CE;
+    border-bottom: 5px solid $primary;
     border-collapse: collapse;
-    color: #35C9CE;
+    color: $primary;
 }
 
 .dashboard__filter__input{

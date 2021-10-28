@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import BrandInfo from "./components/BrandInfo";
-import BrandImage from "../../assests/images/brandcar.png";
-import BrandLogo from "../../assests/images/kia_logo.png";
-import Profile from "../../assests/images/Profile Image.png";
 import Review from "../../components/reviews/Review";
 import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
 import { useParams } from "react-router";
@@ -97,9 +94,9 @@ const SearchBrand = () => {
         brandData &&
         <BrandInfo brand={brandData} />
       }
-      <div className="brandMain__writeReview">
+      {/* <div className="brandMain__writeReview">
         <WriteYourReviewComponent setPage = { setPage } brandId = {brandId}/>
-      </div>
+      </div> */}
 
       <div className="brandMain__reviews-container">
       

@@ -5,7 +5,7 @@ import { axios } from "../../../../axios/axiosInstance";
 import LoadingIndicator from '../../../../components/loadingIndicator/LoadingIndicator'
 import { uploadPhoto } from "../../../../helpers/uploadPhoto";
 import { clientActions } from "../../../../Redux/clientslice/clientSlice";
-const ProfileContent = ({user, setClientDetails}) => {
+const ProfileContent = ({user, setClientDetails, visitorIsUser}) => {
   const [isImageUploading, setIsImageUploading] = useState(false)
   const {client:User} = useSelector(state => state.client)
   const dispatch = useDispatch()
@@ -38,7 +38,7 @@ const ProfileContent = ({user, setClientDetails}) => {
   }
   
   useEffect(() => {
-    console.log(user)
+    console.log('user info: ',user)
   }, [user])
 
   return (
@@ -54,12 +54,16 @@ const ProfileContent = ({user, setClientDetails}) => {
                 <div className="profile__intro__displayImage__content__img">
                   <img src={user.profileImage} alt="profileasdasdsa"  />
                 </div>
-
-                <div className="profile__intro__displayImage__content__upload">
-                  <HiCamera className="profile__intro__displayImage__content__upload__icon"/>
-                  <p className="profile__intro__displayImage__content__upload__text">upload</p>
-                  <input ref={fileRef} type="file" accept="image/*" className="profile__intro__displayImage__content__upload__file" onChange={uploadphoto} />
-                </div>
+                {
+                  visitorIsUser ? 
+                    <div className="profile__intro__displayImage__content__upload">
+                      <HiCamera className="profile__intro__displayImage__content__upload__icon"/>
+                      <p className="profile__intro__displayImage__content__upload__text">upload</p>
+                      <input ref={fileRef} type="file" accept="image/*" className="profile__intro__displayImage__content__upload__file" onChange={uploadphoto} />
+                    </div>
+                    :
+                    null  
+                }
 
               </div>
               

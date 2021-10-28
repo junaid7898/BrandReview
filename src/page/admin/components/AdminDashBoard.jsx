@@ -8,6 +8,7 @@ import {AiFillCaretDown} from 'react-icons/ai'
 
 import Chart from '../../../components/charts/Chart'
 import Select from "react-select";
+import { axios } from '../../../axios/axiosInstance'
 
 const AdminDashBoard = () => {
 
@@ -27,20 +28,7 @@ const AdminDashBoard = () => {
     const [option1, setOption1] = useState(null)
     const [option2, setOption2] = useState(null)
     const [option3, setOption3] = useState(null)
-
-    const allReviews = [{name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'nadeem khan', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf asddd aaaaaaaa ddddd ffffff ddddddd dddddd ddddddd ddddddd  dddddd ddddd', date: '1/25/2021'},
-    {name: 'alam husain subsvardi shehnvari', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid abbasi', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},
-    {name: 'junaid', ratings: 1.5, comment: 'hello hello hello ehlloo hello hello hello hello ehlloodadf adfadf adfadf adfadf adfadfdf adfadfadf', date: '1/25/2021'},    
-]
-
+    const [settings, setSettings] = useState(null)
    const handleHideDashboardPhone = () => {
        setShowDashboardPhone(false)
    }
@@ -150,6 +138,102 @@ const AdminDashBoard = () => {
         alert(`${option1.value}, ${option2.value}, ${option3.value}`)
     }
 
+
+    useEffect(() => {
+        if(option1){
+            let newSettings
+            if(option1.value === "y"){
+                newSettings = {
+                    ...settings,
+                    reviewVerificationRequired : false
+                }
+            }
+            else{
+                newSettings = {
+                    ...settings,
+                    reviewVerificationRequired : true
+                }
+            }
+            console.log(settings)
+            setSettings({...newSettings})
+            axios.patch("/settings",{
+                ...newSettings
+            })
+            .then(() =>{
+                console.log("tyes")
+            })
+            .catch(err => {
+                console.log(err)
+            }) 
+        }
+    }, [option1])
+    useEffect(() => {
+        if(option2){
+            let newSettings;
+            if(option2.value === "y"){
+                newSettings = ({
+                    ...settings,
+                    emailVerificationRequired : true
+                })
+            }
+            else{
+                newSettings = ({
+                    ...settings,
+                    emailVerificationRequired : false
+                })
+            }
+            setSettings({...newSettings})
+            axios.patch("/settings",{
+                ...newSettings
+            })
+            .then(() =>{
+                console.log("tyes")
+            })
+            .catch(err => {
+                console.log(err)
+            }) 
+        }
+    }, [option2])
+    useEffect(() => {
+        console.log(option3)
+        if(option3){
+            let newSettings;
+            if(option3.value === "y"){
+                newSettings = ({
+                    ...settings,
+                    phoneVerificationRequired : true
+                })
+            }
+            else{
+                newSettings = ({
+                    ...settings,
+                    phoneVerificationRequired : false
+                })
+            }
+            setSettings(newSettings)
+            axios.patch("/settings",{
+                ...newSettings
+            })
+            .then(() =>{
+                console.log("tyes")
+            })
+            .catch(err => {
+                console.log(err)
+            }) 
+        }
+    }, [option3])
+
+    useEffect(() => {
+        axios.get('settings/')
+        .then(({data}) =>{
+            console.log(data.settings)
+            setSettings(data.settings)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }, [])
+
     return (
         <section >
             <div className = 'dashboard'>
@@ -198,43 +282,47 @@ const AdminDashBoard = () => {
                 showSettings ? 
                     <>
                         <div className="dashboard1__settings">
-                            <div className="dashboard1__settings__option1">
-                                <label htmlFor="reviewVerify">Allow Verify Review</label>
-                                <Select
-                                    id = 'reviewVerify'
-                                    value = {option1}
-                                    onChange = {setOption1}
-                                    options = {settingOptions1}
-                                    className = 'dashboard1__settings__option1__dropdown'
-                                    placeholder = 'Do you want brand to verify reviews?'    
-                                />
-                            </div>
+                            {
+                                settings &&
+                                <>
+                                    <div className="dashboard1__settings__option1">
+                                        <label htmlFor="reviewVerify">Allow Verify Review</label>
+                                        <Select
+                                            id = 'reviewVerify'
+                                            onChange = {setOption1}
+                                            options = {settingOptions1}
+                                            className = 'dashboard1__settings__option1__dropdown'
+                                            placeholder = {`Do you want Admin to verify reviews? (${!settings.reviewVerificationRequired ? "Yes" : "No"})`}   
+                                        />
+                                    </div>
 
-                            <div className="dashboard1__settings__option1">
-                                <label htmlFor="reviewVerify">Email Verification settings</label>
-                                <Select
-                                    id = 'reviewVerify'
-                                    value = {option2}
-                                    onChange = {setOption2}
-                                    options = {settingOptions2}
-                                    className = 'dashboard1__settings__option1__dropdown'
-                                    placeholder = 'Email verification must require to post review?'    
-                                />
-                            </div>
+                                    <div className="dashboard1__settings__option1">
+                                        <label htmlFor="reviewVerify">Email Verification settings</label>
+                                        <Select
+                                            id = 'reviewVerify'
+                                            value = {option2}
+                                            onChange = {setOption2}
+                                            options = {settingOptions2}
+                                            className = 'dashboard1__settings__option1__dropdown'
+                                            placeholder = {` Email verification must require to post review? (${!settings.emailVerificationRequired ? "Yes" : "No"})`}   
+                                        />
+                                    </div>
 
-                            <div className="dashboard1__settings__option1">
-                                <label htmlFor="reviewVerify">
-                                    Phone Verification settings
-                                </label>
-                                <Select
-                                    id = 'reviewVerify'
-                                    value = {option3}
-                                    options = {settingOptions3}
-                                    onChange = {setOption3}
-                                    className = 'dashboard1__settings__option1__dropdown'
-                                    placeholder = 'Phone verification must require to post review?'    
-                                />
-                            </div>
+                                    <div className="dashboard1__settings__option1">
+                                        <label htmlFor="reviewVerify">
+                                            Phone Verification settings
+                                        </label>
+                                        <Select
+                                            id = 'reviewVerify'
+                                            value = {option3}
+                                            options = {settingOptions3}
+                                            onChange = {setOption3}
+                                            className = 'dashboard1__settings__option1__dropdown'
+                                            placeholder = {` Phone verification must require to post review? (${!settings.phoneVerificationRequired ? "Yes" : "No"})`}
+                                        />
+                                    </div>
+                                </>
+                            }
 
                             <div className = 'dashboard1__settings__button' onClick = {handleAdminSettingsChange}>
                                 <h3>Ok</h3>

@@ -69,22 +69,16 @@ const WriteReview = () => {
     if(client){
       if(client.user){
         if(client.type.includes('user')){
-          if(client.user.isEmailVerified && client.user.isPhoneVerified){
-            if(ratings === 0){
-              return 'ratings must be greater than zero'
-            }
-            else if(brand){
-              return 'ok'
-            }
-            else if(!brand){
-              setBrand(null)
-              return 'please select a valid brand'
-            }
+          if(ratings === 0){
+            return 'ratings must be greater than zero'
           }
-          else{
-            return 'both email address and phone number needed to be verified....'
+          else if(brand){
+            return 'ok'
           }
-          
+          else if(!brand){
+            setBrand(null)
+            return 'please select a valid brand'
+          }
         }
       }
 

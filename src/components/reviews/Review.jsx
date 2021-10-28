@@ -14,6 +14,7 @@ import {TiTick} from 'react-icons/ti'
 import {FaRegSmile} from 'react-icons/fa'
 import {FcSettings} from 'react-icons/fc'
 import Button from "./Button";
+import ReactStars from "react-rating-stars-component";
 import {statusAction} from "../../Redux/statusSlice"
 const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandData}) => {
   const dispatch = useDispatch()
@@ -28,7 +29,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   const [page, setPage] = useState(0)
   const [isEditingReview, setIsEditingReview] = useState(false)
   const [clikedImage, setClickedImage] = useState(null)
-
+  const [rating, setRating] = useState(null)
   const handleCommentUser = () =>{
     setCommentIsSending(true)
     const reqObj = {
@@ -407,7 +408,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     // }))
     setIsEditingReview(false)
     const changes = {
-      message: reviewChanges.current.message,
+      message: reviewChanges.current.text,
       ratingCount: reviewChanges.current.rating
     }
     const updatedReview = {
@@ -437,6 +438,11 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     }
   }
   
+  useEffect(() => {
+    if(rating){
+      reviewChanges.current.rating = rating
+    }
+  }, [rating])
 
   return (
     review ?
@@ -453,7 +459,13 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
                 isEditingReview
                 ?
                   <div>
-                    star library
+                    <ReactStars
+                      count = {5}
+                      onChange = {setRating}
+                      size = {30}  
+                      isHalf = {true}
+                      activeColor="#ffd700"
+                    />
                   </div>
                 :
                 <div className="reviewComponent__profile__intro__name__rating">
@@ -505,7 +517,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         {
           isEditingReview 
           ?
-            <textarea id="edit_textarea" onChange={ (e) => reviewChanges.current.message = e.target.value} className="reviewComponent__text__edit" defaultValue={review.message} placeholder="Enter your changes here" rows={4} name="" id="" />
+            <textarea id="edit_textarea" onChange={ (e) => reviewChanges.current.text = e.target.value} className="reviewComponent__text__edit" defaultValue={review.message} placeholder="Enter your changes here" rows={4} name="" id="" />
           :
             <p className="reviewComponent__text__para">{review.message}</p> 
         }

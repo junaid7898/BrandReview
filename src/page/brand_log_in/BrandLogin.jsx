@@ -5,7 +5,9 @@ import BrandLoginInputs from "./components/BrandLoginInputs";
 const BrandLogin = () => {
   return (
     <div className = 'brand__login'>
+    <div className="brand__login__component">
       <RegistrationPageComponent />
+    </div>
       <BrandLoginInputs />         
     </div>
   );

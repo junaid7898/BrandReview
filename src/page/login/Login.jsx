@@ -5,7 +5,9 @@ import LoginInputs from './components/LoginInputs'
 const Login = () => {
     return (
         <div className = 'login'>
-            <RegistrationPageComponent/>
+            <div className="login__component">
+                <RegistrationPageComponent/>
+            </div>
             <LoginInputs/>
         </div>
     )

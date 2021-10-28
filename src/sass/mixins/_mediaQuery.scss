@@ -1,4 +1,9 @@
 @mixin respond($breakpoint) {
+    @if $breakpoint == big-tab {
+      @media (max-width: 1000px) {
+        @content;
+      } //900px
+    }
     @if $breakpoint == tab {
       @media (max-width: 900px) {
         @content;

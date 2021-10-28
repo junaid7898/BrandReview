@@ -93,7 +93,6 @@ const BrandReviews = ({ brandId }) => {
             <th>Ratings</th>
             <th>Review</th>
             <th>Date</th>
-            <th></th>
           </tr>
           {reviewData &&
             reviewData.map((item) => {
@@ -148,28 +147,6 @@ const BrandReviews = ({ brandId }) => {
                       </div>
                     </td>
                     <td>{new Date(item.createdOn).toDateString()}</td>
-
-                    
-                        <td className="dashboard__panel__reports__button">
-                        {!item.isVerified ? (
-                          <button onClick={() => handleBlacklist(item.id)}>
-                            Resolve
-                            {isBlackListing.includes(item.id) && (
-                              <LoadingIndicator />
-                            )}
-                          </button>
-                        ) : (
-                          <button onClick={() => handleRemoveBlacklist(item.id)}>
-                            Revert
-                            {
-                              isBlackListing.includes(item.id) && (
-                              <LoadingIndicator />
-                            )
-                            }
-                          </button>
-                        )}
-                      </td>
-                    
                   </tr>
                 </>
               );

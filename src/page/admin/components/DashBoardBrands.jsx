@@ -6,6 +6,7 @@ import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndica
 import ImageViewer from '../../../components/image_viewer/ImageViewer'
 import { statusAction } from '../../../Redux/statusSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 function DashBoardBrands() {
 
     const [page, setPage] = useState(1)
@@ -29,7 +30,6 @@ function DashBoardBrands() {
         }
         axios.post('/brand/query', {filters, options})
         .then(({data}) => {
-            console.log(data)
             setBrandData(data.results)
             setTotalPages(data.totalPages)
         })
@@ -97,17 +97,21 @@ function DashBoardBrands() {
 
     return (
         <div className="dashboard__brands">
-            <FilterComponent tab = "brand" setFilters = {setFilters} setSortOptions = {setSort}/>
+            <div className="dashboard__brands__filter">
+                <FilterComponent tab = "brand" setFilters = {setFilters} setSortOptions = {setSort}/>
+            </div>
             <div className="dashboard__brands__data">
             {
                 brandData &&
                 brandData.map(
                     brand => (
-                        <div className="dashboard__brands__data__brands">
+                        <div className="dashboard__brands__data__brand">
 
                             <div className="dashboard__brands__data__brand__intro">
                                 <img src = {brand.logo} onClick = {() => {setShowImage(brand.logo)}}/>
-                                <h5>{brand.name}</h5>
+                                <Link to = {`brand/${brand.id}`}>
+                                    <h5 className = 'dashboard__brands__data__brand__intro__name'>{brand.name}</h5>
+                                </Link>
                             </div>
 
                             <div className="dashboard__brands__data__brand__details">
@@ -119,8 +123,8 @@ function DashBoardBrands() {
                                 </div>
 
                                 <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__email">
-                                    <label>Average Rating</label>
-                                    <p>{69.6}</p>
+                                    <label>Reviews Count</label>
+                                    <p>{brand.reviews.length > 0 ? brand.reviews.length: 'No Reviews Yet' }</p>
                                 </div>
 
                                 <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__address">

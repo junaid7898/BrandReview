@@ -65,6 +65,16 @@
     color: #35C9CE;
 }
 
+.admin{
+    &__panel{
+    }
+    &__dashboard{
+        width: 1100px;
+        max-width: 100%;
+        margin: auto;
+    }
+}
+
 @media(max-width: 700px){
     .panel__div{
         justify-content: center;

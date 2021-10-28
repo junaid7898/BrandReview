@@ -28,6 +28,7 @@ import PrivateRoute from "./PrivateRoute";
 import { statusAction } from "./Redux/statusSlice";
 import { brandAction } from "./Redux/brandInfoSlice/brandInfoSlice";
 import Notification from "./components/notification/Notification";
+import ForgotPasswordPage from "./page/forgotPasswordPage/ForgotPasswordPage";
 
 function App() {
   
@@ -213,6 +214,7 @@ function App() {
             <Route path = '/phoneverification' component = {PhoneVerification}/>
             <Route path = '/verify-email/:token/:type' component = {EmailVerificationPage}/>  
             <Route path = '/termsandcondition' component = {TermsAndCondition}/>
+            <Route path = '/forgot-password' component = {ForgotPasswordPage}/>
             <Route path = '/*' component = {Error404Page}/>
         </Switch>
         :

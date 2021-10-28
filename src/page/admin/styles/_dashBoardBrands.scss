@@ -7,7 +7,8 @@
         width: 100%;
         text-align: center;
         margin: 10px 0px;
-        border-bottom: 1px solid rgb(240, 240, 240);
+        padding: 5px 0px;
+        border-bottom: 1px solid rgb(109, 109, 109);
         &__item{
             flex: 1 1 20%;
         }
@@ -28,11 +29,12 @@
                     transform: scale(1.1);
                 }
             }  
-            & h5{
+            &__name{
                 color: $onSurface-primary;
                 font-weight: 500;
                 font-size: 20px;
                 line-height: 30px;
+                text-transform: capitalize;
             }
         }
         &__details{
@@ -41,6 +43,9 @@
             align-items: flex-start;
             justify-content: space-between;
             width: 100%;
+            @include respond(phone){
+                flex-direction: column;
+            }
             &__button{
                 & button{
                     background-color: tomato;
@@ -91,5 +96,14 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
+    }
+}
+
+.dashboard__brands__filter{
+    margin: 20px 0px;
+    width: 30%;
+    margin-left: auto;
+    @include respond(phone){
+        width: 100%;
     }
 }

@@ -3,9 +3,13 @@ import AdminDashBoard from './components/AdminDashBoard'
 import AdminPanel from './components/AdminPanel'
 const Admin = () => {
     return (
-        <section>
-            <AdminPanel/>
-            <AdminDashBoard/>
+        <section className = 'admin'>
+            <div className="admin__panel">
+                <AdminPanel/>
+            </div>
+            <div className="admin__dashboard">
+                <AdminDashBoard/>
+            </div>
         </section>
     )
 }

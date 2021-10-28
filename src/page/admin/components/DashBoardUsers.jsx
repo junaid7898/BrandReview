@@ -8,6 +8,7 @@ import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndica
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import {statusAction} from "../../../Redux/statusSlice"
+import { Link } from 'react-router-dom'
 const DashBoardUsers = () => {
     const [showImage, setShowImage] = useState(null)
     const {client} = useSelector(state => state.client)
@@ -99,7 +100,9 @@ const DashBoardUsers = () => {
 
     return (
         <div className="dashboard__users">
-            <FilterComponent tab = "user" setFilters = {setFilters} setSortOptions = {setSort}/>
+            <div className="dashboard__users__filter-component">
+                <FilterComponent tab = "user" setFilters = {setFilters} setSortOptions = {setSort}/>
+            </div>
             <div className="dashboard__users__data">
             {
                 userData &&
@@ -109,7 +112,9 @@ const DashBoardUsers = () => {
 
                             <div className="dashboard__users__data__user__intro">
                                 <img src = {user.profileImage} onClick = {() => {setShowImage(user.profileImage)}}/>
-                                <h5>{user.name}</h5>
+                                <Link to = {`user/${user.id}`}>
+                                    <h5 className = 'dashboard__users__data__user__intro__name'>{user.name}</h5>
+                                </Link>
                             </div>
 
                             <div className="dashboard__users__data__user__details">

@@ -462,20 +462,22 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
                 </div>
               }
             </div>
-            {
-              review.isResolved &&
-              <div className="reviewComponent__profile__intro__review-label">
-                  {/* TODO wether review is a complaint/thanked/resolved */}
-                  <p>Resolved</p>
-              </div>
-            }
-            {
-              review.isThanked &&
-              <div className="reviewComponent__profile__intro__thank-label">
-                  {/* TODO wether review is a complaint/thanked/resolved */}
-                  <p>Thanked</p>
-              </div>
-            }
+            <div className="reviewComponent__profile__intro__status">
+              {
+                review.isResolved &&
+                <div className="reviewComponent__profile__intro__status__review-label">
+                    {/* TODO wether review is a complaint/thanked/resolved */}
+                    <p>Resolved</p>
+                </div>
+              }
+              {
+                review.isThanked &&
+                <div className="reviewComponent__profile__intro__status__thank-label">
+                    {/* TODO wether review is a complaint/thanked/resolved */}
+                    <p>Thanked</p>
+                </div>
+              }
+            </div>
           </div>
 
           <div className="reviewComponent__profile__pics">

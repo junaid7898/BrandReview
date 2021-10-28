@@ -22,6 +22,7 @@
             align-items: center;
             justify-content: space-around;
             padding: 10px 20px;
+            
             & img{
                 width: 50px;
                 height: 50px;
@@ -54,23 +55,30 @@
                     }
                 }    
             }
-            &__review-label, &__thank-label{
-                background-color: $primary;
-                font-weight: 600;
-                border-radius: 10px;
-                color: white;
-                align-self: flex-start;
-                margin-top: 5px;
-                pointer-events: none;
-                & p{
-                    padding: 5px 15px;
-                    padding-bottom: 7px;
+            &__status{
+                display: flex;
+                flex-flow: row wrap;
+                &__review-label, &__thank-label{
+                    background-color: $primary;
+                    font-weight: 600;
+                    border-radius: 10px;
+                    color: white;
+                    align-self: flex-start;
+                    margin-top: 5px;
+                    pointer-events: none;
+                    & p{
+                        padding: 5px 15px;
+                        padding-bottom: 7px;
+                    }
                 }
+                &__thank-label{
+                    background-color: rgb(81, 255, 0);
+                    margin-left: 10px;
+                    @include respond(phone){
+                        margin-left: 0px;
+                    }
+                }  
             }
-            &__thank-label{
-                background-color: rgb(81, 255, 0);
-                margin-left: 10px;
-            }  
 
         }
         &__pics{

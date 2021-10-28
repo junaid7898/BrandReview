@@ -68,6 +68,16 @@
       line-height: 110%;
       color: #357bce;
     }
+
+    &__forgot-password{
+      cursor: pointer;
+      & p{
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 110%;
+        color: $primary;
+      }
+    }
   }
 
   &__title {
@@ -150,7 +160,7 @@
       rgba(82, 36, 167, 0.3) 0px 1px 3px -1px;
       cursor: pointer;
     &:hover{
-      opacity: 0.9;
+      background-color: $primaryHover;
     }
   }
 
@@ -173,7 +183,7 @@
       width: 49%;
 
       position: relative;
-
+      transition: 300ms;
       &:hover{
         transform:scale(0.9);
       }

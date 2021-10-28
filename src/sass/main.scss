@@ -103,6 +103,9 @@
 
 @import '../components/multi_date_picker/style/multiDatePicker';
 
+//ANCHOR forgot password component
+@import '../components/forgot_password/style/forgotPassword';
+
 //ANCHOR filter component
 
 @import '../components/filter_component/style/filterComponent';
@@ -124,6 +127,9 @@
 
     //!SECTION otp verification component
     @import '../components/verify-otp/styles/verifyOTP';
+
+    //SECTION empty data component
+    @import '../components/EmptyDataComponent/style/emptyData';
 //!SECTION
 
 /* -------------------------------------------------------------------------- */
@@ -175,6 +181,7 @@
     @import "../page/BrandPanel/styles/brandDetail";
     @import '../page/BrandPanel/styles/brandPanel';
     @import '../page/BrandPanel/styles/updateProfile';
+    @import '../page/BrandPanel/styles/brandChart';
     //!SECTION =========
 
 
@@ -184,6 +191,7 @@
     @import "../page/admin/styles/dashboardLink";
     @import '../page/admin/styles/dashBoardUsers';
     @import '../page/admin/styles/dashBoardBrands';
+    @import '../page/admin/styles/dashBoardSettings';
     //!SECTION =========
 
 
@@ -232,6 +240,10 @@
 
     //SECTION  email-verification page
     @import '../page/email_verification_page/styles/emailVerificationPage';
+    
+
+    //SECTION forgot-passwrod page
+    @import '../page/forgotPasswordPage/style/forgotPasswordPage';
     //!SECTION =========
 
 //!SECTION

@@ -107,7 +107,7 @@ const SearchBrand = () => {
           {
             reviewData.length > 0 && areReviewsLoading ?
             reviewData.map(review =>{
-            return <Review review = {review} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
+            return <Review review = {review} brandData = {brandData} setBrandData = {setBrandData} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
           })
           :
             <LoadingIndicator />

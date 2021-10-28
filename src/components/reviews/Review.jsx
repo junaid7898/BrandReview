@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Star from "../../assests/Star"
 import ImageThumbnail from "../image_thumbnail/ImageThumbnail";
@@ -11,9 +11,12 @@ import {axios} from "../../axios/axiosInstance";
 import {clientActions} from "../../Redux/clientslice/clientSlice"
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
 import {TiTick} from 'react-icons/ti'
+import {FaRegSmile} from 'react-icons/fa'
+import {FcSettings} from 'react-icons/fc'
 import Button from "./Button";
-const Review = ({review, setUpdatedReview, commentsAllowed}) => {
-  const [clikedImage, setClickedImage] = useState(null)
+import {statusAction} from "../../Redux/statusSlice"
+const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandData}) => {
+  const dispatch = useDispatch()
   const {client} = useSelector(state => state.client) 
   const [showComments, setShowComments] = useState(false)
   const [commentText, setCommentText] = useState('')
@@ -23,7 +26,9 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
   const [moreCommentsLoading, setMoreCommentsLoading] = useState(false)
   const [totalComments, setTotalComments] = useState(0)
   const [page, setPage] = useState(0)
-  const dispatch = useDispatch()
+  const [isEditingReview, setIsEditingReview] = useState(false)
+  const [clikedImage, setClickedImage] = useState(null)
+
   const handleCommentUser = () =>{
     setCommentIsSending(true)
     const reqObj = {
@@ -49,6 +54,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
       setCommentIsSending(false)
     })
   }
+
   const handleCommentBrand = () =>{
     setCommentIsSending(true)
     const reqObj = {
@@ -78,8 +84,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
     })
   }
  
-  
-
   const handleLike = () =>{
     let updatedUser = null
     let updatedReview = null
@@ -136,7 +140,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
 
   }
 
-
   const handleFollow = () =>{
     let updatedUser = null
     let updatedReview = null
@@ -186,7 +189,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
 
   }
   
-
   const handleThank = () => {
     let updatedUser = null
     let updatedReview = null
@@ -234,38 +236,53 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
   }
 
   const handleResolve = () => {
-    let updatedBrand = null
+    let updatedUser = null
     let updatedReview = null
-    if(client.brand.resolvedReviews.find( id => id === review.id )){
-      updatedBrand = dispatch(clientActions.setClient({
+    let updateBrand = brandData
+    if(client.user.resolvedReviews.find( id => id === review.id )){
+      updatedUser = dispatch(clientActions.setClient({
         ...client,
-        brand:{
-          ...client.brand,
-          resolvedReviews:[...client.brand.resolvedReviews.filter(id => id !== review.id)]
+        user:{
+          ...client.user,
+          resolvedReviews:[...client.user.resolvedReviews.filter(id => id !== review.id)]
         }
       }))
       updatedReview = {
         ...review,
         isResolved: false
       }
+      console.log(review)
+      updateBrand = {
+        ...brandData,
+        resolveCount: brandData.resolveCount - 1
+      }
     }
     else{
-      updatedBrand = dispatch(clientActions.setClient({
+      updatedUser = dispatch(clientActions.setClient({
         ...client,
-        brand:{
-          ...client.brand,
-          resolvedReviews:[...client.brand.resolvedReviews, review.id]
+        user:{
+          ...client.user,
+          resolvedReviews:[...client.user.resolvedReviews, review.id]
         }
       }))
       updatedReview = {
         ...review,
         isResolved: true
       }
+      updateBrand = {
+        ...brandData,
+        resolveCount: brandData.resolveCount +  1
+      }
     }
-    setUpdatedReview(updatedReview)
+    setUpdatedReview({
+      ...updatedReview,
+      brand: updateBrand
+    })
+    setBrandData(updateBrand)
     axios.post(`/review/resolve/${review.id}`, {
-      brand: updatedBrand.payload.brand,
-      review: updatedReview
+      user: updatedUser.payload.user,
+      review: updatedReview,
+      brand: updateBrand
     },{
       headers:{
         'role' : client.type,
@@ -346,18 +363,12 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
         likeCount: comment.likeCount + 1
       }
     }
-
-
     setComments([...comments.map(item =>{
       if(item.id === comment.id){
         return updatedComment
       }
       return item
     })])
-
-
-
-
     axios.post('/comment/like' ,{
       user: updatedUser.payload.user,
       comment: updatedComment
@@ -374,7 +385,59 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
     })
   }
 
+  const reviewChanges = useRef({
+    text: "",
+    rating: null
+  })
+
+
+  useEffect(() =>{
+    if(review){
+      reviewChanges.current={
+        text: review.message,
+        rating: review.ratingCount
+      }
+    }
+  },[review])
+
+  const handleConfirmChanges = () =>{
+    // dispatch(statusAction.setNotification({
+    //   message: "updating review",
+    //   type:"loading"
+    // }))
+    setIsEditingReview(false)
+    const changes = {
+      message: reviewChanges.current.message,
+      ratingCount: reviewChanges.current.rating
+    }
+    const updatedReview = {
+      ...review,
+      ...changes
+    }
+
+    setUpdatedReview(updatedReview)
+
+    axios.patch(`review/${review.id}`,{...changes})
+    .then(({data}) =>{
+      console.log(data)
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+
+
+
+  }
+
+  const handleCancelChanges = () =>{
+    setIsEditingReview(false)
+    reviewChanges.current = {
+      message: "",
+      rating: null
+    }
+  }
   
+
   return (
     review ?
     <div className="reviewComponent-container">
@@ -386,11 +449,18 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
             <img src={review.user.profileImage} alt="profile Img" />
             <div className="reviewComponent__profile__intro__name">
               <Link to={`/user/${review.user.id}`}>{review.user.name}</Link>
-              <div className="reviewComponent__profile__intro__name__rating">
-                {/* TODO star icon and rating */}
+              {
+                isEditingReview
+                ?
+                  <div>
+                    star library
+                  </div>
+                :
+                <div className="reviewComponent__profile__intro__name__rating">
                   <Star starLines="#357BCE" starGradient1="#357BCE" starGradiet2="#357BCE"/>
                   <h4>{review.ratingCount}</h4>
-              </div>
+                </div>
+              }
             </div>
             {
               review.isResolved &&
@@ -430,8 +500,21 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
         </div>
 
         <div className="reviewComponent__text">
-            <p>{review.message}</p>
+        {
+          isEditingReview 
+          ?
+            <textarea id="edit_textarea" onChange={ (e) => reviewChanges.current.message = e.target.value} className="reviewComponent__text__edit" defaultValue={review.message} placeholder="Enter your changes here" rows={4} name="" id="" />
+          :
+            <p className="reviewComponent__text__para">{review.message}</p> 
+        }
         </div>
+        {
+          isEditingReview &&
+          <div className="reviewComponent__text__edit__buttons">
+            <button onClick={() => handleConfirmChanges()}>Confirm</button>
+            <button onClick={() => handleCancelChanges()}>Cancel</button>
+          </div>
+        }
         <div className="reviewComponent__buttons">
           <div className="reviewComponent__buttons__likeCount">
             <p>Popularity: {review.likedByUsers.length}</p>
@@ -465,31 +548,11 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
                       null
                   }  
                 </Button>
-                <Button className="reviewComponent__buttons__button " onClick = {handleThank} client={client} type={"user"}>
-                {
-                  review && client.type.includes("brand")
-                  ?
-                    review.isResolved
-                    ?
-                      (
-                        review.isThanked ?
-                        
-                        <TiTick  className = 'reviewComponent__buttons__button-thanked' />
-                        :
-                        <TiTick  className = 'reviewComponent__buttons__button-thank' />
-                      )
-                    :
-                      null
-                      
-                  :
-                      null
-                }
-                </Button>
-                <Button onClick={handleResolve} className="reviewComponent__buttons__button" client={client} type={"brand"}>
+                <Button onClick={handleResolve} className="reviewComponent__buttons__button" client={client} type={"user"}>
                   {
-                    client.type.includes("brand") && !review.isThanked
+                    client.type.includes("user") && !review.isThanked && client.user.id === review.user.id
                     ?
-                      client.brand.resolvedReviews.includes(review.id)
+                      client.user.resolvedReviews.includes(review.id)
                       ?
                         <TiTick  className="reviewComponent__buttons__button-resolved" />
                       :
@@ -498,11 +561,48 @@ const Review = ({review, setUpdatedReview, commentsAllowed}) => {
                       null
                   }  
                 </Button>
+                <Button className="reviewComponent__buttons__button " onClick = {handleThank} client={client} type={"user"}>
+                {
+                  (review && client.type.includes("user")  && client.user.id === review.user.id) 
+                  ?
+                    review.isResolved
+                    ?
+                      review.isThanked 
+                      ?
+                        <FaRegSmile  className = 'reviewComponent__buttons__button-thanked' />
+                      :
+                        <FaRegSmile  className = 'reviewComponent__buttons__button-thank' />
+                    :
+                      null
+                  :
+                    null
+                }
+                </Button>
               </>
               :
                 null
             }
             
+        </div>
+        <div className="reviewComponent__edit" onClick={() => setIsEditingReview(!isEditingReview)}>
+        {
+          client ?
+            (review && client.type.includes("user"))
+            ?
+              review.user.id === client.user.id
+              ?
+                isEditingReview 
+                ?
+                  <FcSettings  className = 'reviewComponent__edit-editing' />
+                :
+                  <FcSettings  className = 'reviewComponent__edit-edit' />
+              :
+                null
+                
+            :
+              null
+          : null
+        }
         </div>
       </div>
       

@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { useRef, useState, useEffect } from "react";
+import {axios} from "../../axios/axiosInstance";
+import {default as Ax} from 'axios'
+import React, { useRef, useState } from "react";
 import ImagePreview from "../../components/image_preview/ImagePreview"
 import {getImageDetails} from "../../helpers/getImageDetails";
 import { useHistory } from "react-router";
-import Star from "../../assests/Star";
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 import { useDispatch, useSelector } from "react-redux";
 import { statusAction } from "../../Redux/statusSlice";
@@ -30,7 +30,6 @@ const WriteReview = () => {
 
   const {client} = useSelector(state => state.client)
   const {brands} = useSelector(state => state.brands)
-  const [isEmailVerified, setIsEmailVerified] = useState(false)
 
   
 
@@ -116,7 +115,7 @@ const WriteReview = () => {
     }
 
     let data;
-    const g = await axios.post('http://localhost:4000/v1/review/', {review, imageDetails},{
+    const g = await axios.post('/review/', {review, imageDetails},{
       headers:{
         "authorization" : `bearer ${client.tokens.access.token}`,
         "role" : Object.keys(client)[0]
@@ -155,7 +154,7 @@ const WriteReview = () => {
 
 
         
-        axios.all(data.imageArray.map( (_, index) => {
+        Ax.all(data.imageArray.map( (_, index) => {
           dispatch(statusAction.setNotification({
             message: 'publishing selected images......',
             type: "loading"
@@ -332,7 +331,7 @@ const WriteReview = () => {
                 onClick = { (e) => {e.target.value = null}}
               />
             </div>
-            <button type = 'submit' className="review__content__publishButton" disabled = {isEmailVerified} >
+            <button type = 'submit' className="review__content__publishButton" >
               publish
               {
                 isPublishing &&

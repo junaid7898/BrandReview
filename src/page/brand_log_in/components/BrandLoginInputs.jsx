@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import {axios} from "../../../axios/axiosInstance";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 
@@ -16,7 +16,7 @@ const BrandLoginInputs = () => {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [forgotPassword, setForgotPassword] = useState(false)
-
+  const [isForgotPasswordSending, setIsForgotPasswordSending] = useState(false) 
   const [isLoggingIn, setIsLoggingIn] = useState({
     email: false,
     google: false,
@@ -28,7 +28,7 @@ const BrandLoginInputs = () => {
   
     const onSuccess = async({profileObj}) =>{
       console.log(profileObj)  
-      const {data:user} = await axios.post("http://localhost:4000/v1/auth/brand/login/google",{
+      const {data:user} = await axios.post("/auth/brand/login/google",{
           user:{
             name:profileObj.name,
             password:profileObj.googleId,
@@ -68,7 +68,7 @@ const BrandLoginInputs = () => {
       password: password,
     };
       axios
-        .post("http://localhost:4000/v1/auth/brand/login", req)
+        .post("/auth/brand/login", req)
         .then(({data}) => {
           dispatch(statusAction.setNotification({
             message: "Logged in successfully",
@@ -96,7 +96,27 @@ const BrandLoginInputs = () => {
 //ANCHOR here handle forgot password
   const handleForgotPassword = (emailAddress) => {
     //emailAddress contains the email
-    alert(`forgot password with ${emailAddress}...`)  
+    setIsForgotPasswordSending(true)
+    axios.post('/auth/brand/forgot-password/',{
+      email: emailAddress,
+      type: "brand"
+    })
+    .then((_) =>{
+      dispatch(statusAction.setNotification({
+        message: `Reset Email Send to ${emailAddress}`,
+        type: "success"
+      }))
+      setIsForgotPasswordSending(false)
+      setForgotPassword(false)
+    })
+    .catch(err =>{
+      console.log(err)
+      setIsForgotPasswordSending(false)
+      dispatch(statusAction.setNotification({
+        message: err.response.data.message,
+        type: "error"
+      }))
+    })
   }
 
   
@@ -158,7 +178,7 @@ const BrandLoginInputs = () => {
         {
           forgotPassword ? 
             <div className="login__form__inputs__after__forgot-component">
-              <ForgotPassword onCancel = {setForgotPassword} onSubmit = {(emailAddress) => handleForgotPassword(emailAddress)}/>
+              <ForgotPassword isSending={isForgotPasswordSending} onCancel = {setForgotPassword} onSubmit = {(emailAddress) => handleForgotPassword(emailAddress)}/>
             </div>
           :
             null

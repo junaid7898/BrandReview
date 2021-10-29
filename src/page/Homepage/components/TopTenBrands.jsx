@@ -1,9 +1,4 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
-import BeatsLogo from '../../../assests/images/beats_logo.png'
-import FirstPosition from '../../../assests/images/1st.png'
-import SecontPosition from '../../../assests/images/2nd.png'
-import ThirdPosition from '../../../assests/images/3rd.png'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
 function TopTenBrands() {

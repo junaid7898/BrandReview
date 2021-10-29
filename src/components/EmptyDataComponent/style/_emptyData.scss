@@ -1,11 +1,19 @@
 .warning{
     &__value{
         width: 200px;
-        color: red;
-        text-align: left;
+        color: $primary;
+        font-size: 12px;
+        font-weight: 300;
+        text-align: center;
         width: 100%;
+        max-width: 100%;
         padding: 10px;
         margin: 30px 10px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        text-transform: capitalize;
+        @include respond(phone){
+            width: 80%;
+            font-size: 10px;
+        }
     }
 }

@@ -1,4 +1,4 @@
-import axios from "axios"
+import {axios} from "../axios/axiosInstance"
 
 
 
@@ -31,7 +31,7 @@ export const uploadMultiPhotos = async(review, user, images) =>{
                 type: images[0].type
             }
         
-            const {data: uploadConfig} = await axios.post('http://localhost:4000/v1/aws/review/',{user, file})
+            const {data: uploadConfig} = await axios.post('/aws/review/',{user, file})
             await axios.put(uploadConfig.url, images[0], {
                 headers:{
                 'Content-Type' : file.type

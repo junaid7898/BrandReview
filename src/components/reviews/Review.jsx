@@ -239,7 +239,13 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   const handleResolve = () => {
     let updatedUser = null
     let updatedReview = null
-    let updateBrand = brandData
+    let updatedBrand = null
+    if(brandData){
+      updatedBrand = brandData
+    }
+    else{
+      updatedBrand = review.brand
+    }
     if(client.user.resolvedReviews.find( id => id === review.id )){
       updatedUser = dispatch(clientActions.setClient({
         ...client,
@@ -253,9 +259,9 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         isResolved: false
       }
       console.log(review)
-      updateBrand = {
-        ...brandData,
-        resolveCount: brandData.resolveCount - 1
+      updatedBrand = {
+        ...updatedBrand,
+        resolveCount: updatedBrand.resolveCount - 1
       }
     }
     else{
@@ -270,20 +276,22 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         ...review,
         isResolved: true
       }
-      updateBrand = {
-        ...brandData,
-        resolveCount: brandData.resolveCount +  1
+      updatedBrand = {
+        ...updatedBrand,
+        resolveCount: updatedBrand.resolveCount +  1
       }
     }
     setUpdatedReview({
       ...updatedReview,
-      brand: updateBrand
+      brand: updatedBrand
     })
-    setBrandData(updateBrand)
+    if(brandData){
+      setBrandData(updatedBrand)
+    }
     axios.post(`/review/resolve/${review.id}`, {
       user: updatedUser.payload.user,
       review: updatedReview,
-      brand: updateBrand
+      brand: updatedBrand
     },{
       headers:{
         'role' : client.type,

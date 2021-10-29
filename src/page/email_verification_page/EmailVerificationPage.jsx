@@ -1,7 +1,7 @@
 import React, { useEffect, useRef }  from 'react'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router'
-import axios from 'axios'
+import {axios} from '../../axios/axiosInstance'
 import { useDispatch, useSelector } from 'react-redux'
 import { clientActions } from '../../Redux/clientslice/clientSlice'
 const EmailVerificationPage = () => {
@@ -15,7 +15,7 @@ const EmailVerificationPage = () => {
         const fetcher = async(token, type) => {
             if(type === "user"){
                 console.log("req sent for user===============")
-                axios.post(`http://localhost:4000/v1/auth/user/verify-email?token=${token}`)
+                axios.post(`/auth/user/verify-email?token=${token}`)
                 .then(({data}) =>{
                     if(client){
                         dispatch(clientActions.setClient({
@@ -30,7 +30,7 @@ const EmailVerificationPage = () => {
             }
             else if(type === "brand"){
                 console.log("req sent for brand===============")
-                axios.post(`http://localhost:4000/v1/auth/brand/verify-email?token=${token}`)
+                axios.post(`/auth/brand/verify-email?token=${token}`)
                 .then(({data}) =>{
                     console.log(data)
                     if(client){

@@ -11,7 +11,7 @@
     padding: 10px 14px;
     &__img-ratings{
         display: flex;
-        flex-direction: row;
+        flex-flow: row wrap;
         align-items: center;
         justify-content: space-around;
         flex: 1;

@@ -120,7 +120,7 @@ const BrandDetail = ({item, brandId}) => {
 
    const handleOtpVerification = () => {
     setIsSendingOtp(true)
-    axios.post('/auth/brand/send-verification-sms', {item}).then(() => {
+    axios.post('/auth/brand/send-verification-sms', {brand: item}).then(() => {
       setIsSendingOtp(false)
       setVerifyPhone(true)
     }

@@ -3,11 +3,11 @@ import {ImCross} from 'react-icons/im'
 import { statusAction } from '../../Redux/statusSlice';
 import { useDispatch } from "react-redux";
 import { GiSverdIFjell } from 'react-icons/gi';
+import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
 
-const ForgotPassword = ({onCancel, onSubmit}) => {
+const ForgotPassword = ({onCancel, onSubmit, isSending}) => {
     const [emailAddress, setEmailAddress] = useState(null)
     const dispatch = useDispatch()
-
     const validateEmail = () => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(emailAddress).toLowerCase());
@@ -44,11 +44,15 @@ const ForgotPassword = ({onCancel, onSubmit}) => {
                         onChange = {e => setEmailAddress(e.target.value)}
                     />
                 </div>
-                <div className="forgot__password__container__button" onClick = {() => submitEmail(emailAddress)}>
+                <button disabled={isSending} className="forgot__password__container__button" onClick = {() => submitEmail(emailAddress)}>
                     <h3> Forgot Password </h3>
-                </div>
+                    {
+                        isSending &&
+                        <LoadingIndicator />
+                    }
+                </button>
                 <div className="forgot__password__container__icon" onClick = {() => onCancel(false)}>
-                    <ImCross size = {24} color = 'white'/>
+                    <ImCross className="forgot__password__container__icon__svg"/>
                 </div>
             </div>
         </div>

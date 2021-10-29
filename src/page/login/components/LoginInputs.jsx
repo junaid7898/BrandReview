@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import GoogleIcon from "../../../assests/icons/googleIcon.png";
 import FacebookIcon from "../../../assests/icons/facebookIcon.png";
-import axios from "axios";
+import {axios} from "../../../axios/axiosInstance";
 import { useDispatch } from "react-redux";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
 import {useGoogleLogin} from 'react-google-login'
@@ -28,7 +28,7 @@ const LoginInputs = () => {
   
     const onSuccess = async({profileObj}) =>{
       console.log(profileObj)  
-      const {data:user} = await axios.post("http://localhost:4000/v1/auth/user/login/google",{
+      const {data:user} = await axios.post("/auth/user/login/google",{
           user:{
             name:profileObj.name,
             password:profileObj.googleId,
@@ -70,7 +70,7 @@ const LoginInputs = () => {
     try {
       setIsLoggingIn({...isLoggingIn, email: true})
         axios.post(
-        "http://localhost:4000/v1/auth/user/login",
+        "/auth/user/login",
         req
         ).then(res => {
           dispatch(statusAction.setNotification({
@@ -102,7 +102,17 @@ const LoginInputs = () => {
   //ANCHOR handle forgot password here
   const handleForgotPassword = (emailAddress) => {
     //emailAddress contains the email
-    alert(`forgot password with ${emailAddress}...`)  
+    axios.post('/auth/user/forgot-password/',{
+      email: emailAddress,
+      type: "user"
+    })
+    .then((_) =>{
+      console.log("success")
+    })
+    .catch(err =>{
+      console.log(err)
+    })
+    alert(`forgot password with ${emailAddress}...`)
   }
 
   return (

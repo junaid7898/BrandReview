@@ -134,6 +134,9 @@
                         color: #357bce;
                         border-color: #357bce;
                     }
+                    @include respond(phone){
+                        margin-bottom: 2px;
+                    }
                 }
                 & button:last-child{
                     background-color: white;
@@ -377,6 +380,10 @@
         aspect-ratio: 1;
         &:hover{
             transform: rotate(30deg);
+        }
+        @include respond(phone){
+            top: 0;
+            right: 0;
         }
     }
 }

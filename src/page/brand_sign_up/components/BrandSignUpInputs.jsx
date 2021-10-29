@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import {axios} from "../../../axios/axiosInstance";
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
 import { Link } from "react-router-dom";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
@@ -120,7 +120,7 @@ const BrandSignUpInputs = () => {
       };
       
       await axios.post(
-        "http://localhost:4000/v1/auth/brand/register",{
+        "/v1/auth/brand/register",{
           brand:req,
           logoDetails: imageDetails
         }).then(({data}) => {

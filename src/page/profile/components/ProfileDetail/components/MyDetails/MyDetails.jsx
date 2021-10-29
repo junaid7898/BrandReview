@@ -3,13 +3,14 @@ import UpdateProfile from "../../../../../../components/update_profile_button/Up
 import VerifyOTP from "../../../../../../components/verify-otp/VerifyOTP";
 import DetailTag from "./components/DetailTag";
 import { axios } from "../../../../../../axios/axiosInstance";
-
+import { statusAction } from "../../../../../../Redux/statusSlice";
+import { useDispatch } from "react-redux";
 import UpdateProfileComponents from "./components/UpdateProfileComponents";
 import LoadingIndicator from "../../../../../../components/loadingIndicator/LoadingIndicator";
 const MyDetails = ({ user }) => {
 
   const [isSendingOtp, setIsSendingOtp] = useState(false)
-
+  const dispatch = useDispatch()
 
   const [updateProfile, setUpdateProfile] = useState(false);
   const [verifyPhoneNumber, setVerifyPhoneNumber] = useState(false)
@@ -18,14 +19,27 @@ const MyDetails = ({ user }) => {
   };
 
   const handleOtpVerification = () => {
+    dispatch(statusAction.setNotification({
+      message: 'sending otp',
+      type: "loading"
+    }))
     const phoneNumber = user.countryCode + user.phoneNumber;
     setIsSendingOtp(true)
-    axios.post('/auth/user/send-verification-sms', {user}).then(() => {
+    axios.post('/auth/user/send-verification-sms', {user})
+    .then(() => {
+      dispatch(statusAction.setNotification({
+        message: 'OTP sent',
+        type: "success"
+      }))
       setIsSendingOtp(false)
       setVerifyPhoneNumber(true)
       
     }
     ).catch(err => {
+      dispatch(statusAction.setNotification({
+        message: err.response.data.message,
+        type: "error"
+      }))
       setIsSendingOtp(false)
       alert(JSON.stringify(err.response.data.message))
     })

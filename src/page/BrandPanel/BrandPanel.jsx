@@ -3,7 +3,7 @@ import BrandContent from './components/BrandContent'
 import BrandDetail from './components/BrandDetail'
 import { useParams } from 'react-router'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
+import {axios} from '../../axios/axiosInstance'
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 
 const BrandPanel = () => {
@@ -28,7 +28,7 @@ const BrandPanel = () => {
 
     useEffect(() => {
         if(brandId && client){
-            axios.get(`http://localhost:4000/v1/brand/${brandId}`, {   
+            axios.get(`/brand/${brandId}`, {   
                 headers:{
                     "role" : "brand",
                     "Authorization" : `bearer ${client.tokens.access.token}`

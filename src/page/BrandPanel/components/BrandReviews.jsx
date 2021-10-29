@@ -9,7 +9,7 @@ import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndica
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ImageViewer from "../../../components/image_viewer/ImageViewer";
-
+import EmptyData from "../../../components/EmptyDataComponent/EmptyData";
 const BrandReviews = ({ brandId }) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -94,7 +94,7 @@ const BrandReviews = ({ brandId }) => {
             <th>Review</th>
             <th>Date</th>
           </tr>
-          {reviewData &&
+          {reviewData ?
             reviewData.map((item) => {
               return (
                 <>
@@ -150,7 +150,10 @@ const BrandReviews = ({ brandId }) => {
                   </tr>
                 </>
               );
-            })}
+            })
+            :
+            <EmptyData value = 'no review yet....come back again to see the update'/>
+          }
         </table>
       </div>
 

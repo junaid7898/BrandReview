@@ -20,8 +20,7 @@ import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
 
 import { useEffect, useRef, useState } from 'react';
-import axios from "axios";
-import { axios as axiosInstance } from "./axios/axiosInstance";
+import { axios } from "./axios/axiosInstance";
 import { useSelector, useDispatch } from "react-redux";
 import { clientActions } from "./Redux/clientslice/clientSlice";
 import PrivateRoute from "./PrivateRoute";
@@ -38,7 +37,7 @@ function App() {
   const isStateSet = useRef(false)
   const [isState, setIsState] = useState(false)
   useEffect(() => {
-    axiosInstance.get("brand/getAllBrands")
+    axios.get("brand/getAllBrands")
     .then(({data}) => {
       dispatch(brandAction.setBrands(data))
     })
@@ -62,7 +61,7 @@ function App() {
       const accessToken = localStorage.getItem("accessToken")
       if(userId && accessToken){
         dispatch(statusAction.setAttemptingLogin(true))
-        axios.get(`http://localhost:4000/v1/auth/user/login/${userId}`,{
+        axios.get(`/auth/user/login/${userId}`,{
           headers:{
             'authorization' : `bearer ${accessToken}`
           }
@@ -84,7 +83,7 @@ function App() {
       const accessToken = localStorage.getItem("accessToken")
       if(brandId && accessToken){
         dispatch(statusAction.setAttemptingLogin(true))
-        axios.get(`http://localhost:4000/v1/auth/brand/login/${brandId}`,{
+        axios.get(`/auth/brand/login/${brandId}`,{
           headers:{
             'authorization' : `bearer ${accessToken}`
           }
@@ -214,7 +213,7 @@ function App() {
             <Route path = '/phoneverification' component = {PhoneVerification}/>
             <Route path = '/verify-email/:token/:type' component = {EmailVerificationPage}/>  
             <Route path = '/termsandcondition' component = {TermsAndCondition}/>
-            <Route path = '/forgot-password' component = {ForgotPasswordPage}/>
+            <Route path = '/forgot-password/:token/:type' component = {ForgotPasswordPage}/>
             <Route path = '/*' component = {Error404Page}/>
         </Switch>
         :

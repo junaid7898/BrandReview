@@ -3,7 +3,7 @@ import BrandInfo from "./components/BrandInfo";
 import Review from "../../components/reviews/Review";
 import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
 import { useParams } from "react-router";
-
+import EmptyData from "../../components/EmptyDataComponent/EmptyData";
 import {axios} from "../../axios/axiosInstance";
 import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator";
 import { useSelector } from "react-redux";
@@ -107,7 +107,7 @@ const SearchBrand = () => {
             return <Review review = {review} brandData = {brandData} setBrandData = {setBrandData} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
           })
           :
-            <LoadingIndicator />
+            <EmptyData value = 'No reviews posted for this brand...'/>
           }
 
         </div>

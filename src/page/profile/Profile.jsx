@@ -1,4 +1,4 @@
-import axios from 'axios'
+import {axios} from '../../axios/axiosInstance'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProfileContent from './components/ProfileContent/ProfileContent'
@@ -36,7 +36,7 @@ const Profile = () => {
         
         if(userId){
             if(visitorIsUser){
-                axios.get(`http://localhost:4000/v1/user/detail/${userId}`,{
+                axios.get(`/user/detail/${userId}`,{
                 headers:{
                     "role": "none",
                     "Authorization" : `bearer ${client.tokens.access.token}`
@@ -50,7 +50,7 @@ const Profile = () => {
                 })
             }
             else{
-                axios.get(`http://localhost:4000/v1/user/${userId}`,{
+                axios.get(`/user/${userId}`,{
                 headers:{
                     "role": "none"
                 }

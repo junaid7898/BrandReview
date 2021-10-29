@@ -4,6 +4,7 @@ import PhoneInput from 'react-phone-number-input';
 import { isPossiblePhoneNumber, formatPhoneNumber, formatPhoneNumberIntl, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
 import { useDispatch , useSelector} from "react-redux";
 import { axios } from "../../../../../../../axios/axiosInstance";
+import { statusAction } from "../../../../../../../Redux/statusSlice";
 import LoadingIndicator from "../../../../../../../components/loadingIndicator/LoadingIndicator";
 import {clientActions} from '../../../../../../../Redux/clientslice/clientSlice'
 
@@ -21,20 +22,28 @@ const UpdateProfileComponents = ({ onSubmit, user }) => {
   const checkValidation = () => {
       let response;
       if(address === null || phone === null){
-          response = 'please fill all entries'
-          return response
-      }
-      else if(isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
-          response = 'phone number is invalid! please enter a valid phone number'
-          return response
-      }
-      else{
-          response = 'ok'
-          return response
-      }
+            response = 'please fill all entries'
+            return response
+        }
+        else if(phone === user.countryCode + user.phoneNumber && birthday === new Date(user.dateOfBirth) && address === user.address ){
+            response = 'no information is changed.....'
+            return response
+        }
+        else if(isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
+            response = 'phone number is invalid! please enter a valid phone number'
+            return response
+        }
+        else{
+            response = 'ok'
+            return response
+        }
   }
 
   const handleUpdate = () => {
+    dispatch(statusAction.setNotification({
+        message: 'updating user information....',
+        type: "loading"
+    }))
       const validation = checkValidation();
       if(validation === 'ok'){
         setIsUpdating(true)
@@ -57,9 +66,17 @@ const UpdateProfileComponents = ({ onSubmit, user }) => {
                 "authorization" : `bearer ${client.tokens.access.token}`
             }
         }).then((res) => {
+            dispatch(statusAction.setNotification({
+                message: 'updated....',
+                type: "success"
+                }))
             onSubmit(false)
             setIsUpdating(false)
         }).catch(err => {
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+                }))
             setIsUpdating(false)
             alert(JSON.stringify(err))
         })

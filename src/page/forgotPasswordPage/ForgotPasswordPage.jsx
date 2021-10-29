@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { statusAction } from '../../Redux/statusSlice'
 import { useDispatch } from 'react-redux'
+import { useHistory, useParams } from 'react-router'
+import { axios } from '../../axios/axiosInstance'
+import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 
 const ForgotPasswordPage = () => {
     const [password, setPassword] = useState(null)
     const [confirmPassword, setConfirmPassword] = useState(null)
-
+    const {token, type} = useParams()
+    const history = useHistory()
     const dispatch = useDispatch()
-    
+    const [isProcessing, setIsProcessing] = useState(false)
     const CheckPassword = () => { 
         var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
         if(password.match(paswd)){
@@ -18,11 +22,10 @@ const ForgotPasswordPage = () => {
         }
     }
     const validationCheck = () => {
-        let validPassword = CheckPassword()
         if(password === null || confirmPassword === null){
             return 'please fill all the entries....'
         }
-        else if(!validPassword){
+        else if(!CheckPassword()){
             return 'password must be between 7-15 characters long and contain at least one numeric digit and special character '
         }
         else if(password !== confirmPassword){
@@ -39,14 +42,52 @@ const ForgotPasswordPage = () => {
         const validation = validationCheck()
         if(validation === 'ok'){
             //TODO here call an axios method to change password
-            alert(`${password} and ${confirmPassword}`)
+            // alert(`${password} and ${confirmPassword}`)
+            if(type === "user"){
+                axios.post(`/auth/user/reset-password?token=${token}`, {password: password})
+                .then((_) => {
+                    dispatch(statusAction.setNotification({
+                        message: "Password Changed Successfully",
+                        type: "success"
+                      }))
+                    history.push('/')
+                })
+                .catch(err =>{
+                    dispatch(statusAction.setNotification({
+                        message: "Password Changed Failed",
+                        type: "error"
+                      }))
+                    console.log(err)
+                })
+                console.log("brand")
+            }
+            else if(type === "brand"){
+                axios.post(`/auth/brand/reset-password?token=${token}`, {password: password})
+                .then((_) => {
+                    dispatch(statusAction.setNotification({
+                        message: "Password Changed Successfully",
+                        type: "success"
+                      }))
+                    history.push('/')
+                })
+                .catch(err =>{
+                    dispatch(statusAction.setNotification({
+                        message: "Password Changed Failed",
+                        type: "error"
+                      }))
+                    console.log(err)
+                })
+            }
         }
         else{
             dispatch(statusAction.setNotification({
                 message: validation,
                 type: "error"
               }))
+              return 
         }
+        console.log(password)
+        
     }
     return (
         <div className="forgot__password__page">
@@ -75,9 +116,13 @@ const ForgotPasswordPage = () => {
                         placeholder = 'Enter your password again'
                     />
                 </div>
-                <div className="forgot__password__page__container__button" onClick = {handleForgotPassword}>
+                <button className="forgot__password__page__container__button" onClick = {handleForgotPassword}>
                     <h3>Confirm</h3>
-                </div>
+                    {
+                        isProcessing &&
+                        <LoadingIndicator />
+                    }
+                </button>
 
             </div>
         </div>

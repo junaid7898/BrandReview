@@ -112,7 +112,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
       options:{
         page,
         limit: 10,
-        populate:"user.User"
+        populate:"user.User,brand.Brand"
     }
     })
     .then(({data}) =>{ 
@@ -188,7 +188,7 @@ useEffect(() => {
                         ?
                             <LoadingIndicator />
                         :
-                          <h1>oops no reviews yet.....</h1>
+                          <h1>no reviews yet.....</h1>
                       }
                     </div>
                     {

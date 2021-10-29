@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import {axios} from "../../../axios/axiosInstance";
 import { Link } from "react-router-dom";
 
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
@@ -96,7 +96,7 @@ const SignUpInputs = () => {
       };
       try {
         const { data } = await axios
-          .post("http://localhost:4000/v1/auth/user/register", req)
+          .post("/auth/user/register", req)
           .then((res) => {
             dispatch(statusAction.setNotification({
               message: 'signed in successful',

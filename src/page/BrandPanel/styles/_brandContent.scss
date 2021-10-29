@@ -8,14 +8,14 @@
         align-items: center;
     }
     &__logo{
-        min-width: 200px;
-        max-width: 200px;
-        min-height: 200px;
-        max-height: 20px;
-        object-fit: contain;
         position: relative;
         & img{
-            width: 100%;
+            border-radius: 4px;
+            object-fit: contain;
+            min-width: 200px;
+            max-width: 200px;
+            min-height: 200px;
+            max-height: 200px;
         }
         @include respond(phone){
             margin: auto;

@@ -11,6 +11,9 @@ import LoadingIndicator from '../loadingIndicator/LoadingIndicator'
 import { Link } from 'react-router-dom'
 import ImagePreview from '../image_preview/ImagePreview'
 import ImageViewer from '../image_viewer/ImageViewer'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { statusAction } from '../../Redux/statusSlice'
 export const DashboardReviews = () => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -20,6 +23,8 @@ export const DashboardReviews = () => {
     const [date, setDate] = useState(null)
     const [isVerifing, setIsVerifing] = useState([])
     const [previewImage, setPreviewImage] = useState(null)
+    const {client} = useSelector(state => state.client)
+    const dispatch = useDispatch()
     const handlePageination = (index) =>{
         setPage(index)
     }
@@ -58,6 +63,63 @@ export const DashboardReviews = () => {
 
     const handleVerification = (reviewId) =>{
         setIsVerifing([...isVerifing, reviewId])
+
+        axios.patch(`/review/${reviewId}`, {isVerified: true}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "Removed from verified list",
+                type: "success"
+            }))
+            setReviewData([...reviewData.map(item => {
+                if(item.id === reviewId){
+                    return data
+                }
+                return item
+            })])
+            setIsVerifing([...isVerifing.filter(item => item.id !== reviewId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setIsVerifing([...isVerifing.filter(item => item.id !== reviewId)])
+        })
+    }
+
+    const handleUnVerification = (reviewId) => {
+        setIsVerifing([...isVerifing, reviewId])
+        axios.patch(`/review/${reviewId}`, {isVerified: false}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "Removed from verified list",
+                type: "success"
+            }))
+            setReviewData([...reviewData.map(item => {
+                if(item.id === reviewId){
+                    return data
+                }
+                return item
+            })])
+            setIsVerifing([...isVerifing.filter(item => item.id !== reviewId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setIsVerifing([...isVerifing.filter(item => item.id !== reviewId)])
+        })
     }
 
     return (
@@ -131,14 +193,22 @@ export const DashboardReviews = () => {
                                     <td>{ new Date(item.createdOn).toDateString()}</td>
                                     <td className = "dashboard__panel__reports__button">
                                     {
-                                            !item.isVerified && 
-                                            <button onClick={() => handleVerification(item.id)}>
-                                                Verify
-                                                {
-                                                    isVerifing.includes(item.id) &&
-                                                    <LoadingIndicator />
-                                                }
-                                            </button>
+                                            !item.isVerified ?
+                                                <button onClick={() => handleVerification(item.id)}>
+                                                    Verify
+                                                    {
+                                                        isVerifing.includes(item.id) &&
+                                                        <LoadingIndicator />
+                                                    }
+                                                </button>
+                                            :
+                                                <button onClick={() => handleUnVerification(item.id)}>
+                                                    Unverify
+                                                    {
+                                                        isVerifing.includes(item.id) &&
+                                                        <LoadingIndicator />
+                                                    }
+                                                </button>
                                     }
                                     </td>
                                 </tr>

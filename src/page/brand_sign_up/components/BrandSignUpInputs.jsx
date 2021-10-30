@@ -120,7 +120,7 @@ const BrandSignUpInputs = () => {
       };
       
       await axios.post(
-        "/v1/auth/brand/register",{
+        "/auth/brand/register",{
           brand:req,
           logoDetails: imageDetails
         }).then(({data}) => {

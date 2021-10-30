@@ -37,10 +37,10 @@ const Chart = () => {
         }
     }
     
-    var date1 = new Date('2021/4/25');
-    var date2 = new Date(); 
-    var difference = date1.getTime() - date2.getTime();
-    var days = Math.ceil(difference / (1000 * 3600 * 24));
+    // var date1 = new Date('2021/4/25');
+    // var date2 = new Date(); 
+    // var difference = date1.getTime() - date2.getTime();
+    // var days = Math.ceil(difference / (1000 * 3600 * 24));
 
     function getArray (day){
         let x = []
@@ -78,10 +78,7 @@ const Chart = () => {
     useEffect(() => {
         if(date){
 
-            let newFilter
-
-            newFilter = {
-                ...newFilter,
+            let newFilterReview = {
                 createdOn: JSON.stringify({
                     $gt: new Date(date[0]),
                     $lt: new Date(date[1])
@@ -91,61 +88,48 @@ const Chart = () => {
                 limit: 100000,
             }
 
-            console.log(newFilter)
-            axios.post('/review/query',{filters: newFilter, options})
+
+            axios.post('/review/query',{filters: newFilterReview, options})
             .then(({data}) => {
-                console.log(data)
                 let newObj = {}
-                let ratingAvg = {}
                 data.results.map( item => {
                     const g = new Date(item.createdOn).toDateString()
-                    console.log(g)
                     if(newObj[g]){
                         newObj[g]++
                     }
                     else {
                         newObj[g] = 1
                     }
-
-                    if(ratingAvg[g]){
-                        ratingAvg[g].sum = ratingAvg[g].sum + item.ratingCount
-                        ratingAvg[g].avg = ratingAvg[g].sum / newObj[g]
+                })
+                setChartData({
+                    label:Object.keys(newObj).reverse(),
+                    value: Object.values(newObj).reverse()
+                })
+            })
+            let newFilterBrand = {
+                    createdAt: JSON.stringify({
+                    $gte: new Date(date[0]),
+                    $lte: new Date(date[1])
+                })
+            }
+            axios.post('/brand/query',{filters: newFilterBrand, options})
+            .then(({data}) => {
+                console.log(data)
+                let newObj = {}
+                data.results.map( item => {
+                    const g = new Date(item.createdAt).toDateString()
+                    if(newObj[g]){
+                        newObj[g]++
                     }
                     else {
-                        ratingAvg[g] = {}
-                        ratingAvg[g].sum = item.ratingCount
-                        ratingAvg[g].avg = item.ratingCount
+                        newObj[g] = 1
                     }
                 })
-
-                const user = ["sadsa"];
-                
-
-
-
-                console.log(user)
-
-
                 console.log(newObj)
-                setChartData({
-                    label:Object.keys(newObj),
-                    value: Object.values(newObj)
-                })
-
-                const labelA = Object.keys(ratingAvg)
-                const valueA = labelA.map(item => ratingAvg[item].avg)
-
                 setChartData2({
-                    label: labelA,
-                    value: valueA
+                    label:Object.keys(newObj).reverse(),
+                    value: Object.values(newObj).reverse()
                 })
-
-
-
-
-
-
-
             })
         }
     }, [date])
@@ -195,14 +179,14 @@ const Chart = () => {
 
                     <div className="chart__div__second-chart">
                         <div className="chart__div__second-chart__intro">
-                                <h3>Ratings</h3>
+                                <h3>Brands Registered</h3>
                         </div>
                         <div className = 'chart__div__first__chart__bar'>
                             <Line
                                     data = {{
                                         labels: chartData2 && chartData2.label,
                                         datasets: [{  
-                                            label: 'Total Ratings',  
+                                            label: 'Total Brands',  
                                             data: chartData2 && chartData2.value,
                                             barPercentage: 0.5,
                                             barThickness: 6,

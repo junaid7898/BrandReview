@@ -308,12 +308,13 @@ const Header = () => {
                     {
                       client.type.includes("user") ? 
                       (
+                        client.user.role.includes("user") &&
                         <li>
                           <Link to={`/user/${client.user.id}`} ><h4 className = 'nav__links__link__h4'>Profile</h4></Link>
                         </li>
                       ) 
                       :
-                      client.type === "brand" ? 
+                      client.type.includes("brand") ? 
                       (
                           <li>
                             <Link to={`/brand/panel/${client.user.id}`}>
@@ -329,8 +330,7 @@ const Header = () => {
                     {
                       (
                         client.type.includes("brand") &&
-                        client.brand.role.includes("brand")) ||
-                        client.user.role.includes("brandAdmin") ? 
+                        client.brand.role.includes("brand"))? 
                         (
                           <li>
                             <Link to={`/brand/panel/${client.brand.id}`}>   
@@ -341,11 +341,9 @@ const Header = () => {
                         :
                         null
                     }
-                  
-                  
                     {
                       
-                        client.type.includes('brand') && client.brand.role.includes('brand') ?
+                        client.type.includes('brand') ?
                         (
                           <li>
                           <Link to = {`/brand/${client.brand.id}`}><h4 className = 'nav__links__link__h4'>brand</h4></Link>

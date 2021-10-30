@@ -61,7 +61,7 @@ const WriteYourReviewComponent = ({setPage, brandId}) => {
       message: message,
     }
 
-    const {data: imageArray} = await axios.post('/v1/review/', {review, imageDetails},{
+    const {data: imageArray} = await axios.post('/review/', {review, imageDetails},{
       headers:{
         "authorization" : `bearer ${client.tokens.access.token}`,
         "role" : Object.keys(client)[0]

@@ -16,7 +16,9 @@ const DashBoardUsers = () => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
     const [userData, setUserData] = useState(null)
-    const [filters, setFilters] = useState({})
+    const [filters, setFilters] = useState({role:JSON.stringify({
+                                                $not: {$in: "admin"}
+                                            })})
     const [sort, setSort] = useState({})
     const [blackListing, setBlackListng] = useState([])
     const handlePageination = (index) =>{

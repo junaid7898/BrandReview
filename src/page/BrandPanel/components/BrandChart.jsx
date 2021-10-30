@@ -126,8 +126,8 @@ const BrandChart = ({brandId}) => {
                 console.log(newObj)
                 console.log(ratingAvg);
                 setChartData({
-                    label:Object.keys(newObj),
-                    value: Object.values(newObj)
+                    label:Object.keys(newObj).reverse(),
+                    value: Object.values(newObj).reverse()
                 })
                 const labelA = Object.keys(ratingAvg)
                 const valueA = labelA.map(item => ratingAvg[item].avg)

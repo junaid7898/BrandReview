@@ -19,7 +19,7 @@ export const uploadPhoto = async(user, image, ref) =>{
         type: image.type
     }
 
-    const {data: uploadConfig} = await axios.post('/v1/aws/',{user, file})
+    const {data: uploadConfig} = await axios.post('/aws/',{user, file})
     await axios.put(uploadConfig.url, image, {
         headers:{
           'Content-Type' : file.type

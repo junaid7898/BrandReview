@@ -8,6 +8,7 @@ import {axios} from "../../axios/axiosInstance";
 import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator";
 import { useSelector } from "react-redux";
 import Pagination from "../../components/Pagination/Pagination";
+import TopBrands from "../../components/top-brands/TopBrands"
 const SearchBrand = () => {
   
 
@@ -97,21 +98,29 @@ const SearchBrand = () => {
       {/* <div className="brandMain__writeReview">
         <WriteYourReviewComponent setPage = { setPage } brandId = {brandId}/>
       </div> */}
+      <div className="brandMain__lower">
+        <div className="brandMain__reviews-container">
+        
+          <div className="brandMain__reviews">
+            {
+              reviewData.length > 0 && areReviewsLoading ?
+              reviewData.map(review =>{
+              return <Review review = {review} brandData = {brandData} setBrandData = {setBrandData} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
+            })
+            :
+              <EmptyData value = 'No reviews posted for this brand...'/>
+            }
 
-      <div className="brandMain__reviews-container">
-      
-        <div className="brandMain__reviews">
-          {
-            reviewData.length > 0 && areReviewsLoading ?
-            reviewData.map(review =>{
-            return <Review review = {review} brandData = {brandData} setBrandData = {setBrandData} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
-          })
-          :
-            <EmptyData value = 'No reviews posted for this brand...'/>
-          }
-
+          </div>
+            <Pagination currentPage={currentPage} totalPages = {totalPages} handlePageination= {handlePageination} />
         </div>
-          <Pagination currentPage={currentPage} totalPages = {totalPages} handlePageination= {handlePageination} />
+        { 
+          brandData && 
+          <div className="brandMain__topbrands">
+                <h2>Top brands in the same category</h2>
+                <TopBrands  rank={false} length={5} />
+          </div>
+        }
       </div>
     </div>
   );

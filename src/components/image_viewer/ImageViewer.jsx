@@ -1,13 +1,12 @@
 import React from 'react'
-import { GrClose } from "react-icons/gr";
+import { AiOutlineClose } from "react-icons/ai";
 function ImageViewer({image, setImage}) {
     console.log(image)
     return (
         <div className="imageViewer">
             <div className="imageViewer__mask" onClick={() => setImage(null)}/>
             <div className="imageViewer__close" onClick={() => setImage(null)}>
-            <GrClose
-                size={24}
+            <AiOutlineClose
                 className= "imageViewer__close__icon" 
             />
             </div>

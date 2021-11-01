@@ -4,11 +4,11 @@ import SearchIcon from "../../assests/icons/search_icon.png";
 import { GrClose } from "react-icons/gr";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
-
+import {BiLockAlt, BiLockOpenAlt} from 'react-icons/bi'
 import { AiFillCar } from "react-icons/ai";
 import { FiChevronDown } from "react-icons/fi";
 import {BiUser} from 'react-icons/bi'
@@ -25,6 +25,12 @@ const Header = () => {
   const {brands: data} = useSelector(state => state.brands)
   const [isEmailVerified, setIsEmailVerified] = useState(true)
   const { client } = useSelector((state) => state.client);
+  const {pathname} = useLocation()
+
+
+  useEffect(() => {
+    document.getElementById('nav_search').value = ""
+  }, [pathname])
 
   useEffect(() => {
     if(client){
@@ -167,6 +173,7 @@ const Header = () => {
             
           />
           <input
+            id="nav_search"
             type="text"
             placeholder="Search"
             value={searchKey}
@@ -203,12 +210,21 @@ const Header = () => {
           !attemptingLoginOnSiteLoad 
           ?
           <>
+          <div className="nav__lock">
+          {
+            client 
+            ?
+              <BiLockOpenAlt className="nav__lock__lockIcon" />
+            :
+              <BiLockAlt className="nav__lock__unlockIcon" />
+          }
+          </div>
           <ul>
-            <li>
+            {/* <li>
               <Link to = '/' >
                 <h4 className = 'nav__links__link__h4'>Home</h4>
               </Link>
-            </li>
+            </li> */}
             
             {
               !client ? 
@@ -252,7 +268,6 @@ const Header = () => {
 
                         {/* SECTION LOGIN ends here */}
                   </li>
-
 
                         {/* SECTION Register links start */}
                   <li>
@@ -306,7 +321,8 @@ const Header = () => {
                 <>
                   
                     {
-                      client.type.includes("user") ? 
+                      client.type.includes("user") 
+                      ? 
                       (
                         client.user.role.includes("user") &&
                         <li>
@@ -317,8 +333,8 @@ const Header = () => {
                       client.type.includes("brand") ? 
                       (
                           <li>
-                            <Link to={`/brand/panel/${client.user.id}`}>
-                              <h4  className = 'nav__links__link__h4'>Brand</h4>
+                            <Link to={`/brand/${client.brand.id}`}>
+                              <h4  className = 'nav__links__link__h4'>Brand Page</h4>
                             </Link>
                           </li>
                       )
@@ -334,14 +350,14 @@ const Header = () => {
                         (
                           <li>
                             <Link to={`/brand/panel/${client.brand.id}`}>   
-                              <h4 className = 'nav__links__link__h4'>Panel</h4>    
+                              <h4 className = 'nav__links__link__h4'>Brand Panel</h4>    
                             </Link>
                           </li>
                         )
                         :
                         null
                     }
-                    {
+                    {/* {
                       
                         client.type.includes('brand') ?
                         (
@@ -353,7 +369,7 @@ const Header = () => {
                         (
                           null
                         )
-                    }
+                    } */}
                   
                   
                     {
@@ -374,14 +390,14 @@ const Header = () => {
                       null
                     }
                   
-                  <li>
+                  <>
                     <button
                     className = 'nav__links__button'
                       onClick={() => logout(dispatch, history, client.type, client.tokens.refresh.token)}
                     >
                       Logout
                     </button>
-                  </li>
+                  </>
                 </>
               )
             }

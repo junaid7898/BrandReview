@@ -168,7 +168,7 @@ const BrandDetail = ({item, brandId}) => {
                             <div className="dashboard__list__settings__items">
                                 <div className="dashboard__list__settings__items__name">
                                     <h3>Category</h3>
-                                    <h4>{item.name}</h4>
+                                    <h4>{item.category ? item.category : " - "}</h4>
                                 </div>
                             </div>
 
@@ -193,7 +193,7 @@ const BrandDetail = ({item, brandId}) => {
                             <div className="mydetails__update-button__button1">
                                 <UpdateProfile onClick={() => setUpdateProfile(true)}  value = 'Update Profile' />
                             </div>
-                        {
+                        {/* {
                             item.isPhoneVerified ?
                             null
                             :
@@ -203,7 +203,7 @@ const BrandDetail = ({item, brandId}) => {
                                 }
                             </div>
                             
-                        }
+                        } */}
                         
 
                         </div>

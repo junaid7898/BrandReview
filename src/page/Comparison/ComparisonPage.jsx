@@ -4,6 +4,7 @@ import BrandComparisonDetail from '../../components/brand_comparison_detail/Bran
 import KiaLogo from '../../assests/images/kia_logo.png';
 import { useParams } from 'react-router';
 import { axios } from '../../axios/axiosInstance';
+import TopBrands from "../../components/top-brands/TopBrands"
 const ComparisonPage = () => {
 
 
@@ -175,20 +176,32 @@ const ComparisonPage = () => {
 
     return (
         <div className = 'comparison__page'>
-            <div className="comparison__page__inputs">
-                <BrandComparison selectedBrand1 = {testBrand && testBrand.name} selectedBrand2 = {testBrand1 &&testBrand1.name}/>
+            <div className="comparison__page__upper">
+                <div className="comparison__page__inputs">
+                    <BrandComparison selectedBrand1 = {testBrand && testBrand.name} selectedBrand2 = {testBrand1 &&testBrand1.name}/>
+                </div>
+                {
+                    testBrand && testBrand1 &&
+                    <>
+                        <div className="comparison__page__block-1">
+                            <BrandComparisonDetail  brandDetails = { testBrand } thankCount = {thankedCount1} reviewCount = {reviewCount1} satisfactionRate = {satisfactionRate1} solvedCount = {solvedCount1} averageRating = {averageRating1}/>
+                        </div>
+                        <div className="comparison__page__block-2">
+                            <BrandComparisonDetail  brandDetails = {testBrand1} thankCount = {thankedCount2} reviewCount = {reviewCount2} satisfactionRate = {satisfactionRate2} solvedCount = {solvedCount2} averageRating = {averageRating2}/>  
+                        </div>
+                    </>
+                }     
             </div>
-            {
-                testBrand && testBrand1 &&
-                <>
-                    <div className="comparison__page__block-1">
-                        <BrandComparisonDetail  brandDetails = { testBrand } thankCount = {thankedCount1} reviewCount = {reviewCount1} satisfactionRate = {satisfactionRate1} solvedCount = {solvedCount1} averageRating = {averageRating1}/>
+            <div className="comparison__page__lower">
+                {
+                    // testBrand.category === testBrand1.category ? testBrand.category : 
+                    testBrand && testBrand1 &&
+                    <div className="comparison__page__topbrands">
+                        <h2>{testBrand.category === testBrand1.category ? "Top brands in the same category" : "Top Brands"}</h2>
+                        <TopBrands category={null} length={5} rank={false} />    
                     </div>
-                    <div className="comparison__page__block-2">
-                        <BrandComparisonDetail  brandDetails = {testBrand1} thankCount = {thankedCount2} reviewCount = {reviewCount2} satisfactionRate = {satisfactionRate2} solvedCount = {solvedCount2} averageRating = {averageRating2}/>  
-                    </div>
-                </>
-            }     
+                }
+            </div>
         </div>
     )
 }   

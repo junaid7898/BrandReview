@@ -1,36 +1,24 @@
-@mixin respond($breakpoint) {
-    // @if $breakpoint == tab-land {
-    //   @media (max-width: 75em) {
-    //     @content;
-    //   }
-    // } //1200px
-    @if $breakpoint == tab {
-      @media (max-width: 900px) {
-        @content;
-      } //900px
-    }
-    @if $breakpoint == phone {
-      @media (max-width: 700px) {
-        @content;
-      } //768px
-    }
-    @if $breakpoint == big-desktop {
-      @media (min-width: 87.5em) {
-        @content;
-      } //1400px
-    }
-  }
-
-
-
 .comparison__page{
-    display: flex;
+  max-width: $maxwidth;
+  margin: auto;
+    &__upper{
+      display: flex;
     flex-flow: row wrap;   
     align-items: center;
     justify-content: space-around;
     padding: 8px 12px;
     width: 100%;
     margin: 50px 0px;
+    }
+    &__lower{
+      box-shadow: 0px 20px 70px rgba(0, 0, 0, 0.07);
+      border-radius: 10px;
+      margin: 20px 0;
+      & h2{
+        color: #357BCE;
+        padding: 20px;
+      }
+    }
     &__inputs{
         @include respond(phone){
             margin: 50px 0px;

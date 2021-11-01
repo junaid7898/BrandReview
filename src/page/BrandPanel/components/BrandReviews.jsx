@@ -40,7 +40,7 @@ const BrandReviews = ({ brandId }) => {
     if (date) {
       newFilter = {
         ...newFilter,
-        createdOn: JSON.stringify({
+        createdAt: JSON.stringify({
           $gt: new Date(date[0]),
           $lt: new Date(date[1]),
         }),
@@ -146,7 +146,7 @@ const BrandReviews = ({ brandId }) => {
                         </>
                       </div>
                     </td>
-                    <td>{new Date(item.createdOn).toDateString()}</td>
+                    <td>{new Date(item.createdAt).toDateString()}</td>
                   </tr>
                 </>
               );

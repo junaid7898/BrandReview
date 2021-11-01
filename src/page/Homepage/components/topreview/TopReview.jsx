@@ -17,10 +17,10 @@ function TopReview() {
     }, [])
 
 
-    useEffect(() => {
-        console.log(reviewsDataUpper)
-        console.log(reviewsDataLower)
-    }, [setReviewsDataUpper, reviewsDataLower])
+    // useEffect(() => {
+    //     console.log(reviewsDataUpper)
+    //     console.log(reviewsDataLower)
+    // }, [setReviewsDataUpper, reviewsDataLower])
 
 
     return (

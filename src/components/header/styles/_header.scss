@@ -60,7 +60,7 @@
     background-color: #F8F8F8;
     padding: 10px 0;
     position: relative;
-    width: 100%;
+    width: 350px;
 }
 
 .nav__searchBar input, .nav__searchBar img{
@@ -85,8 +85,14 @@
 .searchBar__close__icon{
     display: none;
 }
-
-.nav__links ul li:not(:last-child)::after{
+.nav__lock{
+    @include respond(phone){
+        // display: none;
+    }
+    margin: 0 10px;
+    font-size: 25px;
+}
+.nav__links ul li::after{
     content: '';
     width: 0%;
     height: 2px;
@@ -197,7 +203,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
+    @include respond(phone){
+        padding: 10px 0;
+    }
 }
 .nav__links ul li{
     
@@ -221,6 +229,9 @@
     &__h4{
         color: $onSurface-secondary;
         font-weight: 700;
+        @include respond(phone){
+            // width: min-content;
+        }
     }
 
     &__user-login{
@@ -248,6 +259,7 @@
             padding: 4px 8px;
             transition: 2.3s;
             width: 100%;
+            
             &__item{
                 display: flex;
                 flex-direction: row;
@@ -263,6 +275,7 @@
             }
         }
         &__link2{
+            
             padding: 4px 8px;
             width: 100%;
             &:hover{

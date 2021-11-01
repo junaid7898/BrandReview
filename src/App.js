@@ -28,6 +28,7 @@ import { statusAction } from "./Redux/statusSlice";
 import { brandAction } from "./Redux/brandInfoSlice/brandInfoSlice";
 import Notification from "./components/notification/Notification";
 import ForgotPasswordPage from "./page/forgotPasswordPage/ForgotPasswordPage";
+import Background from "./components/Background/Background";
 
 function App() {
   
@@ -113,7 +114,17 @@ function App() {
     )
   }
   return (
-    <div className="App" >
+    <div className="app" >
+      {
+        isState ?
+        !attemptingLoginOnSiteLoad ?
+          // <Background />
+          null
+        :
+          null
+    : null
+      }
+    
     <BrowserRouter>
     <Notification /> 
     <Header/>

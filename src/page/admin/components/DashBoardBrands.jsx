@@ -7,12 +7,11 @@ import ImageViewer from '../../../components/image_viewer/ImageViewer'
 import { statusAction } from '../../../Redux/statusSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-function DashBoardBrands() {
+function DashBoardBrands({filters, sortOptions}) {
 
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
     const [brandData, setBrandData] = useState(null)
-    const [filters, setFilters] = useState({})
     const [sort, setSort] = useState({})
     const [blackListing, setBlackListng] = useState([])
     const [showImage, setShowImage] = useState(null)
@@ -26,15 +25,15 @@ function DashBoardBrands() {
         const options = {
             page,
             limit: 10,
-            sortBy: sort
+            sortBy: sortOptions
         }
+        console.log(filters, options)
         axios.post('/brand/query', {filters, options})
         .then(({data}) => {
             setBrandData(data.results)
             setTotalPages(data.totalPages)
         })
-        
-    }, [page, filters, sort])
+    }, [page, filters, sortOptions])
 
     const handleBlackListing = (brandId) =>{
         setBlackListng([...blackListing, brandId])
@@ -97,9 +96,6 @@ function DashBoardBrands() {
 
     return (
         <div className="dashboard__brands">
-            <div className="dashboard__brands__filter">
-                <FilterComponent tab = "brand" setFilters = {setFilters} setSortOptions = {setSort}/>
-            </div>
             <div className="dashboard__brands__data">
             {
                 brandData &&

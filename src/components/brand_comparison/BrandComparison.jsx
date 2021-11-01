@@ -127,7 +127,7 @@ console.log(props.selectedBrand1)
       <div ref={searchRef} className="comparison__first-brand">
         <input
           type="text"
-          placeholder="select a brand"
+          placeholder="1. Brand"
           defaultValue={props.selectedBrand1}
           onClick = { () => setShowDropdown(!showDropdown)}
           onChange={(e) => {
@@ -156,7 +156,7 @@ console.log(props.selectedBrand1)
       <div ref = {searchRef2} className="comparison__second-brand">
         <input
           type="text"
-          placeholder="select a brand"
+          placeholder="2. Brand"
           defaultValue={props.selectedBrand2}
           onChange={(e) => {
             handleSearch(e.target.value);

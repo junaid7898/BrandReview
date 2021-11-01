@@ -16,6 +16,7 @@ import {FcSettings} from 'react-icons/fc'
 import Button from "./Button";
 import ReactStars from "react-rating-stars-component";
 import {statusAction} from "../../Redux/statusSlice"
+import Dots from "../../assests/Dots";
 const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandData}) => {
   const dispatch = useDispatch()
   const {client} = useSelector(state => state.client) 

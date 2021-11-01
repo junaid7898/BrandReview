@@ -9,6 +9,8 @@ import {AiFillCaretDown} from 'react-icons/ai'
 import Chart from '../../../components/charts/Chart'
 import Select from "react-select";
 import { axios } from '../../../axios/axiosInstance'
+import FilterComponent from '../../../components/filter_component/FilterComponent'
+import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker'
 
 const AdminDashBoard = () => {
 
@@ -20,7 +22,6 @@ const AdminDashBoard = () => {
     const [showUsers, setShowUsers] = useState(false)
     const [showBrands, setShowBrands] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
-    const [showReport, setShowReport] = useState(false)
     const [date, setDate] = useState(null)
     const [dashboardPhone, setDashBoardPhone] = useState('Dashboard')
     const [showDashboardPhone, setShowDashboardPhone] = useState(null)
@@ -40,7 +41,6 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(false)
         setShowSettings(false)
-        setShowReport(false)
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -53,7 +53,7 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(false)
         setShowSettings(false)
-        setShowReport(false)
+        
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -66,7 +66,7 @@ const AdminDashBoard = () => {
         setShowUsers(true)
         setShowBrands(false)
         setShowSettings(false)
-        setShowReport(false)
+        
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -79,7 +79,7 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(true)
         setShowSettings(false)
-        setShowReport(false)
+        
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -92,24 +92,12 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(false)
         setShowSettings(true)
-        setShowReport(false)
+        
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
     }
 
-    const handleShowReport = () => {
-        setDashBoardPhone('Report')
-        setShowDashBoard(false)
-        setShowReviews(false)
-        setShowUsers(false)
-        setShowBrands(false)
-        setShowSettings(false)
-        setShowReport(true)
-        if(showDashboardPhone){
-            handleHideDashboardPhone()
-        }
-    }
     const handleShowDashboard = () => {
         if(showDashboardPhone === false || showDashboardPhone === null){
             setShowDashboardPhone(true)
@@ -233,28 +221,45 @@ const AdminDashBoard = () => {
             console.log(err)
         })
     }, [])
-
+    const [filters, setFilters] = useState({})
+    const [sortOptions, setSortOptions] = useState({})
     return (
         <section >
             <div className = 'dashboard'>
                 <div className="dashboard__links">
-                    <div className="dashboard__links__header"  onClick = {() => handleShowDashboard()}>
-                        <h1>{dashboardPhone}</h1>
-                        <AiFillCaretDown size = {24}/>
+                    <div className="dashboard__links-container">
+                        <div className="dashboard__links__header"  onClick = {() => handleShowDashboard()}>
+                            <h1>{dashboardPhone}</h1>
+                            <AiFillCaretDown size = {24}/>
+                        </div>
+                        <ul className = {`dashboard__links__list ${showDashboardPhone === true ? `dashboard__links__show`:`dashboard__links__hide`}` }>
+                            <li onClick = {handleShowDashBoard} className = {showDashBoard ? 'dashboard__list__click': ''}>Dashboard</li>
+                            <li onClick = {handleShowReviews} className = {showReviews ? 'dashboard__list__click': ''}>Report</li>
+                            <li onClick = {handleShowUsers} className = {showUsers ? 'dashboard__list__click': ''}>Users</li>
+                            <li onClick = {handleShowBrands} className = {showBrands ? 'dashboard__list__click': ''}>Brands</li>
+                            <li onClick = {handleShowSettings} className = {showSettings ? 'dashboard__list__click': ''}>Settings</li>
+                        </ul>
                     </div>
-                    <ul className = {`dashboard__links__list ${showDashboardPhone === true ? `dashboard__links__show`:`dashboard__links__hide`}` }>
-                        <li onClick = {handleShowDashBoard} className = {showDashBoard ? 'dashboard__list__click': ''}>Dashboard</li>
-                        <li onClick = {handleShowReviews} className = {showReviews ? 'dashboard__list__click': ''}>Report</li>
-                        <li onClick = {handleShowUsers} className = {showUsers ? 'dashboard__list__click': ''}>Users</li>
-                        <li onClick = {handleShowBrands} className = {showBrands ? 'dashboard__list__click': ''}>Brands</li>
-                        <li onClick = {handleShowSettings} className = {showSettings ? 'dashboard__list__click': ''}>Settings</li>
-                    </ul>
-
+                    <div className="dashboard__links__filters">
+                        {
+                            !showSettings && !showDashBoard &&
+                            <div className="dashboard__links__filters__item">
+                                <FilterComponent tab = {showReviews ? "review" : (showBrands || showUsers ) ? "client" : null} setFilters= {setFilters} setSortOptions = {setSortOptions}/>
+                            </div>
+                        }
+                        {
+                            !showSettings && !showUsers && !showBrands &&
+                            <div className="dashboard__links__filters__item">
+                                <MultiDatePicker date = {date}  setDate={setDate} />
+                            </div>
+                        }
+                    </div>
                 </div>
+                
             {
                 showDashBoard ? 
                     <div className = 'dashboard__panel__chart'>
-                       <Chart />
+                       <Chart date={date} />
                     </div>
                     :
                     (null)
@@ -262,20 +267,20 @@ const AdminDashBoard = () => {
             {
                 showReviews && 
                     <div className="dashboard__panel__review">
-                        <DashboardReviews/>
+                        <DashboardReviews filters={filters} sortOptions={sortOptions} date={date}/>
                     </div>
             }
             {
                 showUsers && 
                     <div className="dashboard__panel__user">
-                        <DashBoardUsers/>
+                        <DashBoardUsers filters={filters} sortOptions={sortOptions} date={date}/>
                     </div>
                         
             }
             {
                 showBrands && 
                     <div className="dashboard__panel__user">
-                        <DashBoardBrands />
+                        <DashBoardBrands filters={filters} sortOptions={sortOptions} date={date} />
                     </div>
             }
             {

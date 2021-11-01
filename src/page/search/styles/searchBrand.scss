@@ -3,8 +3,10 @@
     margin: auto;
 
     &__reviews-container{
-        max-width: 1000px;
-        margin: auto;
+        // max-width: 1000px;
+        // margin: auto;
+        // flex: 90%;
+        width: 100%;
     }
     &__reviews{
         position: relative;
@@ -13,5 +15,32 @@
     &__writeReview{
         max-width: 1000px;
         margin: auto;
+    }
+    &__lower{
+        display: flex;
+        width: 100%;
+        flex-flow: row nowrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        max-width: 1100px;
+        margin: auto;
+        padding: 5px;
+        @include respond(phone){
+            flex-direction: column;
+        }
+    }
+    &__topbrands{
+        border-radius: 10px;
+        box-shadow: 0px 20px 70px rgba(0, 0, 0, 0.07);
+        margin: 10px;
+        width: 500px;
+        @include respond(phone){
+            margin: 10px auto;
+        }
+        & h2{
+            padding: 20px 10px;
+            font-size: 15px;
+            color: #357BCE;
+        }
     }
 }

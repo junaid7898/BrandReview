@@ -7,6 +7,7 @@ import TopTenBrands from './components/TopTenBrands'
 import Header from './components/Header'
 import BrandComparison from '../../components/brand_comparison/BrandComparison'
 import Compare from './components/Compare'
+import Search from './components/Search'
 
 
 function HomePage() {
@@ -19,6 +20,9 @@ function HomePage() {
         <div className="homepage">
             <div className="homepage__header-container">
                 <Header />
+            </div>
+            <div className="homepage__searchbar-container">
+                <Search />
             </div>
             <div className="homepage__topReview-container">
                 <TopReview />

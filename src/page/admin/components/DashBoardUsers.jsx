@@ -9,17 +9,13 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import {statusAction} from "../../../Redux/statusSlice"
 import { Link } from 'react-router-dom'
-const DashBoardUsers = () => {
+const DashBoardUsers = ({filters, sortOptions}) => {
     const [showImage, setShowImage] = useState(null)
     const {client} = useSelector(state => state.client)
     const dispatch = useDispatch()
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
     const [userData, setUserData] = useState(null)
-    const [filters, setFilters] = useState({role:JSON.stringify({
-                                                $not: {$in: "admin"}
-                                            })})
-    const [sort, setSort] = useState({})
     const [blackListing, setBlackListng] = useState([])
     const handlePageination = (index) =>{
         setPage(index)
@@ -29,17 +25,25 @@ const DashBoardUsers = () => {
         const options = {
             page,
             limit: 10,
-            sortBy: sort
+            sortBy: sortOptions
         }
+        let newFilters = {
+            ...filters,
+            role:JSON.stringify({
+                $not: {$in: ["admin"]}
+            })
+        }
+        console.log(newFilters)
         setUserData(null)
-        axios.post(`/user/query`,{filters, options})
+        axios.post(`/user/query`,{filters: newFilters, options})
         .then(({data}) => {
             console.log(data)
             setUserData(data.results)
             setTotalPages(data.totalPages)
         })
+        console.log(newFilters, options)
         
-    }, [page, filters, sort])
+    }, [page, filters, sortOptions])
 
     const handleBlackListing = (userId) =>{
         setBlackListng([...blackListing, userId])
@@ -102,9 +106,6 @@ const DashBoardUsers = () => {
 
     return (
         <div className="dashboard__users">
-            <div className="dashboard__users__filter-component">
-                <FilterComponent tab = "user" setFilters = {setFilters} setSortOptions = {setSort}/>
-            </div>
             <div className="dashboard__users__data">
             {
                 userData &&

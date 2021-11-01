@@ -6,4 +6,12 @@
         align-items: center;
         margin-top: 50px; 
     }
+    &__searchbar-container{
+        max-width: 750px;
+        margin: 20px auto;
+        position: relative;
+        @include respond(phone){
+            margin: 20px;
+        }
+    }
 }

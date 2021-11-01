@@ -47,12 +47,13 @@
         padding: 20px 30px;
         font-size: 20px;
         cursor: pointer;
+        color: white !important;
+        transition: all 300ms;
         &:hover{
             background-color: $primaryHover;
         }
     }
     &__right{
-        background-color: white;
         width: 50%;
         margin-top: 200px;
         @include respond(phone){
@@ -61,6 +62,7 @@
         }
     }
     overflow: hidden;
+    padding-bottom: 20px;
     &__brand{
         display: flex;
         align-items: center;
@@ -92,7 +94,7 @@
             align-items: center;
             padding: 25px 20px;
             margin: 20px;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow: 0px 30px 80px rgba(13, 19, 19, 0.1);
             background-color: white;
             border-radius: 10px;
             aspect-ratio: 1;
@@ -122,6 +124,11 @@
                 }
                 align-items: center;
                 margin: 20px 0;
+                & p{
+                    font-size: 14px;
+                    white-space: nowrap;
+                    line-height: 8px;
+                }
             }
         }
     }

@@ -2,14 +2,14 @@ import React from "react";
 import logo from "../../assests/icons/header_icon1.png";
 import { Link } from "react-router-dom";
 import {AiFillFacebook, AiFillTwitterSquare, AiFillInstagram} from 'react-icons/ai'
-
+import WebisteLogo from "../../assests/WebsiteLogo"
 const Footer = () => {
   return (
     <section className="footer">
       <div className="footer__content">  
         <div className="footer__content__intro">
           <div>
-            <img src={logo} alt="site logo" />
+            <WebisteLogo />
             <Link to = '/' className = 'footer__rights__link'><h4>SikayetBox</h4></Link>
           </div>
 

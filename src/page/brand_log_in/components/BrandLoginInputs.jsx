@@ -85,6 +85,7 @@ const BrandLoginInputs = () => {
           history.push('/')
         })
         .catch((err) => {
+          console.log(err)
           dispatch(statusAction.setNotification({
             message: err.response.data.message,
             type: "error"

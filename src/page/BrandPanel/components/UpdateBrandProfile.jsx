@@ -17,12 +17,13 @@ const UpdateBrandProfile = ({phone, setPhone, about, setAbout, handleUpdate, set
                                     value={phone}
                                     className = 'update__brand__profile__inputs__phone-input'
                                     name = 'phone number'
-                                    onChange={setPhone}/>   
+                                    onChange={setPhone}
+                                />   
                         </div>
 
                         <div className="update__brand__profile__inputs__about">
                             <label htmlFor="aboutBrand">About {`[${aboutLength.current}/200]`}</label>
-                                <input
+                                <textarea
                                     type = 'text'
                                     maxLength = {200}
                                     id = 'aboutBrand'
@@ -48,7 +49,7 @@ const UpdateBrandProfile = ({phone, setPhone, about, setAbout, handleUpdate, set
                             <h1>Ok</h1>
                         </div>
                         <div className="update__brand__profile__inputs__cancel-button" onClick = {() => setUpdateProfile(false)}>
-                            <ImCross size = {24} color = 'white' className = 'cancel__button__brand__icon'/>
+                            <ImCross className = 'update__brand__profile__inputs__cancel-button-icon'/>
                         </div>
                     </div>
 

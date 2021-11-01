@@ -7,7 +7,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
     const [showList, setShowList] = useState(false)
     const filterRef = useRef(null)
     const [sort, setSort] = useState({
-        createdOn: "desc"
+        createdAt: "desc"
     })
     const [filterOption, setFilterOption] = useState({})
     const [isAscending, setIsAscending] = useState(true)
@@ -92,7 +92,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
             }
             else if(option === "date"){
                 setSort({
-                    createdOn: isAscending ? 1 : -1
+                    createdAt: isAscending ? 1 : -1
                 })
             }
         }
@@ -136,7 +136,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
                             <h5>Rating</h5>
                         </div>
                     }
-                    <div onClick={() => handleOption("date")} className={`filter__options__item ${sort.createdOn && `filter__options__item-selected` }`}>
+                    <div onClick={() => handleOption("date")} className={`filter__options__item ${sort.createdAt && `filter__options__item-selected` }`}>
                         <h5>Date Created</h5>
                     </div>
 
@@ -149,7 +149,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
                         </div>
                     }
                     {
-                        (tab === "user" || tab === "brand") &&
+                        tab === "client" &&
                         <>
                         <div onClick = {() => handleFilters('email')} 
                          className={`filter__options__filter ${filterOption.isEmailVerified && `filter__options__filter-selected` }`}>

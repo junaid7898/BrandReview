@@ -82,7 +82,7 @@ const BrandChart = ({brandId}) => {
             
             newFilter = {
                 ...newFilter,
-                createdOn: JSON.stringify({
+                createdAt: JSON.stringify({
                     $gt: new Date(date[0]),
                     $lt: new Date(date[1])
                 })
@@ -98,7 +98,7 @@ const BrandChart = ({brandId}) => {
                 let newObj = {}
                 let ratingAvg = {}
                 data.results.map( item => {
-                    const g = new Date(item.createdOn).toDateString()
+                    const g = new Date(item.createdAt).toDateString()
                     console.log(g)
                     if(newObj[g]){
                         newObj[g]++

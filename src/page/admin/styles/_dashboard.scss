@@ -97,7 +97,34 @@
 }
 .dashboard__links{
     width: 100%;
-    max-width: 100%;  
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @include respond(phone){
+        flex-direction: column;
+    }
+    &-container{
+        position: relative;
+        width: 50%;
+        @include respond(phone){
+            width: 100%;
+        }
+    }
+    &__filters{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        @include respond(phone){
+            flex-direction: column;
+        }
+        &__item{
+            margin-right: 10px;
+            @include respond(phone){
+                margin: 10px 0;
+            }
+        }
+    }
 }
 .dashboard__links__header{
     display: none;
@@ -122,8 +149,8 @@
     flex-flow: row wrap;
     align-self: flex-start;
     justify-content: space-evenly;
+    align-items: center;
     padding: 10px 14px;
-    width: 50%;  
     // margin: auto;
     z-index: 75;
     @include respond(phone){

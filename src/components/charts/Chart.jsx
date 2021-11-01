@@ -4,82 +4,14 @@ import {Bar, Line} from 'react-chartjs-2'
 import MultiDatePicker from '../multi_date_picker/MultiDatePicker';
 import EmptyData from '../EmptyDataComponent/EmptyData';
 
-const Chart = () => {
-    const [date, setDate] = useState(null)
-    var date1, date2, diff1, diff2, diff, x;
-    if(date !== null){ 
-        date.map((item, index) => {
-            if(index === 0)
-            {
-                date1 = new Date(item)
-                diff1 = item.dayOfYear
-                // console.log('date1: ', date1, item.dayOfYear)
-            }
-            else if(index === 1){
-                date2 = new Date(item)
-                // console.log('date2: ',date2, item.dayOfYear);
-                diff2 = item.dayOfYear
-            }
-        })
-        diff = Math.abs(diff1 - diff2)
-        // console.log('diff: ', diff);
-        if(diff > 100){
-            x = getArray(diff)
-            // console.log('x1,100: ', x);
-        }
-        else if(diff < 5){
-            x = getMinorArray(diff)
-            // console.log('x1, 5: ', x);
-        }
-        else if (diff < 100){
-            x = getMiniArray(diff)
-            // console.log('x1, <100: ', x)
-        }
-    }
-    
-    // var date1 = new Date('2021/4/25');
-    // var date2 = new Date(); 
-    // var difference = date1.getTime() - date2.getTime();
-    // var days = Math.ceil(difference / (1000 * 3600 * 24));
-
-    function getArray (day){
-        let x = []
-        for(let y = 0; y < day; y = y + 10){   
-            x.push(y)
-        }
-        
-        return x;   
-    }
-
-    function getMiniArray (day){
-        let x = []
-        for(let y = 0; y < day; y = y + 5){   
-            x.push(y)
-        }
-        
-        return x;   
-    }
-
-    function getMinorArray (day){
-        let x = []
-        for(let y = 69; y <100; y = y + 1){   
-            x.push(y+"gada")
-        }
-        
-        return x;   
-    }
-
-    // const x1 = getArray(Math.abs(days));
-
-    //TODO get data from api
-    const data = [ 2.4 , 3 , 4 , 5 , 3.4 , 5 , 3 , 2 , 4 , 4.5 , 5 , 3.4, 5 , 3]
+const Chart = ({date}) => {
     const [chartData, setChartData] = useState(null)
     const [chartData2, setChartData2] = useState(null)
     useEffect(() => {
         if(date){
 
             let newFilterReview = {
-                createdOn: JSON.stringify({
+                createdAt: JSON.stringify({
                     $gt: new Date(date[0]),
                     $lt: new Date(date[1])
                 })
@@ -93,7 +25,7 @@ const Chart = () => {
             .then(({data}) => {
                 let newObj = {}
                 data.results.map( item => {
-                    const g = new Date(item.createdOn).toDateString()
+                    const g = new Date(item.createdAt).toDateString()
                     if(newObj[g]){
                         newObj[g]++
                     }
@@ -134,18 +66,8 @@ const Chart = () => {
         }
     }, [date])
 
-
-    
-
-
-
-
-
     return (
         <>
-        <div className="chart__div__date-picker1">
-                <MultiDatePicker date = {date} setDate = {setDate} />
-        </div>
         {
             date ? 
             (

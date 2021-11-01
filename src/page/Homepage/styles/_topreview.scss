@@ -17,12 +17,20 @@
         min-width: 300px;
         height: 390px;
         min-height: 390px;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        box-shadow: 0px 30px 80px rgba(13, 19, 19, 0.07);
         border-radius: 12px;
         margin: 40px;
         position: relative;
         &:nth-child(2n+1){
             top: 100px;
+        }
+        &-dots{
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            // transform: translateX(-100%);
+            // transform: translate(-100%, -50%);
+            z-index: -10;
         }
         &__heading{
             display: flex;
@@ -30,9 +38,9 @@
             align-items: center;
             &__userName{
                 text-decoration: none;
-                color: inherit;
+                color: rgba(0, 0, 0, 0.8);
                 font-size: 18px;
-                font-weight: 500;
+                font-weight: 700;
                 &:hover{
                     text-decoration: underline;
                 }
@@ -59,7 +67,11 @@
                 }
                 & p{
                     margin-bottom: 10px;
+                    color: #357BCE;
                 }
+            }
+            &__reviewText{
+                color: rgba(0, 0, 0, 0.5);
             }
         }
         &__footer{

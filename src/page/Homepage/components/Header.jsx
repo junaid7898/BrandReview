@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import Star from '../../../assests/Star';
-
+import {getAverageReviewRating} from "../../../helpers/getAverageReview"
 
 function Header() {
 
@@ -36,7 +36,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[0].ratingCount} out of {brands[0].totalReviewCount} Reviews</p>
+                                    <p>{getAverageReviewRating(brands[0].reviews).averageReviewRating} out of {getAverageReviewRating(brands[0].reviews).totalReviews} Reviews</p>
                                 </div>
                             </div>
                             <div className="homepage__header__brand__item">
@@ -45,7 +45,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[1].ratingCount} out of {brands[1].totalReviewCount} Reviews</p>
+                                    <p>{getAverageReviewRating(brands[1].reviews).averageReviewRating} out of {getAverageReviewRating(brands[1].reviews).totalReviews} Reviews</p>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +56,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[2].ratingCount} out of {brands[2].totalReviewCount} Reviews</p>
+                                    <p>{getAverageReviewRating(brands[2].reviews).averageReviewRating} out of {getAverageReviewRating(brands[2].reviews).totalReviews} Reviews</p>
                                 </div>
                             </div>
                         </div>

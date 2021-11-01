@@ -14,13 +14,13 @@ import ImageViewer from '../image_viewer/ImageViewer'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { statusAction } from '../../Redux/statusSlice'
-export const DashboardReviews = () => {
+export const DashboardReviews = ({filters, sortOptions, date}) => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
     const [reviewData, setReviewData] = useState(null)
-    const [filters, setFilters] = useState({})
-    const [sortOptions, setSortOptions] = useState()
-    const [date, setDate] = useState(null)
+    // const [filters, setFilters] = useState({})
+    // const [sortOptions, setSortOptions] = useState()
+    // const [date, setDate] = useState(null)
     const [isVerifing, setIsVerifing] = useState([])
     const [previewImage, setPreviewImage] = useState(null)
     const {client} = useSelector(state => state.client)
@@ -44,7 +44,7 @@ export const DashboardReviews = () => {
         if(date){
             newFilter = {
                 ...newFilter,
-                createdOn: JSON.stringify({
+                createdAt: JSON.stringify({
                     $gt: new Date(date[0]),
                     $lt: new Date(date[1])
                 })
@@ -57,8 +57,6 @@ export const DashboardReviews = () => {
             setReviewData(data.results)
             setTotalPages(data.totalPages)
         })
-
-        
     }, [page,filters, sortOptions, date])
 
     const handleVerification = (reviewId) =>{
@@ -124,19 +122,7 @@ export const DashboardReviews = () => {
 
     return (
         <div className = 'dashboard__review__component'>
-            <div className="dashboard__review__component__container">
-                <div className="dashboard__review__component__item">
-                    <FilterComponent tab = "review" setFilters= {setFilters} setSortOptions = {setSortOptions}/>
-                </div>
-                <div className="dashboard__review__component__item">
-                    <MultiDatePicker date = {date}  setDate={setDate} />
-                </div>
-            </div>
-
-
-            
             <div className = 'dashboard__panel__reports'>
-                
                 <table className="dashboard__panel__reports__table">
                     <tr>
                         <th>User Name</th>
@@ -190,7 +176,7 @@ export const DashboardReviews = () => {
                                                 null
                                         }
                                 </div></td>
-                                    <td>{ new Date(item.createdOn).toDateString()}</td>
+                                    <td>{ new Date(item.createdAt).toDateString()}</td>
                                     <td className = "dashboard__panel__reports__button">
                                     {
                                             !item.isVerified ?

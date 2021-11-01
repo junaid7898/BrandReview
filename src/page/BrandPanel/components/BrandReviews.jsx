@@ -10,16 +10,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ImageViewer from "../../../components/image_viewer/ImageViewer";
 import EmptyData from "../../../components/EmptyDataComponent/EmptyData";
-const BrandReviews = ({ brandId }) => {
+const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [reviewData, setReviewData] = useState(null);
-  const [filters, setFilters] = useState({});
-  const [sortOptions, setSortOptions] = useState();
-  const [date, setDate] = useState(null);
   const [isBlackListing, setIsBlacklisting] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const {client} = useSelector(state => state.client) 
   const [previewImage, setPreviewImage] = useState(null)
 
   const handlePageination = (index) => {
@@ -73,19 +69,6 @@ const BrandReviews = ({ brandId }) => {
 
   return (
     <div className="dashboard__review__component">
-      <div className="dashboard__review__component__container">
-        <div className="dashboard__review__component__item">
-          <FilterComponent
-            tab="review"
-            setFilters={setFilters}
-            setSortOptions={setSortOptions}
-          />
-        </div>
-        <div className="dashboard__review__component__item">
-          <MultiDatePicker date={date} setDate={setDate} />
-        </div>
-      </div>
-
       <div className="dashboard__panel__reports">
         <table className="dashboard__panel__reports__table">
           <tr>

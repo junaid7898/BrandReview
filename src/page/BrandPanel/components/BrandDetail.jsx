@@ -10,17 +10,20 @@ import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndica
 import VerifyOTP from '../../../components/verify-otp/VerifyOTP';
 import BrandChart from './BrandChart';
 import { statusAction } from "../../../Redux/statusSlice";
+import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker';
+import FilterComponent from '../../../components/filter_component/FilterComponent';
 
 
 const BrandDetail = ({item, brandId}) => { 
 
     const [option, setOption] = useState(1)
     const {client} = useSelector(state => state.client)
-
+    const [date, setDate] = useState(null)
     const [phone, setPhone] = useState(null)
     const [about, setAbout] = useState(null)
     const [isUpdatingBrand, setIsUpdatingBrand] = useState(false)
-
+    const [filters, setFilters] = useState({})
+    const [sortOptions, setSortOptions] = useState({})
     useEffect(() => {
         if(item){
             setPhone(item.countryCode + item.phoneNumber)
@@ -135,21 +138,32 @@ const BrandDetail = ({item, brandId}) => {
     return (
         
             <div className = 'dashboard__list'>
-                <ul>
-                    <li onClick = {handleShowDashBoard} className = {option === 1 ? 'list__click': ''}>Dashboard</li>
-                    <li onClick = {handleShowReviews} className = {option === 2 ? 'list__click': ''}>Reports</li>
-                    <li onClick = {handleShowSettings} className = {option === 3 ? 'list__click': ''}>Settings</li>
-                </ul>
+                <div className="dashboard__list__brand__link">
+                    <ul>
+                        <li onClick = {handleShowDashBoard} className = {option === 1 ? 'list__click': ''}>Dashboard</li>
+                        <li onClick = {handleShowReviews} className = {option === 2 ? 'list__click': ''}>Reports</li>
+                        <li onClick = {handleShowSettings} className = {option === 3 ? 'list__click': ''}>Settings</li>
+                    </ul>
+                    <div className="dashboard__list__brand__link__filters">
+                        {
+                            option !== 3 &&
+                            <div className="dashboard__list__brand__link__filters__item">
+                                <MultiDatePicker date={date} setDate={setDate} />
+                            </div>
+                        }
+                        {
+                            option !== 1 && option !== 3 &&
+                            <div className="dashboard__list__brand__link__filters__item">
+                                <FilterComponent tab="review" setFilters={setFilters} setSortOptions={setSortOptions}  />
+                            </div>
+                        }
+                    </div>
+                </div>
                 {
-                    option === 1 && item ? 
-                    (
+                    option === 1 && item &&
                         <div className="dashboard__list__chart">
-                            <BrandChart brandId = {brandId}/>
+                            <BrandChart brandId = {brandId} date={date}/>
                         </div>
-                    ):
-                    (
-                        null
-                    )
                 }
 
                 {
@@ -243,7 +257,7 @@ const BrandDetail = ({item, brandId}) => {
                 {
                     option === 2 ?
                         <div className="brand__reviews__container">
-                            <BrandReviews brandId = {brandId} />
+                            <BrandReviews brandId = {brandId} filters={filters} sortOptions={sortOptions} date={date} />
                         </div>
                     :
                     

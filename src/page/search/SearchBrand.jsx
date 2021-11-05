@@ -9,6 +9,11 @@ import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator
 import { useSelector } from "react-redux";
 import Pagination from "../../components/Pagination/Pagination";
 import TopBrands from "../../components/top-brands/TopBrands"
+import VerticalDotBackGround from "../login/components/VerticalDotBackGround";
+import HorizantalDotBackground from "../login/components/HorizantalDotBackground";
+import BlueSpiralBackground from "../login/components/BlueSpiralBackground";
+import ZigZagBackgroundComponent from "../login/components/ZigZagBackgroundComponent";
+import SpiralBackground from "../login/components/SpiralBackground";
 const SearchBrand = () => {
   
 
@@ -89,7 +94,7 @@ const SearchBrand = () => {
 
 
   return (
-    <div className="brandMain">
+    <div className="brandMain" style = {{position: 'relative'}}>
 
       {
         brandData &&
@@ -121,6 +126,24 @@ const SearchBrand = () => {
                 <TopBrands  rank={false} length={5} />
           </div>
         }
+      </div>
+      <div className = 'brandMain__background__vertical-dot'>
+        <VerticalDotBackGround/>
+      </div>
+      <div className = 'brandMain__background__vertical-dot2'>
+        <VerticalDotBackGround/>
+      </div>
+      <div className = 'brandMain__background__horizantal-dot'>
+        <HorizantalDotBackground/>
+      </div>
+      <div className = 'brandMain__background__blue-spiral'>
+        <BlueSpiralBackground/>
+      </div>
+      <div className = 'brandMain__background__yellow-spiral'>
+        <SpiralBackground/>
+      </div>
+      <div className = 'brandMain__background__yello-zigzag'>
+        <ZigZagBackgroundComponent/>
       </div>
     </div>
   );

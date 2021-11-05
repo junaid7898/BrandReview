@@ -19,7 +19,11 @@ const BrandContent = ({item}) => {
         totalCount = totalCount + item.ratingCount
         console.log('rating: ', item.ratingCount, 'totalCount: ', totalCount);
       })
-      setAvgRating(Math.round(totalCount / data.results.length))
+      if(data.results.length > 0){
+        setAvgRating(Math.round(totalCount / data.results.length))
+      }else{
+        setAvgRating(1)
+      }
     })
   }, [])
 

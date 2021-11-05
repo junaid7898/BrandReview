@@ -4,7 +4,56 @@
     align-items: center;
     justify-content: space-around;
     margin: 50px 0px;
+    width: 100%;
+    position: relative;
+    // background-color: rosybrown;
+    // background-color: seashell;
     &__component{
+        @include respond(phone){
+            display: none;
+        }
+        @include respond(big-tab){
+            display: none;
+        }
+    }
+    &__dots-vertical-background{
+        position: absolute;
+        z-index: -10;
+        bottom: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__dots-vertical-background2{
+        z-index: -10;
+        position: absolute;
+        left: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__zig-zag-background{
+        z-index: -10;
+        position: absolute;
+        top: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__spiral-background{
+        z-index: -10;
+        position: absolute;
+        left: 5%;
+        top: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__blue-spiral-background{
+        z-index: -10;
+        position: absolute;
+        right: 0;
+        top: 0;
         @include respond(phone){
             display: none;
         }

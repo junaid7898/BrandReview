@@ -1,0 +1,49 @@
+.signup__page{
+    position: relative;
+    width: 100%;
+    &__dots-vertical-background{
+        position: absolute;
+        z-index: -10;
+        top: 50%;
+        right: 50%;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__dots-vertical-background2{
+        z-index: -10;
+        position: absolute;
+        top: 30%;
+        left: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__zig-zag-background{
+        z-index: -10;
+        position: absolute;
+        top: 0;
+        right: 50%;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__spiral-background{
+        z-index: -10;
+        position: absolute;
+        left: 5%;
+        top: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__blue-spiral-background{
+        z-index: -10;
+        position: absolute;
+        right: 0%;
+        top: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+}

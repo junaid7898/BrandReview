@@ -1,15 +1,10 @@
 import React from 'react'
-import img1 from '../../../assests/images/img1.png'
-import dots from '../../../assests/images/Dots.png'
-import img2 from '../../../assests/images/Vector 3.png'
 
-const BackgroundContent = () => {
+const HorizantalDotBackground = () => {
     return (
-        <section className = 'banner'>
-            <img src = {img1}  className = 'banner__img' alt = 'background'/>
-            {/* <img src = {dots} className = 'banner__dots' alt = 'background'/> */}
-            <svg width="218" height="50" viewBox="0 0 218 50" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'banner__dots'>
-                    <g opacity="0.3">
+        <div>
+            <svg width="218" height="50" viewBox="0 0 218 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g opacity="0.3">
                     <circle r="4" transform="matrix(1 0 0 -1 4 46)" fill="#357BCE"/>
                     <circle r="4" transform="matrix(1 0 0 -1 4 18)" fill="#357BCE"/>
                     <circle r="4" transform="matrix(1 0 0 -1 4 32)" fill="#357BCE"/>
@@ -74,12 +69,11 @@ const BackgroundContent = () => {
                     <circle r="4" transform="matrix(1 0 0 -1 214 18)" fill="#357BCE"/>
                     <circle r="4" transform="matrix(1 0 0 -1 214 32)" fill="#357BCE"/>
                     <circle r="4" transform="matrix(1 0 0 -1 214 4)" fill="#357BCE"/>
-                    </g>
-                </svg>
+                </g>
+            </svg>
 
-            <img src = {img2} className = 'banner__img' alt = 'background'/>
-        </section>
+        </div>
     )
 }
 
-export default BackgroundContent
+export default HorizantalDotBackground

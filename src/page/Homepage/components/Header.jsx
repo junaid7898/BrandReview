@@ -7,6 +7,8 @@ import {getAverageReviewRating} from "../../../helpers/getAverageReview"
 function Header() {
 
     const {brands} = useSelector(state => state.brands)
+    brands.map(item => console.log('item: ', brands))
+
 
 
     return (
@@ -26,9 +28,9 @@ function Header() {
                     </div>
                 </div>
                 {
-                    brands.length > 0 &&
+                    brands && brands.length > 0 &&
                     <div className="homepage__header__right">
-                    <div className="homepage__header__brand">
+                    {/* <div className="homepage__header__brand">
                         <div className="homepage__header__brand__col1">
                             <div className="homepage__header__brand__item">
                                 <Link to = {`/brand/${brands[0].id}`} className="homepage__header__brand__item__logo-container">
@@ -60,7 +62,7 @@ function Header() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 }
             </div>

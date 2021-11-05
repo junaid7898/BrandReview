@@ -5,6 +5,11 @@ import ProfileContent from './components/ProfileContent/ProfileContent'
 import ProfileDetail from './components/ProfileDetail/ProfileDetail'
 import { useParams } from 'react-router'
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
+import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
+import BlueSpiralBackground from '../login/components/BlueSpiralBackground'
+import HorizantalDotBackground from '../login/components/HorizantalDotBackground'
+import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
+import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
 const Profile = () => {
 
     const {client} = useSelector(state => state.client)
@@ -69,7 +74,7 @@ const Profile = () => {
 
 
     return (
-        <div >
+        <div style = {{position: 'relative'}}>
             {
                 userDetails ?
                 <>
@@ -79,6 +84,22 @@ const Profile = () => {
                 :
                     <LoadingIndicator />
             }
+
+            <div className="user__profile__vertical-dots">
+                <VerticalDotBackGround/>
+            </div>
+            <div className="user__profile__blue-spiral">
+                <BlueSpiralBackground/>
+            </div>
+            <div className = 'user__profile__horizantal-dots'>
+                <HorizantalDotBackground/>
+            </div>
+            <div className = 'user__profile__zig-zag-component'>
+                <ZigZagBackgroundComponent/>
+            </div>
+            <div className = 'user__profile__blue-zig-zag-component'>
+                <BlueZigZagComponent/>
+            </div>
         </div>
     )
 }

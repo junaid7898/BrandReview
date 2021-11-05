@@ -1,7 +1,7 @@
 .brandMain{
-    max-width: $maxwidth;
+    // max-width: $maxwidth;
     margin: auto;
-
+    // background-color: red;
     &__reviews-container{
         // max-width: 1000px;
         // margin: auto;
@@ -40,7 +40,64 @@
         & h2{
             padding: 20px 10px;
             font-size: 15px;
-            color: #357BCE;
+            color: $primary;
+        }
+    }
+    &__background{
+        &__vertical-dot{
+            position: absolute;
+            top: 200px;
+            left: 5%;
+            z-index: -10;
+            @include respond(phone){
+                display: none;
+            }
+        }
+        &__vertical-dot2{
+            position: absolute;
+            bottom: 0px;
+            left: 20%;
+            z-index: -10;
+            transform: translate(50%, 70%);
+            @include respond(phone){
+                display: none;
+            }
+        }
+        &__horizantal-dot{
+            position: absolute;
+            top: 250px;
+            right: 5%;
+            z-index: -10;
+            @include respond(phone){
+                display: none;
+            }
+        }
+        &__blue-spiral{
+            position: absolute;
+            top:0;
+            right: 0;
+            z-index: -10;
+            @include respond(phone){
+                display: none;
+            }
+        }
+        &__yellow-spiral{
+            position: absolute;
+            bottom:0;
+            left: 5%;
+            z-index: -10;
+            @include respond(phone){
+                display: none;
+            }
+        }
+        &__yello-zigzag{
+            position: absolute;
+            bottom:0;
+            right: 5%;
+            z-index: -10;
+            @include respond(phone){
+                display: none;
+            }
         }
     }
 }

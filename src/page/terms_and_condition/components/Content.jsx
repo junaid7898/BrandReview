@@ -50,8 +50,14 @@ const Content = () => {
           model sentence structures, to generate Lorem Ipsum which looks
           reasonable.
         </p>
-        <img className = 'vector4' src = {vector4} alt = 'background'/>
-        <img className = 'vector5' src = {vector5} alt = 'background'/>
+        <svg width="38" height="70" viewBox="0 0 38 70" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'vector4'>
+          <path d="M36.949 2.50269C17.4594 4.63185 -17.0323 14.8189 0.917728 38.5339C23.3552 68.1777 43.616 28.3864 18.533 20.9187C-6.55002 13.4509 -3.39456 54.239 -4.88481 69.5633" stroke="#FFCC0D" stroke-width="5"/>
+        </svg>
+
+        <svg width="48" height="44" viewBox="0 0 48 44" fill="none" xmlns="http://www.w3.org/2000/svg" className = 'vector5'>
+          <path d="M40.0156 3L44.1245 17.4031L34.9115 16.2078L35.0329 26.7197L17.936 25.6261L22.0449 40.0292L13.4813 38.1684L2.99985 40.9319" stroke="#357BCE" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+
         <img className = 'vector6' src = {vector6} alt = 'background'/>
       </div>
       

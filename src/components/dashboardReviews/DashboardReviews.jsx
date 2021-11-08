@@ -35,8 +35,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
         const options = {
             page,
             limit: 10,
-            sortBy: sortOptions,
-            populate:"user.User,brand.Brand"
+            sortBy: sortOptions
         }
         console.log(filters)
         let newFilter = filters
@@ -51,7 +50,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
             }
         }
         console.log(newFilter)
-        axios.post('/review/query',{filters: newFilter, options})
+        axios.post('/review/query',{ filters: newFilter, options })
         .then(({data}) => {
             console.log(data)
             setReviewData(data.results)
@@ -133,7 +132,6 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                     </tr>
                     {
                         reviewData && reviewData.map((item) => {
-                            console.log('itemData: ', item)
                             return(
                                 <>
                                 <tr className = 'dashboard__panel__reports__table__data-rows' id = {item.id}>
@@ -144,10 +142,10 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                                     </td>
                                     <td>
                                         <div className="dashboard__panel__reports__table__data-rows__ratings">
-                                            <h4>{item.ratingCount}</h4>
+                                            <h4>{item.rating}</h4>
                                             <span className ='dashboard__panel__reports__table__data-rows__ratings__stars'>
                                                 {
-                                                    Array(Math.round(item.ratingCount < 1 ? 1 : item.ratingCount )).fill().map((_)=>(
+                                                    Array(Math.round(item.rating < 1 ? 1 : item.rating )).fill().map((_)=>(
                                                         <Star starGradient1 = "#FFDC64" starGradient2 = "#FFC850" starLines = "#FFF082"/>
                                                     ))
                                                 }
@@ -157,8 +155,6 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                                     
                                     <td className = 'dashboard__panel__reports__table__comment'>{item.message}
                                     <div className = 'dashboard__panel__reports__images'>
-                                    
-                                
                                         {
                                             item.images.map(img => {
                                                 return(

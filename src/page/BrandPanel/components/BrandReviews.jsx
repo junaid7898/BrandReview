@@ -23,13 +23,14 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
   };
 
   useEffect(() => {
-    setReviewData(null);
+    if(filters && sortOptions){
+      setReviewData(null);
     setCurrentPage(0);
     const options = {
       page,
       limit: 10,
       sortBy: sortOptions,
-      populate: "user.User",
+      populate:"user.User"
     };
     let newFilter = filters;
 
@@ -44,7 +45,7 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
     }
     newFilter = {
       ...newFilter,
-      brand: brandId,
+      "brand.details": brandId,
     };
     console.log(newFilter);
     console.log(options);
@@ -56,6 +57,7 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
         setTotalPages(data.totalPages);
         setCurrentPage(data.page);
       });
+    }
   }, [page, filters, sortOptions, date]);
 
   //FIXME for admin blacklist user
@@ -66,7 +68,6 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
   const handleRemoveBlacklist = (id) => {
     setIsBlacklisting([...isBlackListing, id]);
   };
-
   return (
     <div className="dashboard__review__component">
       <div className="dashboard__panel__reports">
@@ -90,13 +91,9 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
                     </td>
                     <td>
                       <div className="dashboard__panel__reports__table__data-rows__ratings">
-                        <h4>{item.ratingCount}</h4>
+                        <h4>{item.rating}</h4>
                         <span className="dashboard__panel__reports__table__data-rows__ratings__stars">
-                          {Array(
-                            Math.round(
-                              item.ratingCount < 1 ? 1 : item.ratingCount
-                            )
-                          )
+                          {Array(Math.round(item.rating < 1 ? 1 : item.rating))
                             .fill()
                             .map((_) => (
                               <Star

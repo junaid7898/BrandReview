@@ -12,7 +12,7 @@ import TopBrands from "../../components/top-brands/TopBrands"
 const SearchBrand = () => {
   
 
-  const {brandId} = useParams()
+  const {brandSlug} = useParams()
   const {client} = useSelector(state => state.client)
   const [brandData, setBrandData] = useState(null)
   const [reviewData, setReviewData] = useState([])
@@ -23,9 +23,10 @@ const SearchBrand = () => {
   const [updatedReview, setUpdatedReview] = useState(null)
   useEffect(() => {
     
-    if(brandId){
+    if(brandSlug){
+      console.log(brandSlug)
       axios
-        .get(`/brand/${brandId}`)
+        .get(`/brand/page/${brandSlug}`)
         .then(({data}) => {
           setBrandData(data)
         })
@@ -34,37 +35,37 @@ const SearchBrand = () => {
           // console.log(err.response.data.message)
         })
       }
-  }, [brandId])
+  }, [brandSlug])
 
   useEffect(() => {
-    const options = {
-      page,
-      limit: 10,
-      populate:"user.User"
+    if(brandData){
+      const options = {
+        page,
+        limit: 10,
+        populate: "user.User"
+      }
+      const filters={
+        "brand.details": brandData.id
+      }
+      if(brandData.id){
+        axios
+        .post(`/review/query`,{
+          options,
+          filters
+        })
+        .then(({data}) =>{
+          console.log(data)
+          setCurrentPage(data.page)
+          setTotalPages(data.totalPages)
+          setReviewData(data.results)
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     }
-    const filters={
-      brand: brandId
-    }
-    if(brandId){
-
-      
-      axios
-      .post(`/review/query`,{
-        options,
-        filters
-      })
-      .then(({data}) =>{
-        console.log(data)
-        setCurrentPage(data.page)
-        setTotalPages(data.totalPages)
-        setReviewData(data.results)
-        console.log(data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    }
-  }, [brandId, page])
+  }, [brandData, page])
 
 
   const handlePageination = (index) => {
@@ -118,7 +119,7 @@ const SearchBrand = () => {
           brandData && 
           <div className="brandMain__topbrands">
                 <h2>Top brands in the same category</h2>
-                <TopBrands  rank={false} length={5} />
+                {/* <TopBrands  rank={false} length={5} /> */}
           </div>
         }
       </div>

@@ -4,7 +4,7 @@ import TopBrands from '../../../components/top-brands/TopBrands'
 function TopTenBrands() {
     return (
         <div className="topbrands">
-            <TopBrands />
+            <TopBrands rank={true} length={10} />
         </div>
     )
 }

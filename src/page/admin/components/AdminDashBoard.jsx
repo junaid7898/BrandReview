@@ -244,7 +244,7 @@ const AdminDashBoard = () => {
                         {
                             !showSettings && !showDashBoard &&
                             <div className="dashboard__links__filters__item">
-                                <FilterComponent tab = {showReviews ? "review" : (showBrands || showUsers ) ? "client" : null} setFilters= {setFilters} setSortOptions = {setSortOptions}/>
+                                <FilterComponent tab = { showReviews ? "review" : showBrands ? "brand" : showUsers ? "user" : null } setFilters= {setFilters} setSortOptions = {setSortOptions}/>
                             </div>
                         }
                         {

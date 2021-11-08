@@ -22,12 +22,12 @@ function Review({review}) {
                     <Dots />
                 </div>
             <div className="topReview__item__heading">
-                <Link to={`/user/${review.user._id}`} className="topReview__item__heading__userImage"><img src={review.user.profileImage} alt="idk"/></Link>
-                <Link to={`/user/${review.user._id}`}className="topReview__item__heading__userName"><p className="topReview__item__heading__name">{review.user.name}</p></Link>
+                <Link to={`/user/${review.user.id}`} className="topReview__item__heading__userImage"><img src={review.user.profileImage} alt="idk"/></Link>
+                <Link to={`/user/${review.user.id}`}className="topReview__item__heading__userName"><p className="topReview__item__heading__name">{review.user.name}</p></Link>
             </div>
             <div className="topReview__item__body">
-                <Link to={`brand/${review.brand._id}`} className="topReview__item__body__brandName"><p>{review.brand.name}</p></Link>
-                <p className="topReview__item__body__reviewText">"{truncateString(review.message,250)}"</p>
+                {/* <Link to={` ${review.brand ? `brand/${review.brand}` : `/`}`} className="topReview__item__body__brandName"><p>{review.brand.name}</p></Link>
+                <p className="topReview__item__body__reviewText">"{truncateString(review.message,250)}"</p> */}
             </div>
             <div className="topReview__item__footer">
                 <div className="topReview__item__footer__stars">

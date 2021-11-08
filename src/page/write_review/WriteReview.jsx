@@ -8,7 +8,7 @@ import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator
 import { useDispatch, useSelector } from "react-redux";
 import { statusAction } from "../../Redux/statusSlice";
 import ReactStars from "react-rating-stars-component";
-
+import {brandAction} from "../../Redux/brandInfoSlice/brandInfoSlice"
 import { clientActions } from "../../Redux/clientslice/clientSlice";
 const WriteReview = () => {
   const history = useHistory()
@@ -105,20 +105,25 @@ const WriteReview = () => {
 
     setIsPublishing(true)
 
-    console.log(title, message);
     const review = {
-      brand: brandId,
+      brand: {
+        details: brand.id,
+        name: brand.name,
+        image: brand.logo,
+        averageRating: brand.averageRating,
+        totalReviews: brand.reviews.length
+      },
       user: client.user.id,
       title: title,
       message: message,
-      ratingCount: ratings,
+      rating: parseFloat(ratings),
     }
-
+    console.log(review)
     let data;
     const g = await axios.post('/review/', {review, imageDetails},{
       headers:{
         "authorization" : `bearer ${client.tokens.access.token}`,
-        "role" : Object.keys(client)[0]
+        "role" : client.type
       }
     })
     .then(({data:gg}) => {
@@ -131,6 +136,7 @@ const WriteReview = () => {
       return true
     })
     .catch(err =>{
+      console.log(err)
       dispatch(statusAction.setNotification({
         message: err.response.data.message,
         type: "error"
@@ -146,6 +152,16 @@ const WriteReview = () => {
       ...client,
       user: data.user
     }))
+    dispatch(brandAction.setBrands([
+      ...brands.map(brand => {
+        if(brand.id === data.brand.id){
+          return data.brand
+        }
+        else{
+          return brand
+        }
+      }),
+    ]))
 
 
       if(data.imageArray.length < 1){
@@ -226,6 +242,7 @@ const WriteReview = () => {
           <div className="review__content__tboxes">
           <div className="review__content__tboxes1">
             <input
+                autoComplete="off"
                 type="text"
                 placeholder="Select the Brand"
                 className="review__content__tboxes1__input"
@@ -244,7 +261,6 @@ const WriteReview = () => {
                       return(
                           <div className = 'review__content__tboxes1__search-list__list__item' onClick = {() => {
                               setBrand(item)
-                              setBrandId(item.id)
                               setShowList(!showList)
                               document.getElementById("brandInput").value = item.name
                               // setSelectedBrand(item.name)
@@ -279,14 +295,14 @@ const WriteReview = () => {
 
             <div className = 'review__star__container'>
               <div className="review__star__container__stars">
-                <label>Ratings: {ratings}</label>
+                <label>Rating</label>
                 <div className="review__star__container__stars__selector">
                   <ReactStars
                     count = {5}
                     onChange = {setRatings}
                     size = {40}  
                     isHalf = {true}
-                    activeColor="#ffd700"
+                    activeColor="#357BCE"
                   />
                 </div>
               </div>

@@ -16,27 +16,18 @@ function TopBrands({category, rank, length}) {
         if(brands){
 
             if(!category){
-
-                const preSortedBrands = [...brands.map(brand => {
-                    const newBrand = {...brand, averageRatingCalculated: parseFloat(getAverageReviewRating(brand.reviews).averageReviewRating)}
-                    return newBrand
-                })]
-                let sorted = [...preSortedBrands]
+                let sorted = [...brands]
                 function mycomparator(a,b) {
-                    return parseInt(b.averageRatingCalculated) - parseInt(a.averageRatingCalculated);
+                    return parseInt(b.averageRating) - parseInt(a.averageRating);
                 }
                 sorted.sort(mycomparator);
                 setBrandsData([...sorted.slice(0, length)])
             }
             else if(category){
                 const similarBrands = [...brands.filter(brand => brand.category === category)]
-                const preSortedBrands = [...similarBrands.map(brand => {
-                    const newBrand = {...brand, averageRating: parseFloat(getAverageReviewRating(brand.reviews).averageReviewRating)}
-                    return newBrand
-                })]
-                let sorted = [...preSortedBrands]
+                let sorted = [...similarBrands]
                 function mycomparator(a,b) {
-                    return parseInt(b.averageRatingCalculated) - parseInt(a.averageRatingCalculated);
+                    return parseInt(b.averageRating) - parseInt(a.averageRating);
                 }
                 sorted.sort(mycomparator);
                 setBrandsData([...sorted.slice(0, length)])
@@ -53,7 +44,7 @@ function TopBrands({category, rank, length}) {
                 brandsData.length > 0 &&
                 brandsData.map((item, index) => {
                     return(
-                        <Link to={`brand/${item.id}`} className="topbrands__list">
+                        <Link to={`brand/${item.slug}`} className="topbrands__list">
                             {
                                 rank && (index === 0 || index === 1 || index === 2) ? 
                                 (
@@ -76,7 +67,7 @@ function TopBrands({category, rank, length}) {
                             }
                             <td className="topbrands__list__ratings">
                                 <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                <p>{getAverageReviewRating(item.reviews).averageReviewRating} Ratings</p>
+                                <p className="topbrands__list__ratings__text">{item.averageRating} Ratings</p>
                             </td>
                         </Link>  
                     )

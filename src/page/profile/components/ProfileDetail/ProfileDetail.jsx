@@ -5,11 +5,14 @@ import { axios } from "../../../../axios/axiosInstance";
 import Review from "../../../../components/reviews/Review";
 import Pagination from "../../../../components/Pagination/Pagination"
 import LoadingIndicator from "../../../../components/loadingIndicator/LoadingIndicator";
+import FilterComponent from "../../../../components/filter_component/FilterComponent"
 const ProfileDetail = ({user, visitorIsUser, userId}) => {
   // console.log('user:>', user);
   const location = useLocation()
   const [option ,setOption] = useState(0)
   const [page, setPage] = useState(1)
+  const [filter, setFilter] = useState({})
+  const [sortOptions, setSortOptions] = useState({})
   const [followPage, setFollowPage] = useState(1)
   const [totalfollowPage, setTotalFollowPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -23,7 +26,6 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
     review: true,
     follow: true
   })
-
   const handlePageination = (index) => {
     setPage(index)
     setReviewData([])
@@ -59,20 +61,10 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
   useEffect(() => {
         if(option === 2){
           setIsLoading({...isLoading, review: true})
-          let num = user.reviews.length/10;
-        
-        if(num > Math.round(num)){
-          num = Math.round(num + 1)
-        }
-        else{
-          num = Math.round(num)
-        }
-        // console.log('total reviews:', num);
-        setTotalPages(num)
       axios
       .post(`review/query/`,{
         filters:{
-          user: user.id
+          "user": user.id
         },
         options:{
           page,
@@ -112,7 +104,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
       options:{
         page,
         limit: 10,
-        populate:"user.User,brand.Brand"
+        populate:"user.User"
     }
     })
     .then(({data}) =>{ 
@@ -154,18 +146,26 @@ useEffect(() => {
 
   return (
     <section className="details">
-      <ul>
-        {
-          visitorIsUser &&
-          <li onClick={() => {option === 1 ? setOption(0) : setOption(1)}} className = {option === 1 ? 'details__list__click': ''}>Details</li>
-        }
-        <li onClick={() => {option === 2 ? setOption(0) : setOption(2)}} className = {option === 2 ? 'details__list__click': ''} >Reviews</li>
-        {
-          visitorIsUser &&
-          <li onClick={() => {option === 3 ? setOption(0) : setOption(3)}} className = {option === 3 ? 'details__list__click': ''}>Reviews I Follow</li>
-        }
-        
-      </ul>
+      <div className="details__list">
+        <ul>
+          {
+            visitorIsUser &&
+            <li onClick={() => {option === 1 ? setOption(0) : setOption(1)}} className = {option === 1 ? 'details__list__click': ''}>Details</li>
+          }
+          <li onClick={() => {option === 2 ? setOption(0) : setOption(2)}} className = {option === 2 ? 'details__list__click': ''} >Reviews</li>
+          {
+            visitorIsUser &&
+            <li onClick={() => {option === 3 ? setOption(0) : setOption(3)}} className = {option === 3 ? 'details__list__click': ''}>Reviews I Follow</li>
+          }
+          
+        </ul>
+          <div className="details__list__filters">
+            {
+              option !== 1 &&
+              <FilterComponent tab="review" setFilters={setFilter} setSortOptions={setSortOptions} />
+            }
+          </div>
+      </div>
             {
               option === 1 ? 
                 (

@@ -183,6 +183,10 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
+    &__loader{
+        width: 100px;
+        text-align: center;
+    }
     @include respond(desktop){
         // min-width: 300px;
     }

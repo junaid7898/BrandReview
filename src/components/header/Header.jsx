@@ -152,11 +152,12 @@ const Header = () => {
 
         <div className="nav__icon__container">
         {
-          !attemptingLoginOnSiteLoad ?
-          <GiHamburgerMenu
-            className="nav__open__icon"
-            onClick={() => showMenu()}
-          />
+          !attemptingLoginOnSiteLoad 
+          ?
+            <GiHamburgerMenu
+              className="nav__open__icon"
+              onClick={() => showMenu()}
+            />
           :
             <div className="nav__icon__container__mobile">
               <LoadingIndicator />
@@ -210,202 +211,202 @@ const Header = () => {
           !attemptingLoginOnSiteLoad 
           ?
           <>
-          <div className="nav__lock">
-          {
-            client 
-            ?
-              <BiLockOpenAlt className="nav__lock__lockIcon" />
-            :
-              <BiLockAlt className="nav__lock__unlockIcon" />
-          }
-          </div>
-          <ul>
-            {/* <li>
-              <Link to = '/' >
-                <h4 className = 'nav__links__link__h4'>Home</h4>
-              </Link>
-            </li> */}
-            
+            <div className="nav__lock">
             {
-              !client ? 
-              (
-                <>
-                        {/* ANCHOR Links for headers */}
-                        {/* SECTION Login */}
-                  <li>
-                    <div
-                      className="nav__links__link" onClick={() => {
-                        setShowRegister(false)
-                        setShowLogin(!showLogin);
-                      }}>
-                                  {/* SECTION nav links on click login */}
-                          <h4 className = 'nav__links__link__h4'>Login</h4>
-                          <FiChevronDown size={20} className="nav__links__icon" />
-                          {
-                            showLogin ? 
-                            (
-                              <div className="nav__links__link__user-login">
-
-                                <Link to="/user/login"  className="nav__links__link__user-login__link1">
-                                  <div className="nav__links__link__user-login__link1__item">
-                                    <BiUser size = {15}/>
-                                    <h4>User</h4>
-                                  </div> 
-                                </Link>
-
-                                <Link to="/brand/login" className="nav__links__link__user-login__link2">
-                                  <div className="nav__links__link__user-login__link2__item">
-                                        <AiFillCar size = {15}/>
-                                        <h4 >Brand</h4>
-                                  </div>
-                                </Link>
-                              </div>
-                          )
-                          :
-                          null
-                        }
-                    </div>
-
-                        {/* SECTION LOGIN ends here */}
-                  </li>
-
-                        {/* SECTION Register links start */}
-                  <li>
-
+              client 
+              ?
+                <BiLockOpenAlt className="nav__lock__lockIcon" />
+              :
+                <BiLockAlt className="nav__lock__unlockIcon" />
+            }
+            </div>
+            <ul>
+              {/* <li>
+                <Link to = '/' >
+                  <h4 className = 'nav__links__link__h4'>Home</h4>
+                </Link>
+              </li> */}
+              
+              {
+                !client ? 
+                (
+                  <>
+                          {/* ANCHOR Links for headers */}
+                          {/* SECTION Login */}
+                    <li>
                       <div
-                        className="nav__links__link"
-                        onClick={() => {
-                          setShowLogin(false);
-                          setShowRegister(!showRegister);
-                        }}
-                      >
-                        
-                        <h4 className = 'nav__links__link__h4'>Signup</h4>
-                        <FiChevronDown size={20} className="nav__links__icon" />
-                          {
-                            showRegister ? 
-                            (
-                              <div className="nav__links__link__user-login">
+                        className="nav__links__link" onClick={() => {
+                          setShowRegister(false)
+                          setShowLogin(!showLogin);
+                        }}>
+                                    {/* SECTION nav links on click login */}
+                            <h4 className = 'nav__links__link__h4'>Login</h4>
+                            <FiChevronDown size={20} className="nav__links__icon" />
+                            {
+                              showLogin ? 
+                              (
+                                <div className="nav__links__link__user-login">
 
-                                  <Link
-                                    to="/user/signup"
-                                    className="nav__links__link__user-login__link1"
-                                  >
+                                  <Link to="/user/login"  className="nav__links__link__user-login__link1">
                                     <div className="nav__links__link__user-login__link1__item">
                                       <BiUser size = {15}/>
                                       <h4>User</h4>
-                                  </div>
+                                    </div> 
                                   </Link>
 
-                                  <Link
-                                    to="/brand/signup"
-                                    className="nav__links__link__user-login__link2"
-                                  >
+                                  <Link to="/brand/login" className="nav__links__link__user-login__link2">
                                     <div className="nav__links__link__user-login__link2__item">
-                                      <AiFillCar size = {15}/>
-                                      <h4 >Brand</h4>
+                                          <AiFillCar size = {15}/>
+                                          <h4 >Brand</h4>
                                     </div>
                                   </Link>
-
-                              </div>
+                                </div>
                             )
                             :
                             null
                           }
                       </div>
-                  </li>
-                  
-                {/* SECTION Register ends Here */}
-                </>
-              ) : (
-                <>
-                  
-                    {
-                      client.type.includes("user") 
-                      ? 
-                      (
-                        client.user.role.includes("user") &&
-                        <li>
-                          <Link to={`/user/${client.user.id}`} ><h4 className = 'nav__links__link__h4'>Profile</h4></Link>
-                        </li>
-                      ) 
-                      :
-                      client.type.includes("brand") ? 
-                      (
-                          <li>
-                            <Link to={`/brand/${client.brand.id}`}>
-                              <h4  className = 'nav__links__link__h4'>Brand Page</h4>
-                            </Link>
-                          </li>
-                      )
-                        :
-                        null
-                    }
-                  
-                  
-                    {
-                      (
-                        client.type.includes("brand") &&
-                        client.brand.role.includes("brand"))? 
-                        (
-                          <li>
-                            <Link to={`/brand/panel/${client.brand.id}`}>   
-                              <h4 className = 'nav__links__link__h4'>Brand Panel</h4>    
-                            </Link>
-                          </li>
-                        )
-                        :
-                        null
-                    }
-                    {/* {
-                      
-                        client.type.includes('brand') ?
-                        (
-                          <li>
-                          <Link to = {`/brand/${client.brand.id}`}><h4 className = 'nav__links__link__h4'>brand</h4></Link>
-                          </li>
-                        )
-                        :
-                        (
-                          null
-                        )
-                    } */}
-                  
-                  
-                    {
-                      client.type.includes("admin") ||
-                      (
-                        client.type === "user" &&
-                        client.user.role.includes("subAdmin")
-                      )
 
-                      ?
+                          {/* SECTION LOGIN ends here */}
+                    </li>
 
-                      (
-                        <li>
-                          <Link to={`/admin`} ><h4 className = 'nav__links__link__h4'>Admin Panel</h4></Link>
-                        </li>
-                      )
-                      :
-                      null
-                    }
-                  
-                  <>
-                    <button
-                    className = 'nav__links__button'
-                      onClick={() => logout(dispatch, history, client.type, client.tokens.refresh.token)}
-                    >
-                      Logout
-                    </button>
+                          {/* SECTION Register links start */}
+                    <li>
+
+                        <div
+                          className="nav__links__link"
+                          onClick={() => {
+                            setShowLogin(false);
+                            setShowRegister(!showRegister);
+                          }}
+                        >
+                          
+                          <h4 className = 'nav__links__link__h4'>Signup</h4>
+                          <FiChevronDown size={20} className="nav__links__icon" />
+                            {
+                              showRegister ? 
+                              (
+                                <div className="nav__links__link__user-login">
+
+                                    <Link
+                                      to="/user/signup"
+                                      className="nav__links__link__user-login__link1"
+                                    >
+                                      <div className="nav__links__link__user-login__link1__item">
+                                        <BiUser size = {15}/>
+                                        <h4>User</h4>
+                                    </div>
+                                    </Link>
+
+                                    <Link
+                                      to="/brand/signup"
+                                      className="nav__links__link__user-login__link2"
+                                    >
+                                      <div className="nav__links__link__user-login__link2__item">
+                                        <AiFillCar size = {15}/>
+                                        <h4 >Brand</h4>
+                                      </div>
+                                    </Link>
+
+                                </div>
+                              )
+                              :
+                              null
+                            }
+                        </div>
+                    </li>
+                    
+                  {/* SECTION Register ends Here */}
                   </>
-                </>
-              )
-            }
-        </ul>
-        <GrClose className="nav__close__icon" onClick={() => hideMenu()}  size = {24}/>
+                ) : (
+                  <>
+                    
+                      {
+                        client.type.includes("user") 
+                        ? 
+                        (
+                          client.user.role.includes("user") &&
+                          <li>
+                            <Link to={`/user/${client.user.id}`} ><h4 className = 'nav__links__link__h4'>Profile</h4></Link>
+                          </li>
+                        ) 
+                        :
+                        client.type.includes("brand") ? 
+                        (
+                            <li>
+                              <Link to={`/brand/${client.brand.slug}`}>
+                                <h4  className = 'nav__links__link__h4'>Brand Page</h4>
+                              </Link>
+                            </li>
+                        )
+                          :
+                          null
+                      }
+                    
+                    
+                      {
+                        (
+                          client.type.includes("brand") &&
+                          client.brand.role.includes("brand"))? 
+                          (
+                            <li>
+                              <Link to={`/brand/panel/${client.brand.id}`}>   
+                                <h4 className = 'nav__links__link__h4'>Brand Panel</h4>    
+                              </Link>
+                            </li>
+                          )
+                          :
+                          null
+                      }
+                      {/* {
+                        
+                          client.type.includes('brand') ?
+                          (
+                            <li>
+                            <Link to = {`/brand/${client.brand.id}`}><h4 className = 'nav__links__link__h4'>brand</h4></Link>
+                            </li>
+                          )
+                          :
+                          (
+                            null
+                          )
+                      } */}
+                    
+                    
+                      {
+                        client.type.includes("admin") ||
+                        (
+                          client.type === "user" &&
+                          client.user.role.includes("subAdmin")
+                        )
+
+                        ?
+
+                        (
+                          <li>
+                            <Link to={`/admin`} ><h4 className = 'nav__links__link__h4'>Admin Panel</h4></Link>
+                          </li>
+                        )
+                        :
+                        null
+                      }
+                    
+                    <>
+                      <button
+                      className = 'nav__links__button'
+                        onClick={() => logout(dispatch, history, client.type, client.tokens.refresh.token)}
+                      >
+                        Logout
+                      </button>
+                    </>
+                  </>
+                )
+              }
+            </ul>
+            <GrClose className="nav__close__icon" onClick={() => hideMenu()}  size = {24}/>
           </>
         :
-        <LoadingIndicator /> 
+          <LoadingIndicator className="nav__links__loader" /> 
         }
       </div>
       </div>

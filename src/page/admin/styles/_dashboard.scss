@@ -32,10 +32,13 @@
         overflow: auto;
         &__images{
             display: flex;
-            flex-direction: row;
+            flex-flow: row wrap;
             align-items: center;
             justify-content: flex-start;
             margin: 10px 0;
+            &__item{
+                margin: 5px 0;
+            }
         }
         &__table{
             width: 100%;

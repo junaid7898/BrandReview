@@ -50,7 +50,7 @@ const statusSlice = createSlice({
                 action.payload.color = "#FF5151"
             }
             else if(action.payload.type === "success"){
-                action.payload.color = "#77D970"
+                action.payload.color = "#34BE82"
             }
             else if(action.payload.type === "loading"){
                 action.payload.color = "#EDEDED"

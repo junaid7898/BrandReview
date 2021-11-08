@@ -239,6 +239,7 @@
     }
 
     &__user-login{
+        z-index: 75;
         position: absolute;
         top: 20px;
         display: flex;

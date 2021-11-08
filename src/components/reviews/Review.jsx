@@ -37,10 +37,11 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   const [clikedImage, setClickedImage] = useState(null)
   const [rating, setRating] = useState(null)
   const [firstCommentHeight, setFirstCommentHeight] = useState(0)
-  const handleCommentUser = (depth = 0, commentId) =>{
+  const handleCommentUser = ( commentId) =>{
     setCommentIsSending(true)
     let reqObj = {}
-    const isAdmin = client.user.includes("admin")
+    let depth = 0
+    const isAdmin = !!client.type.includes("admin")
     if(depth === 0){
       reqObj = {
         message: commentText,
@@ -59,6 +60,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         type: "user"
       }
     }
+    console.log(reqObj)
     axios.post("/comment",reqObj,{
       headers:{
         "role" : client.type,

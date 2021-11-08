@@ -55,7 +55,7 @@
     }
     &__right{
         width: 50%;
-        margin-top: 200px;
+        margin-top: 50px;
         @include respond(phone){
             margin-top: 100px;
             width: 100%;

@@ -23,12 +23,11 @@
     padding: 30px 24px;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    width: 400px;
+    max-width: 400px;
+    min-width: 350px;
     background-color: #ffffff;
     @include respond(phone){
-        width: 200px;
-        margin-bottom: 80px;
-        margin-top: 30px;
+        display: none;
     }
     &__main {
         @include respond(phone){
@@ -39,6 +38,10 @@
       position: absolute;
       top: 0;
       left: 0;
+      min-width: 100px;
+      max-width: 100px;
+      min-height: 100px;
+      max-height: 100px;
       transform: translateX(-50%) translateY(-50%);
       @include respond(phone){
           width: 100px;
@@ -49,6 +52,10 @@
       top: 0;
       right: 0;
       transform: translateX(50%) translateY(-50%);
+      min-width: 100px;
+      max-width: 100px;
+      min-height: 100px;
+      max-height: 100px;
       @include respond(phone){
         width: 100px;
     }
@@ -57,6 +64,10 @@
       position: absolute;
       bottom: 0;
       left: 0;
+      min-width: 100px;
+      max-width: 100px;
+      min-height: 100px;
+      max-height: 100px;
       transform: translateY(50%) translateX(-50%);
       @include respond(phone){
         width: 100px;
@@ -66,12 +77,21 @@
       position: absolute;
       bottom: 0;
       right: 0;
+      min-width: 100px;
+      max-width: 100px;
+      min-height: 100px;
+      max-height: 100px;
       transform: translateY(50%) translateX(50%);
       @include respond(phone){
         width: 100px;
     }
     }
 
+}
+@media (max-width: 1100px) {
+  .registration__form__icons{
+    display: none;
+  }
 }
 
 

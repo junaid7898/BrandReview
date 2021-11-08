@@ -39,7 +39,7 @@ function Header() {
                 {
                     brandIndexArray.length > 0 &&
                     <div className="homepage__header__right">
-                    <div className="homepage__header__brand">
+                    {/* <div className="homepage__header__brand">
                         <div className="homepage__header__brand__col1">
                             <div className="homepage__header__brand__item">
                                 <Link to = {`/brand/${brands[brandIndexArray[0]].slug}`} className="homepage__header__brand__item__logo-container">
@@ -71,7 +71,7 @@ function Header() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 }
             </div>

@@ -9,6 +9,8 @@ const BrandContent = ({item}) => {
   const [avgRating, setAvgRating] = useState(null)
 
   useEffect(() => {
+
+
     // const filters = { brand: item.id }
     // const options = {limit: 100000}
     // axios.post('/review/query', {filters, options})

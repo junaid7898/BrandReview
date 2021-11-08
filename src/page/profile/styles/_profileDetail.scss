@@ -58,3 +58,48 @@
     border-collapse: collapse;
     color: $primary;  
 }
+
+.user__profile{
+    background-color: red;
+    &__vertical-dots{
+        position: absolute;
+        z-index: -10;
+        top: 50%;
+    }
+    &__horizantal-dots{
+        position: absolute;
+        z-index: -10;
+        top: 5%;
+        right: 10%;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__blue-spiral{
+        position: absolute;
+        z-index: -10;
+        top: 30%;
+        right: 0;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__zig-zag-component{
+        position: absolute;
+        z-index: -10;
+        top: 5%;
+        left: 10%;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__blue-zig-zag-component{
+        position: absolute;
+        z-index: -10;
+        bottom: 5%;
+        left: 10%;
+        @include respond(phone){
+            display: none;
+        }
+    }
+}

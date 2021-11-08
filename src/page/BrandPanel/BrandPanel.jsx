@@ -5,6 +5,12 @@ import { useParams } from 'react-router'
 import { useSelector } from 'react-redux'
 import {axios} from '../../axios/axiosInstance'
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
+import BlueSpiralBackground from '../login/components/BlueSpiralBackground'
+import SpiralBackground from '../login/components/SpiralBackground'
+import HorizantalDotBackGround from '../login/components/HorizantalDotBackground'
+import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
+import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
+import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
 
 const BrandPanel = () => {
 
@@ -63,7 +69,28 @@ const BrandPanel = () => {
             (
                 <LoadingIndicator/>
             )
-        }         
+        }
+            <div className = 'brand__background__blue-spiral'>
+                <BlueSpiralBackground/>
+            </div> 
+            <div className = 'brand__background__yellow-spiral'>
+                <SpiralBackground/>
+            </div> 
+            <div className = 'brand__background__horizantal-dot'>
+                <HorizantalDotBackGround/>
+            </div>   
+            {/* <div className = 'brand__background__vertical-dot2'>
+                <VerticalDotBackGround/>
+            </div>  */}
+            <div className = 'brand__background__vertical-dot'>
+                <VerticalDotBackGround/>
+            </div>  
+            <div className = 'brand__background__yellow-zigzag'>
+                <ZigZagBackgroundComponent/>
+            </div>  
+            <div className = 'brand__background__blue-zigzag'>
+                <BlueZigZagComponent/>
+            </div>  
         </div>
     )
 }

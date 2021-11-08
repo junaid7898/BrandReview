@@ -105,7 +105,7 @@ function DashBoardBrands({filters, sortOptions}) {
 
                             <div className="dashboard__brands__data__brand__intro">
                                 <img src = {brand.logo} onClick = {() => {setShowImage(brand.logo)}}/>
-                                <Link to = {`brand/${brand.id}`}>
+                                <Link to = {`brand/${brand.slug}`}>
                                     <h5 className = 'dashboard__brands__data__brand__intro__name'>{brand.name}</h5>
                                 </Link>
                             </div>
@@ -143,6 +143,11 @@ function DashBoardBrands({filters, sortOptions}) {
                                                     <LoadingIndicator />
                                                 }
                                             </button>
+                                            <Link to = {`/brand/panel/${brand.id}`}>
+                                                <button className = 'dashboard__brands__data__brand__details__button__button2' >
+                                                    Visit Panel
+                                                </button>
+                                            </Link>
                                         </div>
                                     :
                                         <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">

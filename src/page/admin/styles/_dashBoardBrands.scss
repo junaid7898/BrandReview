@@ -61,6 +61,12 @@
                     &:active{
                         transform: scale(.98);
                     }
+                    &:hover{
+                        background-color: $primaryHover;
+                    }
+                }
+                &__button2{
+                    margin-top: 10px;
                 }
             }
             &__phone, &__email, &__address, &__country-code{

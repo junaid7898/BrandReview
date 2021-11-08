@@ -11,6 +11,7 @@ import Select from "react-select";
 import { axios } from '../../../axios/axiosInstance'
 import FilterComponent from '../../../components/filter_component/FilterComponent'
 import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker'
+import DashboardAddBrand from './DashboardAddBrand'
 
 const AdminDashBoard = () => {
 
@@ -25,6 +26,7 @@ const AdminDashBoard = () => {
     const [date, setDate] = useState(null)
     const [dashboardPhone, setDashBoardPhone] = useState('Dashboard')
     const [showDashboardPhone, setShowDashboardPhone] = useState(null)
+    const [newBrand, setNewBrand] = useState(false)
 
     const [option1, setOption1] = useState(null)
     const [option2, setOption2] = useState(null)
@@ -41,6 +43,7 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(false)
         setShowSettings(false)
+        setNewBrand(false)
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -53,7 +56,7 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(false)
         setShowSettings(false)
-        
+        setNewBrand(false)
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -66,7 +69,7 @@ const AdminDashBoard = () => {
         setShowUsers(true)
         setShowBrands(false)
         setShowSettings(false)
-        
+        setNewBrand(false)
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -79,7 +82,7 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(true)
         setShowSettings(false)
-        
+        setNewBrand(false)
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -92,7 +95,20 @@ const AdminDashBoard = () => {
         setShowUsers(false)
         setShowBrands(false)
         setShowSettings(true)
-        
+        setNewBrand(false)
+        if(showDashboardPhone){
+            handleHideDashboardPhone()
+        }
+    }
+
+    const handleAddBrand = () => {
+        setDashBoardPhone('Settings')
+        setShowDashBoard(false)
+        setShowReviews(false)
+        setShowUsers(false)
+        setShowBrands(false)
+        setShowSettings(false)
+        setNewBrand(true)
         if(showDashboardPhone){
             handleHideDashboardPhone()
         }
@@ -238,6 +254,7 @@ const AdminDashBoard = () => {
                             <li onClick = {handleShowUsers} className = {showUsers ? 'dashboard__list__click': ''}>Users</li>
                             <li onClick = {handleShowBrands} className = {showBrands ? 'dashboard__list__click': ''}>Brands</li>
                             <li onClick = {handleShowSettings} className = {showSettings ? 'dashboard__list__click': ''}>Settings</li>
+                            <li onClick = {handleAddBrand} className = {newBrand ?  'dashboard__list__click': ''}>Add Brand</li>
                         </ul>
                     </div>
                     <div className="dashboard__links__filters">
@@ -281,6 +298,12 @@ const AdminDashBoard = () => {
                 showBrands && 
                     <div className="dashboard__panel__user">
                         <DashBoardBrands filters={filters} sortOptions={sortOptions} date={date} />
+                    </div>
+            }
+            {
+                newBrand &&
+                    <div className = 'dashboard__panel__add-brand'>
+                        <DashboardAddBrand/>
                     </div>
             }
             {

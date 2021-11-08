@@ -170,6 +170,7 @@ const BrandSignUpInputs = () => {
       return 
     }
     setImageDetails(g)
+    console.log(URL.createObjectURL(e.target.files[0]));
     if(g){
       setBrandLogo(URL.createObjectURL(e.target.files[0]))
       setRawLogo(e.target.files[0])

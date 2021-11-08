@@ -43,12 +43,14 @@ const SearchBrand = () => {
   }, [brandSlug])
 
   useEffect(() => {
+
     if(brandData){
       const options = {
         page,
         limit: 10,
         populate: "user.User"
       }
+      console.log('brand id: ',brandData.id)
       const filters={
         "brand.details": brandData.id
       }

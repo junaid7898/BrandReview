@@ -8,6 +8,7 @@ function TopReview() {
     useEffect(() => {
         axios.get("/review/topreviews")
         .then(({data}) =>{
+            console.log(data)
             const halfwayThrough = Math.floor(data.length / 2)
             const arrayFirstHalf = data.slice(0, halfwayThrough);
             const arraySecondHalf = data.slice(halfwayThrough, data.length);

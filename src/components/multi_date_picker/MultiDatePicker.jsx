@@ -59,7 +59,7 @@ const MultiDatePicker = ({date, setDate}) => {
     <div className="date__picker">
       <DatePicker
         id="datePicker"
-        placeholder="click to open"
+        placeholder="Click To Open"
         className="date__picker__custom-calender"
         title="Select Date"
         value={date}

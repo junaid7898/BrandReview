@@ -1,16 +1,57 @@
 
 
 .reviewComponent{
-    margin: 10px 0;
     width: 100%;
-    // background-color: white;
     border-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    // box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     // box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     // box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-    padding:10px 5px;
+    // padding:0px 5px;
     position: relative;
-    
+    &-container{
+        border-radius: 8px;
+        padding: 5px;
+        margin: 10px 0;
+        &__upper{
+            display: flex;
+        flex-direction: row;
+        align-items:stretch;
+        }
+        &__left{
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            &__lineBox{
+                width: 100%;
+                flex: 1;
+                position: relative;
+                &__line{
+                    position: absolute;
+                    width: 1px;
+                    border-left: 2px solid rgb(221, 221, 221);
+                    height: calc(100% - 140px);
+                    // background-color: rgb(221, 221, 221);
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
+            }
+        }
+        &__right{
+            flex: 1;
+            padding-left: 15px;
+        }
+    }
+    &__userImage{
+        & img{
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            object-position: top center;
+            aspect-ratio: 1;
+            margin: 5px;
+            border-radius: 50%;
+        }
+    }
     &__profile{
         display: flex;
         flex-flow: row wrap;
@@ -20,19 +61,9 @@
         &__intro{
             display: flex;
             flex-direction: row;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-around;
-            padding: 10px 20px;
-            
-            & img{
-                width: 50px;
-                height: 50px;
-                object-fit: cover;
-                object-position: top center;
-                margin-right: 15px;
-                border-radius: 50%;
-                aspect-ratio: 1;
-            }
+            // padding: 0px 20px;
             &__name{
                 display: flex;
                 flex-direction: column;
@@ -40,11 +71,29 @@
                 justify-content: flex-start;
                 text-transform: capitalize;
                 margin-right: 15px;
+                &-container{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    &-svg{
+                        margin: 0 5px;
+                    }
+                    &-editsvg{
+                        margin: 0 5px;
+                        cursor: pointer;
+                        transition: all 300ms;
+                        transform: translateZ(0);
+                        backface-visibility: hidden;
+                        &:hover{
+                            transform: translateZ(0) scale(1.2);
+                        }
+                    }
+                }
                 & a{
                     font-weight: 500;
                     font-size: 20px;
                     line-height: 30px;
-                    color: $primary;
+                    color: black;
                 }
                 &__rating{
                     display: flex;
@@ -52,6 +101,7 @@
                     align-items: center;
                     & h4{
                         color: $primary;
+                        padding: 0 5px;
                         padding-bottom: 4px;
                     }
                 }    
@@ -60,7 +110,7 @@
                 display: flex;
                 flex-flow: row wrap;
                 &__review-label, &__thank-label{
-                    background-color: $primary;
+                    background-color: #35C9CE;
                     font-weight: 600;
                     border-radius: 10px;
                     color: white;
@@ -68,8 +118,8 @@
                     margin-top: 5px;
                     pointer-events: none;
                     & p{
-                        padding: 5px 15px;
-                        padding-bottom: 7px;
+                        padding: 2px 15px;
+                        padding-bottom: 5px;
                     }
                 }
                 &__thank-label{
@@ -98,13 +148,14 @@
         color: $onSurface-secondary;
         width: 100%;
         // max-width: 100%;
-        max-width: 95%;
-        margin: auto;
+        width: 100%;
+        // margin: auto;
         // margin-left: 30px;
         text-align: left;
         align-self: flex-end;
         // margin-left: 50px;
-        padding: 8px 12px;
+        margin-top: 20px;
+        margin-bottom: 10px;
         &__edit{
             outline: none;
             background-color: transparent;
@@ -158,8 +209,8 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        border-top: 1px solid rgb(167, 167, 167);
-        padding-top: 10px;
+        // padding-top: 10px;
+        text-align: right;
         &__likeCount{
             font-size: 20px;
             padding-bottom: 6px;
@@ -168,13 +219,15 @@
             pointer-events: none;
         }
         &__button{
-            font-size: 25px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 300ms;
-            margin: 0 10px;
+            &:not(:last-child){
+                margin-right: 10px;
+            }
             backface-visibility: hidden;
             &:hover{
-                transform: scale(1.1);
+                // transform: scale(1.1);
             }
             &-like{
                 transition: all 300ms;
@@ -189,6 +242,13 @@
                 &:hover{
                     color: grey;
                 }   
+            }
+            &-reply{
+                transition: all 300ms;
+                color: grey;
+                &:hover{
+                    color: rgb(0, 0, 0);
+                }
             }
             &-thanked{
                 transition: all 300ms;
@@ -208,7 +268,7 @@
                 transition: all 300ms;
                 color: grey;
                 &:hover{
-                    color: rgb(255, 238, 0);
+                    color: gold;
                 }
             }
             &-following{
@@ -234,21 +294,122 @@
             }
         }
     }
-    &__comments{
+    &__commentReply{
+        &__line{
+            position: absolute;
+            left: -26px;
+            top: 0;
+            transform: translateY(-50%);
+            width:55px; 
+            height:30px;  
+            border:solid 2px rgb(221, 221, 221);
+            border-color:transparent transparent rgb(221, 221, 221) rgb(221, 221, 221);
+            border-radius: 50%/0 0 0 28px;
+            z-index: -1;
+        }
+        &__show{
+            display: inline-block;
+            width: max-content;
+            padding: 5px;
+            color: blue;
+            cursor: pointer;
+            text-decoration: underline;
+            position: relative;
+            // padding: 10px;
+        }
         &__writeComment{
             &-container{
 
             }
+            position: relative;
             display: flex;
             flex-direction: row;
             align-items: center;
             
             border-radius: 10px;
-            padding: 5px;
+            // padding: 5px;
+            &__userImage{
+                height: 30px;
+                margin: 1px;
+                aspect-ratio: 1;
+                object-fit: cover;
+                object-position: center top;
+                border-radius: 50%;
+                background-color: transparent;
+            }
+            &__input{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: #F8F8F8;
+                padding: 0 15px;
+                height: 30px;
+                width: 100%;
+                margin: 5px 0;
+                margin-left: 10px;
+                border-radius: 3px;
+                & input{
+                    width: 100%;
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                }
+            }
+            &__sendIcon{
+                font-size: 20px;
+                color: grey;
+                transition: all 300ms;
+                opacity: 1;
+                pointer-events: all;
+                // margin: 0 30px;
+                cursor: pointer;
+                &-hide{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                &-loader{
+                    position: static;
+                    color: rgb(22, 176, 236);
+                }
+            }
+        }
+        &__replies{
+            &__item{
+                margin: 10px 0;
+                position: relative;
+                display: flex;
+            }
+        }
+    }
+    &__comments{
+        &__line{
+            position: absolute;
+            left: -51px;
+            top: -25px;
+            width:80px; 
+            height:50px;  
+            border:solid 2px rgb(221, 221, 221);
+            border-color:transparent transparent rgb(221, 221, 221) rgb(221, 221, 221);
+            border-radius: 50%/0 0 0 45px;
+            z-index: -1;
+        }
+        &__writeComment{
+            &-container{
+
+            }
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            
+            border-radius: 10px;
+            // padding: 5px;
             &__userImage{
                 height: 50px;
+                margin: 5px;
                 aspect-ratio: 1;
-                object-fit: contain;
+                object-fit: cover;
+                object-position: center top;
                 border-radius: 50%;
                 background-color: transparent;
             }
@@ -289,38 +450,87 @@
             }
         }
         &__array{
-            position: relative;
+            // position: relative;
             padding: 5px;
             &__item{
                 display: flex;
-                flex-direction: column;
-                width: 95%;
-                float: right;
-                // box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-                border: 1px solid rgb(243, 243, 243);
+                flex-direction: row;
                 border-radius: 3px;
                 margin: 10px 0;
-                padding: 10px;
+                padding: 10px 0;
+                position: relative;
+                &__right{
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    position: relative;
+                    margin-left: 10px;
+                    
+                }
+                &__left{
+                    //someting
+                    display: flex;
+                    flex-direction: column;
+                    &__lineBox{
+                        width: 100%;
+                        flex: 1;
+                        position: relative;
+                        &__line{
+                            position: absolute;
+                            width: 1px;
+                            border-left: 2px solid rgb(221, 221, 221);
+                            height: calc(100%);
+                            // background-color: rgb(221, 221, 221);
+                            left: 50%;
+                            transform: translateX(-50%);
+                        }
+                    }
+                }
+                &__text{
+                    color: rgba(0, 0, 0, 0.4);
+                    padding: 5px 0;
+                }
+                &__tag{
+                    &-container{
+                        position: relative;
+                    }
+                    &__verified{
+                        display: flex;
+                        position: absolute;
+                        // top: -50%;
+                        top: 0;
+                        right: 0;
+                    }
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    position: absolute;
+                    background-color: #357BCE;
+                    border-radius: 2px;
+                    padding: 1px 7px;
+                    color: white;
+                    font-size: 5px;
+                }
                 &__upper{
                     display: flex;
                     flex-direction: row;
                     align-items: center;
                 }
                 &__img{
-                    max-width: 50px;
-                    max-height: 50px;
-                    min-width: 50px;
-                    min-height: 50px;
-                    object-fit: contain;
+                    max-width: 30px;
+                    max-height: 30px;
+                    min-width: 30px;
+                    min-height: 30px;
+                    object-fit: cover;
+                    object-position: center top;
                     border-radius: 50%;
-                    margin-right: 20px;
+                    // margin: 2px 0;
+                    
                 }
                 &__lower{
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    margin-top: 15px;
-                    border-top: 1px solid rgb(240, 240, 240);
                 }
                 &__likeCount{
                     padding: 5px;
@@ -337,7 +547,7 @@
             }
         }
         &__moreComments{
-            position: static;
+            // position: static;
             & button{
                 position: relative;
                 background-color: transparent;
@@ -351,8 +561,8 @@
             }
         }
         &__showComments{
-            position: relative;
             & button{
+                position: relative;
                 background-color: transparent;
                 outline: 0;
                 border: 0;
@@ -361,6 +571,7 @@
                 color: rgb(67, 67, 255);
                 font-size: 14px;
                 padding: 10px;
+                padding-left: 0;
             }
         }
     }

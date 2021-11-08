@@ -7,9 +7,18 @@ import {getAverageReviewRating} from "../../../helpers/getAverageReview"
 function Header() {
 
     const {brands} = useSelector(state => state.brands)
-    brands.map(item => console.log('item: ', brands))
-
-
+    const [brandIndexArray, setBrandIndexArray] = useState([])
+    
+    useEffect(() => {
+        if(brands && brands.length > 0){
+            let indexes = []
+            for (let i=0; i<3; i++){
+                indexes.push(Math.floor(Math.random() * brands.length))
+            }
+            setBrandIndexArray(indexes)
+        }
+        console.log(brandIndexArray)
+    }, [brands])
 
     return (
         <div className="homepage__header-container">
@@ -28,37 +37,37 @@ function Header() {
                     </div>
                 </div>
                 {
-                    brands && brands.length > 0 &&
+                    brandIndexArray.length > 0 &&
                     <div className="homepage__header__right">
                     {/* <div className="homepage__header__brand">
                         <div className="homepage__header__brand__col1">
                             <div className="homepage__header__brand__item">
-                                <Link to = {`/brand/${brands[0].id}`} className="homepage__header__brand__item__logo-container">
-                                    <img src={brands[0].logo} className="homepage__header__brand__item__logo"/>
+                                <Link to = {`/brand/${brands[brandIndexArray[0]].slug}`} className="homepage__header__brand__item__logo-container">
+                                    <img src={brands[brandIndexArray[0]].logo} className="homepage__header__brand__item__logo"/>
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{getAverageReviewRating(brands[0].reviews).averageReviewRating} out of {getAverageReviewRating(brands[0].reviews).totalReviews} Reviews</p>
+                                    <p>{brands[brandIndexArray[0]].averageRating} out of {brands[brandIndexArray[0]].reviews.length} Reviews</p>
                                 </div>
                             </div>
                             <div className="homepage__header__brand__item">
-                                <Link to = {`/brand/${brands[1].id}`} className="homepage__header__brand__item__logo-container">
-                                    <img src={brands[1].logo} className="homepage__header__brand__item__logo"/>
+                                <Link to = {`/brand/${brands[brandIndexArray[1]].slug}`} className="homepage__header__brand__item__logo-container">
+                                    <img src={brands[brandIndexArray[1]].logo} className="homepage__header__brand__item__logo"/>
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{getAverageReviewRating(brands[1].reviews).averageReviewRating} out of {getAverageReviewRating(brands[1].reviews).totalReviews} Reviews</p>
+                                    <p>{brands[brandIndexArray[1]].averageRating} out of {brands[brandIndexArray[1]].reviews.length} Reviews</p>
                                 </div>
                             </div>
                         </div>
                         <div className="homepage__header__brand__col2">
                             <div className="homepage__header__brand__item">
-                                <Link to = {`/brand/${brands[2].id}`} className="homepage__header__brand__item__logo-container">
-                                    <img src={brands[2].logo} className="homepage__header__brand__item__logo"/>
+                                <Link to = {`/brand/${brands[brandIndexArray[2]].slug}`} className="homepage__header__brand__item__logo-container">
+                                    <img src={brands[brandIndexArray[2]].logo} className="homepage__header__brand__item__logo"/>
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{getAverageReviewRating(brands[2].reviews).averageReviewRating} out of {getAverageReviewRating(brands[2].reviews).totalReviews} Reviews</p>
+                                    <p>{brands[brandIndexArray[2]].averageRating} out of {brands[brandIndexArray[2]].reviews.length} Reviews</p>
                                 </div>
                             </div>
                         </div>

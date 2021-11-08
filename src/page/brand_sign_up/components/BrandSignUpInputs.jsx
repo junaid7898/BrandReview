@@ -94,7 +94,12 @@ const BrandSignUpInputs = () => {
   const options = [
     { value: 'fashion', label: 'Fashion' },
     { value: 'automobile', label: 'Auto Mobile' },
-    { value: 'gadgets', label: 'Gadgets' },
+    { value: 'online-retail', label: 'Online Retail' },
+    { value: 'social-network', label: 'Social Network' },
+    { value: 'medicine', label: 'Medicine' },
+    { value: 'furniture', label: 'Furniture' },
+    { value: 'pet-store', label: 'Pet Store' },
+    { value: 'search-engine', label: 'Search Engine' },
   ];
 
 

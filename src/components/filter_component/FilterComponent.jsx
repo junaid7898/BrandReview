@@ -97,6 +97,21 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
             }
         }
 
+        const handleInput = (e) =>{
+            const searchQuery = e.target.value.trimStart()
+            const g = filterOption
+            if(searchQuery === ""){
+                delete g.name
+                setFilterOption(g)
+                return 
+            }
+            console.log(searchQuery)
+            setFilterOption({
+                ...filterOption,
+                query: JSON.stringify({$text: `{$search: ${searchQuery}}`}),
+            })
+        }
+
         useEffect(() => {
             const g = sort
             for(var prop in g) {
@@ -120,7 +135,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
         <div ref = {filterRef} className="filter">
             <div className="filter__div"  >
                 <div onClick = {() => setShowList(!showList)} className="filter__div__div">
-                    <h1>Filter & Sort</h1>
+                    <input onChange={(e) => handleInput(e)} type="text" placeholder="Filter & Sort" />
                 </div>
                 <div className="filter__div__icon">
                     <FaSortAmountDownAlt onClick={() => setIsAscending(!isAscending)} className={`filter__div__icon__svg ${isAscending && `filter__div__icon__svg-asc`}`} size = {24} color = '#357BCE'/>
@@ -149,20 +164,21 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
                         </div>
                     }
                     {
-                        tab === "client" &&
-                        <>
+                        (tab === "user" || tab === "brand") &&
                         <div onClick = {() => handleFilters('email')} 
                          className={`filter__options__filter ${filterOption.isEmailVerified && `filter__options__filter-selected` }`}>
                             <h5>IsEmailVerified</h5>
                         </div>
+                    }
+                    {
+                        tab === "user" &&
                         <div onClick = {() => handleFilters('phone')} 
                             className={`filter__options__filter ${filterOption.isPhoneVerified && `filter__options__filter-selected` }`}>
                             <h5>isPhoneVerified</h5>
                         </div>
-                        </>
                     }
                     {
-                        tab === "review" &&
+                        (tab === "review" || tab === "brand") &&
                         <div onClick = {() => handleFilters('verified')} 
                          className={`filter__options__filter ${filterOption.isVerified && `filter__options__filter-selected` }`}>
                             <h5>IsVerified</h5>

@@ -77,14 +77,29 @@ const SignUpInputs = () => {
 
   //ANCHOR signup function 
   const signUp = async () => {
+    dispatch(statusAction.setNotification({
+      message: 'signing up please wait',
+      type: "loading"
+    }))
+    let ipAddress = ""
+    const isError = await axios.get("https://api.ipify.org/?format=JSON")
+    .then(({data}) => {
+        ipAddress = data
+        return false
+    })
+    .catch(() => {
+      dispatch(statusAction.setNotification({
+        message: 'failed to obtain IP address',
+        type: "error"
+      }))
+      return  true
+    })
+    if(isError){
+      return
+    }
     const check = checkValidation(); 
     if (check === 'ok') {
-      dispatch(statusAction.setNotification({
-        message: 'signing up please wait',
-        type: "loading"
-      }))
       const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
-      
       console.log(countryCallingCode, nationalNumber);
       setIsSigningIn(true);
       const req = {
@@ -93,6 +108,7 @@ const SignUpInputs = () => {
         email: email,
         countryCode: `+${countryCallingCode}`,
         phoneNumber: nationalNumber,
+        ipAddress
       };
       try {
         const { data } = await axios
@@ -111,7 +127,6 @@ const SignUpInputs = () => {
               message: err.response.data.message,
               type: "error"
             }))
-            alert(err.response.data.message);
             setIsSigningIn(false);
           });
         console.log("---->" + data);
@@ -120,7 +135,8 @@ const SignUpInputs = () => {
         console.error(err);
         setIsSigningIn(false);
       }
-    } else {
+    } 
+    else {
       dispatch(statusAction.setNotification({
         message: check,
         type: "error"

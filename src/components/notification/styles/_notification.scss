@@ -4,10 +4,13 @@
         position: fixed;
         margin: 1%;
         width: 98%;
+        // width: max-content;
         color: white;
         text-align: center;
-        padding: 10px;
+        padding: 10px 15px;
         border-radius: 5px;
+        // bottom: 0;
+        top: 70px;
     }
     & p::first-letter{
         text-transform: capitalize;

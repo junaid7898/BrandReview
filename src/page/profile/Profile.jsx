@@ -37,8 +37,6 @@ const Profile = () => {
 
 
     useEffect(() => {
-
-        
         if(userId){
             if(visitorIsUser){
                 axios.get(`/user/detail/${userId}`,{

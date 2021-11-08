@@ -15,6 +15,7 @@
         width: 100%;
         padding: 0px 0px;
         font-size: 11px;
+        width: 100px !important;
     }
     &__cursor-default{   
         cursor: auto;
@@ -36,7 +37,6 @@
         }
     }
     &__custom-calender{
-        // max-width: 400px;
         padding: 8px 12px;
         margin-top: 15px;
     }
@@ -48,8 +48,13 @@
        background-color: transparent;
        border: 0px solid;
        padding: 4px 8px;
+       font-weight: 600;
+       font-size: 15px;
        &:focus{
            outline: none;
+       }
+       &::placeholder{
+           text-transform: capitalize;
        }
     }
     &__icon{

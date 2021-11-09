@@ -173,14 +173,14 @@ const BrandDetail = ({item, brandId}) => {
                         <div className="dashboard__list__settings">   
 
                             <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
+                                <div className="dashboard__list__settings__items__brand-name">
                                     <h3>Brand Name</h3>
                                     <h4>{item.name}</h4>
                                 </div>
                             </div>
 
                             <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
+                                <div className="dashboard__list__settings__items__category-name">
                                     <h3>Category</h3>
                                     <h4>{item.category ? item.category : " - "}</h4>
                                 </div>

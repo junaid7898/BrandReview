@@ -11,7 +11,45 @@ a{
   }
 }
 
+input, textarea, input::placeholder, textarea::placeholder{
+  font-family: $subTitle2;
+}
+
+h1{
+  font-family: $round;
+}
+h2{
+  font-family: $title;
+}
+h3{
+  font-family: $title;
+}
+p, span, div{
+  font-family: $subTitle;
+}
+
+code{
+  background-color: red;
+}
+
+body{
+  font-family: $title;
+}
+
 .app{
   position: relative;
   // background-color: white;
+  
+}
+
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }

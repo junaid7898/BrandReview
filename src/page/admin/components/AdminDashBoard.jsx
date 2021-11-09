@@ -259,13 +259,13 @@ const AdminDashBoard = () => {
                     </div>
                     <div className="dashboard__links__filters">
                         {
-                            !showSettings && !showDashBoard &&
+                            !showSettings && !newBrand && !showDashBoard &&
                             <div className="dashboard__links__filters__item">
                                 <FilterComponent tab = { showReviews ? "review" : showBrands ? "brand" : showUsers ? "user" : null } setFilters= {setFilters} setSortOptions = {setSortOptions}/>
                             </div>
                         }
                         {
-                            !showSettings && !showUsers && !showBrands &&
+                            !showSettings && !newBrand && !showUsers && !showBrands &&
                             <div className="dashboard__links__filters__item">
                                 <MultiDatePicker date = {date}  setDate={setDate} />
                             </div>

@@ -24,6 +24,9 @@ const BrandPanel = () => {
     const [visitorIsBrand, setVisitorIsBrand] = useState(false)
 
     useEffect(() => {
+        console.log(
+            'here starting 2......'
+        );
         if(client && brandId){
             setVisitorIsBrand(true)
         }
@@ -34,7 +37,7 @@ const BrandPanel = () => {
 
 
     useEffect(() => {
-        console.log('here starting')
+        console.log('here starting......')
         if(brandId && client){
             axios.get(`/brand/${brandId}`, {   
                 headers:{
@@ -51,6 +54,8 @@ const BrandPanel = () => {
             })
         }
     }, [client, brandId])
+
+    
     return (
         <div style = {{position: 'relative'}}>
         {

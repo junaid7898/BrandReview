@@ -78,16 +78,70 @@ const Header = () => {
       };
     }, [searchRef, showResult]);
 
+    //ANCHOR useEffect for hiding login and register
+    const loginRef = useRef(null)
+    useEffect(() => {
+      if (showLogin) {
+        document.addEventListener("mousedown", handleClickOutside1);
+        document.addEventListener('keydown', handleEsc1)
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside1);
+        document.removeEventListener('keydown', handleEsc1)
+      }
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside1);
+        document.removeEventListener('keydown', handleEsc1)
+      };
+    }, [loginRef, showLogin]);
+
+    const registerRef = useRef(null)
+    useEffect(() => {
+      if (showRegister) {
+        document.addEventListener("mousedown", handleClickOutside2);
+        document.addEventListener('keydown', handleEsc2)
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside2);
+        document.removeEventListener('keydown', handleEsc2)
+      }
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside2);
+        document.removeEventListener('keydown', handleEsc2)
+      };
+    }, [registerRef, showRegister]);
+    
+
     //ANCHOR handling use effect listeners
     function handleClickOutside(event) {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowResult(false);
       }
     }
+    function handleClickOutside1(event) {
+      if (loginRef.current && !loginRef.current.contains(event.target)) {
+        setShowLogin(false);
+      }
+    }
+
+    function handleClickOutside2(event) {
+      if (registerRef.current && !registerRef.current.contains(event.target)) {
+        setShowRegister(false);
+      }
+    }
 
     const handleEsc = (e) => {
       if(e.keyCode === 27){
           setShowResult(false)
+      }
+    }
+    const handleEsc1 = (e) => {
+      if(e.keyCode === 27){
+          setShowLogin(false)
+      }
+    }
+
+    const handleEsc2 = (e) => {
+      if(e.keyCode === 27){
+          setShowRegister(false)
       }
     }
 
@@ -242,10 +296,7 @@ const Header = () => {
                                     {/* SECTION nav links on click login */}
                             <h4 className = 'nav__links__link__h4'>Login</h4>
                             <FiChevronDown size={20} className="nav__links__icon" />
-                            {
-                              showLogin ? 
-                              (
-                                <div className="nav__links__link__user-login">
+                                <div ref = {loginRef} className={`nav__links__link__user-login ${!showLogin && `nav__links__link__user-login-hide` }`}>
 
                                   <Link to="/user/login"  className="nav__links__link__user-login__link1">
                                     <div className="nav__links__link__user-login__link1__item">
@@ -261,10 +312,6 @@ const Header = () => {
                                     </div>
                                   </Link>
                                 </div>
-                            )
-                            :
-                            null
-                          }
                       </div>
 
                           {/* SECTION LOGIN ends here */}
@@ -283,10 +330,8 @@ const Header = () => {
                           
                           <h4 className = 'nav__links__link__h4'>Signup</h4>
                           <FiChevronDown size={20} className="nav__links__icon" />
-                            {
-                              showRegister ? 
-                              (
-                                <div className="nav__links__link__user-login">
+                            
+                                <div ref = {registerRef} className={`nav__links__link__user-login ${!showRegister && `nav__links__link__user-login-hide` }`}>
 
                                     <Link
                                       to="/user/signup"
@@ -309,10 +354,7 @@ const Header = () => {
                                     </Link>
 
                                 </div>
-                              )
-                              :
-                              null
-                            }
+                             
                         </div>
                     </li>
                     

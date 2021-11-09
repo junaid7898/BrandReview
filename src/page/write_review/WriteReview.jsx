@@ -1,6 +1,6 @@
 import {axios} from "../../axios/axiosInstance";
 import {default as Ax} from 'axios'
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ImagePreview from "../../components/image_preview/ImagePreview"
 import {getImageDetails} from "../../helpers/getImageDetails";
 import { useHistory } from "react-router";
@@ -32,6 +32,34 @@ const WriteReview = () => {
   const {brands} = useSelector(state => state.brands)
 
   
+
+  //ANCHOR click outside and hide search bar
+  const searchRef = useRef(null)
+  useEffect(() => {
+    if (showList) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('keydown', handleEsc)
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('keydown', handleEsc)
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('keydown', handleEsc)
+    };
+  }, [searchRef, showList]);
+
+  function handleClickOutside(event) {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setShowList(false);
+    }
+  }
+
+  const handleEsc = (e) => {
+    if(e.keyCode === 27){
+        setShowList(false)
+    }
+  }
 
   const fileSelectHandler = async(e) => {
     const images = e.target.files
@@ -240,7 +268,7 @@ const WriteReview = () => {
           onPublish(e)
         }} >
           <div className="review__content__tboxes">
-          <div className="review__content__tboxes1">
+          <div className="review__content__tboxes1" ref = {searchRef}>
             <input
                 autoComplete="off"
                 type="text"

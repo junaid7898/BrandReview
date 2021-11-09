@@ -26,6 +26,10 @@
         }
         &__header{
             color: $onSurface-primary;
+            & p{
+                font-family: $round;
+                font-weight: 400;
+            }
         }
         &__fields{
             // display: flex;

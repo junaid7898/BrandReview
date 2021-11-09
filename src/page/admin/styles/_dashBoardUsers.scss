@@ -33,7 +33,8 @@
             }
             &__name{
                 color: $onSurface-primary;
-                font-weight: 500;
+                font-style: $title;
+                font-weight: 700;
                 font-size: 20px;
                 line-height: 30px;
                 text-transform: capitalize;
@@ -73,7 +74,8 @@
                 
                 & label{
                     color: $onSurface-primary;
-                    font-weight: 600;
+                    font-family: $subTitle;
+                    font-weight: 700;
                     font-size: 20px;
                     line-height: 30px;
                     margin-bottom: 10px;
@@ -82,6 +84,8 @@
                     }
                 }
                 & p{
+                    font-family: $subTitle2;
+                    font-weight: 400;
                     color: $onSurface-secondary;
                     font-weight: normal;
                     font-size: 15px;

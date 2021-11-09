@@ -5,6 +5,7 @@ import FilterComponent from "../../../components/filter_component/FilterComponen
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator'
 import ImageViewer from '../../../components/image_viewer/ImageViewer'
 import { statusAction } from '../../../Redux/statusSlice'
+import {brandAction} from "../../../Redux/brandInfoSlice/brandInfoSlice"
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 function DashBoardBrands({filters, sortOptions}) {
@@ -17,6 +18,7 @@ function DashBoardBrands({filters, sortOptions}) {
     const [showImage, setShowImage] = useState(null)
     const dispatch = useDispatch()
     const {client} = useSelector(state => state.client)
+    const {brands} = useSelector(state => state.brands)
     const handlePageination = (index) =>{
         setPage(index)
     }
@@ -94,6 +96,85 @@ function DashBoardBrands({filters, sortOptions}) {
         })
     } 
 
+
+
+    //ANCHOR adding in demotion
+    const handleDemotion = (brandId) =>{
+        setBlackListng([...blackListing, brandId])
+        axios.patch(`/brand/${brandId}`, {isDemoted: true}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "brand demoted....",
+                type: "success"
+            }))
+            setBrandData([...brandData.map(item => {
+                if(item.id === brandId){
+                    return data
+                }
+                return item
+            })])
+            dispatch(brandAction.setBrands([...brands.map(brand =>{
+                if(brand.id === brandId){
+                    return data
+                }
+                return brand
+            })]))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        })
+    }
+
+
+
+    //ANCHOR remove from demotion
+    const handleRemoveDemotion = (brandId) => {
+        setBlackListng([...blackListing, brandId])
+        axios.patch(`/brand/${brandId}`, {isDemoted: false}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "brand removed from demotion...",
+                type: "success"
+            }))
+            setBrandData([...brandData.map(item => {
+                if(item.id === brandId){
+                    return data
+                }
+                return item
+            })])
+            dispatch(brandAction.setBrands([...brands.map(brand =>{
+                if(brand.id === brandId){
+                    return data
+                }
+                return brand
+            })]))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        })
+    } 
+
+
     return (
         <div className="dashboard__brands">
             <div className="dashboard__brands__data">
@@ -132,34 +213,64 @@ function DashBoardBrands({filters, sortOptions}) {
                                     <label>Phone</label>
                                     <p>{brand.countryCode + " " + brand.phoneNumber}</p>
                                 </div>
-
-                                {
-                                    !brand.blackListed ?
-                                        <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
-                                            <button onClick={() => handleBlackListing(brand.id)}>
-                                                BlackList
-                                                {
-                                                    blackListing.includes(brand.id) &&
-                                                    <LoadingIndicator />
-                                                }
-                                            </button>
-                                            <Link to = {`/brand/panel/${brand.id}`}>
-                                                <button className = 'dashboard__brands__data__brand__details__button__button2' >
-                                                    Visit Panel
+                                <div className = 'admin__panel__brands__button__container'>
+                                    {
+                                        !brand.blackListed ?
+                                            <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
+                                                <button onClick={() => handleBlackListing(brand.id)}>
+                                                    BlackList
+                                                    {
+                                                        blackListing.includes(brand.id) &&
+                                                        <LoadingIndicator />
+                                                    }
                                                 </button>
-                                            </Link>
-                                        </div>
-                                    :
-                                        <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
-                                            <button onClick={() => handleRemoveBlackListing(brand.id)}>
-                                                Remove from Blacklist
-                                                {
-                                                    blackListing.includes(brand.id) &&
-                                                    <LoadingIndicator />
-                                                }
+                                                
+                                            </div>
+                                        :
+                                            <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
+                                                <button onClick={() => handleRemoveBlackListing(brand.id)}>
+                                                    Remove from Blacklist
+                                                    {
+                                                        blackListing.includes(brand.id) &&
+                                                        <LoadingIndicator />
+                                                    }
+                                                </button>
+                                            </div>
+                                    }
+                                    
+                                    <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
+                                        <Link to = {`/brand/panel/${brand.id}`}>
+                                            <button className = 'dashboard__brands__data__brand__details__button__button2' >
+                                                Visit Panel
                                             </button>
-                                        </div>
-                                }
+                                        </Link>
+                                    </div>
+
+                                    {
+                                        !brand.isDemoted ?
+                                            <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
+                                                <button onClick={() => handleDemotion(brand.id)}>
+                                                    Demote
+                                                    {
+                                                        blackListing.includes(brand.id) &&
+                                                        <LoadingIndicator />
+                                                    }
+                                                </button>
+                                                
+                                            </div>
+                                        :
+                                            <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
+                                                <button onClick={() => handleRemoveDemotion(brand.id)}>
+                                                    Remove from Demotion
+                                                    {
+                                                        blackListing.includes(brand.id) &&
+                                                        <LoadingIndicator />
+                                                    }
+                                                </button>
+                                            </div>
+                                    }
+
+                                </div>
 
                             </div>
                             {showImage ? ( <ImageViewer image = {showImage} setImage = {setShowImage}/> ) : ( null ) }

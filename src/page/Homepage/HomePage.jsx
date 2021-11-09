@@ -16,10 +16,6 @@ import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
 
 function HomePage() {
 
-    
-
-
-
     return (
         <div className="homepage">
             <div className="homepage__header-container">

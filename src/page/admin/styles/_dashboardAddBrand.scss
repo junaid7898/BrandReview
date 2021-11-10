@@ -1,0 +1,113 @@
+.add__brand__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
+    background-color: $background;
+    border-radius: 10px;
+    padding: 20px 15px;
+    margin: 50px auto;
+
+    &__button{
+        width: 30%;
+        background-color: $primary;
+        color: $onPrimary;
+        padding: 10px 0px;
+        text-align: center;
+        margin: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 100ms;
+        &:hover{
+            background-color: $primaryHover;
+        }
+    }
+    &__name-input{
+        display: flex;
+        flex-direction: column;   
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+        & label{
+            color: $onSurface-primary;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        & input{
+            margin: 10px 0px;
+            padding: 8px 4px;
+            width: 100%;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid $onSurface-secondary;
+            &:focus{
+                border-color: green;
+            }
+        }
+    }
+    &__category-input{
+        display: flex;
+        flex-direction: column;   
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100%;
+        & label{
+            color: $onSurface-primary;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        &__selector {
+            margin: 10px 0px;
+            padding: 8px 4px;
+            width: 100%;
+        }
+    }
+    &__about-input{
+        display: flex;
+        flex-direction: column;   
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+        & label{
+            color: $onSurface-primary;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        & input{
+            margin: 10px 0px;
+            width: 100%;
+            padding: 8px 4px;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid $onSurface-secondary;
+            &:focus{
+                border-color: green;
+            }
+        }
+    }
+    &__logo-input{
+        display: flex;
+        flex-direction: column;   
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+        & label{
+            color: $onSurface-primary;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        & input{
+            margin: 10px 0px;
+            width: 100%;
+            padding: 8px 4px;
+            outline: none;
+            border: none;
+            border-bottom: 2px solid $onSurface-secondary;
+            &:focus{
+                border-color: green;
+            }
+        }
+    }
+}

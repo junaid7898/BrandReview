@@ -20,12 +20,16 @@ const BrandPanel = () => {
 
     const [brandDetails, setBrandDetails] = useState(null)
     const [isCurrentBrand, setIsCurrentBrand] = useState(false)
-    const { brandId } = useParams()   
+    const { brandId } = useParams()
+    console.log('brand id: ', brandId);   
 
     const [visitorIsBrand, setVisitorIsBrand] = useState(false)
 
     useEffect(() => {
-        if(client && brandId && client.brand.id === brandId){
+        console.log(
+            'here starting 2......'
+        );
+        if(client && brandId){
             setVisitorIsBrand(true)
         }
         else{
@@ -35,6 +39,7 @@ const BrandPanel = () => {
 
 
     useEffect(() => {
+        console.log('here starting......')
         if(brandId && client){
             axios.get(`/brand/${brandId}`, {   
                 headers:{
@@ -51,6 +56,8 @@ const BrandPanel = () => {
             })
         }
     }, [client, brandId])
+
+    
     return (
         <div style = {{position: 'relative'}}>
         {
@@ -59,11 +66,11 @@ const BrandPanel = () => {
                 <div className = 'brand__main'>
                 
                     <div className="brand__main__brand-content">
-                        <BrandContent item = {brandDetails}/>
+                        <BrandContent setItem = {setBrandDetails} item = {brandDetails}/>
                     </div>
 
                     <div className="brand__main__brand-details">
-                        <BrandDetail item = {brandDetails} brandId = {brandId}/>
+                        <BrandDetail item = {brandDetails}  brandId = {brandId}/>
                     </div>
                 </div>   
             )

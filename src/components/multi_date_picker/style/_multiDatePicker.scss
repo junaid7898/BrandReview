@@ -8,6 +8,7 @@
     border-radius: 10px;
     min-width: 250px;
     height: 50px;
+    // background-color: red;
     &__dates{
         display: flex;
         flex-direction: row;
@@ -16,6 +17,7 @@
         padding: 0px 0px;
         font-size: 11px;
         width: 100px !important;
+        // background-color: red;
     }
     &__cursor-default{   
         cursor: auto;
@@ -39,6 +41,7 @@
     &__custom-calender{
         padding: 8px 12px;
         margin-top: 15px;
+        // background-color: red;
     }
 
     &__arrow{
@@ -66,6 +69,7 @@
 }
 
 .multi-locale-days .rmdp-day {
+    // background-color: red;
     width: 80px;
     height: 80px;
   }
@@ -115,4 +119,8 @@
 
 .rmdp-header-values{
     color: $onSurface-secondary !important;
+}
+.rmdp-shadow{
+
+    max-width: 400px !important;
 }

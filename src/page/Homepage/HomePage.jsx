@@ -16,13 +16,9 @@ import { useLocation } from 'react-router'
 
 
 function HomePage() {
-
-
   useEffect(() => {
         window.scrollTo(0,0)
   }, [useLocation().pathname])
-
-
 
     return (
         <div className="homepage">
@@ -55,9 +51,6 @@ function HomePage() {
                     <svg width="154" height="81" viewBox="0 0 154 81" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M152 46.7168C122.221 70.3238 60.6765 103.374 52.7353 46.7168C42.8088 -24.1044 125.529 2.45354 101.265 46.7168C77 90.98 25.1618 31.2246 2 12.4128" stroke="#357BCE" stroke-width="5"/>
                     </svg>
-                </div>
-                <div className = 'hoempage__vertical-dot3'>
-                    <VerticalDotBackGround/>
                 </div>
             </div>
             <div className="homepage__contact-container">

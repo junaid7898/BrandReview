@@ -29,13 +29,17 @@
     & button{
         outline: none;
         border: none;
-        background-color: tomato;
+        background-color: $primary;
         padding: 10px 25px;
         border-radius: 3px;
         transition: all 300ms;
         cursor: pointer;
         color: white;
         position: relative;
+        width: 100px;
+        &:hover{
+            background-color: $primaryHover;
+        }
         &:active{
             transform: scale(0.98);
         }

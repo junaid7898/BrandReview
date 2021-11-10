@@ -67,6 +67,8 @@
         }
         &__name{
           width: 100%;
+          font-style: $title;
+          font-weight: 700;
           @include respond(phone){
             width: 50%;
           }
@@ -81,6 +83,8 @@
         }
         &__category{
             width: 20%;
+            font-family: $subTitle;
+            font-weight: 500;
             @include respond(phone){
               width: 50%;
             }
@@ -92,6 +96,8 @@
             }
         }
         &__ratings{
+          font-family: $subTitle;
+          font-weight: 500;
             width: 10%;
             min-width: 75px;
             display: flex;

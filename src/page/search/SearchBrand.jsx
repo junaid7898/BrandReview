@@ -51,6 +51,7 @@ const SearchBrand = () => {
   }, [brandSlug])
 
   useEffect(() => {
+
     if(brandData){
       const options = {
         page,

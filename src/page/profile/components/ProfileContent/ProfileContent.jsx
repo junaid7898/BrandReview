@@ -19,7 +19,6 @@ const ProfileContent = ({user, setClientDetails, visitorIsUser}) => {
         ...user,
         profileImage: imageUrl
       }
-      setClientDetails(newUser)
       dispatch(clientActions.setClient({
         ...User,
         user: newUser
@@ -29,6 +28,8 @@ const ProfileContent = ({user, setClientDetails, visitorIsUser}) => {
           "authorization" : `bearer ${User.tokens.access.token}`
         }
       })
+      // setClientDetails(newUser)
+      setClientDetails(newUser)
       setIsImageUploading(false)
     }
     catch(err){
@@ -37,9 +38,6 @@ const ProfileContent = ({user, setClientDetails, visitorIsUser}) => {
     }
   }
   
-  useEffect(() => {
-    console.log('user info: ',user)
-  }, [user])
 
   return (
       user ?
@@ -50,10 +48,14 @@ const ProfileContent = ({user, setClientDetails, visitorIsUser}) => {
             <div className="profile__intro__displayImage">
 
               <div className={`profile__intro__displayImage__content ${isImageUploading && `profile__intro__displayImage__content__uploading`}`}>
-                
-                <div className="profile__intro__displayImage__content__img">
-                  <img src={user.profileImage} alt="profileasdasdsa"  />
-                </div>
+                {
+                  isImageUploading ?
+                    <LoadingIndicator/>
+                    :
+                    <div className="profile__intro__displayImage__content__img">
+                      <img src={user.profileImage} alt="profileasdasdsa"  />
+                    </div>
+                }
                 {
                   visitorIsUser ? 
                     <div className="profile__intro__displayImage__content__upload">
@@ -77,8 +79,8 @@ const ProfileContent = ({user, setClientDetails, visitorIsUser}) => {
 
             <div className="profile__intro__nameAndAddress">
               <h1>{user.name}</h1>
-              <h3>{user.email}</h3>
-              <h3>{user.countryCode && user.phoneNumber ? user.countryCode+user.phoneNumber : null}</h3>
+              <p>{user.email}</p>
+              <p>{user.countryCode && user.phoneNumber ? user.countryCode+user.phoneNumber : null}</p>
             </div>
           </div>
 

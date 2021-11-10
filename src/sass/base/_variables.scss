@@ -1,3 +1,39 @@
+@font-face {
+    font-family: hv-B;
+    src: url('../../fonts/Hind_Vadodara/HindVadodara-Bold.ttf');
+}
+@font-face {
+    font-family: hv-S;
+    src: url('../../fonts/Hind_Vadodara/HindVadodara-Light.ttf');
+}
+@font-face {
+    font-family: hv-M;
+    src: url('../../fonts/Hind_Vadodara/HindVadodara-Medium.ttf');
+}
+
+@font-face {
+    font-family: rb-B;
+    src: url('../../fonts/Roboto/Roboto-Bold.ttf');
+}
+
+@font-face {
+    font-family: rb-S;
+    src: url('../../fonts/Roboto/Roboto-Light.ttf');
+}
+
+@font-face {
+    font-family: rb-M;
+    src: url('../../fonts/Roboto/Roboto-Medium.ttf');
+}
+@font-face {
+    font-family: round1;
+    src: url('../../fonts/Round/MPLUSRounded1c-Medium.ttf');
+}
+@font-face {
+    font-family:gr;
+    src: url('../../fonts/gothic_round/FontsFree-Net-All-Round-Gothic-W01-Bold.ttf');
+}
+
 $primary:#357BCE;
 $primaryHover:#505d6d; 
 $onPrimary: #ffffff;
@@ -5,5 +41,14 @@ $background: #ffffff;
 $surface: #F8F8F8;
 $onSurface-primary: rgba(0, 0, 0, 0.8);
 $onSurface-secondary: rgba(0, 0, 0, 0.5);
+
+$title: hv-B;
+$subTitle: hv-S;
+$subTitle2: hv-M;
+$rights: rb-B;
+$subRights: rb-S;
+$subRights2: rb-M;
+$round: gr;
+
 
 $maxwidth: 1200px;

@@ -19,14 +19,13 @@ const BrandDetail = ({item, brandId}) => {
     const [option, setOption] = useState(1)
     const {client} = useSelector(state => state.client)
     const [date, setDate] = useState(null)
-    const [phone, setPhone] = useState(null)
+
     const [about, setAbout] = useState(null)
     const [isUpdatingBrand, setIsUpdatingBrand] = useState(false)
     const [filters, setFilters] = useState({})
     const [sortOptions, setSortOptions] = useState({})
     useEffect(() => {
         if(item){
-            setPhone(item.countryCode + item.phoneNumber)
             setAbout(item.about)
         }
     }, [item])
@@ -56,16 +55,12 @@ const BrandDetail = ({item, brandId}) => {
 
     const checkValidation = () => {
         let response;
-        if(about === item.about && phone === item.countryCode + item.phoneNumber){
+        if(about === item.about){
             response = 'nothing is changed'
             return response
         }
-        else if(about === null || phone === null){
+        else if(about === null){
             response = 'please fill all the entries'
-            return response
-        }
-        else if(isValidPhoneNumber(phone) === false || isPossiblePhoneNumber(phone) === false){
-            response = 'phone number is invalid! please enter a valid phone number'
             return response
         }
         else{
@@ -82,14 +77,11 @@ const BrandDetail = ({item, brandId}) => {
                 type: "loading"
               }))
           setIsUpdatingBrand(true)
-          const {countryCallingCode, nationalNumber} = parsePhoneNumber(phone)
           const {payload} = dispatch(clientActions.setClient({
               ...client, 
               brand: {
                   ...client.brand,
                   about: about,
-                  phoneNumber: nationalNumber,
-                  countryCode: `+${countryCallingCode}`,
               },
               
           }))
@@ -173,14 +165,14 @@ const BrandDetail = ({item, brandId}) => {
                         <div className="dashboard__list__settings">   
 
                             <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
+                                <div className="dashboard__list__settings__items__brand-name">
                                     <h3>Brand Name</h3>
                                     <h4>{item.name}</h4>
                                 </div>
                             </div>
 
                             <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
+                                <div className="dashboard__list__settings__items__category-name">
                                     <h3>Category</h3>
                                     <h4>{item.category ? item.category : " - "}</h4>
                                 </div>
@@ -226,7 +218,7 @@ const BrandDetail = ({item, brandId}) => {
                             updateProfile ?
                             (
                                 <div className="update__brand">
-                                    <UpdateBrandProfile phone = {phone} setPhone = {setPhone} about = {about} setAbout = {setAbout} handleUpdate = {handleUpdate}
+                                    <UpdateBrandProfile  about = {about} setAbout = {setAbout} handleUpdate = {handleUpdate}
                                     setUpdateProfile = {setUpdateProfile}
                                     />
                                     {

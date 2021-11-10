@@ -154,11 +154,13 @@
     top:100%;
     width: 100%;
     /* padding: 0px 10px; */
-    background-color: $background;
+    background-color: rgba($background, 0.9);
     max-height: 300px;
     overflow-y: auto;   
     color: #272727;
     z-index: 100;
+    // background-color: red;
+    backdrop-filter: blur(4px);
 }
 
 .nav__search__result__item{
@@ -250,18 +252,22 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        
+        transform-origin: top left;
+        transform: scale(1);
         width: 100px;
-        background-color: $surface;
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-        border: 1px solid $onSurface-primary;
+        // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
         margin-top: 10px;
-        border-radius: 10px;
-        border-top-left-radius: 0px;
-        
+        border-radius: 4px;
+        backdrop-filter: blur(4px);
+        transition: all 300ms;
+        &-hide{
+            transform: scale(0);
+        }
         @include respond(phone){
             top: -26px;
             border-radius: 0px;
+            background-color: $background;
         }
         // background-color: blue;
         &__link1{
@@ -277,7 +283,7 @@
                 justify-content: space-between;
                 width: 100%;
                 &:hover{
-                    opacity: 0.6;
+                    color: $primary;
                 }
             }
             @include respond(phone){
@@ -289,7 +295,7 @@
             padding: 4px 8px;
             width: 100%;
             &:hover{
-                opacity: 0.6;
+                color: $primary;
             }
             &__item{
                 display: flex;

@@ -19,13 +19,14 @@
 }
 
 .panel__div__intro h1{
-    font-style: normal;
-    font-weight: bold;
+    font-family: $round;
+    font-weight: 700;
     font-size: 36px;
     line-height: 43px;
     color: rgba(0, 0, 0, 0.8);
 }
 .panel__div__intro p{
+    font-family: $subTitle;
     font-style: normal;
     font-weight: normal;
     font-size: 18px;
@@ -40,6 +41,7 @@
     text-align: left;
 }
 .panel__div__details p{
+    font-family: $subTitle;
     margin-top: 20px;
     max-width: 500px;
     color: rgba(0, 0, 0, 0.5);
@@ -59,6 +61,7 @@
 }
 
 .panel__div__details__initials div h1, .panel__div__details__initials div h3{
+    font-family: $title;
     font-style: normal;
     font-weight: 600;
     font-size: 22px;

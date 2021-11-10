@@ -109,8 +109,9 @@
     font-size: 18px;
     border: 0px solid;
     cursor: pointer;
+    transition: 100ms;
     &:hover{
-        opacity: 0.8;
+        background-color: $primaryHover;
     }
 }
 
@@ -118,7 +119,9 @@
 .review__content__uploadButton{
 
     background-color: #F8F8F8;
+    // border: 2px solid $primary;
     cursor: pointer;
+    transition: 100ms;
     & label{
         cursor: inherit;
     }
@@ -126,7 +129,9 @@
 
 
 .review__content__uploadButton:hover{
-    opacity: 0.6;
+    background-color: $primary;
+    color: $onPrimary;
+    // border: 2px solid $primary;
 }
 
 .review__content__uploadButton input{
@@ -137,6 +142,7 @@
     color: $onPrimary;
     margin-left: 10px;
     position: relative;
+    
 }
 
 .review__star__container{

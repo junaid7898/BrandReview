@@ -14,9 +14,9 @@ function TopBrands({category, skipBrandId, rank, length}) {
 
     useEffect(() => {
         if(brands){
-
+            const newBrandList = [...brands.filter(brand => !!brand.isDemoted === false)]
             if(!category){
-                let sorted = [...brands]
+                let sorted = [...newBrandList]
                 function mycomparator(a,b) {
                     return parseInt(b.averageRating) - parseInt(a.averageRating);
                 }
@@ -24,7 +24,7 @@ function TopBrands({category, skipBrandId, rank, length}) {
                 setBrandsData([...sorted.slice(0, length)])
             }
             else if(category){
-                const similarBrands = [...brands.filter(brand => brand.category === category && brand.id !== skipBrandId)]
+                const similarBrands = [...newBrandList.filter(brand => brand.category === category)]
                 let sorted = [...similarBrands]
                 function mycomparator(a,b) {
                     return parseInt(b.averageRating) - parseInt(a.averageRating);

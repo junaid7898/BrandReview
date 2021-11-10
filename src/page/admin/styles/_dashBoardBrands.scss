@@ -48,7 +48,8 @@
             }
             &__button{
                 & button{
-                    background-color: tomato;
+                    background-color: $primary;
+                    width: 150px;
                     outline: none;
                     border: none;
                     text-align: center;
@@ -58,9 +59,16 @@
                     color: white;
                     transition: all 300ms;
                     position: relative;
+                    margin: 10px;
                     &:active{
                         transform: scale(.98);
                     }
+                    &:hover{
+                        background-color: $primaryHover;
+                    }
+                }
+                &__button2{
+                    margin-top: 10px;
                 }
             }
             &__phone, &__email, &__address, &__country-code{

@@ -113,12 +113,15 @@
     align-items: flex-end;
     justify-content: space-between;
     margin-bottom: 50px;
+
+    height: 50px;
     @include respond(phone){
         flex-direction: column;
     }
     &-container{
         position: relative;
         width: 45%;
+        min-width: 45%;
         @include respond(phone){
             width: 100%;
         }
@@ -129,6 +132,7 @@
         align-items: center;
         justify-content: flex-end;
         width: 55%;
+        min-width: 55%;
         @include respond(phone){
             flex-direction: column;
             justify-content: flex-start;
@@ -176,6 +180,7 @@
         width: 100%;
         background-color: rgba(0, 0, 0, 0.3);
         bottom: 3px;
+
         z-index: -1;
     }
     @include respond(phone){
@@ -209,6 +214,7 @@
     padding: 10px 0px;
     font-family: $subTitle;
     font-weight: 700;
+
     @include respond(phone){
         display: block;
         padding: 10px 0px;
@@ -219,7 +225,6 @@
 
 .dashboard__list__click{
     border-bottom: 5px solid $primary;
-    border-collapse: collapse;
     color: $primary;
 }
 

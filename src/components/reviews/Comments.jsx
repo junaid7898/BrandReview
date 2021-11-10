@@ -8,19 +8,30 @@ import { axios } from '../../axios/axiosInstance';
 import { FiSend } from 'react-icons/fi';
 function Comments({setHeight, commentsAllowed, review, comments, client, showComments, commentsLoading, moreCommentsLoading, totalComments, handleCommentLike, handleShowComments, }) {
     useEffect(() => {
-        if(comments.length > 0){
+        if(comments.length > 0 && showComments){
             console.log("ran")
             const arrayWrapper = document.getElementById(review.id)
-            const reviewTextHeight = document.getElementById(`review/text/${review.id}`).getBoundingClientRect().height
-            const reviewButtonHeight = document.getElementById(`review/buttons/${review.id}`).getBoundingClientRect().height
-            const totalHeight = arrayWrapper.getBoundingClientRect().height
-            const lastChild = arrayWrapper.lastChild
-            const lastChildHeight = lastChild.getBoundingClientRect().height
-            const tweek = 10
-            const height = (totalHeight  - lastChildHeight) + reviewTextHeight + reviewButtonHeight - tweek
-            setHeight(height)
+            if(arrayWrapper){
+                const reviewTextHeight = document.getElementById(`review/text/${review.id}`).getBoundingClientRect().height
+                const reviewButtonHeight = document.getElementById(`review/buttons/${review.id}`).getBoundingClientRect().height
+                const totalHeight = arrayWrapper.getBoundingClientRect().height
+                const lastChild = arrayWrapper.lastChild
+                const totalChilds = arrayWrapper.childNodes.length
+                const lastChildHeight = lastChild.getBoundingClientRect().height
+                const factors = reviewTextHeight + reviewButtonHeight
+                let childHeight = 0
+                if(totalChilds === 1){
+                    childHeight = 0 - 10
+                }
+                else{
+                    childHeight = (totalHeight - lastChildHeight) - 40
+                }
+                const finalHeight = childHeight + factors
+                console.log("commentsArray: ", arrayWrapper)
+                setHeight(finalHeight)
+            }
         }
-    }, [comments])
+    }, [comments, showComments])
 
     return (
         <div className="review__comments-container">
@@ -411,7 +422,6 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
           const finalHeight = wrapperHeight - lastChildHeight - tweek + 50
           setHeight(finalHeight)
           console.log(wrapperHeight, lastChildHeight)
-
       }
   }, [replies])
 

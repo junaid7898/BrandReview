@@ -8,6 +8,9 @@
     text-align: center;
     margin: auto;
     margin-bottom: 50px;
+    & h1{
+        margin-bottom: 30px;
+    }
 }
 .content__intro p{
     color: gray;

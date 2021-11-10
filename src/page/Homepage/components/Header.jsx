@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux";
 import Star from '../../../assests/Star';
 import {getAverageReviewRating} from "../../../helpers/getAverageReview"
+import Search from './Search';
 
 function Header() {
 
@@ -35,6 +36,9 @@ function Header() {
                             Write a Review
                         </Link>
                     </div>
+                </div>
+                <div className="homepage__header__search">
+                    <Search />
                 </div>
                 {
                     brandIndexArray.length > 0 &&

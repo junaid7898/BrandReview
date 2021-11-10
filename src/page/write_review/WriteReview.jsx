@@ -136,8 +136,6 @@ const WriteReview = () => {
     const review = {
       brand: {
         details: brand.id,
-        name: brand.name,
-        image: brand.logo,
         averageRating: brand.averageRating,
         totalReviews: brand.reviews.length
       },
@@ -146,7 +144,6 @@ const WriteReview = () => {
       message: message,
       rating: parseFloat(ratings),
     }
-    console.log(review)
     let data;
     const g = await axios.post('/review/', {review, imageDetails},{
       headers:{
@@ -307,12 +304,6 @@ const WriteReview = () => {
                 )
               }
           </div>
-            
-              
-             
-            
-
-
             <input
               type="text"
               placeholder="Subject"

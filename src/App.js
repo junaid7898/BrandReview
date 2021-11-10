@@ -2,7 +2,7 @@ import "./sass/main.scss"
 import TermsAndCondition from './page/terms_and_condition/TermsAndCondition';
 import WriteReview from './page/write_review/WriteReview';
 import Profile from './page/profile/Profile'
-import { BrowserRouter, Route, Switch, Redirect, Link} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Admin from './page/admin/Admin';
@@ -29,9 +29,9 @@ import { brandAction } from "./Redux/brandInfoSlice/brandInfoSlice";
 import Notification from "./components/notification/Notification";
 import ForgotPasswordPage from "./page/forgotPasswordPage/ForgotPasswordPage";
 import Background from "./components/Background/Background";
-
+// import {  } from "react-router-dom";
 function App() {
-  
+
   const dispatch = useDispatch()
   const {client} = useSelector(state => state.client)
   const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
@@ -104,15 +104,16 @@ function App() {
     
     
   }, [dispatch])
-  const handleRedirectBrand = () => {
+  const handleRedirect = (message, type = "error") => {
     dispatch(statusAction.setNotification({
-      message: "Only Users can give reviews",
-      type: "error"
+      message,
+      type
     }))
     return(
       <Redirect to = '/'/>
     )
   }
+  
   return (
     <div className="app" >
       {
@@ -125,7 +126,7 @@ function App() {
     : null
       }
     
-    <BrowserRouter>
+    <Router>
     <Notification /> 
     <Header/>
       {
@@ -163,9 +164,9 @@ function App() {
                         client.type.includes("user") ?
                           <WriteReview />
                           :
-                            () => handleRedirectBrand()
+                            () => handleRedirect("Brands cant give review :))")
                       :
-                      <Redirect to='/'  />
+                        () => handleRedirect("You need to be Logged in to give reviews")
                     }
                     
               </Route>
@@ -175,7 +176,7 @@ function App() {
                       ? 
                         <BrandLogin />
                       :
-                        <Redirect to='/' exact />
+                      () => handleRedirect("Already Logged in")
                     }
                     
               </Route>
@@ -234,7 +235,7 @@ function App() {
           null
       }
       <Footer/>
-    </BrowserRouter>
+    </Router>
     
     </div>
   );

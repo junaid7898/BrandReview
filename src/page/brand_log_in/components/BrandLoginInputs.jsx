@@ -41,7 +41,6 @@ const BrandLoginInputs = () => {
       history.push('/')
     }
     const onFailure = () =>{
-      alert("Login Failed")
       setIsLoggingIn({...isLoggingIn, google: false})
     }
 

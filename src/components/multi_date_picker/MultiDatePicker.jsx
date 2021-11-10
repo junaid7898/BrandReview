@@ -76,6 +76,7 @@ const MultiDatePicker = ({date, setDate}) => {
         plugins={[<CustomHeader position="top" />]}
         disableMonthPicker = {true}
         disableYearPicker = {true}
+        // containerStyle = {{backgroundColor: 'red'}}
       />
       <label className="date__picker__icon" htmlFor="datePicker">
         <AiOutlineCalendar size={24} color="#357BCE" />

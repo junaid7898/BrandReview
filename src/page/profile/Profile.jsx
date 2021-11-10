@@ -1,5 +1,5 @@
 import {axios} from '../../axios/axiosInstance'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProfileContent from './components/ProfileContent/ProfileContent'
 import ProfileDetail from './components/ProfileDetail/ProfileDetail'
@@ -20,7 +20,7 @@ const Profile = () => {
 
     const [visitorIsUser, setVisitorIsUser] = useState(false)
     console.log('visitor is user: ',visitorIsUser);
-
+    const clientChecked = useRef(false)
     
     useEffect(() => {
         if(client && userId ){
@@ -66,7 +66,7 @@ const Profile = () => {
                 })
             }
         }
-    }, [client, userId])
+    }, [userId])
 
     
 

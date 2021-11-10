@@ -2,14 +2,14 @@ import React, { useRef, useState } from 'react'
 import PhoneInput from 'react-phone-number-input';
 import {ImCross} from 'react-icons/im';
 
-const UpdateBrandProfile = ({phone, setPhone, about, setAbout, handleUpdate, setUpdateProfile}) => {
+const UpdateBrandProfile = ({ about, setAbout, handleUpdate, setUpdateProfile}) => {
     const aboutLength = useRef(about.length)
     return (
         <div>
             <div className="update__brand__profile" style = {{position: 'relative'}}>
                     <div className="update__brand__profile__inputs">
 
-                        <div className="update__brand__profile__inputs__phone">
+                        {/* <div className="update__brand__profile__inputs__phone">
                             <label htmlFor="phoneNumber">Phone Number </label>
                                 <PhoneInput
                                     id = 'phoneNumber'
@@ -19,7 +19,7 @@ const UpdateBrandProfile = ({phone, setPhone, about, setAbout, handleUpdate, set
                                     name = 'phone number'
                                     onChange={setPhone}
                                 />   
-                        </div>
+                        </div> */}
 
                         <div className="update__brand__profile__inputs__about">
                             <label htmlFor="aboutBrand">About {`[${aboutLength.current}/200]`}</label>

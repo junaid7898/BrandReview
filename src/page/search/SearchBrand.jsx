@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import BrandInfo from "./components/BrandInfo";
 import Review from "../../components/reviews/Review";
 import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import EmptyData from "../../components/EmptyDataComponent/EmptyData";
 import {axios} from "../../axios/axiosInstance";
 import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator";
@@ -15,8 +15,10 @@ import BlueSpiralBackground from "../login/components/BlueSpiralBackground";
 import ZigZagBackgroundComponent from "../login/components/ZigZagBackgroundComponent";
 import SpiralBackground from "../login/components/SpiralBackground";
 const SearchBrand = () => {
-  
-
+    useEffect(() => {
+      window.scrollTo(0,0)
+  }, [useLocation().pathname])
+  const query = new URLSearchParams(useLocation().search)
   const {brandSlug} = useParams()
   const {client} = useSelector(state => state.client)
   const [brandData, setBrandData] = useState(null)
@@ -26,8 +28,14 @@ const SearchBrand = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [areReviewsLoading, setAreReviewsLoading] = useState(true)
   const [updatedReview, setUpdatedReview] = useState(null)
+  const [queryReviewId, setQueryReviewId] = useState(null)
   useEffect(() => {
-    
+    const reivewId = query.get("review")
+    if(reivewId){
+      alert(reivewId)
+    }
+  }, [query])
+  useEffect(() => {
     if(brandSlug){
       console.log(brandSlug)
       axios
@@ -50,7 +58,7 @@ const SearchBrand = () => {
         populate: "user.User"
       }
       const filters={
-        "brand.details": brandData.id
+        "brand": brandData.id
       }
       if(brandData.id){
         axios
@@ -124,7 +132,7 @@ const SearchBrand = () => {
           brandData && 
           <div className="brandMain__topbrands">
                 <h2>Top brands in the same category</h2>
-                {/* <TopBrands  rank={false} length={5} /> */}
+                <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
           </div>
         }
       </div>

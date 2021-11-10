@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import BrandContent from './components/BrandContent'
 import BrandDetail from './components/BrandDetail'
-import { useParams } from 'react-router'
+import { useLocation, useParams } from 'react-router'
 import { useSelector } from 'react-redux'
 import {axios} from '../../axios/axiosInstance'
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
@@ -13,7 +13,9 @@ import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
 import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
 
 const BrandPanel = () => {
-
+    useEffect(() => {
+        window.scrollTo(0,0)
+  }, [useLocation().pathname])
     const {client} = useSelector(state => state.client)
 
     const [brandDetails, setBrandDetails] = useState(null)

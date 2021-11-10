@@ -61,6 +61,9 @@
     padding: 10px 0;
     position: relative;
     width: 350px;
+    &__searchIcon{
+        margin: 0 10px;
+    }
 }
 
 .nav__searchBar input, .nav__searchBar img{
@@ -113,10 +116,12 @@
 /* nav icon and website name */
 .nav__icon{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding-left: 10px;
-    flex: 1;
     text-decoration: none;
+    &__svg{
+        margin: 0 5px;
+    }
     &__container{
         position: relative;
         min-width: 30px;

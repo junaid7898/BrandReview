@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProfileContent from './components/ProfileContent/ProfileContent'
 import ProfileDetail from './components/ProfileDetail/ProfileDetail'
-import { useParams } from 'react-router'
+import { useLocation, useParams } from 'react-router'
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
 import BlueSpiralBackground from '../login/components/BlueSpiralBackground'
@@ -11,7 +11,9 @@ import HorizantalDotBackground from '../login/components/HorizantalDotBackground
 import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
 import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
 const Profile = () => {
-
+    useEffect(() => {
+        window.scrollTo(0,0)
+  }, [useLocation().pathname])
     const {client} = useSelector(state => state.client)
 
     const [userDetails, setClientDetails] = useState(null)

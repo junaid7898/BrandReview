@@ -31,16 +31,20 @@
 
 }
 .footer__content__intro div{
+    // background-color: red;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     margin-bottom: 10px;
 }
-.footer__content__intro div h1{
-    color: $primary;
+.footer__content__intro div h4{
+    // color: $primary;
+    // background-color: red;
     font-size: 20px;
     font-weight: 600;
+    margin: 0 10px;
+    margin-top: 1.5px;
 }
 .footer__content__intro p{
     max-width: 250px;

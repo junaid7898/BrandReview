@@ -45,7 +45,7 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
     }
     newFilter = {
       ...newFilter,
-      "brand.details": brandId,
+      "brand": brandId,
     };
     console.log(newFilter);
     console.log(options);

@@ -6,7 +6,7 @@ import FirstPosition from '../../assests/images/1st.png'
 import SecontPosition from '../../assests/images/2nd.png'
 import ThirdPosition from '../../assests/images/3rd.png'
 import Star from "../../assests/Star"
-function TopBrands({category, rank, length}) {
+function TopBrands({category, skipBrandId, rank, length}) {
 
 
     const {brands} = useSelector(state => state.brands)
@@ -24,7 +24,7 @@ function TopBrands({category, rank, length}) {
                 setBrandsData([...sorted.slice(0, length)])
             }
             else if(category){
-                const similarBrands = [...brands.filter(brand => brand.category === category)]
+                const similarBrands = [...brands.filter(brand => brand.category === category && brand.id !== skipBrandId)]
                 let sorted = [...similarBrands]
                 function mycomparator(a,b) {
                     return parseInt(b.averageRating) - parseInt(a.averageRating);

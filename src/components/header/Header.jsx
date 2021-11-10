@@ -1,6 +1,6 @@
 import React, { useState , useEffect, useRef} from "react";
 import HeaderIcon from "../../assests/icons/header_icon1.png";
-import SearchIcon from "../../assests/icons/search_icon.png";
+import SearchIcon from "../../assests/SearchIcon";
 import { GrClose } from "react-icons/gr";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsSearch } from "react-icons/bs";
@@ -14,7 +14,7 @@ import { FiChevronDown } from "react-icons/fi";
 import {BiUser} from 'react-icons/bi'
 import { axios } from "../../axios/axiosInstance";
 import { logout } from "./logout";
-
+import WebsiteLogo from "../../assests/WebsiteLogo"
 
 const Header = () => {
   //search bar states
@@ -137,8 +137,7 @@ const Header = () => {
       
       <div className="nav-container">
       <div className="nav__innerContainer">
-        <BsSearch
-          src={SearchIcon}
+        <SearchIcon
           className="nav__search__icon"
           onClick={() => {
             showBar();
@@ -146,7 +145,7 @@ const Header = () => {
         />
 
         <Link to="/" className="nav__icon">
-          <img src={HeaderIcon} alt="site logo" />
+          <WebsiteLogo className="nav__icon__svg" />
           <h1>SikayetBox</h1>
         </Link>
 
@@ -177,6 +176,7 @@ const Header = () => {
             id="nav_search"
             type="text"
             placeholder="Search"
+            autoComplete="off"
             value={searchKey}
             onChange={(e) => {
               handleSearch(e.target.value);
@@ -185,7 +185,7 @@ const Header = () => {
             onClick={() => setShowResult(!showResult)}
             ref = {searchValueRef}
           />
-          <img src={SearchIcon} alt="search icon" />
+          <SearchIcon className="nav__searchBar__searchIcon" />
 
           {searchResults.length > 0 && showResult ? (
             <>

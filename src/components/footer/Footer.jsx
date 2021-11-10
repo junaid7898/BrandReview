@@ -8,7 +8,7 @@ const Footer = () => {
     <section className="footer">
       <div className="footer__content">  
         <div className="footer__content__intro">
-          <div>
+          <div className="footer__content__intro__flex">
             <WebisteLogo />
             <Link to = '/' className = 'footer__rights__link'><h4>SikayetBox</h4></Link>
           </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AdminDashBoard from './components/AdminDashBoard'
 import AdminPanel from './components/AdminPanel'
 import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
@@ -6,7 +6,11 @@ import BlueSpiralBackground from '../login/components/BlueSpiralBackground'
 import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
 import BlueZigZagBackgroundComponent from '../login/components/BlueZigZagComponent'
 import HorizantalDotBackGround from '../login/components/HorizantalDotBackground'
+import { useLocation } from 'react-router'
 const Admin = () => {
+    useEffect(() => {
+        window.scrollTo(0,0)
+  }, [useLocation().pathname])
     return (
         <section className = 'admin'>
             <div className="admin__panel">

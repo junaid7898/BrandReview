@@ -71,10 +71,13 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       setCommentIsSending(false)
       console.log(data)
       setCommentText("")
-      setComments([{
-        ...data,
-        user: client.user
-      }, ...comments])
+      console.log("comments Allowed: ", commentsAllowed)
+      if(showComments){
+        setComments([{
+          ...data,
+          user: client.user
+        }, ...comments])
+      }
     })
     .catch(err => {
       console.log(err)
@@ -103,7 +106,10 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       console.log(data)
       setCommentText("")
       data.brand = client.brand
-      setComments([data, ...comments])
+      if(showComments){
+        setComments([data, ...comments])
+      }
+      
     })
     .catch(err => {
       console.log(err)
@@ -451,7 +457,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       ...review,
       ...changes
     }
-
+    console.log(changes)
     setUpdatedReview(updatedReview)
 
     axios.patch(`review/${review.id}`,{...changes})
@@ -582,7 +588,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
           {
             isEditingReview 
             ?
-              <textarea id="edit_textarea" onChange={ (e) => reviewChanges.current.text = e.target.value} className="reviewComponent__text__edit" defaultValue={review.message} placeholder="Enter your changes here" rows={4} name="" id="" />
+              <textarea id="edit_textarea" onChange={ (e) => reviewChanges.current.text = e.target.value} className="reviewComponent__text__edit" defaultValue={review.message} placeholder="Enter your changes here" rows={4}/>
             :
               <p className="reviewComponent__text__para">{review.message}</p> 
           }
@@ -693,7 +699,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         <div className="reviewComponent__comments__writeComment-container">
         {
           client ?
-            client.type.includes("user")
+            ( client.type.includes("user") || client.type.includes("admin") )
             ?
               <div className="reviewComponent__comments__writeComment">
                 <Link to={`/user/${client.user.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.user.profileImage} alt="" /></Link>

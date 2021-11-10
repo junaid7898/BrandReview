@@ -11,6 +11,14 @@
     @include respond(phone){
         flex-direction: column;
     }
+    &__search{
+        display: none;
+        @include respond(phone){
+            display: block;
+            margin: 0 10px;
+            margin-top: 30px;
+        }
+    }
     &__left{
         // background-color: #E8FFFE;
         width: 50%;
@@ -69,7 +77,8 @@
         transform: rotate(30deg) translate(50px, 50px);
         @include respond(phone){
             transform: none;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: nowrap;
             justify-content: space-evenly;
         }
         &__col1{
@@ -77,9 +86,11 @@
             flex-direction: column;
             margin:20px;
             @include respond(phone){
-                flex-direction: column;
+                flex-direction: row;
                 justify-content: space-around;
-                width: 90%;
+                width: auto;
+                margin: 0;
+                width: 66.66%;
             }
         }
         &__col2{
@@ -87,11 +98,17 @@
             flex-direction: column;
             justify-content: space-around;
             width: 90%;
+            @include respond(phone){
+                flex-direction: row;
+                justify-content: space-around;
+                width: 33.33%;
+            }
         }
         &__item{
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             padding: 25px 20px;
             margin: 20px;
             box-shadow: 0px 30px 80px rgba(13, 19, 19, 0.1);
@@ -100,18 +117,30 @@
             aspect-ratio: 1;
             width: 200px;
             @include respond(phone){
-                width: 100%;
+                width: 100px;
+                height: 100px;
                 padding: 10px;
                 margin: 10px 0px;
                 text-align: center;
+                margin: 0;
             }
             &__logo{
-                max-height: 120px;
-                // width: 100%;
-                // object-fit: contain;
+                max-width: 120px;
+                border-radius: 8px;
+                object-fit: contain;
+                width: 100%;
             }
             &__logo-container{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 120px;
+                height: 120px;
                 transition: 300ms;
+                @include respond(phone){
+                    width: 50px;
+                    height: 50px;
+                }
                 &:hover{
                     transform: scale(1.1);
                 }
@@ -119,15 +148,21 @@
             &__rating{
                 display: flex;
                 flex-direction: row;
-                @include respond(phone){
-                    flex-direction: column;
-                }
                 align-items: center;
                 margin: 20px 0;
+                @include respond(phone){
+                    flex-direction: column;
+                    margin: 0;
+                    margin-top: 5px;
+                }
                 & p{
                     font-size: 14px;
                     white-space: nowrap;
                     line-height: 8px;
+                    font-weight:600;
+                    @include respond(phone){
+                        font-size: 8px;
+                    }
                 }
             }
         }

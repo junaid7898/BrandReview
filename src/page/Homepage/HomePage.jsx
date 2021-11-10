@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Contact from './components/Contact'
 
 import TopReview from './components/topreview/TopReview'
@@ -12,11 +12,15 @@ import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundCompo
 import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
 import HorizantalDotBackground from '../login/components/HorizantalDotBackground'
 import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
+import { useLocation } from 'react-router'
 
 
 function HomePage() {
 
-    
+
+  useEffect(() => {
+        window.scrollTo(0,0)
+  }, [useLocation().pathname])
 
 
 

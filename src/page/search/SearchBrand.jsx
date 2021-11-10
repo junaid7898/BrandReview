@@ -29,12 +29,12 @@ const SearchBrand = () => {
   const [areReviewsLoading, setAreReviewsLoading] = useState(true)
   const [updatedReview, setUpdatedReview] = useState(null)
   const [queryReviewId, setQueryReviewId] = useState(null)
-  useEffect(() => {
-    const reivewId = query.get("review")
-    if(reivewId){
-      alert(reivewId)
-    }
-  }, [query])
+  // useEffect(() => {
+  //   const reivewId = query.get("review")
+  //   if(reivewId){
+  //     alert(reivewId)
+  //   }
+  // }, [query])
   useEffect(() => {
     if(brandSlug){
       console.log(brandSlug)
@@ -57,8 +57,14 @@ const SearchBrand = () => {
         limit: 10,
         populate: "user.User"
       }
-      const filters={
+      let filters={
         "brand": brandData.id
+      }
+      const reivewId = query.get("review")
+      if(reivewId){
+        filters={
+          "_id": reivewId
+        }
       }
       if(brandData.id){
         axios

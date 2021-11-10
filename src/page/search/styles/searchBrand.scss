@@ -2,6 +2,7 @@
     // max-width: $maxwidth;
     margin: auto;
     // background-color: red;
+    // background-color: red;
     &__reviews-container{
         // max-width: 1000px;
         // margin: auto;
@@ -10,6 +11,8 @@
     }
     &__reviews{
         position: relative;
+        // width: 100%;
+        // background-color: red;
         min-height: 100px;
     }
     &__writeReview{
@@ -22,17 +25,21 @@
         flex-flow: row nowrap;
         align-items: flex-start;
         justify-content: space-between;
-        max-width: 1100px;
+        max-width: 1200px;
         margin: auto;
         padding: 5px;
+        // background-color: red;
         @include respond(phone){
             flex-direction: column;
         }
     }
     &__topbrands{
+        // background-color: red;
+        background-color: $background;
+        max-width: 100%;
         border-radius: 10px;
         box-shadow: 0px 20px 70px rgba(0, 0, 0, 0.07);
-        margin: 10px;
+        // margin: 10px;
         width: 500px;
         @include respond(phone){
             margin: 10px auto;

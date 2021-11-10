@@ -51,7 +51,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[0]].averageRating} out of {brands[brandIndexArray[0]].reviews.length} Reviews</p>
+                                    <p>{brands[brandIndexArray[0]].averageRating.toFixed(1)} out of {brands[brandIndexArray[0]].reviews.length} Reviews</p>
                                 </div>
                             </div>
                             <div className="homepage__header__brand__item">
@@ -60,7 +60,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[1]].averageRating} out of {brands[brandIndexArray[1]].reviews.length} Reviews</p>
+                                    <p>{brands[brandIndexArray[1]].averageRating.toFixed(1)} out of {brands[brandIndexArray[1]].reviews.length} Reviews</p>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[2]].averageRating} out of {brands[brandIndexArray[2]].reviews.length} Reviews</p>
+                                    <p>{brands[brandIndexArray[2]].averageRating.toFixed(1)} out of {brands[brandIndexArray[2]].reviews.length} Reviews</p>
                                 </div>
                             </div>
                         </div>

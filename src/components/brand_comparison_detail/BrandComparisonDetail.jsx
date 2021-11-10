@@ -1,7 +1,7 @@
 import React from "react";
 
 const BrandComparisonDetail = (props) => {
-    console.log(props)
+    console.log('props===============',props)
   return (
     <div className="brand__comparison">
       <img
@@ -18,7 +18,7 @@ const BrandComparisonDetail = (props) => {
         <h3>Solved Count</h3>
         <h4
           className={`${
-            props.brandDetails.solvedCountIsGreater
+            props.isSolvedCountGreater
               ? "brand__comparison__solved-count__greater"
               : "brand__comparison__solved-count__smaller"
           }`}
@@ -31,7 +31,7 @@ const BrandComparisonDetail = (props) => {
         <h3>Average Ratings</h3>
         <h4
           className={`${
-            props.brandDetails.solvedCountIsGreater
+            props.isAverageRatingGreater
               ? "brand__comparison__solved-count__greater"
               : "brand__comparison__solved-count__smaller"
           }`}
@@ -43,7 +43,7 @@ const BrandComparisonDetail = (props) => {
         <h3>Satisfaction Rate</h3>
         <h4
         className={`${
-            props.brandDetails.satisfactionRateIsGreater
+            props.isSatisfactionRateGreater
               ? "brand__comparison__satisfaction-rate__greater"
               : "brand__comparison__satisfaction-rate__smaller"
           }`}

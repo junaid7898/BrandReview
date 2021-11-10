@@ -101,8 +101,8 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
             const searchQuery = e.target.value.trimStart()
             const g = filterOption
             if(searchQuery === ""){
-                delete g.name
-                setFilterOption(g)
+                delete g.query
+                setFilterOption({...g})
                 return 
             }
             console.log(searchQuery)

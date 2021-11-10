@@ -1,28 +1,32 @@
 .brand__information{
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     width: 1200px;
     border-radius: 10px;
     max-width: 90%;
     box-shadow: 0px 20px 80px rgba(0, 0, 0, 0.07);
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-evenly;
+    // align-items: center;
     margin: auto;
     padding: 10px 14px;
     background-color: $background;
+    // background-color: red;
     &__img-ratings{
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
         justify-content: space-around;
-        flex: 1;
         @include respond(phone){
             margin-bottom: 20px;
         }
         // background-color: red;
         &__img{
+            max-height: 150px;
+            min-height:150px;
+            max-width: 200px;
             max-height: 200px;
-            min-height:200px;
+            object-fit: cover;
+            // border-radius: 50%;
         }
         &__info{
             display: flex;
@@ -39,6 +43,7 @@
             &__stars{
                 margin-top: 10px;
             }
+
         }
     }
     &__title-about{
@@ -47,8 +52,10 @@
         align-items: flex-start;
         justify-content: flex-start;
         margin-top: 30px;
-        width: 100%;
+        // width: 100%;
         align-self: stretch;
+        margin-right: auto;
+        margin-left: 10px;
 
         @include respond(phone){
             margin-bottom: 20px;

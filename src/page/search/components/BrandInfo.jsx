@@ -16,14 +16,13 @@ const BrandInfo = ({brand}) => {
                         ))
                     }
                     </div>
-                    <p>{`${brand.averageRating} ratings out of ${brand.reviews.length} reviews`} </p> 
+                    <p>{brand.reviews.length > 0 ? `${brand.averageRating.toFixed(1)} out of ${brand.reviews.length} reviews` : 'No reviews for now'} </p> 
                 </div>
+            </div>
 
-                <div className="brand__information__title-about">
-                    <h3>{brand.name}</h3>
-                    <p className = 'brand__information__title-about__para'>{brand.about}</p>
-                </div>
-
+            <div className="brand__information__title-about">
+                <h3>{brand.name}</h3>
+                <p className = 'brand__information__title-about__para'>{brand.about}</p>
             </div>
             
             <div className="brand__information__comapre">

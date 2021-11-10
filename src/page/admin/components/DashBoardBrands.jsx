@@ -196,22 +196,22 @@ function DashBoardBrands({filters, sortOptions}) {
 
                                 <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__email">
                                     <label>Email</label>
-                                    <p>{brand.email}</p>
+                                    <p>{brand.email ? brand.email : 'No Email Address...'}</p>
                                 </div>
 
                                 <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__email">
                                     <label>Reviews Count</label>
-                                    <p>{brand.reviews.length > 0 ? brand.reviews.length: 'No Reviews Yet' }</p>
+                                    <p>{brand.reviews.length > 0 ? brand.reviews.length: 'No Reviews Yet...' }</p>
                                 </div>
 
                                 <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__address">
                                     <label>About</label>
-                                    <p>{brand.about}</p>
+                                    <p>{brand.about ? brand.about : 'No About Info...'}</p>
                                 </div>
 
                                 <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__phone">
                                     <label>Phone</label>
-                                    <p>{brand.countryCode + " " + brand.phoneNumber}</p>
+                                    <p>{brand.countryCode ? brand.countryCode + " " + brand.phoneNumber : 'No Phone Number...'}</p>
                                 </div>
                                 <div className = 'admin__panel__brands__button__container'>
                                     {

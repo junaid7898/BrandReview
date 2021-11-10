@@ -201,7 +201,7 @@ function App() {
                     }
               </Route>
               
-              <Route path = '/brand/comparison/:brand1Id/:brand2Id' component = {ComparisonPage}/>  
+              <Route path = '/brand/comparison/:brandSlug1/:brandSlug2' component = {ComparisonPage}/>  
               <Route path = '/brand/:brandSlug' component = {SearchBrand} />
 
               <Route exact path="/admin" exact > 

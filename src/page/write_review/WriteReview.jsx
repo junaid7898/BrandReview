@@ -179,12 +179,12 @@ const WriteReview = () => {
     }))
     dispatch(brandAction.setBrands([
       ...brands.map(brand => {
-        if(brand.id === data.brand.id){
-          return data.brand
-        }
-        else{
-          return brand
-        }
+          if(brand.id === data.brand.id){
+            return data.brand
+          }
+          else{
+            return brand
+          }
       }),
     ]))
 

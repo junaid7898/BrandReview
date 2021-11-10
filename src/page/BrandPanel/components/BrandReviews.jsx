@@ -70,6 +70,9 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
   };
   return (
     <div className="dashboard__review__component">
+    {
+      reviewData && reviewData.length > 0 ? 
+
       <div className="dashboard__panel__reports">
         <table className="dashboard__panel__reports__table">
           <tr>
@@ -136,6 +139,11 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
           }
         </table>
       </div>
+      :
+      <div className = 'empty__data__container'>
+        <EmptyData value = 'No Review Yet....'/>
+      </div>
+    }
 
       <Pagination
         totalPages={totalPages}

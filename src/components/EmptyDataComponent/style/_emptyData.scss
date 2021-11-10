@@ -1,14 +1,13 @@
 .warning{
     &__value{
-        width: 200px;
+        // width: 200px;
         color: $primary;
         font-size: 12px;
         font-weight: 300;
         text-align: center;
-        width: 100%;
+        width: 90%;
         max-width: 100%;
         padding: 10px;
-        margin: 30px 10px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
         text-transform: capitalize;
         background-color: $background;

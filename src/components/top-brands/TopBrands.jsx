@@ -14,7 +14,10 @@ function TopBrands({category, skipBrandId, rank, length}) {
 
     useEffect(() => {
         if(brands){
-            const newBrandList = [...brands.filter(brand => !!brand.isDemoted === false)]
+            let newBrandList = [...brands.filter(brand => !!brand.isDemoted === false)]
+            if(skipBrandId){
+                newBrandList = [...newBrandList.filter(brand => brand.id !== skipBrandId)]
+            }
             if(!category){
                 let sorted = [...newBrandList]
                 function mycomparator(a,b) {
@@ -67,7 +70,7 @@ function TopBrands({category, skipBrandId, rank, length}) {
                             }
                             <td className="topbrands__list__ratings">
                                 <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                <p className="topbrands__list__ratings__text">{item.averageRating} Ratings</p>
+                                <p className="topbrands__list__ratings__text">{item.averageRating.toFixed(1)} Ratings</p>
                             </td>
                         </Link>  
                     )

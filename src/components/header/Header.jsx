@@ -15,6 +15,8 @@ import {BiUser} from 'react-icons/bi'
 import { axios } from "../../axios/axiosInstance";
 import { logout } from "./logout";
 import WebsiteLogo from "../../assests/WebsiteLogo"
+import {AiOutlineBell} from 'react-icons/ai'
+import NotificationBell from "./components/NotificationBell";
 
 const Header = () => {
   //search bar states
@@ -431,6 +433,13 @@ const Header = () => {
                         )
                         :
                         null
+                      }
+                      {
+                        client &&
+                          <li>
+                              <NotificationBell/>  
+                          </li>
+                          
                       }
                     
                     <>

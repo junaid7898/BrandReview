@@ -14,6 +14,7 @@ import ImageViewer from '../image_viewer/ImageViewer'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { statusAction } from '../../Redux/statusSlice'
+import EmptyData from '../EmptyDataComponent/EmptyData'
 export const DashboardReviews = ({filters, sortOptions, date}) => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
@@ -35,7 +36,8 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
         const options = {
             page,
             limit: 10,
-            sortBy: sortOptions
+            sortBy: sortOptions,
+            populate: 'user.User'
         }
         console.log(filters)
         let newFilter = filters
@@ -121,6 +123,9 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
 
     return (
         <div className = 'dashboard__review__component'>
+        {
+            reviewData && reviewData.length > 0 ? 
+
             <div className = 'dashboard__panel__reports'>
                 <table className="dashboard__panel__reports__table">
                     <tr>
@@ -201,8 +206,13 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                     }
                 </table>
             </div>
-            
+            :
+            <div className = 'no__data__container'>
+                <EmptyData value = 'no reviews yet'/>
+            </div>
+        }
     <Pagination totalPages={totalPages} handlePageination={handlePageination} />
+            
 
         </div>
     )

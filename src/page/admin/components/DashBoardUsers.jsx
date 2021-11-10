@@ -130,12 +130,12 @@ const DashBoardUsers = ({filters, sortOptions}) => {
 
                                 <div className="dashboard__users__data__user__item dashboard__users__data__user__details__address">
                                     <label>Address</label>
-                                    <p>{user.address}</p>
+                                    <p>{user.address ? user.address: 'No Address' }</p>
                                 </div>
 
                                 <div className="dashboard__users__data__user__item dashboard__users__data__user__details__phone">
                                     <label>Phone</label>
-                                    <p>{user.countryCode + " " + user.phoneNumber}</p>
+                                    <p>{user.countryCode ? user.countryCode + " " + user.phoneNumber : 'No Phone Number'}</p>
                                 </div>
 
                                 {

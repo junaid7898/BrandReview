@@ -138,9 +138,6 @@ const AdminDashBoard = () => {
         {value: 'n', label: 'No'},
     ]
 
-    const handleAdminSettingsChange = () => {
-        alert(`${option1.value}, ${option2.value}, ${option3.value}`)
-    }
 
 
     useEffect(() => {
@@ -320,7 +317,7 @@ const AdminDashBoard = () => {
                                             onChange = {setOption1}
                                             options = {settingOptions1}
                                             className = 'dashboard1__settings__option1__dropdown'
-                                            placeholder = {`Do you want Admin to verify reviews? (${!settings.reviewVerificationRequired ? "Yes" : "No"})`}   
+                                            placeholder = {`Do you want Admin to verify reviews? (${settings.reviewVerificationRequired ? "Yes" : "No"})`}   
                                         />
                                     </div>
 
@@ -332,7 +329,7 @@ const AdminDashBoard = () => {
                                             onChange = {setOption2}
                                             options = {settingOptions2}
                                             className = 'dashboard1__settings__option1__dropdown'
-                                            placeholder = {` Email verification must require to post review? (${!settings.emailVerificationRequired ? "Yes" : "No"})`}   
+                                            placeholder = {` Email verification must require to post review? (${settings.emailVerificationRequired ? "Yes" : "No"})`}   
                                         />
                                     </div>
 
@@ -346,15 +343,11 @@ const AdminDashBoard = () => {
                                             options = {settingOptions3}
                                             onChange = {setOption3}
                                             className = 'dashboard1__settings__option1__dropdown'
-                                            placeholder = {` Phone verification must require to post review? (${!settings.phoneVerificationRequired ? "Yes" : "No"})`}
+                                            placeholder = {` Phone verification must require to post review? (${settings.phoneVerificationRequired ? "Yes" : "No"})`}
                                         />
                                     </div>
                                 </>
                             }
-
-                            <div className = 'dashboard1__settings__button' onClick = {handleAdminSettingsChange}>
-                                <h3>Ok</h3>
-                            </div>
                         </div>
                     </>
                     :

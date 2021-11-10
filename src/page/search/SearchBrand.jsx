@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BrandInfo from "./components/BrandInfo";
 import Review from "../../components/reviews/Review";
 import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
@@ -29,6 +29,7 @@ const SearchBrand = () => {
   const [areReviewsLoading, setAreReviewsLoading] = useState(true)
   const [updatedReview, setUpdatedReview] = useState(null)
   const [queryReviewId, setQueryReviewId] = useState(null)
+  const [isBrandDataSet, setIsBrandDataSet] = useState(false)
   // useEffect(() => {
   //   const reivewId = query.get("review")
   //   if(reivewId){
@@ -42,6 +43,7 @@ const SearchBrand = () => {
         .get(`/brand/page/${brandSlug}`)
         .then(({data}) => {
           setBrandData(data)
+          setIsBrandDataSet(true)
         })
         .catch(err =>{
           console.log(err)
@@ -50,42 +52,49 @@ const SearchBrand = () => {
       }
   }, [brandSlug])
 
+  const firstRender = useRef(false)
+
   useEffect(() => {
 
-    if(brandData){
-      const options = {
-        page,
-        limit: 10,
-        populate: "user.User"
-      }
-      let filters={
-        "brand": brandData.id
-      }
-      const reivewId = query.get("review")
-      if(reivewId){
-        filters={
-          "_id": reivewId
+    // if(firstRender.current){
+      if(isBrandDataSet){
+        const options = {
+          page,
+          limit: 10,
+          populate: "user.User"
+        }
+        let filters={
+          "brand": brandData.id
+        }
+        const reivewId = query.get("review")
+        if(reivewId){
+          filters={
+            "_id": reivewId
+          }
+        }
+        if(brandData.id){
+          axios
+          .post(`/review/query`,{
+            options,
+            filters
+          })
+          .then(({data}) =>{
+            console.log(data)
+            setCurrentPage(data.page)
+            setTotalPages(data.totalPages)
+            setReviewData(data.results)
+            console.log(data)
+          })
+          .catch(err => {
+            console.log(err)
+          })
         }
       }
-      if(brandData.id){
-        axios
-        .post(`/review/query`,{
-          options,
-          filters
-        })
-        .then(({data}) =>{
-          console.log(data)
-          setCurrentPage(data.page)
-          setTotalPages(data.totalPages)
-          setReviewData(data.results)
-          console.log(data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      }
-    }
-  }, [brandData, page])
+    // }
+
+    // firstRender.current = true
+    
+  }, [isBrandDataSet, page])
 
 
   const handlePageination = (index) => {

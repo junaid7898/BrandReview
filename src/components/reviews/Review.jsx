@@ -225,6 +225,13 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   const handleThank = () => {
     let updatedUser = null
     let updatedReview = null
+    let updatedBrand = null
+    if(brandData){
+      updatedBrand = brandData
+    }
+    else{
+      updatedBrand = review.brand
+    }
     if(client.user.thankedReviews.find( id => id === review.id )){
       updatedUser = dispatch(clientActions.setClient({
         ...client,
@@ -237,6 +244,11 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         ...review,
         isThanked: false
       }
+      updatedBrand = {
+        ...updatedBrand,
+        thankCount: updatedBrand.thankCount - 1
+      }
+      
     }
     else{
       updatedUser = dispatch(clientActions.setClient({
@@ -250,11 +262,19 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         ...review,
         isThanked: true
       }
+      updatedBrand = {
+        ...updatedBrand,
+        thankCount: updatedBrand.thankCount +  1
+      }
     }
     setUpdatedReview(updatedReview)
+    if(brandData){
+      setBrandData(updatedBrand)
+    }
     axios.post(`/review/thank/${review.id}`, {
       user: updatedUser.payload.user,
-      review: updatedReview
+      review: updatedReview,
+      brand: updatedBrand
     },{
       headers:{
         'role' : client.type,
@@ -263,7 +283,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     })
     .then(({data}) => {
 
-      console.log(data)
+      // console.log(data)
 
     })
   }
@@ -313,10 +333,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         resolveCount: updatedBrand.resolveCount +  1
       }
     }
-    setUpdatedReview({
-      ...updatedReview,
-      brand: updatedBrand
-    })
+    setUpdatedReview(updatedReview)
     if(brandData){
       setBrandData(updatedBrand)
     }

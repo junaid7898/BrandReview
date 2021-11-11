@@ -53,7 +53,7 @@ const statusSlice = createSlice({
                 action.payload.color = "#34BE82"
             }
             else if(action.payload.type === "loading"){
-                action.payload.color = "#EDEDED"
+                action.payload.color = "#b3b3b3"
             }
             state.notification = action.payload
         },

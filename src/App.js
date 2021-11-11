@@ -105,6 +105,12 @@ function App() {
     
   }, [dispatch])
   const handleRedirect = (message, type = "error") => {
+
+    if(!message){
+      <Redirect to = '/'/>
+      return
+    }
+
     dispatch(statusAction.setNotification({
       message,
       type
@@ -176,7 +182,7 @@ function App() {
                       ? 
                         <BrandLogin />
                       :
-                      () => handleRedirect("Already Logged in")
+                        () => handleRedirect()
                     }
                     
               </Route>

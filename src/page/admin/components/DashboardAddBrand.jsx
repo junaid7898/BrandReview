@@ -3,7 +3,8 @@ import { getImageDetails } from '../../../helpers/getImageDetails'
 import { statusAction } from '../../../Redux/statusSlice'
 import { axios } from '../../../axios/axiosInstance'
 import Select from "react-select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {brandAction } from '../../../Redux/brandInfoSlice/brandInfoSlice'
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator';
 
 const DashboardAddBrand = () => {
@@ -14,7 +15,7 @@ const DashboardAddBrand = () => {
     const [logoDetails, setLogoDetails] = useState(null)
     const [rawLogo, setRawLogo] = useState(null)
     const [imageDetails, setImageDetails] = useState(null)
-
+    const {brands} = useSelector(state => state.brands)
 
     const [isRegistering, setIsRegistering] = useState(false)
 
@@ -94,6 +95,11 @@ const DashboardAddBrand = () => {
                     brand: req,
                     logoDetails: imageDetails,
                 }).then(({data}) => {
+                    console.log(data)
+                    dispatch(brandAction.setBrands([
+                        ...brands,
+                        data.brand.brand
+                    ]))
                     axios.put(data.url, rawLogo, {
                         headers:{
                           'Content-Type' : imageDetails.fileType
@@ -101,7 +107,7 @@ const DashboardAddBrand = () => {
                     })
                 }).then((_) => {
                     dispatch(statusAction.setNotification({
-                        message: 'Brand posted.....',
+                        message: 'Brand Added',
                         type: "success"
                     }))
                     setIsRegistering(false)
@@ -112,6 +118,7 @@ const DashboardAddBrand = () => {
                     setCategory({value: null, label: null})
                     setAbout(null)
                 }).catch(err => {
+                    console.log(err)
                     dispatch(statusAction.setNotification({
                         message: err.response.data.message,
                         type: "error"

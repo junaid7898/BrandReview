@@ -60,6 +60,7 @@
               max-width: 50px;
               min-width: 50px;
               object-fit: contain;
+              border-radius: 4px;
               @include respond(phone){
                   width: 50px;
               }
@@ -82,6 +83,7 @@
           }
         }
         &__category{
+            min-width: 200px;
             width: 20%;
             font-family: $subTitle;
             font-weight: 500;

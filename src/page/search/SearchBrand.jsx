@@ -14,6 +14,7 @@ import HorizantalDotBackground from "../login/components/HorizantalDotBackground
 import BlueSpiralBackground from "../login/components/BlueSpiralBackground";
 import ZigZagBackgroundComponent from "../login/components/ZigZagBackgroundComponent";
 import SpiralBackground from "../login/components/SpiralBackground";
+import BrandComparison from "../../components/brand_comparison/BrandComparison";
 const SearchBrand = () => {
     useEffect(() => {
       window.scrollTo(0,0)
@@ -30,14 +31,10 @@ const SearchBrand = () => {
   const [updatedReview, setUpdatedReview] = useState(null)
   const [queryReviewId, setQueryReviewId] = useState(null)
   const [isBrandDataSet, setIsBrandDataSet] = useState(false)
-  // useEffect(() => {
-  //   const reivewId = query.get("review")
-  //   if(reivewId){
-  //     alert(reivewId)
-  //   }
-  // }, [query])
+  const [isUrlQuery, setIsUrlQuery] = useState(false)
   useEffect(() => {
     if(brandSlug){
+      setIsUrlQuery(true)
       console.log(brandSlug)
       axios
         .get(`/brand/page/${brandSlug}`)
@@ -47,59 +44,55 @@ const SearchBrand = () => {
         })
         .catch(err =>{
           console.log(err)
-          // console.log(err.response.data.message)
         })
       }
   }, [brandSlug])
 
-  const firstRender = useRef(false)
-
   useEffect(() => {
-
-    // if(firstRender.current){
-      if(isBrandDataSet){
-        const options = {
-          page,
-          limit: 10,
-          populate: "user.User"
-        }
-        let filters={
-          "brand": brandData.id
-        }
-        const reivewId = query.get("review")
-        if(reivewId){
-          filters={
-            "_id": reivewId
+        if(isBrandDataSet){
+          const options = {
+            page,
+            limit: 10,
+            populate: "user.User"
+          }
+          let filters={
+            "brand": brandData.id
+          }
+          const reivewId = query.get("review")
+          if(reivewId && isUrlQuery){
+            filters={
+              "_id": reivewId
+            }
+          }
+          if(brandData.id){
+            axios
+            .post(`/review/query`,{
+              options,
+              filters
+            })
+            .then(({data}) =>{
+              console.log(data)
+              setCurrentPage(data.page)
+              setTotalPages(data.totalPages)
+              setReviewData(data.results)
+              console.log(data)
+            })
+            .catch(err => {
+              console.log(err)
+            })
           }
         }
-        if(brandData.id){
-          axios
-          .post(`/review/query`,{
-            options,
-            filters
-          })
-          .then(({data}) =>{
-            console.log(data)
-            setCurrentPage(data.page)
-            setTotalPages(data.totalPages)
-            setReviewData(data.results)
-            console.log(data)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-        }
-      }
-    // }
-
-    // firstRender.current = true
-    
-  }, [isBrandDataSet, page])
+  }, [isBrandDataSet, page, isUrlQuery])
 
 
   const handlePageination = (index) => {
     setPage(index)
     setReviewData([])
+  }
+
+  const handleShowAllComments = () =>{
+    setReviewData([])
+    setIsUrlQuery(false)
   }
 
 
@@ -143,14 +136,25 @@ const SearchBrand = () => {
 
           </div>
             <Pagination currentPage={currentPage} totalPages = {totalPages} handlePageination= {handlePageination} />
+            {
+              isUrlQuery &&
+              <button className="brandMain__showAllButton" onClick={ () => handleShowAllComments()}>
+                Show all comments
+              </button>
+            }
         </div>
-        { 
-          brandData && 
-          <div className="brandMain__topbrands">
-                <h2>Top brands in the same category</h2>
-                <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
+        <div className="brandMain__right">
+          { 
+            brandData && 
+            <div className="brandMain__topbrands">
+                  <h2>Top brands in the same category</h2>
+                  <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
+            </div>
+          }
+          <div className="brandMain__right__compare">
+              <BrandComparison />
           </div>
-        }
+        </div>
       </div>
       <div className = 'brandMain__background__vertical-dot'>
         <VerticalDotBackGround/>

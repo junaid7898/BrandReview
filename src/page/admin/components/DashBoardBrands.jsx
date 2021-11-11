@@ -50,6 +50,7 @@ function DashBoardBrands({filters, sortOptions}) {
                 message: "brand blacklisted",
                 type: "success"
             }))
+            dispatch(brandAction.setBrands([...brands.filter(brand => brand.id !== brandId)]))
             setBrandData([...brandData.map(item => {
                 if(item.id === brandId){
                     return data
@@ -79,6 +80,7 @@ function DashBoardBrands({filters, sortOptions}) {
                 message: "brand removed from blacklist",
                 type: "success"
             }))
+            dispatch(brandAction.setBrands([...brands, data]))
             setBrandData([...brandData.map(item => {
                 if(item.id === brandId){
                     return data

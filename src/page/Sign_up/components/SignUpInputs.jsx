@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {axios} from "../../../axios/axiosInstance";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import RegistrationPageComponent from "../../../components/registration_page_component/RegistrationPageComponent";
 import { clientActions } from "../../../Redux/clientslice/clientSlice";
@@ -31,7 +31,7 @@ const SignUpInputs = () => {
   // ANCHOR states for redux
   const [user, setClient] = useState(null);
   const dispatch = useDispatch();
-
+  const history = useHistory()
   //ANCHOR email validation
   const validateEmail = () => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -120,7 +120,7 @@ const SignUpInputs = () => {
             }))
             setIsSigningIn(false);
             console.log('response' + res);
-            dispatch(clientActions.setClient(res.data));
+            history.push('/user/login')
           })
           .catch((err) => {
             dispatch(statusAction.setNotification({

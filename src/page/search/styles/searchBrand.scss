@@ -1,13 +1,11 @@
 .brandMain{
-    // max-width: $maxwidth;
     margin: auto;
-    // background-color: red;
-    // background-color: red;
     &__reviews-container{
         // max-width: 1000px;
         // margin: auto;
         // flex: 90%;
         width: 100%;
+        flex: 1;
     }
     &__reviews{
         position: relative;
@@ -33,6 +31,26 @@
             flex-direction: column;
         }
     }
+    &__right{
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        margin-left: 20px;
+        @include respond(phone){
+            margin-left: 0;
+            margin: auto;
+        }
+        &__compare{
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 20px 70px rgba(0, 0, 0, 0.07);
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+    }
     &__topbrands{
         // background-color: red;
         background-color: $background;
@@ -48,6 +66,17 @@
             padding: 20px 10px;
             font-size: 15px;
             color: $primary;
+        }
+    }
+    &__showAllButton{
+        background-color: transparent;
+        color: $primary;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        width: 100%;
+        &:hover{
+            text-decoration: underline;
         }
     }
     &__background{

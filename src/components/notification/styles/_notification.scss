@@ -12,7 +12,10 @@
         // bottom: 0;
         top: 70px;
     }
-    & p::first-letter{
+    & p{
+        font-family: $round;
+        font-family: 100;
         text-transform: capitalize;
+        
     }
 }

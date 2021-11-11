@@ -58,6 +58,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: #F8F8F8;
+    border-radius: 8px;
     padding: 10px 0;
     position: relative;
     width: 350px;
@@ -159,8 +160,9 @@
     overflow-y: auto;   
     color: #272727;
     z-index: 100;
-    // background-color: red;
     backdrop-filter: blur(4px);
+    border-radius: 4px;
+    margin-top: 3px;
 }
 
 .nav__search__result__item{
@@ -310,7 +312,7 @@
     }
 }
 .nav__links__icon{
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 .nav__links ul li a{

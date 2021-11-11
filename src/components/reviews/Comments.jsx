@@ -6,30 +6,16 @@ import VerifiedCommentSvg from "../../assests/verified-comment-svg";
 import { Link } from 'react-router-dom';
 import { axios } from '../../axios/axiosInstance';
 import { FiSend } from 'react-icons/fi';
-function Comments({setHeight, commentsAllowed, review, comments, client, showComments, commentsLoading, moreCommentsLoading, totalComments, handleCommentLike, handleShowComments, }) {
+function Comments({updateFirstLine,  commentsAllowed, review, comments, client, showComments, commentsLoading, moreCommentsLoading, totalComments, handleCommentLike, handleShowComments, }) {
+    
+    
+
+    
     useEffect(() => {
         if(comments.length > 0 && showComments){
             console.log("ran")
-            const arrayWrapper = document.getElementById(review.id)
-            if(arrayWrapper){
-                const reviewTextHeight = document.getElementById(`review/text/${review.id}`).getBoundingClientRect().height
-                const reviewButtonHeight = document.getElementById(`review/buttons/${review.id}`).getBoundingClientRect().height
-                const totalHeight = arrayWrapper.getBoundingClientRect().height
-                const lastChild = arrayWrapper.lastChild
-                const totalChilds = arrayWrapper.childNodes.length
-                const lastChildHeight = lastChild.getBoundingClientRect().height
-                const factors = reviewTextHeight + reviewButtonHeight
-                let childHeight = 0
-                if(totalChilds === 1){
-                    childHeight = 0 - 10
-                }
-                else{
-                    childHeight = (totalHeight - lastChildHeight) - 40
-                }
-                const finalHeight = childHeight + factors
-                console.log("commentsArray: ", arrayWrapper)
-                setHeight(finalHeight)
-            }
+            console.log(`commentsLength: ${comments.length}, showComments: ${showComments}`)
+            updateFirstLine()
         }
     }, [comments, showComments])
 
@@ -45,14 +31,16 @@ function Comments({setHeight, commentsAllowed, review, comments, client, showCom
                     <>
                     <div id={review.id} className="reviewComponent__comments__array">
                     {
-                        comments.map(comment =>{
+                        comments.map((comment, index) =>{
                           if(comment.type === "user"){
                             return <User_Comment 
-                                    client={client}
-                                    comment={comment}
-                                    handleCommentLike={handleCommentLike}
-                                    review={review}
-                                />
+                                        index={index}
+                                        client={client}
+                                        comment={comment}
+                                        handleCommentLike={handleCommentLike}
+                                        review={review}
+                                        updateFirstLine= {updateFirstLine}
+                                    />
                           }
                           else if(comment.type ==="brand"){
                             return <Brand_Comment 
@@ -106,7 +94,7 @@ function Comments({setHeight, commentsAllowed, review, comments, client, showCom
     )
 }
 
-const User_Comment = ({ review, comment, client, handleCommentLike}) =>{
+const User_Comment = ({ index, review, comment, client, handleCommentLike, updateFirstLine}) =>{
     const [commentText, setCommentText] = useState("")
     const [replyActive, setReplyActive] = useState(false)
     const [replyIsSending, setReplyIsSending] = useState(false)
@@ -119,6 +107,7 @@ const User_Comment = ({ review, comment, client, handleCommentLike}) =>{
 
     useEffect(() => {
         if(replies.length > 0){
+            
             const repliesWrapper = document.getElementById(`comment/reply/${comment.id}`)
             const wrapperHeight = repliesWrapper.getBoundingClientRect().height
             const lastChildHeight = repliesWrapper.lastChild.getBoundingClientRect().height
@@ -220,9 +209,9 @@ const User_Comment = ({ review, comment, client, handleCommentLike}) =>{
             console.log(err)
           })
     }
-    console.log(comment)
+    // console.log(comment)
     return(
-        <div className="reviewComponent__comments__array__item">
+        <div key={index} className="reviewComponent__comments__array__item">
             <div className="reviewComponent__comments__line" />
             <div className="reviewComponent__comments__array__item__left">
                 <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${comment.user}`}>

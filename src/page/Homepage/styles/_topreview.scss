@@ -37,10 +37,12 @@
             flex-direction: row;
             align-items: center;
             &__userName{
+                text-transform: capitalize;
                 text-decoration: none;
                 color: rgba(0, 0, 0, 0.8);
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 600;
+                font-family: $round;
                 &:hover{
                     text-decoration: underline;
                 }
@@ -59,7 +61,6 @@
             margin: 20px 0;
             height: 300px;
             &__brandName{
-                text-decoration: none;
                 color: #35C9CE;
                 font-size: 20px;
                 &:hover{
@@ -71,6 +72,9 @@
                 }
             }
             &__reviewText{
+                font-size: 16px;
+                font-weight: 400;
+                font-family: $subTitle;
                 color: rgba(0, 0, 0, 0.5);
             }
         }

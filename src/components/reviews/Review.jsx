@@ -37,6 +37,53 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   const [clikedImage, setClickedImage] = useState(null)
   const [rating, setRating] = useState(null)
   const [firstCommentHeight, setFirstCommentHeight] = useState(0)
+  const currentHeight = useRef()
+  let show = false
+  const resize_ob = new ResizeObserver(function(entries) {
+    // since we are observing only a single element, so we access the first element in entries array
+    console.log("Resize Observer Function ===")
+    console.log(entries)
+    if(!showComments){
+      return 
+    }
+    let rect = entries[0].contentRect;
+    
+    let height = rect.height;
+
+    if(height !== currentHeight.current){
+      if(show){
+        updateFirstLine()
+      }
+        return
+    }
+
+    });  
+  const updateFirstLine = () => {
+    const arrayWrapper = document.getElementById(review.id)
+        if(arrayWrapper){
+            // console.log(arrayWrapper)
+            console.log("updatedLine")
+            const reviewTextHeight = document.getElementById(`review/text/${review.id}`).getBoundingClientRect().height
+            const reviewButtonHeight = document.getElementById(`review/buttons/${review.id}`).getBoundingClientRect().height
+            const totalHeight = arrayWrapper.getBoundingClientRect().height
+            currentHeight.current = totalHeight
+            const lastChild = arrayWrapper.lastChild
+            const totalChilds = arrayWrapper.childNodes.length
+            const lastChildHeight = lastChild.getBoundingClientRect().height
+            const factors = reviewTextHeight + reviewButtonHeight
+            let childHeight = 0
+            if(totalChilds === 1){
+                childHeight = 0 - 10
+            }
+            else{
+                childHeight = (totalHeight - lastChildHeight) - 40
+            }
+            const finalHeight = childHeight + factors
+            // console.log("commentsArray: ", arrayWrapper)
+            setFirstCommentHeight(finalHeight)
+        }
+  }  
+
   const handleCommentUser = ( commentId) =>{
     setCommentIsSending(true)
     let reqObj = {}
@@ -72,12 +119,18 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       console.log(data)
       setCommentText("")
       console.log("comments Allowed: ", commentsAllowed)
+      const updatedReview = {
+        ...review,
+        comments:[data.id, ...review.comments]
+      }
+      setUpdatedReview(updatedReview)
       if(showComments){
         setComments([{
           ...data,
           user: client.user
         }, ...comments])
       }
+      handleShowComments(true)
     })
     .catch(err => {
       console.log(err)
@@ -109,7 +162,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       if(showComments){
         setComments([data, ...comments])
       }
-      
+      handleShowComments(true)
     })
     .catch(err => {
       console.log(err)
@@ -352,17 +405,27 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     })
   }
 
+  useEffect(() => {
+    const arrayWrapper = document.getElementById(review.id)
+    if(arrayWrapper && showComments){
+      resize_ob.observe(arrayWrapper);
+    }
+  }, [showComments])
+  
   const handleShowComments = (bool) =>{
-
+    const arrayWrapper = document.getElementById(review.id)
     if(page === 0){
       setCommentsLoading(bool)
     }
     if(!bool){
       setComments([])
       setPage(0)
+      show = bool
       setShowComments(bool)
+      resize_ob.unobserve(arrayWrapper);
       return
     }
+    
     if(page > 0){
       setMoreCommentsLoading(true)
     }
@@ -384,6 +447,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       setComments([...comments, ...data.results])
       setPage(page + 1)
       setTotalComments(data.totalResults)
+      show = bool
       setShowComments(bool)
     })
     .catch(err => {
@@ -468,7 +532,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     setIsEditingReview(false)
     const changes = {
       message: reviewChanges.current.text,
-      ratingCount: reviewChanges.current.rating
+      rating: reviewChanges.current.rating
     }
     const updatedReview = {
       ...review,
@@ -500,6 +564,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   useEffect(() => {
     if(rating){
       reviewChanges.current.rating = rating
+      console.log(reviewChanges.current)
     }
   }, [rating])
 
@@ -552,7 +617,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
                         onChange = {setRating}
                         size = {30}  
                         isHalf = {true}
-                        activeColor="#ffd700"
+                        activeColor="#357bce"
                       />
                     </div>
                   :
@@ -637,7 +702,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
                         null
                     }
                   </Button>
-                  <Button className="reviewComponent__buttons__button" client={client} type={"user"} onClick= { () => document.getElementById("review-write-comment").focus()}>
+                  <Button className="reviewComponent__buttons__button" client={client} type={"user"} onClick= { () => document.getElementById(`review-${review.id}-write-comment`).focus()}>
                     {
                       client.type.includes("user") 
                       ?
@@ -698,7 +763,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         </div>
         
         <Comments 
-        setHeight = {setFirstCommentHeight}
+          setHeight = {setFirstCommentHeight}
           commentsAllowed = {commentsAllowed}
           review={review}
           comments={comments}
@@ -709,6 +774,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
           totalComments={totalComments}
           handleCommentLike={handleCommentLike}
           handleShowComments={handleShowComments}
+          updateFirstLine={updateFirstLine}
         />
       </div>
       </div>
@@ -721,7 +787,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
               <div className="reviewComponent__comments__writeComment">
                 <Link to={`/user/${client.user.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.user.profileImage} alt="" /></Link>
                 <div className="reviewComponent__comments__writeComment__input">
-                  <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Enter Comment" />
+                  <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Enter Comment" id={`review-${review.id}-write-comment`} />
                     {
                       !commentIsSending 
                       ?
@@ -734,21 +800,21 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
             :
             client.type.includes("brand") 
             ?
-              <div className="reviewComponent__comments__writeComment">
-                  <Link to={`/brand/${client.brand.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
-                  <div className="reviewComponent__comments__writeComment__input">
-                    <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Enter Comment" />
-                      {
-                        !commentIsSending 
-                        ?
-                          <FiSend onClick={handleCommentBrand} className={`reviewComponent__comments__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__comments__writeComment__sendIcon-hide`}`}/>
-                        : 
-                          <LoadingIndicator className="reviewComponent__comments__writeComment__sendIcon-loader" />
-                      }
-                  </div>
-                </div>  
+            <div className="reviewComponent__comments__writeComment">
+                <Link to={`/brand/${client.brand.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
+                <div className="reviewComponent__comments__writeComment__input">
+                  <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Enter Comment" id={`review-${review.id}-write-comment`}/>
+                    {
+                      !commentIsSending 
+                      ?
+                        <FiSend onClick={handleCommentBrand} className={`reviewComponent__comments__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__comments__writeComment__sendIcon-hide`}`}/>
+                      : 
+                        <LoadingIndicator className="reviewComponent__comments__writeComment__sendIcon-loader" />
+                    }
+                </div>
+            </div>  
             :
-                    null
+                null
           : null
         }
         </div>

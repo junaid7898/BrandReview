@@ -156,6 +156,9 @@ const SearchBrand = () => {
           </div>
         </div>
       </div>
+
+
+      
       <div className = 'brandMain__background__vertical-dot'>
         <VerticalDotBackGround/>
       </div>

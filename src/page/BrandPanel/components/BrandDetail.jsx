@@ -12,10 +12,10 @@ import BrandChart from './BrandChart';
 import { statusAction } from "../../../Redux/statusSlice";
 import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker';
 import FilterComponent from '../../../components/filter_component/FilterComponent';
+import UpdatePassword from './UpdatePassword';
 
 
-const BrandDetail = ({item, brandId}) => { 
-
+const BrandDetail = ({item, brandId, visitorIsBrand}) => { 
     const [option, setOption] = useState(1)
     const {client} = useSelector(state => state.client)
     const [date, setDate] = useState(null)
@@ -166,7 +166,7 @@ const BrandDetail = ({item, brandId}) => {
 
                             <div className="dashboard__list__settings__items">
                                 <div className="dashboard__list__settings__items__brand-name">
-                                    <h3>Brand Name</h3>
+                                    <h3>Name</h3>
                                     <h4>{item.name}</h4>
                                 </div>
                             </div>
@@ -178,17 +178,10 @@ const BrandDetail = ({item, brandId}) => {
                                 </div>
                             </div>
 
-                            <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
+                            <div className="dashboard__list__settings__item">
+                                <div className="dashboard__list__settings__item__email">
                                     <h3>Email</h3>
                                     <h4>{item.email}</h4>
-                                </div>
-                            </div>
-
-                            <div className="dashboard__list__settings__items">
-                                <div className="dashboard__list__settings__items__name">
-                                    <h3>Phone</h3>
-                                    <h4>{item.countryCode + item.phoneNumber}</h4>
                                 </div>
                             </div>
 
@@ -210,9 +203,13 @@ const BrandDetail = ({item, brandId}) => {
                             </div>
                             
                         } */}
-                        
-
                         </div>
+                            {
+                                visitorIsBrand &&
+                                <div className = 'update__brand__password'>
+                                    <UpdatePassword brandId = {brandId}/>
+                                </div>
+                            }
 
                         {
                             updateProfile ?

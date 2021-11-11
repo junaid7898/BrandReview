@@ -13,6 +13,7 @@ import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
 import HorizantalDotBackground from '../login/components/HorizantalDotBackground'
 import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
 import { useLocation } from 'react-router'
+import TopBrandsHeader from './components/TopBrandsHeader'
 
 
 function HomePage() {
@@ -31,7 +32,11 @@ function HomePage() {
             <div className="homepage__topReview-container">
                 <TopReview />
             </div>
+            <div className = 'top__brands__header'>
+                <TopBrandsHeader/>
+            </div>
             <div className="homepage__topbrands-container" style = {{position: 'relative'}}>
+                {/* <TopBrandsHeader/> */}
                 <TopTenBrands/>  
                 <div className = 'homepage__yello-zigzag2'>
                     <ZigZagBackgroundComponent/>

@@ -9,7 +9,26 @@
     border-radius: 10px;
     padding: 20px 15px;
     margin: 50px auto;
-
+    &__password-info{
+        font-family: $subTitle2;
+        font-weight: 400;
+        // background-color: red;
+        color: rgba($onSurface-secondary, 0.9);
+        text-align: left;
+        margin-bottom: 30px;
+    }
+    &__more-info{
+        width: 100%;
+        & p{
+            font-family: $round;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 20px 0px;
+            text-transform: capitalize;
+            color: $onSurface-primary
+        }
+        // background-color: red;
+    }
     &__button{
         width: 30%;
         background-color: $primary;
@@ -24,14 +43,14 @@
             background-color: $primaryHover;
         }
     }
-    &__name-input{
+    &__name-input, &__email-input, &__password-input{
         display: flex;
         flex-direction: column;   
         align-items: flex-start;
         justify-content: center;
         width: 100%;
         & label{
-            color: $onSurface-primary;
+            color: $onSurface-secondary;
             font-size: 15px;
             font-weight: bold;
         }
@@ -54,7 +73,7 @@
         justify-content: flex-start;
         width: 100%;
         & label{
-            color: $onSurface-primary;
+            color: $onSurface-secondary;
             font-size: 15px;
             font-weight: bold;
         }
@@ -71,7 +90,7 @@
         justify-content: center;
         width: 100%;
         & label{
-            color: $onSurface-primary;
+            color: $onSurface-secondary;
             font-size: 15px;
             font-weight: bold;
         }
@@ -94,7 +113,7 @@
         justify-content: center;
         width: 100%;
         & label{
-            color: $onSurface-primary;
+            color: $onSurface-secondary;
             font-size: 15px;
             font-weight: bold;
         }

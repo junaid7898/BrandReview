@@ -40,6 +40,11 @@
             width: 100%;
             padding: 12px 16px;
             background-color: transparent;
+            color: $onSurface-secondary;
+            text-transform: capitalize;
+            &::placeholder{
+                color: $onSurface-secondary;
+            }
         }
     }
     & h1{
@@ -64,6 +69,11 @@
             width: 100%;
             padding: 12px 16px;
             background-color: transparent;
+            color: $onSurface-secondary;
+            text-transform: capitalize;
+            &::placeholder{
+                color: $onSurface-secondary;
+            }
         }
     }
 }

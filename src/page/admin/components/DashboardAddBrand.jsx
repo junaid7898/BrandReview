@@ -9,6 +9,9 @@ import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndica
 
 const DashboardAddBrand = () => {
     const [brandName, setBrandName] = useState(null)
+    const [brandEmail, setBrandEmail] = useState(null)
+    const [brandPassword, setBrandPassword] = useState(null)
+    const [brandConfirmPassword, setBrandConfirmPassword] = useState(null)
     const [about, setAbout] = useState(null)
     const [logo, setLogo] = useState(null)
     const [category, setCategory] = useState({value: null , label: null})
@@ -60,7 +63,32 @@ const DashboardAddBrand = () => {
         
       }
 
+        //ANCHOR email validation
+        const validateEmail = () => {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(brandEmail).toLowerCase());
+        }
+
+        //ANCHOR password validation
+        const CheckPassword = () => { 
+            var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+            if(brandPassword.match(paswd)){
+                return true;
+            }
+            else{ 
+                return false;
+            }
+        }
+
       const checkValidation = () => {
+          let emailValidation, passwordValidation;
+
+          if(brandEmail){
+            emailValidation = validateEmail()
+          }
+          if(brandPassword){
+              passwordValidation = CheckPassword()
+          }
           if(brandName === null || brandName === '' || about === null || about === ''){
               return 'please fill all the entries'
           }
@@ -70,9 +98,38 @@ const DashboardAddBrand = () => {
           else if( category.value === null){
               return 'must provide a category'
           }
-          else{
-              return 'ok'
+          if(brandEmail){
+                if(!brandPassword){
+                    return 'you must type password if you want to create an account'
+                }
+                else if(!passwordValidation){
+                    return 'password must be between 7-15 characters long and contain at least one numeric digit and special character'
+                }
+                else{
+                    if(!brandConfirmPassword){
+                        return 'please confirm your password..'
+                    }
+                    else{
+                        if(brandConfirmPassword !== brandPassword){
+                            return 'password and confirm password do not match...'
+                        }
+                        else if(!emailValidation){
+                            return "please enter a valid email..."
+                        }
+                        else{
+                            return "ok"
+                        }
+                    }
+                }
           }
+          if (!brandEmail){
+              if(brandPassword || brandConfirmPassword){
+                  return 'you must enter an email to create an account...'
+              }
+          }
+          
+              return 'ok'
+          
       }
 
       const handleAddBrand = () => {
@@ -85,10 +142,18 @@ const DashboardAddBrand = () => {
                     type: "loading"
                 }))
                 
-                const req = {
+                let req = {
                     name: brandName,
                     about: about,
                     category: category.value,
+                }
+
+                if(brandEmail && brandPassword){
+                    req = {
+                        ...req,
+                        email: brandEmail,
+                        password: brandPassword
+                    }
                 }
                 
                 axios.post('/auth/brand/register', {
@@ -149,6 +214,8 @@ const DashboardAddBrand = () => {
                 />
             </div>
 
+
+
             <div className = 'add__brand__container__about-input'>
                 <label htmlFor = 'brandAbout'>About {`[${aboutLength.current}/200]`}</label>
                 <input
@@ -196,6 +263,42 @@ const DashboardAddBrand = () => {
                     placeholder = 'select a category for your brand'  
                     isSearchable = {true}
                 />
+            </div>
+
+            <div className = 'add__brand__container__more-info'>
+                <p> for createing an account fill the following</p>
+                <div className = 'add__brand__container__email-input'>
+                    <label htmlFor = 'brandEmail'>Email</label>
+                    <input
+                        id = 'brandEmail'
+                        type = 'text'
+                        name = 'email'
+                        placeholder = 'Enter email address'
+                        onChange = {e => setBrandEmail(e.target.value.trim())}
+                    />
+                </div>
+                <div className = 'add__brand__container__password-input'>
+                    <label htmlFor = 'brandPassword'>Password</label>
+                    <input
+                        id = 'brandPassword'
+                        type = 'password'
+                        name = 'password'
+                        placeholder = 'Enter password'
+                        onChange = {e => setBrandPassword(e.target.value)}
+                    />
+                    <h4 className = 'add__brand__container__password-info'>Password must be between 7-15 characters long and contain at least one numeric digit and special character</h4>
+
+                </div>
+                <div className = 'add__brand__container__password-input'>
+                    <label htmlFor = 'brandPasswordC'> Confirm Password</label>
+                    <input
+                        id = 'brandPasswordC'
+                        type = 'password'
+                        name = 'confirm password'
+                        placeholder = 'Enter password again'
+                        onChange = {e => setBrandConfirmPassword(e.target.value)}
+                    />
+                </div>
             </div>
 
             <div className = 'add__brand__container__button' onClick = {handleAddBrand}>

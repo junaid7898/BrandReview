@@ -200,7 +200,7 @@ function App() {
                     {
                       client 
                       ? 
-                        client.type.includes("brand") || client.type.includes('admin') &&
+                        (client.type.includes("brand") || client.type.includes('admin')) &&
                         <BrandPanel />
                       :
                         <Redirect to='/' exact />

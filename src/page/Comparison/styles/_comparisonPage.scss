@@ -1,25 +1,33 @@
 .comparison__page{
   max-width: $maxwidth;
   margin: auto;
+  position: relative;
+  // background-color: red;
     &__upper{
       display: flex;
-    flex-flow: row wrap;   
-    align-items: center;
-    justify-content: space-around;
-    padding: 8px 12px;
-    width: 100%;
-    margin: 50px 0px;
+      flex-flow: row wrap;   
+      align-items: stretch;
+      justify-content: space-around;
+      padding: 8px 12px;
+      width: 100%;
+      margin: 50px 0px;
+      position: relative;
+    // background-color: red;
     }
     &__lower{
       box-shadow: 0px 20px 70px rgba(0, 0, 0, 0.07);
       border-radius: 10px;
-      margin: 20px 0;
+      margin: 20px 10px;
+
       & h2{
         color: #357BCE;
         padding: 20px;
       }
     }
     &__inputs{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
         @include respond(phone){
             margin: 50px 0px;
         }
@@ -34,4 +42,27 @@
             margin-bottom: 50px;
         }
     }
+}
+
+.comparison__background{
+  &__vertical-dot{
+    @include respond(phone){
+      display: none;   
+    }
+  }
+  &__horizantal-dot{
+    @include respond(phone){
+      display: none;
+    }
+  }
+  &__blue-zigzag{
+    @include respond(phone){
+      display: none;
+    }
+  }
+  &__blue-spiral{
+    @include respond(phone){
+      display: none;
+    }
+  }
 }

@@ -1,0 +1,31 @@
+.top__brands__header{
+    // background-color: red;
+    width: 1000px;
+    max-width: 100%;
+    margin: 30px auto;
+    &__container{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        @include respond(phone){
+            padding: 0 10px;
+        }
+        &__title{
+            font-family: $round;   
+            font-weight: 700;
+            font-size: 46px;
+            line-height: 55px;
+            max-width: 170px;
+        }
+        &__desc{
+            font-family: $subTitle;
+            font-weight: 400;
+            max-width: 800px;
+            line-height: 30px;
+            text-align: left;
+            color: $onSurface-secondary;
+        }
+    }
+}

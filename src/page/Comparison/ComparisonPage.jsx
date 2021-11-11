@@ -5,6 +5,10 @@ import KiaLogo from "../../assests/images/kia_logo.png";
 import { useLocation, useParams } from "react-router";
 import { axios } from "../../axios/axiosInstance";
 import TopBrands from "../../components/top-brands/TopBrands";
+import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
+import HorizantalDotBackground from '../login/components/HorizantalDotBackground'
+import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
+import BlueSpiralBackground from '../login/components/BlueSpiralBackground'
 const ComparisonPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -153,7 +157,7 @@ const ComparisonPage = () => {
 
         });
     }
-  }, []);
+  }, [brandSlug1, brandSlug2]);
 
   const isSolvedCountGreater = useRef();
   const isThankedCountGreater = useRef();
@@ -200,8 +204,20 @@ const ComparisonPage = () => {
 //   }, []);
 
   return (
-    <div className="comparison__page">
-      <div className="comparison__page__upper">
+    <div className="comparison__page" style = {{position: 'relative'}}>
+       <div className = 'comparison__background__vertical-dot' style = {{position: 'absolute', top: 70, left: 30}}>
+           <VerticalDotBackGround/>
+        </div>
+        <div className = 'comparison__background__horizantal-dot' style = {{position: 'absolute', right: 0, zIndex: -1}}>
+          <HorizantalDotBackground/>
+        </div>
+        <div className = 'comparison__background__blue-zigzag' style = {{position: 'absolute', left: '25%',zIndex: -1}}>
+          <BlueZigZagComponent/>
+        </div>
+        <div className = 'comparison__background__blue-spiral' style = {{position: 'absolute', top: '40%', zIndex: -1, left: '25%'}}>
+          <BlueSpiralBackground/>
+        </div>
+      <div className="comparison__page__upper" >
         <div className="comparison__page__inputs">
           <BrandComparison
             selectedBrand1={testBrand && testBrand.name}
@@ -210,7 +226,7 @@ const ComparisonPage = () => {
         </div>
         {testBrand && testBrand1 && (
           <>
-            <div className="comparison__page__block-1">
+            <div className="comparison__page__block-1" >
               <BrandComparisonDetail
                 brandDetails={testBrand}
                 thankCount={thankedCount1}
@@ -224,6 +240,7 @@ const ComparisonPage = () => {
                 isAverageRatingGreater = { averageRating1 > averageRating2 ? true : false }
                 isSatisfactionRateGreater = { satisfactionRate1 > satisfactionRate2 ? true : false }
               />
+              
             </div>
             <div className="comparison__page__block-2">
               <BrandComparisonDetail
@@ -242,6 +259,7 @@ const ComparisonPage = () => {
             </div>
           </>
         )}
+
       </div>
       <div className="comparison__page__lower">
         {
@@ -253,11 +271,12 @@ const ComparisonPage = () => {
                   ? "Top brands in the same category"
                   : "Top Brands"}
               </h2>
-              <TopBrands category={null} length={5} rank={false} />
+              <TopBrands category={testBrand.category === testBrand1.category ? testBrand1.category : null} length={5} rank={false} />
             </div>
           )
         }
       </div>
+       
     </div>
   );
 };

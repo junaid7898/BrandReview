@@ -13,6 +13,7 @@
         background-color: $background;
         font-family: $round;
         font-weight: 700;
+        margin-top: 50px;
         @include respond(phone){
             width: 100%;
             font-size: 10px;

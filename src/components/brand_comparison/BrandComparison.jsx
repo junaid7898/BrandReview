@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import BrandIcon from "../../assests/images/brand_icon.png";
 import BrandSearchList from "./components/BrandSearchList";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { statusAction } from "../../Redux/statusSlice";
 const BrandComparison = (props) => {
-  
+  const dispatch = useDispatch()
   const history = useHistory()
   const [selectedBrand1, setSelectedBrand1] = useState(null)
   const [selectedBrand2, setSelectedBrand2] = useState(null)
@@ -97,40 +99,69 @@ const BrandComparison = (props) => {
             setShowDropdown2(false)
         }
     }
+
+    const check = () => {
+      if(selectedBrand1 === null || selectedBrand2 === null){
+        return 'please fill all feilds...'
+      }
+      else{
+        return 'ok'
+      }
+    }
     
     const handleCompare = () => {
-      console.log(selectedBrand1)
-      console.log(selectedBrand2)
-
+    const valid = check()
+    if(valid === 'ok'){
+      console.log('here');
       if(!selectedBrand1 && !selectedBrand2){
         return
       }
 
       if(selectedBrand1 && !selectedBrand2){
-        history.push(`/brand/${selectedBrand1.id}`)
+        history.push(`/brand/${selectedBrand1.slug}`)
         return 
       } 
       else if(!selectedBrand1 && selectedBrand2){
-        history.push(`/brand/${selectedBrand2.id}`)
+        history.push(`/brand/${selectedBrand2.slug}`)
         return
       }
       else if(selectedBrand1.id === selectedBrand2.id){
-        history.push(`/brand/${brand1.id}`)
+        console.log(selectedBrand1, selectedBrand2);
+        history.push(`/brand/${selectedBrand1.slug}`)
       }
-      history.push(`/brand/comparison/${selectedBrand1.slug}/${selectedBrand2.slug}`)
+      else{
+
+        history.push(`/brand/comparison/${selectedBrand1.slug}/${selectedBrand2.slug}`)
+      }
+    }
+    else{
+      dispatch(statusAction.setNotification({
+        message: valid,
+        type: "error"
+      }))
+    }
+      
 
     }
   
 console.log(props.selectedBrand1)
+    useEffect(() => {
+      if(props.selectedBrand1 && props.selectedBrand2){
+        setBrand1(props.selectedBrand1)
+        setBrand2(props.selectedBrand2)
+      }
+    }, [props])
   return (
     <section className="comparison">
       <div ref={searchRef} className="comparison__first-brand">
         <input
           type="text"
           placeholder="1. Brand"
-          defaultValue={props.selectedBrand1}
           onClick = { () => setShowDropdown(!showDropdown)}
+          value = {brand1}
+          defaultValue={props.selectedBrand1}
           onChange={(e) => {
+            setBrand1(null)
             setShowResult2(false);
             handleSearch(e.target.value);
             setShowResult1(true);
@@ -158,7 +189,9 @@ console.log(props.selectedBrand1)
           type="text"
           placeholder="2. Brand"
           defaultValue={props.selectedBrand2}
+          value = {brand2}
           onChange={(e) => {
+            setBrand2(null)
             handleSearch(e.target.value);
             setShowResult2(true);
             setShowResult1(false);

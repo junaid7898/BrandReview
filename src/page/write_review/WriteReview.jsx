@@ -10,6 +10,10 @@ import { statusAction } from "../../Redux/statusSlice";
 import ReactStars from "react-rating-stars-component";
 import {brandAction} from "../../Redux/brandInfoSlice/brandInfoSlice"
 import { clientActions } from "../../Redux/clientslice/clientSlice";
+import BlueSpiralBackground from '../login/components/BlueSpiralBackground'
+import HorizantalDotBackground from '../login/components/HorizantalDotBackground'
+import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
+import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
 const WriteReview = () => {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -259,6 +263,21 @@ const WriteReview = () => {
 
   return (
     <div className="review-container">
+      <div className = 'review-container__blue-spiral'>
+        <BlueSpiralBackground/>
+      </div>
+      <div className = 'review-container__zigzag'>
+        <ZigZagBackgroundComponent/>
+      </div>
+      <div className = 'review-container__zigzag2'>
+        <BlueZigZagComponent/>
+      </div>
+      <div className = 'review-container__dot'>
+        <HorizantalDotBackground/>
+      </div>
+      <div className = 'review-container__zigzag3'>
+        <ZigZagBackgroundComponent/>
+      </div>
       <section className="review">
         <img className="review__img" src="/assets/review_img.png" alt = 'user' />
         <form ref = {ref} className="review__content" onSubmit = {(e) => {
@@ -314,7 +333,6 @@ const WriteReview = () => {
 
             <div className = 'review__star__container'>
               <div className="review__star__container__stars">
-                <label>Rating</label>
                 <div className="review__star__container__stars__selector">
                   <ReactStars
                     count = {5}
@@ -367,7 +385,7 @@ const WriteReview = () => {
               />
             </div>
             <button type = 'submit' className="review__content__publishButton" >
-              publish
+              Publish
               {
                 isPublishing &&
                 <LoadingIndicator/>

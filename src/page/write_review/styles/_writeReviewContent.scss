@@ -1,18 +1,75 @@
 .review{
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    margin: auto;
-    margin-bottom: 50px;
+    margin: 50px auto;
+    padding: 10px;
+    @include respond(phone){
+        width: 100%;
+        display: block;
+    }
+    // background-color: red;
     // z-index: 2;
     & input, & textarea{
         outline: none;
     }
 }
+.review-container{
+    // background-color: red;
+    position: relative;
+    &__blue-spiral{
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__zigzag{
+        position: absolute;
+        bottom: 0;
+        right: 16%;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__zigzag2{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__zigzag3{
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__dot{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
+    }
+}
 .review__img{
     width: 500px;
     max-width: 90%;
+    @include respond(phone){
+        // display: none;
+    }
 }
 
 .review__content{
@@ -70,9 +127,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    max-width: 90%;
-    
+    width: 500px;
+    @include respond (phone){
+        width: 100%;
+    }
+    // max-width: 90%;
     
 }
 
@@ -84,7 +143,10 @@
     background-color: #F8F8F8;
     border: 0px solid;
     box-sizing: border-box;
-}     
+}  
+.review__content__textarea{
+    resize: none;
+}   
 
 
 
@@ -100,18 +162,27 @@
     font-weight: 500;
     font-size: 18px;
     font-style: normal;
+    height: 60px;
+    width: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $subTitle;
 }
 
 .review__content__publishButton {
-    padding: 10px 14px;
     border-radius: 10px;
     font-weight: 500px;
     font-size: 18px;
     border: 0px solid;
     cursor: pointer;
     transition: 100ms;
+    height: 60px;
+    width: 140px;
     &:hover{
-        background-color: $primaryHover;
+        border-color: $primary;
+        color: $primary;
+        background-color: transparent;
     }
 }
 
@@ -122,6 +193,7 @@
     // border: 2px solid $primary;
     cursor: pointer;
     transition: 100ms;
+    border: 1px solid transparent;
     & label{
         cursor: inherit;
     }
@@ -142,6 +214,7 @@
     color: $onPrimary;
     margin-left: 10px;
     position: relative;
+    border: 1px solid transparent;
     
 }
 
@@ -172,10 +245,11 @@
     // background-color: red;
     width: 100%;
     position: relative;
+    // background-color: red;
     &__input{
         margin-bottom: 20px;
         width: 100%;
-        border-radius: 5px;
+        border-radius: 8px;
         padding: 10px 12px;
         background-color: #F8F8F8;
         border: 0px solid;

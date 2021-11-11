@@ -33,7 +33,12 @@ function TopBrands({category, skipBrandId, rank, length}) {
                     return parseInt(b.averageRating) - parseInt(a.averageRating);
                 }
                 sorted.sort(mycomparator);
-                setBrandsData([...sorted.slice(0, length)])
+                if(sorted.length < 1){
+                    setBrandsData([...newBrandList.slice(0, length)])
+                }
+                else{
+                    setBrandsData([...sorted.slice(0, length)])
+                }
             }
 
         }

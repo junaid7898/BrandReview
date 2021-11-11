@@ -26,11 +26,13 @@ const BrandPanel = () => {
     const [visitorIsBrand, setVisitorIsBrand] = useState(false)
 
     useEffect(() => {
-        console.log(
-            'here starting 2......'
-        );
-        if(client && brandId){
-            setVisitorIsBrand(true)
+
+        if(client){
+            if(client.type.includes("brand")){
+                if(client.brand.id === brandId){
+                    setVisitorIsBrand(true)
+                }
+            }
         }
         else{
             setVisitorIsBrand(false)
@@ -70,7 +72,7 @@ const BrandPanel = () => {
                     </div>
 
                     <div className="brand__main__brand-details">
-                        <BrandDetail item = {brandDetails}  brandId = {brandId}/>
+                        <BrandDetail item = {brandDetails}  brandId = {brandId} visitorIsBrand = {visitorIsBrand}/>
                     </div>
                 </div>   
             )

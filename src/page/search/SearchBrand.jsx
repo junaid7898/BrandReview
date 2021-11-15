@@ -151,9 +151,9 @@ const SearchBrand = () => {
                   <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
             </div>
           }
-          <div className="brandMain__right__compare">
-              <BrandComparison />
-          </div>
+            {/* <div className="brandMain__right__compare">
+                <BrandComparison />
+            </div> */}
         </div>
       </div>
 

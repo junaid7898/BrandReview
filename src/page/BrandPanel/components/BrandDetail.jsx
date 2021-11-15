@@ -17,9 +17,13 @@ import { brandAction } from '../../../Redux/brandInfoSlice/brandInfoSlice';
 
 
 const BrandDetail = ({item, brandId, visitorIsBrand}) => { 
+    console.log('brand:', visitorIsBrand);
     const [option, setOption] = useState(1)
     const {client} = useSelector(state => state.client)
-    const [date, setDate] = useState(null)
+    let from = new Date()
+    from.setDate(from.getDate() - 5)
+    let to = new Date()
+    const [date, setDate] = useState([from , to])
     const {brands} = useSelector(state => state.brands)
 
 

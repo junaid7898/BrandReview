@@ -73,15 +73,17 @@
 }
 
 .user__profile{
-    background-color: red;
     &__vertical-dots{
         position: absolute;
-        z-index: -10;
+        z-index: -1;
         top: 50%;
+        @include respond(phone){
+            display: none;
+        }
     }
     &__horizantal-dots{
         position: absolute;
-        z-index: -10;
+        z-index: -1;
         top: 5%;
         right: 10%;
         @include respond(phone){
@@ -90,7 +92,7 @@
     }
     &__blue-spiral{
         position: absolute;
-        z-index: -10;
+        z-index: -1;
         top: 30%;
         right: 0;
         @include respond(phone){
@@ -99,7 +101,7 @@
     }
     &__zig-zag-component{
         position: absolute;
-        z-index: -10;
+        z-index: -1;
         top: 5%;
         left: 10%;
         @include respond(phone){
@@ -108,7 +110,7 @@
     }
     &__blue-zig-zag-component{
         position: absolute;
-        z-index: -10;
+        z-index: -1;
         bottom: 5%;
         left: 10%;
         @include respond(phone){

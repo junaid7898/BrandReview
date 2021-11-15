@@ -20,10 +20,10 @@
     &__lower{
         display: flex;
         width: 100%;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         align-items: flex-start;
         justify-content: space-between;
-        max-width: 1200px;
+        max-width: 1200px;  
         margin: auto;
         padding: 5px;
         // background-color: red;
@@ -52,15 +52,14 @@
         }
     }
     &__topbrands{
-        // background-color: red;
         background-color: $background;
+        width: 100%;
         max-width: 100%;
         border-radius: 10px;
         box-shadow: 0px 20px 70px rgba(0, 0, 0, 0.07);
         // margin: 10px;
-        width: 500px;
         @include respond(phone){
-            margin: 10px auto;
+            margin: 10px auto; 
         }
         & h2{
             padding: 20px 10px;

@@ -68,7 +68,7 @@
     width: 500px;
     max-width: 90%;
     @include respond(phone){
-        // display: none;
+        display: none;
     }
 }
 

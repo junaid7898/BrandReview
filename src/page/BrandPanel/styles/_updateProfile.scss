@@ -117,7 +117,7 @@
                 transform: translate(-50%, -50%);
                 transition: all 300ms;
                 &:hover{
-                    transform: translate(-50%, -50%) scale(1.05);
+                    background-color: $primaryHover;
                 }
                 &-icon{
                     color: white;

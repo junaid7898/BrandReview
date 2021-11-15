@@ -777,6 +777,9 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
           updateFirstLine={updateFirstLine}
         />
       </div>
+
+
+      
       </div>
       <div className="reviewComponent-container__lower">
         <div className="reviewComponent__comments__writeComment-container">

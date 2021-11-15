@@ -60,8 +60,13 @@ const BrandSignUpInputs = () => {
 
   // ANCHOR validation function for form
   const checkValidation = () => {
-      const emailValidation =  validateEmail();
-      const validPassword = CheckPassword()
+    let emailValidation , validPassword;
+    if(email){
+      emailValidation = validateEmail()
+    }
+    if(password){
+      validPassword = CheckPassword();
+    }
     if(username === null || email === null || password === null || repeatPassword === null || phone === null || about === null){
       return 'please fill all entries'
     }

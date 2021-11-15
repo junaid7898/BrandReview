@@ -13,20 +13,43 @@ import { statusAction } from "../../../Redux/statusSlice";
 import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker';
 import FilterComponent from '../../../components/filter_component/FilterComponent';
 import UpdatePassword from './UpdatePassword';
+import { brandAction } from '../../../Redux/brandInfoSlice/brandInfoSlice';
 
 
 const BrandDetail = ({item, brandId, visitorIsBrand}) => { 
     const [option, setOption] = useState(1)
     const {client} = useSelector(state => state.client)
     const [date, setDate] = useState(null)
+    const {brands} = useSelector(state => state.brands)
+
 
     const [about, setAbout] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [name, setName] = useState(null)
+    const [category, setCategory] = useState(null)
+
+
     const [isUpdatingBrand, setIsUpdatingBrand] = useState(false)
     const [filters, setFilters] = useState({})
     const [sortOptions, setSortOptions] = useState({})
+      //ANCHOR category selection
+  const options = [
+    { value: 'fashion', label: 'Fashion' },
+    { value: 'automobile', label: 'Auto Mobile' },
+    { value: 'online-retail', label: 'Online Retail' },
+    { value: 'social-network', label: 'Social Network' },
+    { value: 'medicine', label: 'Medicine' },
+    { value: 'furniture', label: 'Furniture' },
+    { value: 'pet-store', label: 'Pet Store' },
+    { value: 'search-engine', label: 'Search Engine' },
+  ];
     useEffect(() => {
         if(item){
             setAbout(item.about)
+            setEmail(item.email ? item.email : 'No email Address provided')
+            const categ = options.find((option) =>  option.value === item.category)
+            setCategory(categ)
+            setName(item.name)
         }
     }, [item])
 
@@ -53,14 +76,29 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
     }
 
 
+      //ANCHOR email validation
+        const validateEmail = () => {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+
     const checkValidation = () => {
         let response;
-        if(about === item.about){
+        let validEmail;
+        if(email){
+            validEmail = validateEmail()
+        }   
+        if(about === item.about && email === item.email && name === item.name && category.value === item.category){
             response = 'nothing is changed'
             return response
         }
-        else if(about === null){
+        else if(about === null || email === null || name === null || category.value === null){
             response = 'please fill all the entries'
+            return response
+        }
+        else if(!validEmail){
+            response = 'please enter a valid email address'
             return response
         }
         else{
@@ -81,6 +119,9 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
               ...client, 
               brand: {
                   ...client.brand,
+                  email: email,
+                  category: category.value,
+                  name: name,
                   about: about,
               },
               
@@ -95,6 +136,7 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
                 message: 'your information is updated...',
                 type: "success"
               }))
+            // dispatch(brandAction.setBrands([...brands.find(brand => brand.id === brandId)]))
             setIsUpdatingBrand(false)
             setUpdateProfile(false)
             
@@ -215,7 +257,16 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
                             updateProfile ?
                             (
                                 <div className="update__brand">
-                                    <UpdateBrandProfile  about = {about} setAbout = {setAbout} handleUpdate = {handleUpdate}
+                                    <UpdateBrandProfile  
+                                    about = {about}
+                                    email = {email}
+                                    setEmail = {setEmail}
+                                    name = {name}
+                                    setName = {setName}
+                                    category = {category}
+                                    setCategory = {setCategory}
+                                    options = {options}
+                                    setAbout = {setAbout} handleUpdate = {handleUpdate}
                                     setUpdateProfile = {setUpdateProfile}
                                     />
                                     {

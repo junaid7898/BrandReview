@@ -19,9 +19,6 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
     const [reviewData, setReviewData] = useState(null)
-    // const [filters, setFilters] = useState({})
-    // const [sortOptions, setSortOptions] = useState()
-    // const [date, setDate] = useState(null)
     const [isVerifing, setIsVerifing] = useState([])
     const [previewImage, setPreviewImage] = useState(null)
     const {client} = useSelector(state => state.client)
@@ -37,7 +34,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
             page,
             limit: 10,
             sortBy: sortOptions,
-            populate: 'user.User'
+            populate: 'user.User, brand.Brand'
         }
         console.log(filters)
         let newFilter = filters
@@ -51,10 +48,8 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                 })
             }
         }
-        console.log(newFilter)
         axios.post('/review/query',{ filters: newFilter, options })
         .then(({data}) => {
-            console.log(data)
             setReviewData(data.results)
             setTotalPages(data.totalPages)
         })
@@ -130,6 +125,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                 <table className="dashboard__panel__reports__table">
                     <tr>
                         <th>User Name</th>
+                        <th>Brand</th>
                         <th>Ratings</th>
                         <th>Review</th>
                         <th>Date</th>
@@ -143,6 +139,11 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                                     <td className = 'dashboard__panel__reports__table__data-rows__name'>
                                         <Link to ={`user/${item.user.id}`} >
                                             <h4 className = 'admin__dashboard__name-tag'>{item.user.name}</h4>
+                                        </Link>
+                                    </td>
+                                    <td className = 'dashboard__panel__reports__table__data-rows__name'>
+                                        <Link  to={`brand/${item.brand.slug}`}>
+                                            <h3 style = {{textTransform: 'uppercase'}}>{item.brand.name}</h3>
                                         </Link>
                                     </td>
                                     <td>

@@ -50,7 +50,7 @@ const MyDetails = ({ user }) => {
       {user ? (
         <>
           <div className="mydetails__details">
-            <DetailTag class1="tag " label="phone" value={user.countryCode+" "+user.phoneNumber} isPhoneNumber = {true} verification = {user.isPhoneVerified}/>
+            <DetailTag class1="tag " label="Phone" value={user.countryCode+" "+user.phoneNumber} isPhoneNumber = {true} verification = {user.isPhoneVerified}/>
             <DetailTag
               class1="tag "
               label="Birthday"
@@ -58,7 +58,7 @@ const MyDetails = ({ user }) => {
             />
             <DetailTag
               class1="tag tag__address"
-              label="address"
+              label="Address"
               value={user.address}
             />
             <DetailTag class1="tag " label="Email" value={user.email} />

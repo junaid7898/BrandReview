@@ -52,7 +52,7 @@ function TopBrands({category, skipBrandId, rank, length}) {
                 brandsData.length > 0 &&
                 brandsData.map((item, index) => {
                     return(
-                        <Link to={`brand/${item.slug}`} className="topbrands__list">
+                        <Link to={`/brand/${item.slug}`} className="topbrands__list">
                             {
                                 rank && (index === 0 || index === 1 || index === 2) ? 
                                 (

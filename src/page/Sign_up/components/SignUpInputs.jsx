@@ -10,8 +10,6 @@ import { statusAction } from "../../../Redux/statusSlice";
 import PhoneInput from "react-phone-number-input";
 import {
   isPossiblePhoneNumber,
-  formatPhoneNumber,
-  formatPhoneNumberIntl,
   isValidPhoneNumber,
   parsePhoneNumber,
 } from "react-phone-number-input";
@@ -52,8 +50,13 @@ const SignUpInputs = () => {
 
   // ANCHOR validation function for form
   const checkValidation = () => {
-      const emailValidation =  validateEmail();
-      const validPassword = CheckPassword()
+    let emailValidation, validPassword;
+    if(email){
+      emailValidation =  validateEmail();
+    }
+    if(password){
+      validPassword = CheckPassword()
+    }
     if(username === null || email === null || password === null || repeatPassword === null || phone === null){
       return 'please fill all entries'
     }

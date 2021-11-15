@@ -122,7 +122,10 @@ const BrandLoginInputs = () => {
   
 
   return (
-    <div className="brand__login__inputs">
+    <form className="brand__login__inputs" onSubmit = {(e) => {
+      e.preventDefault()
+      login()
+    }}>
       <div className="brand__login__inputs__title">
         <h1>Login as Brand</h1>
         <p className="brand__login__inputs__title__noaccount-link">
@@ -191,7 +194,8 @@ const BrandLoginInputs = () => {
 
       <button
         className="login__form__inputs__button"
-        onClick={login}
+        // onClick={login}
+        type = 'submit'
         disabled = {isLoggingIn.email}
         style={{position:"relative"}}
       >
@@ -216,7 +220,7 @@ const BrandLoginInputs = () => {
       </div> */}
 
 
-    </div>
+    </form>
   );
 };
 

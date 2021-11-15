@@ -19,6 +19,30 @@
         @include respond(phone){
             width: 350px;
         }
+
+        &__email{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 10px;
+            & label{
+                
+            }
+            & input{
+                width: 100%;
+                border: none;
+                padding: 10px 0px;
+                border-bottom: 1px solid $onSurface-secondary;
+                outline: none;
+                &:focus{
+                    border-bottom: 3px solid green;
+                }
+            }
+        }
+        &__category{
+            & label{
+            }
+        }
         &__inputs{
             display: flex;
             flex-direction: column;

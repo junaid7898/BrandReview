@@ -144,13 +144,19 @@ const SearchBrand = () => {
           </div>
             <Pagination currentPage={currentPage} totalPages = {totalPages} handlePageination= {handlePageination} />
         </div>
-        { 
-          brandData && 
-          <div className="brandMain__topbrands">
-                <h2>Top brands in the same category</h2>
-                <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
-          </div>
-        }
+
+        <div className="brandMain__right">
+          { 
+            brandData && 
+            <div className="brandMain__topbrands">
+                  <h2>Top brands in the same category</h2>
+                  <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
+            </div>
+          }
+            {/* <div className="brandMain__right__compare">
+                <BrandComparison />
+            </div> */}
+        </div>
       </div>
 
 

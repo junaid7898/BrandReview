@@ -35,53 +35,98 @@
         }
     }
     &__topleft {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 100px;
-      max-width: 100px;
-      min-height: 100px;
-      max-height: 100px;
-      transform: translateX(-50%) translateY(-50%);
+      min-width: 50px;
+      max-width: 50px;
+      min-height: 50px;
+      max-height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      &__div{
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(-50%) translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 80px;
+        height: 80px;
+        background-color: $background;
+      }
       @include respond(phone){
           width: 100px;
       }
     }
     &__topright {
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translateX(50%) translateY(-50%);
-      min-width: 100px;
-      max-width: 100px;
-      min-height: 100px;
-      max-height: 100px;
+      min-width: 50px;
+      max-width: 50px;
+      min-height: 50px;
+      max-height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      &__div{
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateX(50%) translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 80px;
+        height: 80px;
+        background-color: $background;
+
+      }
       @include respond(phone){
         width: 100px;
     }
     }
     &__bottomleft {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      min-width: 100px;
-      max-width: 100px;
-      min-height: 100px;
-      max-height: 100px;
-      transform: translateY(50%) translateX(-50%);
+      min-width: 50px;
+      max-width: 50px;
+      min-height: 50px;
+      max-height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      &__div{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translateY(50%) translateX(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 80px;
+        height: 80px;
+        background-color: $background;
+      }
       @include respond(phone){
         width: 100px;
     }
     }
     &__bottomright {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      min-width: 100px;
-      max-width: 100px;
-      min-height: 100px;
-      max-height: 100px;
-      transform: translateY(50%) translateX(50%);
+      min-width: 50px;
+      max-width: 50px;
+      min-height: 50px;
+      max-height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      &__div{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translateY(50%) translateX(50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 80px;
+        height: 80px;
+        background-color: $background;
+      }
       @include respond(phone){
         width: 100px;
     }

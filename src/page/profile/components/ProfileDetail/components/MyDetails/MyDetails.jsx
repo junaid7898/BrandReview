@@ -7,6 +7,7 @@ import { statusAction } from "../../../../../../Redux/statusSlice";
 import { useDispatch } from "react-redux";
 import UpdateProfileComponents from "./components/UpdateProfileComponents";
 import LoadingIndicator from "../../../../../../components/loadingIndicator/LoadingIndicator";
+import UpdateUserProfile from "./components/UpdateUserProfile";
 const MyDetails = ({ user }) => {
 
   const [isSendingOtp, setIsSendingOtp] = useState(false)
@@ -50,7 +51,7 @@ const MyDetails = ({ user }) => {
       {user ? (
         <>
           <div className="mydetails__details">
-            <DetailTag class1="tag " label="phone" value={user.countryCode+" "+user.phoneNumber} isPhoneNumber = {true} verification = {user.isPhoneVerified}/>
+            <DetailTag class1="tag " label="Phone" value={user.countryCode+" "+user.phoneNumber} isPhoneNumber = {true} verification = {user.isPhoneVerified}/>
             <DetailTag
               class1="tag "
               label="Birthday"
@@ -58,7 +59,7 @@ const MyDetails = ({ user }) => {
             />
             <DetailTag
               class1="tag tag__address"
-              label="address"
+              label="Address"
               value={user.address}
             />
             <DetailTag class1="tag " label="Email" value={user.email} />
@@ -88,7 +89,7 @@ const MyDetails = ({ user }) => {
           {
               updateProfile ? 
               (
-                    <UpdateProfileComponents onSubmit = {setUpdateProfile} user = {user}/>
+                    <UpdateUserProfile onSubmit = {setUpdateProfile} user = {user}/>
               ) 
                 : 
                 null

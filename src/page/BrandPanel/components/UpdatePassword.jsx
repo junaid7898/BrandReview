@@ -65,9 +65,9 @@ const UpdatePassword = ({brandId}) => {
                     type: "success"
                   }))
                   setIsPasswordChanging(false)
-                  setConfirmPass(null)
-                  setNewPassword(null)
-                  setOldPassword(null)
+                  setConfirmPass('')
+                  setNewPassword('')
+                  setOldPassword('')
             }
             ).catch(err => {
                 dispatch(statusAction.setNotification({

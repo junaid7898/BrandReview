@@ -1,0 +1,115 @@
+.update__user__profile{
+    position: fixed;
+    top: 35%;
+    left: 37%;
+    @include respond(phone){
+        left: 0%;
+    }
+    &__mask{
+        background-color: rgba(0, 0, 0, 0.247);
+        position: fixed;
+        inset: 0;
+    }
+    &__component{
+        background-color: $background;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        width: 400px;
+        max-width: 100%;
+        padding: 10px 14px;
+        position: relative;
+        border-radius: 10px;
+        @include respond(phone){
+            width: 370px;
+        }
+        &__cancel-button{
+            background-color: $primary;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            &__icon{
+                fill: #fff;
+            }
+            &:hover{
+                background-color: $primaryHover;
+            }
+            @include respond(phone){
+                left: 50%;
+            }
+        }
+        &__form{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            &__phone{
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            &__birthday{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                margin-bottom: 15px;
+                &__picker{
+                    width: 100%;
+                }
+                &__input{
+                    width: 100%;
+                    outline: none;
+                    border: none;
+                    padding: 10px 0px;
+                    border-bottom: 1px solid $onSurface-secondary;
+                    &:focus{
+                        border-bottom: 3px solid green;
+                    }
+                }
+            }
+
+            &__address{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                margin-bottom: 15px;
+
+                &__textarea{
+                    display: block;
+                    width: 100%;
+                    max-width: 100%;  
+                    outline: none;
+                    border: none;
+                    resize: none;
+                    border-bottom: 1px solid $onSurface-secondary;
+                    &:focus{
+                        border-bottom: 3px solid green;
+                    }
+                }
+            }
+            &__submit{
+                text-align: center;
+                width: 30%;
+                background-color: $primary;
+                color: $onPrimary;
+                border: none;
+                padding: 10px 0px;
+                border-radius: 8px;
+                transition: all 300ms;
+                &:hover{
+                    background-color: $primaryHover;
+                }
+            }
+        }
+    }
+}

@@ -55,3 +55,28 @@
     max-width: 100%;
    
 }
+.dashboard__panel__reports__table__comment{
+    // background-color: red;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+     hyphens: auto;
+}
+.dashboard__panel__reports__table__data-rows__name{
+    &__text{
+    }
+    &__rating{
+        color: goldenrod;
+        font-size: 20px;
+        &__icon{
+            color: gold;
+        }
+    }
+}
+.dashboard__panel__reports__table__data-rows__brand-name{
+    &__text{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        
+    }
+}

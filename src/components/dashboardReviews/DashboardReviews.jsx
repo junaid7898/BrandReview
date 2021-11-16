@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Review from '../reviews/Review'
 import { axios } from "../../axios/axiosInstance"
 import Pagination from "../Pagination/Pagination"
-import FilterComponent from '../filter_component/FilterComponent'
-import MultiDatePicker from '../multi_date_picker/MultiDatePicker'
-
-import Star from '../../assests/Star'
+import {AiFillStar} from 'react-icons/ai'
 import ImageThumbnail from '../image_thumbnail/ImageThumbnail'
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator'
 import { Link } from 'react-router-dom'
@@ -126,7 +123,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                     <tr>
                         <th>User Name</th>
                         <th>Brand</th>
-                        <th>Ratings</th>
+                        {/* <th>Ratings</th> */}
                         <th>Review</th>
                         <th>Date</th>
                         <th></th>
@@ -138,26 +135,20 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                                 <tr className = 'dashboard__panel__reports__table__data-rows' id = {item.id}>
                                     <td className = 'dashboard__panel__reports__table__data-rows__name'>
                                         <Link to ={`user/${item.user.id}`} >
-                                            <h4 className = 'admin__dashboard__name-tag'>{item.user.name}</h4>
+                                            <h4 className = 'dashboard__panel__reports__table__data-rows__name__text'>{item.user.name}</h4>
                                         </Link>
+                                        <h4 className = 'dashboard__panel__reports__table__data-rows__name__rating'>{(item.rating).toFixed(1)}</h4>
                                     </td>
-                                    <td className = 'dashboard__panel__reports__table__data-rows__name'>
+                                    <td className = 'dashboard__panel__reports__table__data-rows__brand-name'>
                                         <Link  to={`brand/${item.brand.slug}`}>
-                                            <h3 style = {{textTransform: 'uppercase'}}>{item.brand.name}</h3>
+                                            <h3 className = 'dashboard__panel__reports__table__data-rows__brand-name__text' style = {{textTransform: 'uppercase'}}>{item.brand.name}</h3>
                                         </Link>
+                                        
                                     </td>
-                                    <td>
-                                        <div className="dashboard__panel__reports__table__data-rows__ratings">
-                                            <h4>{item.rating}</h4>
-                                            <span className ='dashboard__panel__reports__table__data-rows__ratings__stars'>
-                                                {
-                                                    Array(Math.round(item.rating < 1 ? 1 : item.rating )).fill().map((_)=>(
-                                                        <Star starGradient1 = "#FFDC64" starGradient2 = "#FFC850" starLines = "#FFF082"/>
-                                                    ))
-                                                }
-                                            </span>
-                                        </div>
-                                    </td>
+
+                                    {/* <td>
+                                            <h4>{(item.rating).toFixed(1)}</h4>
+                                    </td> */}
                                     
                                     <td className = 'dashboard__panel__reports__table__comment'>{item.message}
                                     <div className = 'dashboard__panel__reports__images'>

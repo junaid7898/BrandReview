@@ -176,12 +176,15 @@ const DashboardAddBrand = () => {
                         type: "success"
                     }))
                     setIsRegistering(false)
-                    setBrandName(null)
-                    setLogo(null)
+                    setBrandName('')
+                    setLogo('')
                     setImageDetails(null)
                     setRawLogo(null)
                     setCategory({value: null, label: null})
-                    setAbout(null)
+                    setAbout('')
+                    setBrandConfirmPassword('')
+                    setBrandEmail('')
+                    setBrandPassword('')
                 }).catch(err => {
                     console.log(err)
                     dispatch(statusAction.setNotification({
@@ -210,6 +213,7 @@ const DashboardAddBrand = () => {
                     name = 'brand name'
                     placeholder = 'Enter brand name'
                     maxLength = {25}
+                    value = {brandName}
                     onChange = {e => setBrandName(e.target.value)}
                 />
             </div>
@@ -224,6 +228,7 @@ const DashboardAddBrand = () => {
                     name = 'brand about'
                     placeholder = 'Enter About info....max of 200 characters'
                     maxLength = {200}
+                    value  = {about}
                     onChange = {e =>{ 
                         setAbout(e.target.value)
                         aboutLength.current  = e.target.value.length
@@ -274,6 +279,7 @@ const DashboardAddBrand = () => {
                         type = 'text'
                         name = 'email'
                         placeholder = 'Enter email address'
+                        value = {brandEmail}
                         onChange = {e => setBrandEmail(e.target.value.trim())}
                     />
                 </div>
@@ -284,6 +290,7 @@ const DashboardAddBrand = () => {
                         type = 'password'
                         name = 'password'
                         placeholder = 'Enter password'
+                        value = {brandPassword}
                         onChange = {e => setBrandPassword(e.target.value)}
                     />
                     <h4 className = 'add__brand__container__password-info'>Password must be between 7-15 characters long and contain at least one numeric digit and special character</h4>
@@ -296,6 +303,7 @@ const DashboardAddBrand = () => {
                         type = 'password'
                         name = 'confirm password'
                         placeholder = 'Enter password again'
+                        value = {brandConfirmPassword}
                         onChange = {e => setBrandConfirmPassword(e.target.value)}
                     />
                 </div>

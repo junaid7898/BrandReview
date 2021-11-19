@@ -6,7 +6,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    backdrop-filter: blur(2px);
+    // backdrop-filter: blur(2px);
+    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;

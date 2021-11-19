@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Review from '../reviews/Review'
 import { axios } from "../../axios/axiosInstance"
 import Pagination from "../Pagination/Pagination"
-import {AiFillStar} from 'react-icons/ai'
 import ImageThumbnail from '../image_thumbnail/ImageThumbnail'
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator'
 import { Link } from 'react-router-dom'
-import ImagePreview from '../image_preview/ImagePreview'
 import ImageViewer from '../image_viewer/ImageViewer'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
@@ -24,16 +21,22 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
         setPage(index)
     }
 
+    function truncateString(str, num) {
+        if (str.length > num) {
+          return str.slice(0, num) + "...";
+        } else {
+          return str;
+        }
+    }
+
     useEffect(() => {
         setReviewData(null)
-        console.log(sortOptions)
         const options = {
             page,
             limit: 10,
             sortBy: sortOptions,
             populate: 'user.User, brand.Brand'
         }
-        console.log(filters)
         let newFilter = filters
 
         if(date){
@@ -61,7 +64,6 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                 "authorization" : `bearer ${client.tokens.access.token}`
             }
         }).then(({data}) => {
-            console.log(data)
             dispatch(statusAction.setNotification({
                 message: "Removed from verified list",
                 type: "success"
@@ -74,7 +76,6 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
             })])
             setIsVerifing([...isVerifing.filter(item => item.id !== reviewId)])
         }).catch(err => {
-            console.log(err)
             dispatch(statusAction.setNotification({
                 message: err.response.data.message,
                 type: "error"
@@ -91,7 +92,6 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                 "authorization" : `bearer ${client.tokens.access.token}`
             }
         }).then(({data}) => {
-            console.log(data)
             dispatch(statusAction.setNotification({
                 message: "Removed from verified list",
                 type: "success"
@@ -104,7 +104,6 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
             })])
             setIsVerifing([...isVerifing.filter(item => item.id !== reviewId)])
         }).catch(err => {
-            console.log(err)
             dispatch(statusAction.setNotification({
                 message: err.response.data.message,
                 type: "error"
@@ -150,7 +149,8 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                                             <h4>{(item.rating).toFixed(1)}</h4>
                                     </td> */}
                                     
-                                    <td className = 'dashboard__panel__reports__table__comment'>{item.message}
+                                    <td className = 'dashboard__panel__reports__table__comment'>
+                                       <Link to={`brand/${item.brand.slug}?review=${item.id}`}>{truncateString(item.message,250)} </Link>
                                     <div className = 'dashboard__panel__reports__images'>
                                         {
                                             item.images.map(img => {

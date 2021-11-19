@@ -9,7 +9,7 @@ import { statusAction } from '../../../../../../../Redux/statusSlice';
 import { clientActions } from '../../../../../../../Redux/clientslice/clientSlice';
 import {ImCross} from 'react-icons/im'
 
-const UpdateUserProfile = ({onSubmit, user}) => {
+const UpdateUserProfile = ({onSubmit, user, setClientDetails}) => {
     const formRef = useRef()
     const [phone, setPhone] = useState(user.countryCode + user.phoneNumber);
     const {client} = useSelector(state => state.client)
@@ -63,6 +63,7 @@ const UpdateUserProfile = ({onSubmit, user}) => {
                 },
                 
             }))
+            setClientDetails(payload.user)
             axios.patch(`/user/${client.user.id}`, payload.user, {
                 headers:{
                     "role" : "user",
@@ -75,6 +76,7 @@ const UpdateUserProfile = ({onSubmit, user}) => {
                     }))
                 onSubmit(false)
                 setIsUpdating(false)
+                
             }).catch(err => {
                 dispatch(statusAction.setNotification({
                     message: err.response.data.message,

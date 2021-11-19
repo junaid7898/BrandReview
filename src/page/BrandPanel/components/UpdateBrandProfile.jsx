@@ -1,11 +1,9 @@
-import React, { useRef, useState } from 'react'
-import PhoneInput from 'react-phone-number-input';
+import React, { useRef } from 'react'
 import {ImCross} from 'react-icons/im';
 import Select from "react-select";
 
 const UpdateBrandProfile = ({ about,email, setEmail, name, setName, category, setCategory,options, setAbout, handleUpdate, setUpdateProfile}) => {
     const aboutLength = useRef(about.length)
-    console.log(email, name, category);
     return (
         <div>
             <div className="update__brand__profile" style = {{position: 'relative'}}>

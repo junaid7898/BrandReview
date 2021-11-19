@@ -22,7 +22,6 @@ const WriteReview = () => {
   const [message, setMessage] = useState(null)
 
   const [brand, setBrand] = useState(null)
-  const [brandId, setBrandId] = useState(null)
   const [uploadImage, setUploadImage] = useState([]);
   const [imageDetails, setImageDetails] = useState([])
   const [rawImages, setRawImages] = useState([])
@@ -211,7 +210,7 @@ const WriteReview = () => {
             }
           })
           .then( (_) => {
-            dispatch(statusAction.setNotification({
+            dispatch(statusAction.setNotification({ 
               message: 'images published',
               type: "success"
             }))

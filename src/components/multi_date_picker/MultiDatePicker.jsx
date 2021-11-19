@@ -1,11 +1,8 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import DatePicker from "react-multi-date-picker";
 import { AiOutlineCalendar } from "react-icons/ai";
-import DatePanel from "react-multi-date-picker/plugins/date_panel";
-import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { GiCogLock } from "react-icons/gi";
 
 function CustomButton({ direction, handleClick, disabled }) {
   return (

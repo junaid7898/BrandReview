@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import BrandInfo from "./components/BrandInfo";
 import Review from "../../components/reviews/Review";
-import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
 import { useLocation, useParams } from "react-router";
 import EmptyData from "../../components/EmptyDataComponent/EmptyData";
 import {axios} from "../../axios/axiosInstance";
-import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator";
-import { useSelector } from "react-redux";
 import Pagination from "../../components/Pagination/Pagination";
 import TopBrands from "../../components/top-brands/TopBrands"
 import VerticalDotBackGround from "../login/components/VerticalDotBackGround";
@@ -20,7 +17,6 @@ const SearchBrand = () => {
   }, [useLocation().pathname])
   const query = new URLSearchParams(useLocation().search)
   const {brandSlug} = useParams()
-  const {client} = useSelector(state => state.client)
   const [brandData, setBrandData] = useState(null)
   const [reviewData, setReviewData] = useState([])
   const [page, setPage] = useState(1)
@@ -52,16 +48,19 @@ const SearchBrand = () => {
       }
   }, [brandSlug])
 
+
+
   const firstRender = useRef(false)
 
   useEffect(() => {
 
     // if(firstRender.current){
+      
       if(isBrandDataSet){
         const options = {
           page,
           limit: 10,
-          populate: "user.User"
+          populate: "user.User, brand.Brand"
         }
         let filters={
           "brand": brandData.id
@@ -79,11 +78,12 @@ const SearchBrand = () => {
             filters
           })
           .then(({data}) =>{
-            console.log(data)
+            console.log('here is the data.....',data)
             setCurrentPage(data.page)
             setTotalPages(data.totalPages)
             setReviewData(data.results)
             console.log(data)
+            setIsBrandDataSet(false)
           })
           .catch(err => {
             console.log(err)
@@ -94,7 +94,7 @@ const SearchBrand = () => {
 
     // firstRender.current = true
     
-  }, [isBrandDataSet, page])
+  }, [isBrandDataSet, page, brandSlug])
 
 
   const handlePageination = (index) => {
@@ -138,7 +138,9 @@ const SearchBrand = () => {
               return <Review review = {review} brandData = {brandData} setBrandData = {setBrandData} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
             })
             :
+            <>
               <EmptyData value = 'No reviews posted for this brand...'/>
+              </>
             }
 
           </div>

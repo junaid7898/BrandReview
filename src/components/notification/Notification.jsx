@@ -14,7 +14,6 @@ function Notification() {
         }
         firstRender.current = true
     }, [notification])
-    console.error("rerender");
     return (
         !!notification ?
         notification.show ?

@@ -66,7 +66,7 @@ function Search() {
                             ?
                                 searchResults.map(item =>
 
-                                        <Link to={`brand/${item.id}`} onClick={() => setShowSearchResults(false)} className="header__searchbar__dropdown-item">
+                                        <Link to={`brand/${item.slug}`} onClick={() => setShowSearchResults(false)} className="header__searchbar__dropdown-item">
                                             <img src={item.logo} alt="brand logo" />
                                             <p>{item.name}</p>
                                         </Link>

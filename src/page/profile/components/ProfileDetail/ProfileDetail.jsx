@@ -6,7 +6,7 @@ import Review from "../../../../components/reviews/Review";
 import Pagination from "../../../../components/Pagination/Pagination"
 import LoadingIndicator from "../../../../components/loadingIndicator/LoadingIndicator";
 import FilterComponent from "../../../../components/filter_component/FilterComponent"
-const ProfileDetail = ({user, visitorIsUser, userId}) => {
+const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
   // console.log('user:>', user);
   const location = useLocation()
   const [option ,setOption] = useState(0)
@@ -69,7 +69,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
         options:{
           page,
           limit: 10,
-          populate:"user.User"
+          populate:"user.User, brand.Brand"
       }
       })
       .then(({data}) =>{
@@ -104,7 +104,7 @@ const ProfileDetail = ({user, visitorIsUser, userId}) => {
       options:{
         page,
         limit: 10,
-        populate:"user.User"
+        populate:"user.User, brand.Brand"
     }
     })
     .then(({data}) =>{ 
@@ -169,7 +169,7 @@ useEffect(() => {
             {
               option === 1 ? 
                 (
-                    <MyDetails user={user}/>      
+                    <MyDetails user={user} setClientDetails = {setClientDetails}/>      
                 )
               : option === 2  ? 
                 (

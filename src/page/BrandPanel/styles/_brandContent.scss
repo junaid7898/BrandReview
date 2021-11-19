@@ -58,13 +58,34 @@
             margin-left: 0;
             margin-top: 20px;
         }
-        &__name{
-            font-family: $round;
-            font-weight: 700;
-            font-size: 36px;
-            line-height: 43px;
-            color: rgba(0, 0, 0, 0.8);
-            text-transform: capitalize;
+        &__container{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            &__name{
+                font-family: $round;
+                font-weight: 700;
+                font-size: 36px;
+                line-height: 43px;
+                color: rgba(0, 0, 0, 0.8);
+                text-transform: capitalize;
+            }
+            &__tag{
+                background-color: $primary;
+                color: $onPrimary;
+                padding: 5px 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100px;
+                border-radius: 10px;
+                margin-left: 10px;
+                cursor: pointer;
+                &:hover{
+                    background-color: $primaryHover;
+                }
+            }
         }
         &__para{
             font-family: $subTitle;

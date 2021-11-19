@@ -1,11 +1,10 @@
-import React, {useEffect, useRef, useState}from 'react'
+import React, {useEffect, useState}from 'react'
 import UpdateProfile from '../../../components/update_profile_button/UpdateProfile'
 import { axios } from '../../../axios/axiosInstance';
 import BrandReviews from './BrandReviews';
 import UpdateBrandProfile from './UpdateBrandProfile';
 import { clientActions } from '../../../Redux/clientslice/clientSlice';
 import { useDispatch , useSelector} from "react-redux";
-import { isPossiblePhoneNumber, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator';
 import VerifyOTP from '../../../components/verify-otp/VerifyOTP';
 import BrandChart from './BrandChart';
@@ -13,18 +12,15 @@ import { statusAction } from "../../../Redux/statusSlice";
 import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker';
 import FilterComponent from '../../../components/filter_component/FilterComponent';
 import UpdatePassword from './UpdatePassword';
-import { brandAction } from '../../../Redux/brandInfoSlice/brandInfoSlice';
 
 
 const BrandDetail = ({item, brandId, visitorIsBrand}) => { 
-    console.log('brand:', visitorIsBrand);
     const [option, setOption] = useState(1)
     const {client} = useSelector(state => state.client)
     let from = new Date()
     from.setDate(from.getDate() - 5)
     let to = new Date()
     const [date, setDate] = useState([from , to])
-    const {brands} = useSelector(state => state.brands)
 
 
     const [about, setAbout] = useState(null)
@@ -61,7 +57,6 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
 
     const [updateProfile, setUpdateProfile] = useState(false)
     const [verifyPhone, setVerifyPhone] = useState(false)
-    const [isSendingOtp, setIsSendingOtp] = useState(false)
 
     const handleShowDashBoard = () => {
         setOption(1)
@@ -75,9 +70,6 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
         setOption(3)
     }
 
-    const handleShowReport = () => {
-        setOption(4)
-    }
 
 
       //ANCHOR email validation
@@ -159,17 +151,7 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
       }
    }
 
-   const handleOtpVerification = () => {
-    setIsSendingOtp(true)
-    axios.post('/auth/brand/send-verification-sms', {brand: item}).then(() => {
-      setIsSendingOtp(false)
-      setVerifyPhone(true)
-    }
-    ).catch(err => {
-      setIsSendingOtp(false)
-      alert(JSON.stringify(err.response.data.message))
-    })
-  }
+
    
 
 

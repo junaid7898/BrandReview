@@ -3,23 +3,14 @@ import { Link } from "react-router-dom";
 import Star from "../../assests/Star"
 import ImageThumbnail from "../image_thumbnail/ImageThumbnail";
 import ImageViewer from "../image_viewer/ImageViewer";
-import {AiFillLike, AiOutlineLike} from "react-icons/ai"
-import {IoMdNotifications, IoMdNotificationsOutline} from "react-icons/io"
 import {FiSend} from 'react-icons/fi'
 import { useDispatch, useSelector } from "react-redux";
 import {axios} from "../../axios/axiosInstance";
 import {clientActions} from "../../Redux/clientslice/clientSlice"
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
-import {TiTick} from 'react-icons/ti'
-import {FaRegSmile} from 'react-icons/fa'
-import {FcSettings} from 'react-icons/fc'
-import verfied from "../../assests/verified.png"
 import Button from "./Button";
 import ReactStars from "react-rating-stars-component";
-import {statusAction} from "../../Redux/statusSlice"
-import Dots from "../../assests/Dots";
 import VerifiedSvg from "../../assests/verified-svg"
-import VerifiedCommentSvg from "../../assests/verified-comment-svg";
 import EditSvg from "../../assests/edit-svg"
 import Comments from "./Comments";
 const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandData}) => {
@@ -41,8 +32,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   let show = false
   const resize_ob = new ResizeObserver(function(entries) {
     // since we are observing only a single element, so we access the first element in entries array
-    console.log("Resize Observer Function ===")
-    console.log(entries)
     if(!showComments){
       return 
     }
@@ -61,8 +50,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   const updateFirstLine = () => {
     const arrayWrapper = document.getElementById(review.id)
         if(arrayWrapper){
-            // console.log(arrayWrapper)
-            console.log("updatedLine")
             const reviewTextHeight = document.getElementById(`review/text/${review.id}`).getBoundingClientRect().height
             const reviewButtonHeight = document.getElementById(`review/buttons/${review.id}`).getBoundingClientRect().height
             const totalHeight = arrayWrapper.getBoundingClientRect().height
@@ -79,7 +66,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
                 childHeight = (totalHeight - lastChildHeight) - 40
             }
             const finalHeight = childHeight + factors
-            // console.log("commentsArray: ", arrayWrapper)
             setFirstCommentHeight(finalHeight)
         }
   }  
@@ -107,7 +93,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         type: "user"
       }
     }
-    console.log(reqObj)
     axios.post("/comment",reqObj,{
       headers:{
         "role" : client.type,
@@ -116,9 +101,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     })
     .then(({data})=>{
       setCommentIsSending(false)
-      console.log(data)
       setCommentText("")
-      console.log("comments Allowed: ", commentsAllowed)
       const updatedReview = {
         ...review,
         comments:[data.id, ...review.comments]
@@ -133,7 +116,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       handleShowComments(true)
     })
     .catch(err => {
-      console.log(err)
       setCommentIsSending(false)
     })
   }
@@ -147,7 +129,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       depth: 0,
       type: "brand"
     }
-    console.log(reqObj)
     axios.post("/comment",reqObj,{
       headers:{
         "role" : client.type,
@@ -156,7 +137,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     })
     .then(({data})=>{
       setCommentIsSending(false)
-      console.log(data)
       setCommentText("")
       data.brand = client.brand
       if(showComments){
@@ -165,7 +145,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       handleShowComments(true)
     })
     .catch(err => {
-      console.log(err)
       setCommentIsSending(false)
     })
   }
@@ -208,7 +187,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
 
     
     setUpdatedReview(updatedReview)
-    console.log(updatedUser.payload.user)
     axios.post(`/review/like/${review.id}`, {
       user: updatedUser.payload.user,
       review: updatedReview
@@ -219,9 +197,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       }
     })
     .then(({data}) => {
-
-      console.log(data)
-
     })
 
   }
@@ -237,7 +212,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
           followedReviews:[...client.user.followedReviews.filter(id => id !== review.id)]
         }
       }))
-      console.log(review);
       updatedReview = {
         ...review,
         followedByUsers:[...review.followedByUsers.filter(id => id !== client.user.id)]
@@ -256,7 +230,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         followedByUsers: [...review.followedByUsers, client.user.id]
       }
     }
-    console.log(updatedUser.payload.user.followedReviews);
     setUpdatedReview(updatedReview)
     axios.post(`/review/follow/${review.id}`, {
       user: updatedUser.payload.user,
@@ -268,9 +241,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       }
     })
     .then(({data}) => {
-
-      console.log(data)
-
     })
 
   }
@@ -335,9 +305,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       }
     })
     .then(({data}) => {
-
-      // console.log(data)
-
     })
   }
 
@@ -363,7 +330,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
         ...review,
         isResolved: false
       }
-      console.log(review)
       updatedBrand = {
         ...updatedBrand,
         resolveCount: updatedBrand.resolveCount - 1
@@ -401,7 +367,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       }
     })
     .then(({data}) => {
-      console.log(data)
     })
   }
 
@@ -443,7 +408,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     .then(({data})=>{
       setCommentsLoading(false)
       setMoreCommentsLoading(false)
-      console.log(data)
       setComments([...comments, ...data.results])
       setPage(page + 1)
       setTotalComments(data.totalResults)
@@ -453,7 +417,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     .catch(err => {
       setMoreCommentsLoading(false)
       setCommentsLoading(false)
-      console.log(err)
     })
 
   }
@@ -503,9 +466,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       }
     })
     .then(({data}) => {
-
-      console.log(data)
-
     })
   }
 
@@ -538,15 +498,12 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       ...review,
       ...changes
     }
-    console.log(changes)
     setUpdatedReview(updatedReview)
 
     axios.patch(`review/${review.id}`,{...changes})
     .then(({data}) =>{
-      console.log(data)
     })
     .catch(err =>{
-      console.log(err)
     })
 
 
@@ -564,7 +521,6 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   useEffect(() => {
     if(rating){
       reviewChanges.current.rating = rating
-      console.log(reviewChanges.current)
     }
   }, [rating])
 
@@ -574,7 +530,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       <div className="reviewComponent-container__upper">
       <div className="reviewComponent-container__left">
         <div className="reviewComponent__userImage">
-          <img  src={review.user.profileImage} alt="user profile image" />
+          <img  src={review.user.profileImage} alt={review.user.name} />
         </div>
         <div className="reviewComponent-container__left__lineBox">
           {
@@ -761,21 +717,26 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
               
           </div>
         </div>
-        
-        <Comments 
-          setHeight = {setFirstCommentHeight}
-          commentsAllowed = {commentsAllowed}
-          review={review}
-          comments={comments}
-          client={client}
-          showComments={showComments}
-          commentsLoading={commentsLoading}
-          moreCommentsLoading={moreCommentsLoading} 
-          totalComments={totalComments}
-          handleCommentLike={handleCommentLike}
-          handleShowComments={handleShowComments}
-          updateFirstLine={updateFirstLine}
-        />
+        {
+          review.comments.length > 0 ?
+            <Comments 
+              setHeight = {setFirstCommentHeight}
+              commentsAllowed = {commentsAllowed}
+              review={review}
+              comments={comments}
+              client={client}
+              showComments={showComments}
+              commentsLoading={commentsLoading}
+              moreCommentsLoading={moreCommentsLoading} 
+              totalComments={totalComments}
+              handleCommentLike={handleCommentLike}
+              handleShowComments={handleShowComments}
+              updateFirstLine={updateFirstLine}
+            />
+            :
+            null
+        }
+
       </div>
 
 
@@ -801,7 +762,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
                 </div>
               </div>  
             :
-            client.type.includes("brand") 
+            client.type.includes("brand") && client.brand.id === review.brand.id
             ?
             <div className="reviewComponent__comments__writeComment">
                 <Link to={`/brand/${client.brand.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.brand.logo} alt="" /></Link>

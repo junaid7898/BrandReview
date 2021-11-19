@@ -1,6 +1,6 @@
 import React from 'react'
 import RegistrationPageComponent from '../../components/registration_page_component/RegistrationPageComponent'
-import BackGround from './components/VerticalDotBackGround'
+
 import LoginInputs from './components/LoginInputs'
 import VerticalDotBackGround from './components/VerticalDotBackGround'
 import ZigZagBackgroundComponent from './components/ZigZagBackgroundComponent'

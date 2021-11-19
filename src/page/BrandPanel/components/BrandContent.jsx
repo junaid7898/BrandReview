@@ -1,19 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Star from '../../../assests/Star'
 import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 import { axios } from "../../../axios/axiosInstance";
 import UploadImage from "../../../assests/UploadImage";
-import { getImageDetails } from "../../../helpers/getImageDetails";
 import { uploadPhoto } from "../../../helpers/uploadPhoto";
 import { useDispatch, useSelector } from "react-redux";
 import { brandAction } from "../../../Redux/brandInfoSlice/brandInfoSlice";
 const BrandContent = ({item, setItem}) => {
-  console.log('item: ', item);
   const [imageIsLoading, setImageIsLoading] = useState(true)
-  const [avgRating, setAvgRating] = useState(null)
-
-  const [updatedImage, setUpdatedImage] = useState(null)
-  const [imageDetails, setImageDetails] = useState(null)
 
   const [isImageUploading, setIsImageUploading] = useState(false)
 
@@ -29,7 +23,6 @@ const BrandContent = ({item, setItem}) => {
     try{
       setIsImageUploading(true)
       const { url: imageUrl } = await uploadPhoto(item , e.target.files[0] , fileRef.current)
-      console.log(imageUrl)
       const newBrand = {
         ...item,
         logo: imageUrl
@@ -85,7 +78,17 @@ const BrandContent = ({item, setItem}) => {
 
           </div>
           <div className="brand__info">
-              <h1 className="brand__info__name"> {item.name} </h1>
+              <div className = 'brand__info__container'>
+                <h1 className="brand__info__container__name"> {item.name} </h1>
+                {
+                  item.premiered ? 
+                    <div className = 'brand__info__container__tag'>
+                      Premiered
+                    </div>
+                    :
+                    null
+                }
+              </div>
               <p className="brand__info__para">{item.about}</p>
           </div>    
           <div className="brand__progress">
@@ -103,7 +106,7 @@ const BrandContent = ({item, setItem}) => {
                   ))
                 }
                 </span>
-                <p className="brand__progress__reviews__reviewCount">{item.averageRating} Ratings</p>
+                <p className="brand__progress__reviews__reviewCount">{(item.averageRating).toFixed(1)} Ratings</p>
               </div>
           </div>
       </div> 

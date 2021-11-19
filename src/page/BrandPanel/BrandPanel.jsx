@@ -19,9 +19,7 @@ const BrandPanel = () => {
     const {client} = useSelector(state => state.client)
 
     const [brandDetails, setBrandDetails] = useState(null)
-    const [isCurrentBrand, setIsCurrentBrand] = useState(false)
     const { brandId } = useParams()
-    console.log('brand id: ', brandId);   
 
     const [visitorIsBrand, setVisitorIsBrand] = useState(false)
 
@@ -41,7 +39,6 @@ const BrandPanel = () => {
 
 
     useEffect(() => {
-        console.log('here starting......')
         if(brandId && client){
             axios.get(`/brand/${brandId}`, {   
                 headers:{
@@ -51,7 +48,6 @@ const BrandPanel = () => {
             })   
             .then( res =>{
                 setBrandDetails(res.data)
-                console.log(res.data);
             })
             .catch( err => {
                 alert(err)

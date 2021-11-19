@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getAverageReviewRating } from '../../helpers/getAverageReview'
 import { Link } from 'react-router-dom'
 import FirstPosition from '../../assests/images/1st.png'
 import SecontPosition from '../../assests/images/2nd.png'

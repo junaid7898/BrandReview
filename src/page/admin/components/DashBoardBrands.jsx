@@ -8,6 +8,8 @@ import { statusAction } from '../../../Redux/statusSlice'
 import {brandAction} from "../../../Redux/brandInfoSlice/brandInfoSlice"
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {TiTick} from 'react-icons/ti'
+// import PremierIcon from '../../../assests/icons/p'
 function DashBoardBrands({filters, sortOptions}) {
 
     const [page, setPage] = useState(1)
@@ -177,6 +179,80 @@ function DashBoardBrands({filters, sortOptions}) {
     } 
 
 
+    // SECTION handle premeired
+    const handlePremeired = (brandId) => {
+        setBlackListng([...blackListing, brandId])
+        axios.patch(`/brand/${brandId}`, {premiered: true}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "brand added to premeired list....",
+                type: "success"
+            }))
+            setBrandData([...brandData.map(item => {
+                if(item.id === brandId){
+                    return data
+                }
+                return item
+            })])
+            dispatch(brandAction.setBrands([...brands.map(brand =>{
+                if(brand.id === brandId){
+                    return data
+                }
+                return brand
+            })]))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        })
+    }
+
+    // SECTION remove Premeired
+    const handleRemovePremeired = (brandId) => {
+        setBlackListng([...blackListing, brandId])
+        axios.patch(`/brand/${brandId}`, {premiered: false}, {
+            headers:{
+                "role" : client.role,
+                "authorization" : `bearer ${client.tokens.access.token}`
+            }
+        }).then(({data}) => {
+            console.log(data)
+            dispatch(statusAction.setNotification({
+                message: "brand removed from premeired list...",
+                type: "success"
+            }))
+            setBrandData([...brandData.map(item => {
+                if(item.id === brandId){
+                    return data
+                }
+                return item
+            })])
+            dispatch(brandAction.setBrands([...brands.map(brand =>{
+                if(brand.id === brandId){
+                    return data
+                }
+                return brand
+            })]))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        }).catch(err => {
+            console.log(err)
+            dispatch(statusAction.setNotification({
+                message: err.response.data.message,
+                type: "error"
+            }))
+            setBlackListng([...blackListing.filter(item => item.id !== brandId)])
+        })
+    }
+
     return (
         <div className="dashboard__brands">
             <div className="dashboard__brands__data">
@@ -184,13 +260,21 @@ function DashBoardBrands({filters, sortOptions}) {
                 brandData &&
                 brandData.map(
                     brand => (
-                        <div className="dashboard__brands__data__brand">
+                        <div className={brand.premiered ? ' dashboard__brands__data__brand dashboard__brands__data__brand__premeired': 'dashboard__brands__data__brand'}>
 
                             <div className="dashboard__brands__data__brand__intro">
                                 <img src = {brand.logo} onClick = {() => {setShowImage(brand.logo)}}/>
                                 <Link to = {`brand/${brand.slug}`}>
-                                    <h5 className = 'dashboard__brands__data__brand__intro__name'>{brand.name}</h5>
+                                    <h5 className = 'dashboard__brands__data__brand__intro__name'>{brand.name} </h5>
                                 </Link>
+                                {
+                                    brand.premiered ? 
+                                        <div className = 'dashboard__brands__data__brand__intro__tick'>
+                                            Premiered
+                                        </div>
+                                    : 
+                                        null
+                                }
                             </div>
 
                             <div className="dashboard__brands__data__brand__details">
@@ -264,6 +348,30 @@ function DashBoardBrands({filters, sortOptions}) {
                                             <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
                                                 <button onClick={() => handleRemoveDemotion(brand.id)}>
                                                     Remove from Demotion
+                                                    {
+                                                        blackListing.includes(brand.id) &&
+                                                        <LoadingIndicator />
+                                                    }
+                                                </button>
+                                            </div>
+                                    }
+
+                                    {
+                                        !brand.premiered ?
+                                            <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
+                                                <button onClick={() => handlePremeired(brand.id)}>
+                                                    Premier
+                                                    {
+                                                        blackListing.includes(brand.id) &&
+                                                        <LoadingIndicator />
+                                                    }
+                                                </button>
+                                                
+                                            </div>
+                                        :
+                                            <div className="dashboard__brands__data__brand__item dashboard__brands__data__brand__details__button">
+                                                <button onClick={() => handleRemovePremeired(brand.id)}>
+                                                    Remove from Premiered
                                                     {
                                                         blackListing.includes(brand.id) &&
                                                         <LoadingIndicator />

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import UpdateProfileComponents from "./components/UpdateProfileComponents";
 import LoadingIndicator from "../../../../../../components/loadingIndicator/LoadingIndicator";
 import UpdateUserProfile from "./components/UpdateUserProfile";
-const MyDetails = ({ user }) => {
+const MyDetails = ({ user, setClientDetails }) => {
 
   const [isSendingOtp, setIsSendingOtp] = useState(false)
   const dispatch = useDispatch()
@@ -89,7 +89,7 @@ const MyDetails = ({ user }) => {
           {
               updateProfile ? 
               (
-                    <UpdateUserProfile onSubmit = {setUpdateProfile} user = {user}/>
+                    <UpdateUserProfile onSubmit = {setUpdateProfile} user = {user} setClientDetails = {setClientDetails}/>
               ) 
                 : 
                 null

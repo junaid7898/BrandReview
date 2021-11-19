@@ -160,7 +160,7 @@
     overflow-y: auto;   
     color: #272727;
     z-index: 100;
-    backdrop-filter: blur(4px);
+    // backdrop-filter: blur(4px);
     border-radius: 4px;
     margin-top: 3px;
 }
@@ -228,6 +228,7 @@
     cursor: pointer;
     text-align: center;
     // min-width: 100px;
+    z-index: 50;
     @include respond(phone){
         padding: 8px 8px;
     }
@@ -239,6 +240,7 @@
     justify-content: flex-start;
     margin-right: 10px;
     position: relative;
+    z-index: 50;
     &__h4{
         color: $onSurface-secondary;
         font-weight: 700;
@@ -259,9 +261,11 @@
         box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
         margin-top: 10px;
         border-radius: 4px;
-        backdrop-filter: blur(4px);
+        // backdrop-filter: blur(4px);
+        background-color: #fff;
         transition: all 300ms;
         z-index: 75;
+
         &-hide{
             transform: scale(0);
         }
@@ -384,16 +388,19 @@
         // z-index: 2;
         transition: 300ms;
         right: 0;
-        overflow:hidden;
+        // overflow:hidden;
+        transform-origin: right center;
         @include respond(phone){
             // overflow: visible;
         }
     }
     .nav__links-show{
-        width: 100%;
+        // width: 100%;
+        transform: scaleX(1);
     }
     .nav__links-hide{
-        width: 0;
+        // width: 0;
+        transform: scaleX(0);
     }
     .nav__open__icon{
         display: block;

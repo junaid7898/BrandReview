@@ -30,6 +30,9 @@
         display: flex;
         align-items: flex-start;
         padding: 20px 0px;
+        @include respond(phone){
+            padding: 10px 0px;
+        }
         & h1{
             color: $onSurface-secondary;
             font-weight: bold;
@@ -76,8 +79,12 @@
 
 .rmdp-day{
     padding:5px !important;
+    // width: 20px !important;
     &:not(:nth-child(n + 7)){
         margin-right: 20px;
+        @include respond(phone){
+            margin-right: 5px;
+        }
     }
 
     
@@ -104,6 +111,9 @@
 }
 .rmdp-week{
     margin-bottom: 20px;
+    @include respond(phone){
+        margin-bottom: 10px;
+    }
 }
 .rmdp-week:first-child{
     margin-bottom: 10px;

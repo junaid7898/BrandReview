@@ -6,6 +6,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import {brandAction } from '../../../Redux/brandInfoSlice/brandInfoSlice'
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator';
+import SelectCategory from '../../../components/select_category/SelectCategory';
 
 const DashboardAddBrand = () => {
     const [brandName, setBrandName] = useState(null)
@@ -259,15 +260,7 @@ const DashboardAddBrand = () => {
 
             <div className = 'add__brand__container__category-input'>
                 <label htmlFor="categoryBrand">Category</label>
-                <Select
-                    id = 'categoryBrand'
-                    value = {category}
-                    onChange = {setCategory}
-                    options = {options}
-                    className = 'add__brand__container__category-input__selector'
-                    placeholder = 'select a category for your brand'  
-                    isSearchable = {true}
-                />
+                <SelectCategory value = {category} setValue = {setCategory}/>
             </div>
 
             <div className = 'add__brand__container__more-info'>

@@ -4,6 +4,11 @@ import { useParams } from 'react-router'
 import {axios} from '../../axios/axiosInstance'
 import { useDispatch, useSelector } from 'react-redux'
 import { clientActions } from '../../Redux/clientslice/clientSlice'
+import RegistrationPageComponent from '../../components/registration_page_component/RegistrationPageComponent'
+import VerticalDotBackGround from '../login/components/VerticalDotBackGround'
+import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
+import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
+import BlueSpiralBackground from '../login/components/BlueSpiralBackground'
 const EmailVerificationPage = () => {
     const {client} = useSelector(state => state.client)
     const dispatch = useDispatch()
@@ -56,12 +61,36 @@ const EmailVerificationPage = () => {
 
     return (
         <div className="email__verification">
-            <div className="email__verification__text">
-                <h1>Your Email has been Verified......</h1>
+            <div className = 'email__verification__left-container'>
+                <div className="email__verification__left-container__text">
+                    <h1>Congratulations you are sign up</h1>
+                </div>
+                <Link  to = '/'>
+                    <button className = 'email__verification__left-container__link'>
+                        Continue
+                    </button>
+                </Link>
             </div>
-            <Link to = '/' className = 'email__verification__button'>
-                <h3>Continue</h3>
-            </Link>
+            <div className = 'email__verification__right-container'>
+                <RegistrationPageComponent/>
+            </div>
+
+            <div className = 'email__verification__vertical-dot'>
+                <VerticalDotBackGround/>
+            </div>
+            <div className = 'email__verification__vertical-dot2'>
+                <VerticalDotBackGround/>
+            </div>
+            <div className = 'email__verification__yellow-zigzag'>
+                <ZigZagBackgroundComponent/>
+            </div>
+            <div className = 'email__verification__blue-zigzag'>
+                <BlueZigZagComponent/>
+            </div>
+            <div className = 'email__verification__blue-spiral'>
+                <BlueSpiralBackground/>
+            </div>
+
         </div>
     )
 }

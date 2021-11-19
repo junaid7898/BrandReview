@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { DashboardReviews } from '../../../components/dashboardReviews/DashboardReviews'
 import DashBoardUsers from './DashBoardUsers'
-import { useSelector } from 'react-redux'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { statusAction } from '../../../Redux/statusSlice'
 import DashBoardBrands from './DashBoardBrands'
 import {AiFillCaretDown} from 'react-icons/ai'
 
@@ -12,11 +12,14 @@ import { axios } from '../../../axios/axiosInstance'
 import FilterComponent from '../../../components/filter_component/FilterComponent'
 import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker'
 import DashboardAddBrand from './DashboardAddBrand'
+import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator'
+import DeleteCategories from '../../../components/delete_categories/DeleteCategories'
 
 const AdminDashBoard = () => {
 
     const {brands: topBrands} = useSelector(state => state.brands)
     // console.log('brands: ', topBrands);
+    const dispatch = useDispatch()
 
     const [showDashBoard , setShowDashBoard] = useState(true)
     const [showReviews , setShowReviews] = useState(false)   
@@ -35,6 +38,12 @@ const AdminDashBoard = () => {
     const [option2, setOption2] = useState(null)
     const [option3, setOption3] = useState(null)
     const [settings, setSettings] = useState(null)
+
+    const [addNewCategory, setAddNewCategory] = useState(false)
+    const [category, setCategory] = useState(null)
+
+    const [deleteCategory, setDeleteCategory] = useState(false)
+
    const handleHideDashboardPhone = () => {
        setShowDashboardPhone(false)
    }
@@ -239,6 +248,52 @@ const AdminDashBoard = () => {
     }, [])
     const [filters, setFilters] = useState({})
     const [sortOptions, setSortOptions] = useState({})
+
+    const [isUpdatingCategory, setIsUpdatingCategory] = useState(false)
+    const checkValidation = () =>{
+        if(category === null || category === ''){
+            return 'please provide a category...'
+        }
+        else{
+            return 'ok'
+        }
+    }
+    const handleCategory = () => {
+        const validCheck = checkValidation()
+        if(validCheck === 'ok'){
+            dispatch(statusAction.setNotification({
+                message: "Adding category",
+                type: "loading"
+              }))
+              setIsUpdatingCategory(true)
+            axios.post('/category', {category: category})
+            .then(res =>{
+                dispatch(statusAction.setNotification({
+                    message: "category added....",
+                    type: "success"
+                }))
+                setIsUpdatingCategory(false)
+                setCategory('')
+            }
+            )
+    
+            .catch(err =>{
+                    dispatch(statusAction.setNotification({
+                        message: err.response.data.message,
+                        type: "error"
+                    }))
+                    setIsUpdatingCategory(false)
+                    setCategory(null)
+            }
+            )
+        }
+        else{
+            dispatch(statusAction.setNotification({
+                message: validCheck,
+                type: "error"
+            }))
+        }
+    }
     return (
         <section >
             <div className = 'dashboard'>
@@ -347,11 +402,34 @@ const AdminDashBoard = () => {
                                             onChange = {setOption3}
                                             className = 'dashboard1__settings__option1__dropdown'
                                             placeholder = {` Phone verification must require to post review? (${settings.phoneVerificationRequired ? "Yes" : "No"})`}
-                                        />
+                                        />  
                                     </div>
                                 </>
                             }
+                            <p className = 'dashboard__add-category' onClick = {() => setAddNewCategory(!addNewCategory)}> add new category</p>
+                            {
+                                addNewCategory &&
+                                <div className = 'dashboard__add-category__inputs'>
+                                    <label htmlFor = 'categoryName'>Category Name</label>
+                                    <input
+                                        type = 'text'
+                                        name = 'category name'
+                                        placeholder = 'Enter category name'
+                                        value = {category}
+                                        onChange = {e => setCategory(e.target.value)}
+                                    />
+                                    <button className = 'dashboard__add-category__button' onClick = {handleCategory}> Add Category {isUpdatingCategory ? <LoadingIndicator/> : null} </button>
+                                    <p className = 'dashboard__add-category' onClick = {() => setDeleteCategory(!deleteCategory)}>delete categories</p>
+                                </div>
+                            }
                         </div>
+                        {
+                            deleteCategory &&
+                            <>
+                                <DeleteCategories/> 
+                                <div className = 'delete__category__mask' onClick = {() => setDeleteCategory(!deleteCategory)}></div>
+                            </>
+                        }
                     </>
                     :
                     (null)

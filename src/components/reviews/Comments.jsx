@@ -200,7 +200,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
           .catch(err => {
             setMoreRepliesLoading(false)
             setRepliesLoading(false)
-          })
+        })
     }
     return(
         <div key={index} className="reviewComponent__comments__array__item">
@@ -409,7 +409,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
       setReplyActive(true)
   }
 
-  const giveReplyUser = (depth = 1) =>{
+  const giveReplyBrand = (depth = 1) =>{
       setReplyIsSending(true)
       let reqObj = {}
       if(depth === 0){
@@ -450,50 +450,50 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
   }
 
   const getReplies = (bool) =>{
-      if(page === 0){
-          setRepliesLoading(bool)
-        }
-        if(!bool){
-          setReplies([])
-          setPage(0)
-          setReplyActive(bool)
-          return
-        }
-        if(page > 0){
-          setMoreRepliesLoading(true)
-        }
-        const options = {
-          page: page + 1,
-          limit: 3,
-          populate: "brand.Brand"
-        }
-        const filters={
-          parentId: comment.id,
-          depth: 1
-        }
-        axios.post("/comment/query",{
-          options, filters
+        if(page === 0){
+            setRepliesLoading(bool)
+          }
+          if(!bool){
+            setReplies([])
+            setPage(0)
+            setReplyActive(bool)
+            return
+          }
+          if(page > 0){
+            setMoreRepliesLoading(true)
+          }
+          const options = {
+            page: page + 1,
+            limit: 3,
+            populate: "brand.Brand"
+          }
+          const filters={
+            parentId: comment.id,
+            depth: 1
+          }
+          axios.post("/comment/query",{
+            options, filters
+          })
+          .then(({data})=>{
+            setRepliesLoading(false)
+            setMoreRepliesLoading(false)
+            setReplies([...replies, ...data.results])
+            setPage(page + 1)
+            setTotalReplies(data.totalResults)
+            setReplyActive(bool)
+          })
+          .catch(err => {
+            setMoreRepliesLoading(false)
+            setRepliesLoading(false)
         })
-        .then(({data})=>{
-          setRepliesLoading(false)
-          setMoreRepliesLoading(false)
-          setReplies([...replies, ...data.results])
-          setPage(page + 1)
-          setTotalReplies(data.totalResults)
-          setReplyActive(bool)
-        })
-        .catch(err => {
-          setMoreRepliesLoading(false)
-          setRepliesLoading(false)
-        })
-  }
+    }
 
   return(
       <div className="reviewComponent__comments__array__item brandBackground">
           <div className="reviewComponent__comments__line" />
           <div className="reviewComponent__comments__array__item__left">
-              <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${comment.brand.slug}`}>
-                  <img src={comment.brand.logo} alt="logo" className="reviewComponent__comments__array__item__img" />
+              <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${comment.brand && comment.brand.slug}`}>
+                  <img src={comment.brand && comment.brand.logo} alt="logo" className="reviewComponent__comments__array__item__img" />
                   {
                       comment.type === "admin" &&
                       <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
@@ -628,7 +628,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                                       {
                                                           !replyIsSending 
                                                           ?
-                                                              <FiSend onClick={ () => giveReplyUser()} className={`reviewComponent__commentReply__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__commentReply__writeComment__sendIcon-hide`}`}/>
+                                                              <FiSend onClick={ () => giveReplyBrand()} className={`reviewComponent__commentReply__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__commentReply__writeComment__sendIcon-hide`}`}/>
                                                           : 
                                                               <LoadingIndicator className="reviewComponent__commentReply__writeComment__sendIcon-loader" />
                                                       }

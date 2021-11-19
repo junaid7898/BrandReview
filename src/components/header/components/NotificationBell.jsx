@@ -4,107 +4,82 @@ import { Link } from 'react-router-dom'
 import brandImg from '../../../assests/images/brandcar.png'
 import userImg from '../../../assests/images/Profile Image.png'
 import { useSelector } from 'react-redux'
+import { axios } from '../../../axios/axiosInstance'
+import WebsiteLogo from '../../../assests/WebsiteLogo'
+import {io} from 'socket.io-client';
+
+const ENDPOINT = 'localhost:5000'
+
 const NotificationBell = () => {
+    const { client } = useSelector((state) => state.client);
     // const [newNotificationCount, setNewNotificationCount] = useState(0)
     const newNotificationCount = useRef(0)
-    //ANCHOR user notificatios
-    const [notifications, setNotification] = useState([
-        {
-            brand: {
-                name: 'beats',
-                image: brandImg,
-            },
-            review: '1',
-            date: new Date(244566674667),
-            brandId: '11',
-            userId: '111',
-            user:{
-                name: 'test user',
-                image: userImg
-            },
-            isSeenByUser: false,
-            isSeenByBrand: false,
-            isSeenByAdmin: false,
-            type: 'ADMIN-NEW-REVIEW',
-            forAdmin: true
-        },
-        {
-            brand: {
-                name: 'bmw',
-                image: brandImg,
-            },
-            review: '2',
-            date: new Date(244566674667),
-            brandId: '22',
-            userId: '222',
-            user:{
-                name: 'junaid abbasi',
-                image: userImg
-            },            
-            isSeenByUser: false,
-            isSeenByBrand: false,
-            isSeenByAdmin: false,
-            type: 'BRAND-NEW-REVIEW',
-            forAdmin: false
+    const socket = useRef(null)
 
-        },
-        {
-            brand: {
+    useEffect(() => {
+        socket.current = io(ENDPOINT)
+        socket.current.on("update-notification", () =>{
+            getNotifications()
+        })
+    }, [])
 
-                name: 'kia',
-                image: brandImg,
-            },
-            review: '3',
-            date: new Date(),
-            brandId: '33',
-            userId: '333',
-            user:{
+    
+    const [notifications, setNotifications] = useState([])
 
-                name: 'fahad nadeem',
-                image: userImg
-            },
-            isSeenByUser: false,
-            isSeenByBrand: false,
-            isSeenByAdmin: false,
-            type:'BRAND-REVIEW-RESOLVE',
-            forAdmin: false
-        },
-        {
-            brand: {
-                name: 'test brand 2',
-                image: brandImg,
-            },
-            review: '4',
-            date: new Date(),
-            brandId: '44',
-            userId: '444',
-            user:{
-                name: 'test user 2',
-                image: userImg
-            },
-            isSeenByUser: false,
-            isSeenByBrand: false,
-            isSeenByAdmin: false,
-            type:'USER-REVIEW-REPLY-BY-BRAND',
-            forAdmin: false
+    const getNotifications = () =>{
+        const options = {sortBy: {createdAt: 1}, populate:"userId.User,brandId.Brand"}
+            if(client.type.includes('user')){
+                axios.post('/notification/',{filters: {userId: client.user.id, forUser: true}, options})
+                .then(({data}) => {
+                    console.log("notifications")
+                    console.log(data)
+                    setNotifications(data.results)
+                })
+            }
+            else if(client.type.includes('brand')){
+                axios.post('/notification/',{filters: {brandId: client.brand.id, forBrand: true}})
+                .then(({data}) => {
+                    console.log("notifications")
+                    console.log(data)
+                    console.log(client.brand)
+                    setNotifications(data.results)
+                })
+            }
+            else if(client.type.includes("admin")){
+                axios.post('/notification/',{filters: {forAdmin: true}})
+                .then(({data}) => {
+                    console.log("notifications")
+                    console.log(data)
+                    setNotifications(data.results)
+                })
+            }
+    }
+
+    useEffect(() => {
+        if(client){
+            getNotifications()
         }
-    ])
+
+    }, [client])
+
 
     const [showNotificationContainer, setShowNotificationContainer] = useState(false)
-    const { client } = useSelector((state) => state.client);
+    
 
 
     let [normalizedData, setNormalizedData] = useState({})
     useEffect(() => {
         if(notifications){
             let norm = {}
+            console.log(notifications)
             newNotificationCount.current = 0
             notifications.map(item => {
-                if(norm[item.date]){
-                    norm[item.date].unshift(item)
+                item.createdAt = new Date(item.createdAt).toDateString()
+                if(norm[item.createdAt]){
+                    norm[item.createdAt].push(item)
                 }
                 else{
-                    norm[item.date] = [item]
+                    norm[item.createdAt] = [item]
                 }
         
                 if(client.type.includes('user')){
@@ -124,6 +99,7 @@ const NotificationBell = () => {
                 }
                 
             })
+            console.log(norm)
             setNormalizedData(norm)
         }
     }, [notifications])
@@ -132,9 +108,10 @@ const NotificationBell = () => {
     const hanleNotification = () => {
         const a = showNotificationContainer
         setShowNotificationContainer(!showNotificationContainer)
-
+        let notificationIds = []
         if(!a && newNotificationCount.current > 0){
-            setNotification([...notifications.map(item =>{
+            setNotifications([...notifications.map(item =>{
+                notificationIds = [...notificationIds, item.id]
                 if(client.type.includes('user')){
                     item.isSeenByUser = true
                 }
@@ -144,11 +121,16 @@ const NotificationBell = () => {
                 else if(client.type.includes('admin')){
                     item.isSeenByAdmin = true
                 }
-                // item.isSeenByUser = true
                 return item
             })])
         }
-
+        // console.log(notificationIds)
+        if(notificationIds.length > 0){
+            axios.patch('/notification/',{notificationIds, type: client.type[0]})
+            .then( (_) => {
+                console.log("done")
+            })
+        }
     }
 
 
@@ -191,10 +173,12 @@ const NotificationItem = ({notification}) => {
     const ADMIN_NEW_REVIEW = "ADMIN-NEW-REVIEW"
     const BRAND_NEW_REVIEW = 'BRAND-NEW-REVIEW'
     const BRAND_REVIEW_RESOLVE = 'BRAND-REVIEW-RESOLVE'
+    const USER_REVIEW_APPROVED = 'USER-REVIEW-APPROVED'
     const USER_REVIEW_REPLY_BY_BRAND = 'USER-REVIEW-REPLY-BY-BRAND'
+    console.log(notification)
     if(notification.type === ADMIN_NEW_REVIEW){
         return(
-            <Link className = 'header__notification__item__notification'>
+            <Link to={`/admin`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image} alt = {notification.user.name}/>
                 <p>{notification.user.name} added a review on {notification.brand.name}</p>
             </Link>
@@ -202,26 +186,34 @@ const NotificationItem = ({notification}) => {
     }
     if(notification.type === BRAND_NEW_REVIEW){
         return (
-            <Link className = 'header__notification__item__notification'>
+            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image} alt = 'user'/>
-                <p>{notification.brand.name} replied a review from {notification.user.name}</p>
+                <p>{notification.user.name} added a new review</p>
             </Link>
         )
     }
 
     if(notification.type === BRAND_REVIEW_RESOLVE){
         return (
-            <Link className = 'header__notification__item__notification'>
+            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image}  alt = {notification.user.name}/>
-                <p>{notification.user.name} reviewd {notification.brand.name}</p>
+                <p>{notification.user.name} resolved a review</p>
             </Link>
         )
     }
     if(notification.type === USER_REVIEW_REPLY_BY_BRAND){
         return(
-            <Link className = 'header__notification__item__notification'>
+            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.brand.image}  alt = {notification.brand.name}/>
-                <p>{notification.brand.name} replied a review from {notification.user.name}</p>
+                <p>{notification.brand.name} replied to your review</p>
+            </Link>
+        )
+    }
+    if(notification.type === USER_REVIEW_APPROVED){
+        return(
+            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+                <WebsiteLogo />
+                <p>Your review on {notification.brand.name} has been approved</p>
             </Link>
         )
     }

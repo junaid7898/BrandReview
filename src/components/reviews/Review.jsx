@@ -120,14 +120,27 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     })
   }
 
-  const handleCommentBrand = () =>{
+  const handleCommentBrand = ( commentId) =>{
     setCommentIsSending(true)
-    const reqObj = {
-      message: commentText,
-      review: review.id,
-      brand: client.brand.id,
-      depth: 0,
-      type: "brand"
+    let reqObj = {}
+    let depth = 0
+    if(depth === 0){
+      reqObj = {
+        message: commentText,
+        review: review.id,
+        brand: client.brand.id,
+        depth,
+        type: "brand"
+      }
+    }
+    else if(depth === 1){
+      reqObj = {
+        message: commentText,
+        parentId: commentId,
+        user: client.brand.id,
+        depth,
+        type: "brand"
+      }
     }
     axios.post("/comment",reqObj,{
       headers:{
@@ -138,9 +151,16 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     .then(({data})=>{
       setCommentIsSending(false)
       setCommentText("")
-      data.brand = client.brand
+      const updatedReview = {
+        ...review,
+        comments:[data.id, ...review.comments]
+      }
+      setUpdatedReview(updatedReview)
       if(showComments){
-        setComments([data, ...comments])
+        setComments([{
+          ...data,
+          brand: client.brand
+        }, ...comments])
       }
       handleShowComments(true)
     })
@@ -413,6 +433,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       setTotalComments(data.totalResults)
       show = bool
       setShowComments(bool)
+      console.log(data)
     })
     .catch(err => {
       setMoreCommentsLoading(false)

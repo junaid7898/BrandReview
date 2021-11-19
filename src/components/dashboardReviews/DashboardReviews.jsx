@@ -58,7 +58,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
     const handleVerification = (reviewId) =>{
         setIsVerifing([...isVerifing, reviewId])
 
-        axios.patch(`/review/${reviewId}`, {isVerified: true}, {
+        axios.patch(`/review/${reviewId}`, {isVerified: true, verificationChanged: true}, {
             headers:{
                 "role" : client.role,
                 "authorization" : `bearer ${client.tokens.access.token}`

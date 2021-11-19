@@ -41,6 +41,7 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
     newFilter = {
       ...newFilter,
       "brand": brandId,
+      "isVerified": true
     };
     axios
       .post(`/review/query/`, { filters: newFilter, options })

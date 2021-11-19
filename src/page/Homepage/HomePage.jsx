@@ -32,7 +32,7 @@ function HomePage() {
                 <Search />
             </div>
             <div className="homepage__topReview-container">
-                <TopReview />
+                {/* <TopReview /> */}
             </div>
             <div className = 'top__brands__header'>
                 <TopBrandsHeader/>

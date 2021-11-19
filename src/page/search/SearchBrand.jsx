@@ -63,12 +63,13 @@ const SearchBrand = () => {
           populate: "user.User, brand.Brand"
         }
         let filters={
-          "brand": brandData.id
+          "brand": brandData.id,
+          "isVerified": true
         }
         const reivewId = query.get("review")
         if(reivewId){
           filters={
-            "_id": reivewId
+            "_id": reivewId,
           }
         }
         if(brandData.id){

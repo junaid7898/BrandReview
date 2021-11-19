@@ -142,7 +142,11 @@ const WriteReview = () => {
         averageRating: brand.averageRating,
         totalReviews: brand.reviews.length
       },
+      brandName: brand.name,
+      brandImage: brand.logo,
       user: client.user.id,
+      userName: client.user.name,
+      userImage: client.user.profileImage,
       title: title,
       message: message,
       rating: parseFloat(ratings),

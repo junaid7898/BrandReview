@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {ImCross} from 'react-icons/im'
 import { statusAction } from '../../Redux/statusSlice';
 import { useDispatch } from "react-redux";
-import { GiSverdIFjell } from 'react-icons/gi';
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
 
 const ForgotPassword = ({onCancel, onSubmit, isSending}) => {

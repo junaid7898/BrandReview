@@ -1,11 +1,10 @@
-import React, {useEffect, useRef, useState}from 'react'
+import React, {useEffect, useState}from 'react'
 import UpdateProfile from '../../../components/update_profile_button/UpdateProfile'
 import { axios } from '../../../axios/axiosInstance';
 import BrandReviews from './BrandReviews';
 import UpdateBrandProfile from './UpdateBrandProfile';
 import { clientActions } from '../../../Redux/clientslice/clientSlice';
 import { useDispatch , useSelector} from "react-redux";
-import { isPossiblePhoneNumber, isValidPhoneNumber , parsePhoneNumber} from 'react-phone-number-input'
 import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndicator';
 import VerifyOTP from '../../../components/verify-otp/VerifyOTP';
 import BrandChart from './BrandChart';
@@ -18,15 +17,39 @@ import UpdatePassword from './UpdatePassword';
 const BrandDetail = ({item, brandId, visitorIsBrand}) => { 
     const [option, setOption] = useState(1)
     const {client} = useSelector(state => state.client)
-    const [date, setDate] = useState(null)
+    let from = new Date()
+    from.setDate(from.getDate() - 5)
+    let to = new Date()
+    const [date, setDate] = useState([from , to])
+
 
     const [about, setAbout] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [name, setName] = useState(null)
+    const [category, setCategory] = useState(null)
+
+
     const [isUpdatingBrand, setIsUpdatingBrand] = useState(false)
     const [filters, setFilters] = useState({})
     const [sortOptions, setSortOptions] = useState({})
+      //ANCHOR category selection
+  const options = [
+    { value: 'fashion', label: 'Fashion' },
+    { value: 'automobile', label: 'Auto Mobile' },
+    { value: 'online-retail', label: 'Online Retail' },
+    { value: 'social-network', label: 'Social Network' },
+    { value: 'medicine', label: 'Medicine' },
+    { value: 'furniture', label: 'Furniture' },
+    { value: 'pet-store', label: 'Pet Store' },
+    { value: 'search-engine', label: 'Search Engine' },
+  ];
     useEffect(() => {
         if(item){
             setAbout(item.about)
+            setEmail(item.email ? item.email : 'No email Address provided')
+            const categ = options.find((option) =>  option.value === item.category)
+            setCategory(categ)
+            setName(item.name)
         }
     }, [item])
 
@@ -34,7 +57,6 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
 
     const [updateProfile, setUpdateProfile] = useState(false)
     const [verifyPhone, setVerifyPhone] = useState(false)
-    const [isSendingOtp, setIsSendingOtp] = useState(false)
 
     const handleShowDashBoard = () => {
         setOption(1)
@@ -48,19 +70,31 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
         setOption(3)
     }
 
-    const handleShowReport = () => {
-        setOption(4)
-    }
+
+
+      //ANCHOR email validation
+        const validateEmail = () => {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
 
 
     const checkValidation = () => {
         let response;
-        if(about === item.about){
+        let validEmail;
+        if(email){
+            validEmail = validateEmail()
+        }   
+        if(about === item.about && email === item.email && name === item.name && category.value === item.category){
             response = 'nothing is changed'
             return response
         }
-        else if(about === null){
+        else if(about === null || email === null || name === null || category.value === null){
             response = 'please fill all the entries'
+            return response
+        }
+        else if(!validEmail){
+            response = 'please enter a valid email address'
             return response
         }
         else{
@@ -81,6 +115,9 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
               ...client, 
               brand: {
                   ...client.brand,
+                  email: email,
+                  category: category.value,
+                  name: name,
                   about: about,
               },
               
@@ -95,6 +132,7 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
                 message: 'your information is updated...',
                 type: "success"
               }))
+            // dispatch(brandAction.setBrands([...brands.find(brand => brand.id === brandId)]))
             setIsUpdatingBrand(false)
             setUpdateProfile(false)
             
@@ -113,17 +151,7 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
       }
    }
 
-   const handleOtpVerification = () => {
-    setIsSendingOtp(true)
-    axios.post('/auth/brand/send-verification-sms', {brand: item}).then(() => {
-      setIsSendingOtp(false)
-      setVerifyPhone(true)
-    }
-    ).catch(err => {
-      setIsSendingOtp(false)
-      alert(JSON.stringify(err.response.data.message))
-    })
-  }
+
    
 
 
@@ -215,7 +243,16 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
                             updateProfile ?
                             (
                                 <div className="update__brand">
-                                    <UpdateBrandProfile  about = {about} setAbout = {setAbout} handleUpdate = {handleUpdate}
+                                    <UpdateBrandProfile  
+                                    about = {about}
+                                    email = {email}
+                                    setEmail = {setEmail}
+                                    name = {name}
+                                    setName = {setName}
+                                    category = {category}
+                                    setCategory = {setCategory}
+                                    options = {options}
+                                    setAbout = {setAbout} handleUpdate = {handleUpdate}
                                     setUpdateProfile = {setUpdateProfile}
                                     />
                                     {

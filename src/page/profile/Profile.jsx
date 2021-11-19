@@ -79,7 +79,7 @@ const Profile = () => {
                 userDetails ?
                 <>
                     <ProfileContent user = {userDetails} setClientDetails = {setClientDetails} visitorIsUser = {visitorIsUser}/>
-                    <ProfileDetail visitorIsUser = {visitorIsUser} user = {userDetails} userId = {userId}/>
+                    <ProfileDetail visitorIsUser = {visitorIsUser} user = {userDetails} setClientDetails = {setClientDetails} userId = {userId}/>
                 </>
                 :
                     <LoadingIndicator />

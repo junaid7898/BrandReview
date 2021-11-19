@@ -1,9 +1,7 @@
 import React, { useState , useEffect, useRef} from "react";
-import HeaderIcon from "../../assests/icons/header_icon1.png";
 import SearchIcon from "../../assests/SearchIcon";
 import { GrClose } from "react-icons/gr";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { BsSearch } from "react-icons/bs";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import SearchList from "./components/SearchList";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +13,6 @@ import {BiUser} from 'react-icons/bi'
 import { axios } from "../../axios/axiosInstance";
 import { logout } from "./logout";
 import WebsiteLogo from "../../assests/WebsiteLogo"
-import {AiOutlineBell} from 'react-icons/ai'
 import NotificationBell from "./components/NotificationBell";
 
 const Header = () => {
@@ -25,7 +22,6 @@ const Header = () => {
   const [showRegister, setShowRegister] = useState(false);
   const searchValueRef = useRef()
   const {brands: data} = useSelector(state => state.brands)
-  const [isEmailVerified, setIsEmailVerified] = useState(true)
   const { client } = useSelector((state) => state.client);
   const {pathname} = useLocation()
 
@@ -34,19 +30,7 @@ const Header = () => {
     document.getElementById('nav_search').value = ""
   }, [pathname])
 
-  useEffect(() => {
-    if(client){
-      if(client.type.includes('user')){
-          setIsEmailVerified(client.user.isEmailVerified)
-          console.log('verification==========> : ', client.user.isEmailVerified);
-        
-      }
-      else if(client.type.includes('brand')){
-          setIsEmailVerified(client.brand.isEmailVerified)
-          console.log('b verification==========> : ', client.brand.isEmailVerified);
-      }
-    }
-  }, [client])
+
 
 
 
@@ -181,12 +165,10 @@ const Header = () => {
 
   const handleUserVerification = async () => {
     await axios.post('/auth/user/send-verification-email', {user: client.user, type:"user"})
-    console.log('email sent.....');
   }
 
   const handleBrandVerification = async () => {
     await axios.post('/auth/brand/send-verification-email', {brand: client.brand, type:"brand"})
-    console.log('email sent for brand....')
   }
   return (
     <nav className="nav" >

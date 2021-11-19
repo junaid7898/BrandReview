@@ -7,6 +7,7 @@ import { axios } from "../../../../../../../axios/axiosInstance";
 import { statusAction } from "../../../../../../../Redux/statusSlice";
 import LoadingIndicator from "../../../../../../../components/loadingIndicator/LoadingIndicator";
 import {clientActions} from '../../../../../../../Redux/clientslice/clientSlice'
+import {ImCross} from 'react-icons/im'
 
 const UpdateProfileComponents = ({ onSubmit, user }) => {
   const [phone, setPhone] = useState(user.countryCode + user.phoneNumber);
@@ -104,15 +105,18 @@ const UpdateProfileComponents = ({ onSubmit, user }) => {
 
         <div className="mydetails__update-details__update">
 
-            
+            <div className = 'mydetails__update-details__update__cancel' onClick = {() => onSubmit(false)}>
+                <ImCross className = 'mydetails__update-details__update__cancel-icon'/>
+            </div>
 
             <div className="mydetails__update-details__update__phone">
                  <label htmlFor="phoneNumber">Phone Number </label>
-                    <PhoneInput
+                    <PhoneInput   
                         id = 'phoneNumber'
                         placeholder="Enter phone number"
                         value={phone}
                         className = 'mydetails__update-details__update__phone__phone-number'
+                        // style = 'mydetails__update-details__update__phone__phone-number'
                         name = 'phone number'
                         onChange={setPhone}/>   
             </div>

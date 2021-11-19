@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import BrandComparison from "../../components/brand_comparison/BrandComparison";
 import BrandComparisonDetail from "../../components/brand_comparison_detail/BrandComparisonDetail";
-import KiaLogo from "../../assests/images/kia_logo.png";
 import { useLocation, useParams } from "react-router";
 import { axios } from "../../axios/axiosInstance";
 import TopBrands from "../../components/top-brands/TopBrands";

@@ -55,6 +55,11 @@ const LoginInputs = () => {
     googleLogin()
   }
 
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter'){
+      login()
+    }
+  }
 
   const login = async () => {
     dispatch(statusAction.setNotification({
@@ -115,7 +120,10 @@ const LoginInputs = () => {
   }
 
   return (
-    <div className="login__form__inputs">
+    <form className="login__form__inputs" onSubmit = {(e) => {
+      e.preventDefault()
+      login()
+    }}>
       <div className="login__form__inputs__title">
         <h1>Login as User</h1>
         <p className="login__form__inputs__title__noaccount-link">
@@ -186,7 +194,9 @@ const LoginInputs = () => {
       <button
         className="login__form__inputs__button"
         disabled = {isLoggingIn.email}
-        onClick={login}
+        // onClick={login}
+        type = 'submit'
+        onKeyDown = {handleKeyDown}
       >
         Login
         {
@@ -211,7 +221,7 @@ const LoginInputs = () => {
           }
         </div> */}
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -13,9 +13,11 @@
         
     }
     &__update-details{
+        // background-color: red;
         & h1{
             align-self: center;
             inset: 0;
+            // background-color: red;
         }
         &__mask{
             background-color: rgba(0, 0, 0, 0.247);
@@ -34,18 +36,49 @@
         box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
         border-radius: 10px;
         top: 50%;
-        left: 50%;
+        left: 100%;
         transform: translate(-50%, -50%);
         width: 500px;
-        height: 500px;
+        // height: 500px;
         max-width: 90%;
         transition: 1.5;
+        // background-color: red;
+        position: relative;
+        @include respond (phone){
+            left: 43%;
+            width: 400px;
+        }
+
+        &__cancel{
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $primary;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            @include respond(phone){
+                left: 50%;
+            }
+            &:hover{
+                background-color: $primaryHover;
+            }
+            &-icon{
+                fill: $onPrimary;
+            }
+        }
         &__phone{
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
             width: 100%;
+            margin-bottom: 20px;
             & label{
                 font-weight: 500;
             }
@@ -53,9 +86,10 @@
                 // width: 10%;
                 display: flex;
                 flex-direction: row;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: flex-start;
                 width: 100%;
+                // background-color: red;
             }
             
         }
@@ -113,7 +147,7 @@
                 position: relative;
                 &:hover{
                     cursor: pointer;
-                    opacity: 0.8;
+                    background-color: $primaryHover;
                 }
                 & h1{
                     color: $onPrimary;
@@ -146,27 +180,39 @@
 }
 .PhoneInput{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    justify-content: center;
+    // background-color: red;
+    justify-content: flex-start;
+    // margin-bottom: 0;
     // margin-left: 10px;
 }
 
 .PhoneInputCountryIcon{
+    // display: none;
+    position: absolute;
     margin-top: 10px;
-    width: 50px;
+    top: -10px;
+    width: 53px;
+    height: 50px;
+}
+.PhoneInputCountry{
+    position: relative;
+    // background-color: red;
 }
 .PhoneInputCountrySelect{
     // display: none;
     outline: none;
     border: 0px solid;
-    width: 100px;
+    width: 70px;
+    margin-top: 10px;
 }
 .PhoneInputInput{
     width: 100%;
+    // background-color: red;
     outline: none;
     border: 0px solid;
     border-bottom: 1px solid gray;
-    padding: 10px 14px;
+    padding: 5px 9px;
     // margin: 20px 0px;
 }

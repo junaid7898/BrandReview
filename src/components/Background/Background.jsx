@@ -4,14 +4,10 @@ import Vector2 from "../../assests/Vectors/Vector2"
 import Vector3 from "../../assests/Vectors/Vector3"
 import Vector4 from "../../assests/Vectors/Vector4"
 function Background() {
-    const g = document.getElementById('root').getBoundingClientRect()
-    console.log(g)
+    const g = document.getElementById('root').getBoundingClientRect()   
     const randomNumberWidth = useRef()
     const randomNumberHeight = useRef()
-    // const randomNumberWidth = Math.floor(Math.random() * g.width);
-    // const randomNumberHeight = Math.floor(Math.random() * g.height);
-    const totalNumber = Math.floor(Math.random() * 25);
-    const [coordinated] = useState(g)
+    const [coordinated] = useState(g)      
     let indexCount = 0
     return (
         coordinated &&

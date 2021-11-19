@@ -60,12 +60,33 @@
         @include respond(phone){
             margin-bottom: 20px;
         }
-        & h3{
-            color: $primary;
-            font-weight: bold;
-            font-size: 22px;
-            line-height: 33px;
-            text-transform: capitalize;
+        &__premeired{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            & h3{
+                color: $primary;
+                font-weight: bold;
+                font-size: 22px;
+                line-height: 33px;
+                text-transform: capitalize;
+            }
+            &__tag{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $primary;
+                color: $onPrimary;
+                width: 100px;
+                padding: 5px 0px;
+                border-radius: 10px;
+                cursor: pointer;
+                margin-left: 10px;
+                &:hover{
+                    background-color: $primaryHover;
+                }
+            }
         }
         &__para{
             max-width: 350px;

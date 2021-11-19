@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getAverageReviewRating } from '../../helpers/getAverageReview'
 import { Link } from 'react-router-dom'
 import FirstPosition from '../../assests/images/1st.png'
 import SecontPosition from '../../assests/images/2nd.png'
@@ -52,7 +51,7 @@ function TopBrands({category, skipBrandId, rank, length}) {
                 brandsData.length > 0 &&
                 brandsData.map((item, index) => {
                     return(
-                        <Link to={`brand/${item.slug}`} className="topbrands__list">
+                        <Link to={`/brand/${item.slug}`} className="topbrands__list">
                             {
                                 rank && (index === 0 || index === 1 || index === 2) ? 
                                 (

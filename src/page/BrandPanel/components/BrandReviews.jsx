@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { axios } from "../../../axios/axiosInstance";
-import FilterComponent from "../../../components/filter_component/FilterComponent";
-import MultiDatePicker from "../../../components/multi_date_picker/MultiDatePicker";
 import Star from "../../../assests/Star";
 import ImageThumbnail from "../../../components/image_thumbnail/ImageThumbnail";
 import Pagination from "../../../components/Pagination/Pagination";
-import LoadingIndicator from "../../../components/loadingIndicator/LoadingIndicator";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import ImageViewer from "../../../components/image_viewer/ImageViewer";
 import EmptyData from "../../../components/EmptyDataComponent/EmptyData";
 const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [reviewData, setReviewData] = useState(null);
-  const [isBlackListing, setIsBlacklisting] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [previewImage, setPreviewImage] = useState(null)
 
@@ -47,12 +42,9 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
       ...newFilter,
       "brand": brandId,
     };
-    console.log(newFilter);
-    console.log(options);
     axios
       .post(`/review/query/`, { filters: newFilter, options })
       .then(({ data }) => {
-        console.log("review brand data: ====> ", data);
         setReviewData(data.results);
         setTotalPages(data.totalPages);
         setCurrentPage(data.page);
@@ -60,14 +52,6 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
     }
   }, [page, filters, sortOptions, date]);
 
-  //FIXME for admin blacklist user
-  const handleBlacklist = (id) => {
-    setIsBlacklisting([...isBlackListing, id]);
-  };
-
-  const handleRemoveBlacklist = (id) => {
-    setIsBlacklisting([...isBlackListing, id]);
-  };
   return (
     <div className="dashboard__review__component">
     {

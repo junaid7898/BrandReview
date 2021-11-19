@@ -1,7 +1,6 @@
 import {axios} from '../../axios/axiosInstance';
 import React, {useState, useEffect} from 'react'
 import {Bar, Line} from 'react-chartjs-2'
-import MultiDatePicker from '../multi_date_picker/MultiDatePicker';
 import EmptyData from '../EmptyDataComponent/EmptyData';
 
 const Chart = ({date}) => {
@@ -46,7 +45,6 @@ const Chart = ({date}) => {
             }
             axios.post('/brand/query',{filters: newFilterBrand, options})
             .then(({data}) => {
-                console.log(data)
                 let newObj = {}
                 data.results.map( item => {
                     const g = new Date(item.createdAt).toDateString()
@@ -57,7 +55,6 @@ const Chart = ({date}) => {
                         newObj[g] = 1
                     }
                 })
-                console.log(newObj)
                 setChartData2({
                     label:Object.keys(newObj).reverse(),
                     value: Object.values(newObj).reverse()

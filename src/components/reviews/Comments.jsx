@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator'
 import Button from './Button'
-import {AiFillLike, AiOutlineLike} from "react-icons/ai"
 import VerifiedCommentSvg from "../../assests/verified-comment-svg";
 import { Link } from 'react-router-dom';
 import { axios } from '../../axios/axiosInstance';
@@ -13,8 +12,6 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
     
     useEffect(() => {
         if(comments.length > 0 && showComments){
-            console.log("ran")
-            console.log(`commentsLength: ${comments.length}, showComments: ${showComments}`)
             updateFirstLine()
         }
     }, [comments, showComments])
@@ -33,7 +30,7 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
                     {
                         comments.map((comment, index) =>{
                           if(comment.type === "user"){
-                            return <User_Comment 
+                            return <UserComment 
                                         index={index}
                                         client={client}
                                         comment={comment}
@@ -43,7 +40,7 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
                                     />
                           }
                           else if(comment.type ==="brand"){
-                            return <Brand_Comment 
+                            return <BrandComment 
                               client={client}
                               comment={comment}
                               review={review}
@@ -69,9 +66,13 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
                   :
                     null
               }
+              {/* {
+                  comments.length > 0 &&
+                  
+              } */}
               <div className="reviewComponent__comments__showComments">
               {
-                showComments ?
+                showComments  ?
                   <button onClick={() => handleShowComments(false)}>
                     Hide Comments
                   </button>
@@ -94,7 +95,7 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
     )
 }
 
-const User_Comment = ({ index, review, comment, client, handleCommentLike, updateFirstLine}) =>{
+const UserComment = ({ index, review, comment, client, handleCommentLike, updateFirstLine}) =>{
     const [commentText, setCommentText] = useState("")
     const [replyActive, setReplyActive] = useState(false)
     const [replyIsSending, setReplyIsSending] = useState(false)
@@ -114,7 +115,6 @@ const User_Comment = ({ index, review, comment, client, handleCommentLike, updat
             const tweek = 0
             const finalHeight = wrapperHeight - lastChildHeight - tweek + 50
             setHeight(finalHeight)
-            console.log(wrapperHeight, lastChildHeight)
 
         }
     }, [replies])
@@ -145,8 +145,6 @@ const User_Comment = ({ index, review, comment, client, handleCommentLike, updat
             type: "user"
           }
         }
-        console.log(depth)
-        console.log(reqObj)
         axios.post("/comment",reqObj,{
           headers:{
             "role" : client.type,
@@ -155,7 +153,6 @@ const User_Comment = ({ index, review, comment, client, handleCommentLike, updat
         })
         .then(({data})=>{
             setReplyIsSending(false)
-          console.log(data)
           setCommentText("")
           setReplies([{
             ...data,
@@ -163,7 +160,6 @@ const User_Comment = ({ index, review, comment, client, handleCommentLike, updat
           }, ...replies])
         })
         .catch(err => {
-          console.log(err)
           setReplyIsSending(false)
         })
     }
@@ -196,8 +192,6 @@ const User_Comment = ({ index, review, comment, client, handleCommentLike, updat
           .then(({data})=>{
             setRepliesLoading(false)
             setMoreRepliesLoading(false)
-            console.log("these are replies")
-            console.log(data)
             setReplies([...replies, ...data.results])
             setPage(page + 1)
             setTotalReplies(data.totalResults)
@@ -206,10 +200,8 @@ const User_Comment = ({ index, review, comment, client, handleCommentLike, updat
           .catch(err => {
             setMoreRepliesLoading(false)
             setRepliesLoading(false)
-            console.log(err)
           })
     }
-    // console.log(comment)
     return(
         <div key={index} className="reviewComponent__comments__array__item">
             <div className="reviewComponent__comments__line" />
@@ -387,7 +379,7 @@ const User_Comment = ({ index, review, comment, client, handleCommentLike, updat
     )
 }
 
-const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
+const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
 
 
     
@@ -410,7 +402,6 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
           const tweek = 0
           const finalHeight = wrapperHeight - lastChildHeight - tweek + 50
           setHeight(finalHeight)
-          console.log(wrapperHeight, lastChildHeight)
       }
   }, [replies])
 
@@ -439,8 +430,6 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
           type: "brand"
         }
       }
-      console.log(depth)
-      console.log(reqObj)
       axios.post("/comment",reqObj,{
         headers:{
           "role" : client.type,
@@ -449,7 +438,6 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
       })
       .then(({data})=>{
           setReplyIsSending(false)
-        console.log(data)
         setCommentText("")
         setReplies([{
           ...data,
@@ -457,7 +445,6 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
         }, ...replies])
       })
       .catch(err => {
-        console.log(err)
         setReplyIsSending(false)
       })
   }
@@ -490,8 +477,6 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
         .then(({data})=>{
           setRepliesLoading(false)
           setMoreRepliesLoading(false)
-          console.log("these are replies")
-          console.log(data)
           setReplies([...replies, ...data.results])
           setPage(page + 1)
           setTotalReplies(data.totalResults)
@@ -500,12 +485,11 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
         .catch(err => {
           setMoreRepliesLoading(false)
           setRepliesLoading(false)
-          console.log(err)
         })
   }
 
   return(
-      <div className="reviewComponent__comments__array__item">
+      <div className="reviewComponent__comments__array__item brandBackground">
           <div className="reviewComponent__comments__line" />
           <div className="reviewComponent__comments__array__item__left">
               <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${comment.brand.slug}`}>
@@ -562,13 +546,13 @@ const Brand_Comment = ({ review, comment, client, handleCommentLike}) =>{
                       </Button>
                   }
               </div>
-              {
+              { 
                   <div className="reviewComponent__commentReply-container">
                       {
                           replyActive ?
-                          <p className="reviewComponent__commentReply__show" onClick={() => getReplies(false)}>hide replies</p>
+                          <p className="reviewComponent__commentReply__show reviewComponent__commentReply__show__brand" onClick={() => getReplies(false)}>hide replies</p>
                           :
-                          <p className="reviewComponent__commentReply__show" onClick={() => getReplies(true)}>
+                          <p className="reviewComponent__commentReply__show reviewComponent__commentReply__show__brand" onClick={() => getReplies(true)}>
                               show replies
                               {
                                   repliesLoading &&

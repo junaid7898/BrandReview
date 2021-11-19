@@ -5,10 +5,45 @@
     justify-content: space-between;
     width: 100%;
     max-width: 100%;
-
+    &__add-category{
+        margin-top: 20px;
+        text-decoration: underline;
+        color: blue;
+        cursor: pointer;
+        transition: all 300ms;
+        &__button{
+            width: 30%;
+            background-color: $primary;
+            color: $onPrimary;
+            padding: 15px 0px;
+            border: none;
+            margin-top: 10px;
+            border-radius: 8px;
+            &:hover{
+                background-color: $primaryHover;
+            }
+        }
+        &__inputs{
+            margin-top: 20px;
+            width: 100%;
+            & label{
+                color: $onSurface-primary;
+            }
+            & input{
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid rgba($onSurface-secondary, 0.1);
+                padding: 10px 0px;
+                &:focus{
+                    outline: none;
+                    border-bottom: 3px solid green;
+                }
+            }
+        }
+    }
     &__panel__review{
         max-width: 1100px;
-        margin: 0 auto;
+        margin: 0px auto;
         max-width: 90%;
     }
 
@@ -117,6 +152,7 @@
     height: 50px;
     @include respond(phone){
         flex-direction: column;
+        height: auto;
     }
     &-container{
         position: relative;

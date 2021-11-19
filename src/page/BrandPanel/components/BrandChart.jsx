@@ -1,7 +1,6 @@
 import { axios } from '../../../axios/axiosInstance';
 import React, {useState, useEffect} from 'react'
 import {Bar, Line} from 'react-chartjs-2'
-import MultiDatePicker from '../../../components/multi_date_picker/MultiDatePicker';
 import EmptyData from '../../../components/EmptyDataComponent/EmptyData';
 
 const BrandChart = ({brandId, date}) => {
@@ -23,15 +22,12 @@ const BrandChart = ({brandId, date}) => {
                 limit: 100000,
             }
 
-            console.log(newFilter)
             axios.post('/review/query',{filters: newFilter, options})
             .then(({data}) => {
-                console.log(data)
                 let newObj = {}
                 let ratingAvg = {}
                 data.results.map( item => {
                     const g = new Date(item.createdAt).toDateString()
-                    console.log(g)
                     if(newObj[g]){
                         newObj[g]++
                     }
@@ -49,22 +45,13 @@ const BrandChart = ({brandId, date}) => {
                         ratingAvg[g].sum = item.ratingCount
                         ratingAvg[g].avg = item.ratingCount
                     }
-                    console.log(item.ratingCount);
                 })
-                const user = ["sadsa"];
-                console.log(user)
-
-
-                console.log(newObj)
-                console.log(ratingAvg);
                 setChartData({
                     label:Object.keys(newObj).reverse(),
                     value: Object.values(newObj).reverse()
                 })
                 const labelA = Object.keys(ratingAvg)
                 const valueA = labelA.map(item => ratingAvg[item].avg)
-                console.log(labelA);
-                console.log(valueA);
                 setCharData2({
                     label: labelA,
                     value: valueA

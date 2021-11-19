@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import BrandIcon from "../../assests/images/brand_icon.png";
 import BrandSearchList from "./components/BrandSearchList";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
@@ -112,7 +110,6 @@ const BrandComparison = (props) => {
     const handleCompare = () => {
     const valid = check()
     if(valid === 'ok'){
-      console.log('here');
       if(!selectedBrand1 && !selectedBrand2){
         return
       }
@@ -126,7 +123,6 @@ const BrandComparison = (props) => {
         return
       }
       else if(selectedBrand1.id === selectedBrand2.id){
-        console.log(selectedBrand1, selectedBrand2);
         history.push(`/brand/${selectedBrand1.slug}`)
       }
       else{
@@ -144,7 +140,6 @@ const BrandComparison = (props) => {
 
     }
   
-console.log(props.selectedBrand1)
     useEffect(() => {
       if(props.selectedBrand1 && props.selectedBrand2){
         setBrand1(props.selectedBrand1)

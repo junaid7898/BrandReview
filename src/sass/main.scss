@@ -41,6 +41,7 @@
 
     //SECTION  Header
     @import "../components/header/styles/header";
+    @import '../components/header/styles/notification';
     //!SECTION =========
 
 
@@ -99,6 +100,13 @@
     @import '../components/reviews/styles/review';
     //!SECTION =========
 
+    //SECTION select category
+    @import '../components/select_category/style/selectCategory';
+    //SECTION =========
+
+    //SECTION detete category
+    @import '../components/delete_categories/style/deleteCategories';
+
 //ANCHOR write your review component
 
 @import '../components/write_your_review_input/style/writeYourReviewComponent';
@@ -134,6 +142,8 @@
 
     //SECTION empty data component
     @import '../components/EmptyDataComponent/style/emptyData';
+
+    
 //!SECTION
 
 /* -------------------------------------------------------------------------- */
@@ -147,6 +157,7 @@
 @import "../page/profile/styles/profilecontent";
 @import "../page/profile/styles/profileDetail";
 @import '../page/profile/components/ProfileDetail/components/MyDetails/styles/myReviews';
+@import '../page/profile/styles/updateUserProfile';
 
     //SECTION  Homepage
     @import "../page/Homepage/styles/homePageStyling";
@@ -254,6 +265,8 @@
     //SECTION forgot-passwrod page
     @import '../page/forgotPasswordPage/style/forgotPasswordPage';
     //!SECTION =========
+
+    
 
 //!SECTION
 

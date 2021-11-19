@@ -16,7 +16,9 @@ import { useLocation } from 'react-router'
 import TopBrandsHeader from './components/TopBrandsHeader'
 
 
+
 function HomePage() {
+
   useEffect(() => {
         window.scrollTo(0,0)
   }, [useLocation().pathname])

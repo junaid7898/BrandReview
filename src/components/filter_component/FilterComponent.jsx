@@ -1,7 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
 import {FaSortAmountDownAlt} from 'react-icons/fa'
-import {GrRadial, GrRadialSelected} from 'react-icons/gr'
-import {AiOutlineSortAscending, AiOutlineSortDescending} from 'react-icons/ai'
 
 const FilterComponent = ({tab, setFilters, setSortOptions}) => {
     const [showList, setShowList] = useState(false)
@@ -105,7 +103,6 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
                 setFilterOption({...g})
                 return 
             }
-            console.log(searchQuery)
             setFilterOption({
                 ...filterOption,
                 query: JSON.stringify({$text: `{$search: ${searchQuery}}`}),
@@ -198,18 +195,3 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
 
 export default FilterComponent
 
-
-
-// {
-//     sortBy.map((item, index) => {
-//     {console.log('clicked: ' + clicked)}
-//     return(
-//         <div className="filter__options__items" id = {index} onClick = {() => setClicked(true)}>
-//             <label htmlFor = 'checkBox'>{item}</label>
-//             {/* <input id = 'checkBox' type = 'checkbox' className = 'filter__options__items__input'/> */}
-//             {clicked === true ? (<GrRadialSelected size = {24} color = 'blue'/>): (<GrRadial size = {24}/>)}
-            
-//         </div>
-//     )
-// })
-// }

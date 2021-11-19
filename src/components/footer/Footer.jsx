@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../assests/icons/header_icon1.png";
 import { Link } from "react-router-dom";
 import {AiFillFacebook, AiFillTwitterSquare, AiFillInstagram} from 'react-icons/ai'
 import WebisteLogo from "../../assests/WebsiteLogo"
@@ -18,20 +17,20 @@ const Footer = () => {
             the readable content of a page when looking at its layout.
           </p>
         </div>
-        <div className="footer__content__links">
+        <div className="footer__content__links">   
           <Link to = '/termsandcondition' className = 'footer__content__links__title'><h4>Terms and Conditions</h4></Link>
           <div className = 'footer__content__social__links'>
 
             <div className="footer__content__social__links-facebook">
-              <a><AiFillFacebook className="footer__content__social__links-facebook__icon"/></a>
+              <a href = 'https://www.facebook.com/'><AiFillFacebook className="footer__content__social__links-facebook__icon"/></a>
             </div>
 
             <div className="footer__content__social__links-twitter">
-              <a><AiFillTwitterSquare className="footer__content__social__links-twitter__icon"/></a>
+              <a href = 'https://www.google.com/'><AiFillTwitterSquare className="footer__content__social__links-twitter__icon"/></a>
             </div>
 
-            <div className="footer__content__social__links-instagram">
-              <a><AiFillInstagram className="footer__content__social__links-instagram__icon"/></a>
+            <div className="footer__content__social__links-instagram">   
+              <a href = 'https://www.google.com/'><AiFillInstagram className="footer__content__social__links-instagram__icon"/></a>
             </div>
             
           </div>

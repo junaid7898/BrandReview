@@ -13,36 +13,31 @@ import SignUp from './page/Sign_up/SignUp';
 import Login from './page/login/Login';
 import BrandSignUp from './page/brand_sign_up/BrandSignUp';
 import BrandLogin from './page/brand_log_in/BrandLogin';
-import { AdminLogin } from './page/admin_login/AdminLogin';
 import SearchBrand from './page/search/SearchBrand';
 import PhoneVerification from './page/phone_verification_page/PhoneVerification';
 import Error404Page from './page/error_404_page/Error404Page';
 import EmailVerificationPage from './page/email_verification_page/EmailVerificationPage';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { axios } from "./axios/axiosInstance";
 import { useSelector, useDispatch } from "react-redux";
 import { clientActions } from "./Redux/clientslice/clientSlice";
-import PrivateRoute from "./PrivateRoute";
 import { statusAction } from "./Redux/statusSlice";
 import { brandAction } from "./Redux/brandInfoSlice/brandInfoSlice";
 import Notification from "./components/notification/Notification";
 import ForgotPasswordPage from "./page/forgotPasswordPage/ForgotPasswordPage";
-import Background from "./components/Background/Background";
-// import {  } from "react-router-dom";
 function App() {
 
   const dispatch = useDispatch()
   const {client} = useSelector(state => state.client)
   const { attemptingLoginOnSiteLoad } = useSelector((state) => state.status);
-  const isStateSet = useRef(false)
   const [isState, setIsState] = useState(false)
   useEffect(() => {
     axios.get("brand/getAllBrands")
     .then(({data}) => {
       dispatch(brandAction.setBrands(data))
     })
-  }, [])
+  })
 
   useEffect(() => {
     console.log(attemptingLoginOnSiteLoad)
@@ -210,7 +205,7 @@ function App() {
               <Route path = '/brand/comparison/:brandSlug1/:brandSlug2' component = {ComparisonPage}/>  
               <Route path = '/brand/:brandSlug' component = {SearchBrand} />
 
-              <Route exact path="/admin" exact > 
+              <Route exact path="/admin"  > 
                     {
                       client 
                       ? 
@@ -220,7 +215,7 @@ function App() {
                         <Redirect to='/' exact />
                     }
               </Route>
-              <Route exact path="/admin/login" exact > 
+              <Route exact path="/admin/login"  > 
                     {
                       !client 
                       ? 

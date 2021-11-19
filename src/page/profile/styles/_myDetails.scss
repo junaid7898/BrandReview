@@ -42,16 +42,18 @@
     &:after{
         position: absolute;
         content: 'no phone';
-        top: -100%;   
+        top: -120%;   
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%, 50%);
         height: 100%;
         width: fit-content;
-        border: 1px solid black;
-        background-color: yellow;
-        color: black;
+        border-radius: 10px;
+        border-bottom-left-radius: 0;
+        background-color: $primary;
+        color: $onPrimary;
         display: none;
         white-space: nowrap;
+        padding: 5px 9px;
     }
     &-verified{
         color: green;
@@ -61,7 +63,7 @@
             }
         }
         &::after{
-            content: "phone verified";
+            content: "Number Verified";
         }
     }
     &-unverified{
@@ -72,7 +74,7 @@
             }
         }
         &::after{
-            content: "phone unverified";
+            content: "Number Unverified";
         }
     }
 }

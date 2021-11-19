@@ -1,5 +1,35 @@
 .error__page{
     width: 1200px;
+    max-width: 100%;
     margin: auto;
     border: 1px;
+    // background-color: red;
+    text-align: center;
+    margin: 50px auto;
+    padding: 0px 10px;
+    &__header{
+        background: linear-gradient($primary, #020024);
+        background-clip: text;
+        color: transparent;
+        font-family: $round;
+        font-size: 200px;
+        font-weight: bolder;
+        @include respond(phone){
+            font-size: 100px;
+        }
+    }
+    &__404{
+        font-family: $title;
+        font-weight: 700;
+        font-size: 30px;
+        @include respond(phone){
+            font-size: 15px;
+        }
+    }
+    &__footer{
+        max-width: 400px;
+        margin: auto;
+        font-family: $subTitle;
+        font-weight: 500;
+    }
 }

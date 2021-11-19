@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Star from '../../../assests/Star'
 import BrandComparison from '../../../components/brand_comparison/BrandComparison'
-import { axios } from '../../../axios/axiosInstance'
 
 const BrandInfo = ({brand}) => {
     return (
@@ -21,7 +20,17 @@ const BrandInfo = ({brand}) => {
             </div>
 
             <div className="brand__information__title-about">
-                <h3>{brand.name}</h3>
+                <div className = 'brand__information__title-about__premeired'>
+                    <h3>{brand.name}</h3>
+                    {
+                        brand.premiered ? 
+                            <div className = 'brand__information__title-about__premeired__tag'>
+                                Premiered                                
+                            </div>
+                            :
+                            null
+                    }
+                </div>
                 <p className = 'brand__information__title-about__para'>{brand.about}</p>
             </div>
             

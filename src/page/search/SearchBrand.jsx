@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import BrandInfo from "./components/BrandInfo";
 import Review from "../../components/reviews/Review";
-import WriteYourReviewComponent from "../../components/write_your_review_input/WriteYourReviewComponent";
 import { useLocation, useParams } from "react-router";
 import EmptyData from "../../components/EmptyDataComponent/EmptyData";
 import {axios} from "../../axios/axiosInstance";
-import LoadingIndicator from "../../components/loadingIndicator/LoadingIndicator";
-import { useSelector } from "react-redux";
 import Pagination from "../../components/Pagination/Pagination";
 import TopBrands from "../../components/top-brands/TopBrands"
 import VerticalDotBackGround from "../login/components/VerticalDotBackGround";
@@ -14,14 +11,12 @@ import HorizantalDotBackground from "../login/components/HorizantalDotBackground
 import BlueSpiralBackground from "../login/components/BlueSpiralBackground";
 import ZigZagBackgroundComponent from "../login/components/ZigZagBackgroundComponent";
 import SpiralBackground from "../login/components/SpiralBackground";
-import BrandComparison from "../../components/brand_comparison/BrandComparison";
 const SearchBrand = () => {
     useEffect(() => {
       window.scrollTo(0,0)
   }, [useLocation().pathname])
   const query = new URLSearchParams(useLocation().search)
   const {brandSlug} = useParams()
-  const {client} = useSelector(state => state.client)
   const [brandData, setBrandData] = useState(null)
   const [reviewData, setReviewData] = useState([])
   const [page, setPage] = useState(1)
@@ -31,10 +26,14 @@ const SearchBrand = () => {
   const [updatedReview, setUpdatedReview] = useState(null)
   const [queryReviewId, setQueryReviewId] = useState(null)
   const [isBrandDataSet, setIsBrandDataSet] = useState(false)
-  const [isUrlQuery, setIsUrlQuery] = useState(false)
+  // useEffect(() => {
+  //   const reivewId = query.get("review")
+  //   if(reivewId){
+  //     alert(reivewId)
+  //   }
+  // }, [query])
   useEffect(() => {
     if(brandSlug){
-      setIsUrlQuery(true)
       console.log(brandSlug)
       axios
         .get(`/brand/page/${brandSlug}`)
@@ -44,55 +43,63 @@ const SearchBrand = () => {
         })
         .catch(err =>{
           console.log(err)
+          // console.log(err.response.data.message)
         })
       }
   }, [brandSlug])
 
+
+
+  const firstRender = useRef(false)
+
   useEffect(() => {
-        if(isBrandDataSet){
-          const options = {
-            page,
-            limit: 10,
-            populate: "user.User"
-          }
-          let filters={
-            "brand": brandData.id
-          }
-          const reivewId = query.get("review")
-          if(reivewId && isUrlQuery){
-            filters={
-              "_id": reivewId
-            }
-          }
-          if(brandData.id){
-            axios
-            .post(`/review/query`,{
-              options,
-              filters
-            })
-            .then(({data}) =>{
-              console.log(data)
-              setCurrentPage(data.page)
-              setTotalPages(data.totalPages)
-              setReviewData(data.results)
-              console.log(data)
-            })
-            .catch(err => {
-              console.log(err)
-            })
+
+    // if(firstRender.current){
+      
+      if(isBrandDataSet){
+        const options = {
+          page,
+          limit: 10,
+          populate: "user.User, brand.Brand"
+        }
+        let filters={
+          "brand": brandData.id
+        }
+        const reivewId = query.get("review")
+        if(reivewId){
+          filters={
+            "_id": reivewId
           }
         }
-  }, [isBrandDataSet, page, isUrlQuery])
+        if(brandData.id){
+          axios
+          .post(`/review/query`,{
+            options,
+            filters
+          })
+          .then(({data}) =>{
+            console.log('here is the data.....',data)
+            setCurrentPage(data.page)
+            setTotalPages(data.totalPages)
+            setReviewData(data.results)
+            console.log(data)
+            setIsBrandDataSet(false)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        }
+      }
+    // }
+
+    // firstRender.current = true
+    
+  }, [isBrandDataSet, page, brandSlug])
 
 
   const handlePageination = (index) => {
     setPage(index)
     setReviewData([])
-  }
-
-  const handleShowAllComments = () =>{
-    setReviewData([])
-    setIsUrlQuery(false)
   }
 
 
@@ -131,18 +138,15 @@ const SearchBrand = () => {
               return <Review review = {review} brandData = {brandData} setBrandData = {setBrandData} setUpdatedReview = {setUpdatedReview} commentsAllowed={true} /> 
             })
             :
+            <>
               <EmptyData value = 'No reviews posted for this brand...'/>
+              </>
             }
 
           </div>
             <Pagination currentPage={currentPage} totalPages = {totalPages} handlePageination= {handlePageination} />
-            {
-              isUrlQuery &&
-              <button className="brandMain__showAllButton" onClick={ () => handleShowAllComments()}>
-                Show all comments
-              </button>
-            }
         </div>
+
         <div className="brandMain__right">
           { 
             brandData && 
@@ -151,9 +155,9 @@ const SearchBrand = () => {
                   <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
             </div>
           }
-          <div className="brandMain__right__compare">
-              <BrandComparison />
-          </div>
+            {/* <div className="brandMain__right__compare">
+                <BrandComparison />
+            </div> */}
         </div>
       </div>
 

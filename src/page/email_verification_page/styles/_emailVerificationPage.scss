@@ -1,24 +1,76 @@
 .email__verification{
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     text-align: center;
     height: 700px;
-    &__text{
-        color: $onSurface-primary;
-        font-size: 30px;
-        margin-bottom: 20px;
+    position: relative;
+    &__vertical-dot{
+        position: absolute;
+        left: 0;
+        top: 40%;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
     }
-    &__button{
-        background-color: $primary;
-        width: 30%;
-           
-        text-decoration: none;
-        border-radius: 10px;
-        & h3{
-            padding: 10px 20px;
+    &__vertical-dot2{
+        position: absolute;
+        left: 50%;
+        top: 65%;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__yellow-zigzag{
+        position: absolute;
+        left: 60%;
+        top: 5%;
+        z-index: -1;
+    }
+    &__blue-zigzag{
+        position: absolute;
+        left: 30%;
+        top: 5%;
+        z-index: -1;
+    }
+    &__blue-spiral{
+        position: absolute;
+        right: 0%;
+        top: 40%;
+        z-index: -1;
+        @include respond(phone){
+            display: none;
+        }
+    }
+    &__left-container{
+        // background-color: red;
+        &__text{
+            color: $onSurface-primary;
+            font-size: 30px;
+            margin-bottom: 20px;
+            max-width: 530px;
+            line-height: 84px;
+            @include respond(phone){
+                font-size: 20px;
+            }
+        }
+        &__link{
+            background-color: $primary;
+            width: 70%;  
+            text-decoration: none;
+            border-radius: 10px;
             color: $onPrimary;
+            font-family: $subTitle2;
+            font-weight: 500;
+            font-size: 20px;
+            border: none;
+            padding: 10px 0;
+            &:hover{
+                background-color: $primaryHover;
+            }
         }
     }
 }

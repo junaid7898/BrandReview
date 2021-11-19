@@ -8,7 +8,7 @@ import { axios } from '../../../axios/axiosInstance'
 import WebsiteLogo from '../../../assests/WebsiteLogo'
 import {io} from 'socket.io-client';
 
-const ENDPOINT = 'localhost:5000'
+const ENDPOINT = 'https://sikayetbox.com'
 
 const NotificationBell = () => {
     const { client } = useSelector((state) => state.client);

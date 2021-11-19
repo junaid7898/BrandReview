@@ -12,9 +12,38 @@ const ENDPOINT = 'localhost:5000'
 
 const NotificationBell = () => {
     const { client } = useSelector((state) => state.client);
+    const [showNotificationContainer, setShowNotificationContainer] = useState(false)
     // const [newNotificationCount, setNewNotificationCount] = useState(0)
     const newNotificationCount = useRef(0)
     const socket = useRef(null)
+
+    const notificationRef = useRef(null)
+    useEffect(() => {
+      if (showNotificationContainer) {
+        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('keydown', handleEsc)
+      } else {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('keydown', handleEsc)
+      }
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('keydown', handleEsc)
+      };
+    }, [notificationRef, showNotificationContainer]);
+
+    function handleClickOutside(event) {
+        if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+          setShowNotificationContainer(false);
+        }
+      }
+
+    const handleEsc = (e) => {
+    if(e.keyCode === 27){
+        setShowNotificationContainer(false)
+    }
+    }
+
 
     useEffect(() => {
         socket.current = io(ENDPOINT)
@@ -63,7 +92,6 @@ const NotificationBell = () => {
     }, [client])
 
 
-    const [showNotificationContainer, setShowNotificationContainer] = useState(false)
     
 
 
@@ -146,7 +174,7 @@ const NotificationBell = () => {
             {
                 showNotificationContainer && normalizedData !== {} &&
 
-                <div className="header__notification" id = 'headerNotification'>
+                <div ref = {notificationRef} className="header__notification" id = 'headerNotification'>
                     {
                         Object.keys(normalizedData).map(item => 
                             <div className = 'header__notification__item'>
@@ -212,7 +240,7 @@ const NotificationItem = ({notification}) => {
     if(notification.type === USER_REVIEW_APPROVED){
         return(
             <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
-                <WebsiteLogo />
+                <WebsiteLogo className = 'header__notification__item__notification__logo'/>
                 <p>Your review on {notification.brand.name} has been approved</p>
             </Link>
         )

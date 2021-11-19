@@ -270,7 +270,6 @@
             transform: scale(0);
         }
         @include respond(phone){
-            top: -26px;
             border-radius: 0px;
             background-color: $background;
         }

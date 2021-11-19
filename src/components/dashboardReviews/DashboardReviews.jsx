@@ -133,7 +133,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                                 <>
                                 <tr className = 'dashboard__panel__reports__table__data-rows' id = {item.id}>
                                     <td className = 'dashboard__panel__reports__table__data-rows__name'>
-                                        <Link to ={`user/${item.user.id}`} >
+                                        <Link to ={`/user/${item.user.id}`} >
                                             <h4 className = 'dashboard__panel__reports__table__data-rows__name__text'>{item.user.name}</h4>
                                         </Link>
                                         <h4 className = 'dashboard__panel__reports__table__data-rows__name__rating'>{(item.rating).toFixed(1)}</h4>
@@ -150,7 +150,7 @@ export const DashboardReviews = ({filters, sortOptions, date}) => {
                                     </td> */}
                                     
                                     <td className = 'dashboard__panel__reports__table__comment'>
-                                       <Link to={`brand/${item.brand.slug}?review=${item.id}`}>{truncateString(item.message,250)} </Link>
+                                       <Link to={`/brand/${item.brand.slug}?review=${item.id}`}>{truncateString(item.message,250)} </Link>
                                     <div className = 'dashboard__panel__reports__images'>
                                         {
                                             item.images.map(img => {

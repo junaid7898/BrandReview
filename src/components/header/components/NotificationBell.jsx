@@ -37,7 +37,7 @@ const NotificationBell = () => {
                 })
             }
             else if(client.type.includes('brand')){
-                axios.post('/notification/',{filters: {brandId: client.brand.id, forBrand: true}})
+                axios.post('/notification/',{filters: {brandId: client.brand.id, forBrand: true},options})
                 .then(({data}) => {
                     console.log("notifications")
                     console.log(data)
@@ -46,7 +46,7 @@ const NotificationBell = () => {
                 })
             }
             else if(client.type.includes("admin")){
-                axios.post('/notification/',{filters: {forAdmin: true}})
+                axios.post('/notification/',{filters: {forAdmin: true},options})
                 .then(({data}) => {
                     console.log("notifications")
                     console.log(data)
@@ -76,7 +76,7 @@ const NotificationBell = () => {
             notifications.map(item => {
                 item.createdAt = new Date(item.createdAt).toDateString()
                 if(norm[item.createdAt]){
-                    norm[item.createdAt].push(item)
+                    norm[item.createdAt].unshift(item)
                 }
                 else{
                     norm[item.createdAt] = [item]
@@ -186,7 +186,7 @@ const NotificationItem = ({notification}) => {
     }
     if(notification.type === BRAND_NEW_REVIEW){
         return (
-            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image} alt = 'user'/>
                 <p>{notification.user.name} added a new review</p>
             </Link>
@@ -195,7 +195,7 @@ const NotificationItem = ({notification}) => {
 
     if(notification.type === BRAND_REVIEW_RESOLVE){
         return (
-            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image}  alt = {notification.user.name}/>
                 <p>{notification.user.name} resolved a review</p>
             </Link>
@@ -203,7 +203,7 @@ const NotificationItem = ({notification}) => {
     }
     if(notification.type === USER_REVIEW_REPLY_BY_BRAND){
         return(
-            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.brand.image}  alt = {notification.brand.name}/>
                 <p>{notification.brand.name} replied to your review</p>
             </Link>
@@ -211,7 +211,7 @@ const NotificationItem = ({notification}) => {
     }
     if(notification.type === USER_REVIEW_APPROVED){
         return(
-            <Link to={`brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <WebsiteLogo />
                 <p>Your review on {notification.brand.name} has been approved</p>
             </Link>

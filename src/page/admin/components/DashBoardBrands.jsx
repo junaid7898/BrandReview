@@ -264,7 +264,7 @@ function DashBoardBrands({filters, sortOptions}) {
 
                             <div className="dashboard__brands__data__brand__intro">
                                 <img src = {brand.logo} onClick = {() => {setShowImage(brand.logo)}}/>
-                                <Link to = {`brand/${brand.slug}`}>
+                                <Link to = {`/brand/${brand.slug}`}>
                                     <h5 className = 'dashboard__brands__data__brand__intro__name'>{brand.name} </h5>
                                 </Link>
                                 {

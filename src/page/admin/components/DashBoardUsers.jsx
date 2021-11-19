@@ -115,7 +115,7 @@ const DashBoardUsers = ({filters, sortOptions}) => {
 
                             <div className="dashboard__users__data__user__intro">
                                 <img src = {user.profileImage} onClick = {() => {setShowImage(user.profileImage)}}/>
-                                <Link to = {`user/${user.id}`}>
+                                <Link to = {`/user/${user.id}`}>
                                     <h5 className = 'dashboard__users__data__user__intro__name'>{user.name}</h5>
                                 </Link>
                             </div>

@@ -89,6 +89,11 @@ const LoginInputs = () => {
               localStorage.setItem('accessToken', payload.tokens.access.token)
               localStorage.setItem('clientType', "user")
             }
+            else{
+              window.sessionStorage.setItem('userId', payload.user.id )
+              window.sessionStorage.setItem('accessToken', payload.tokens.access.token)
+              window.sessionStorage.setItem('clientType', "user")
+            }
             setIsLoggingIn({...isLoggingIn, email: false})
             history.push('/')
         }).catch(err => {

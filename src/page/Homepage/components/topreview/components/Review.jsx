@@ -26,8 +26,8 @@ function Review({review}) {
                 <Link to={`/user/${review.user._id}`}className="topReview__item__heading__userName"><p className="topReview__item__heading__name">{review.user.name}</p></Link>
             </div>
             <div className="topReview__item__body">
-                <Link to={`brand/${review.brand.slug}`} className="topReview__item__body__brandName"><p>{review.brand.name}</p></Link>
-                <Link to={`brand/${review.brand.slug}?review=${review._id}`}><p className="topReview__item__body__reviewText">"{truncateString(review.message,250)}"</p></Link>
+                <Link to={`/brand/${review.brand.slug}`} className="topReview__item__body__brandName"><p>{review.brand.name}</p></Link>
+                <Link to={`/brand/${review.brand.slug}?review=${review._id}`}><p className="topReview__item__body__reviewText">"{truncateString(review.message,250)}"</p></Link>
             </div>
             <div className="topReview__item__footer">
                 <div className="topReview__item__footer__stars">

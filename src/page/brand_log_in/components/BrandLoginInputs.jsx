@@ -80,6 +80,12 @@ const BrandLoginInputs = () => {
             localStorage.setItem('accessToken', payload.tokens.access.token)
             localStorage.setItem('clientType', payload.type)
           }
+          else{
+            console.log(payload)
+            window.sessionStorage.setItem('brandId', payload.brand.id )
+            window.sessionStorage.setItem('accessToken', payload.tokens.access.token)
+            window.sessionStorage.setItem('clientType', payload.type)
+          }
           setIsLoggingIn(false)
           history.push('/')
         })

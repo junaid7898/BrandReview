@@ -1,5 +1,8 @@
 .homepage{
     position: relative;
+    @include respond(phone){
+        margin-top: 35px;
+    }
     &__compare-container{
         display: flex;
         flex-flow: row wrap;

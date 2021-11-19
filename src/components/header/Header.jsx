@@ -327,7 +327,7 @@ const Header = () => {
                                     </div>
                                     </Link>
 
-                                    <Link
+                                    {/* <Link
                                       to="/brand/signup"
                                       className="nav__links__link__user-login__link2"
                                     >
@@ -335,7 +335,7 @@ const Header = () => {
                                         <AiFillCar size = {15}/>
                                         <h4 >Brand</h4>
                                       </div>
-                                    </Link>
+                                    </Link> */}
 
                                 </div>
                              

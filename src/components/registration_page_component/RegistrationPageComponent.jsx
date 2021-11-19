@@ -11,16 +11,16 @@ const RegistrationPageComponent = () => {
 
 
         <div className = 'registration__form__icons__topleft__div'>
-          <img src={ brands ?  brands[3].logo : icon} className="registration__form__icons__topleft" alt = 'brand icon'/>
+          <img src={ brands.length > 0 ?  brands[3].logo : icon} className="registration__form__icons__topleft" alt = 'brand icon'/>
         </div>
 
         <div className = 'registration__form__icons__topright__div'>
-          <img src={brands ? brands[2].logo : icon } className="registration__form__icons__topright" alt = "svg random"/>
+          <img src={brands.length > 0 ? brands[2].logo : icon } className="registration__form__icons__topright" alt = "svg random"/>
         </div>
 
         <div className = 'registration__form__icons__bottomleft__div'>  
           <img
-            src={brands ? brands[0].logo : icon}
+            src={brands.length > 0 ? brands[0].logo : icon}
             className="registration__form__icons__bottomleft"
             alt = "svg random"
           />
@@ -28,7 +28,7 @@ const RegistrationPageComponent = () => {
 
         <div className = 'registration__form__icons__bottomright__div'>
           <img
-            src={brands ? brands[1].logo : icon}
+            src={brands.length > 0 ? brands[1].logo : icon}
             className="registration__form__icons__bottomright"
             alt = "svg random"
           />

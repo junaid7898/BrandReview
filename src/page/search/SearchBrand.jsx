@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import BrandInfo from "./components/BrandInfo";
 import Review from "../../components/reviews/Review";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useParams, useHistory } from "react-router";
 import EmptyData from "../../components/EmptyDataComponent/EmptyData";
 import {axios} from "../../axios/axiosInstance";
 import Pagination from "../../components/Pagination/Pagination";
@@ -15,6 +15,7 @@ const SearchBrand = () => {
     useEffect(() => {
       window.scrollTo(0,0)
   }, [useLocation().pathname])
+  const history = useHistory()
   const query = new URLSearchParams(useLocation().search)
   const {brandSlug} = useParams()
   const [brandData, setBrandData] = useState(null)
@@ -43,6 +44,7 @@ const SearchBrand = () => {
         })
         .catch(err =>{
           console.log(err)
+          history.push('/*')
           // console.log(err.response.data.message)
         })
       }

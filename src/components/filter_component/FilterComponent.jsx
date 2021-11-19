@@ -83,9 +83,9 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
         }
 
         const handleOption = (option) => {
-            if(option === "likes"){
+            if(option === "rating"){
                 setSort({
-                    likedByUsers: isAscending ? 1: -1
+                    rating: isAscending ? 1: -1
                 })
             }
             else if(option === "date"){
@@ -144,7 +144,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
                     <p>Sort By</p>
                     {
                         tab === "review" &&
-                        <div onClick={() => handleOption("likes")} className={`filter__options__item ${sort.likedByUsers && `filter__options__item-selected` }`}>
+                        <div onClick={() => handleOption("rating")} className={`filter__options__item ${sort.likedByUsers && `filter__options__item-selected` }`}>
                             <h5>Rating</h5>
                         </div>
                     }

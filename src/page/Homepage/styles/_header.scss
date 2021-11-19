@@ -13,6 +13,7 @@
     }
     &__search{
         display: none;
+        position: relative;
         @include respond(phone){
             display: block;
             margin: 0 10px;

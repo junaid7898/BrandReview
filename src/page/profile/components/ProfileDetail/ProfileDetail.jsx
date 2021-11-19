@@ -9,7 +9,7 @@ import FilterComponent from "../../../../components/filter_component/FilterCompo
 const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
   // console.log('user:>', user);
   const location = useLocation()
-  const [option ,setOption] = useState(0)
+  const [option ,setOption] = useState(2)
   const [page, setPage] = useState(1)
   const [filter, setFilter] = useState({})
   const [sortOptions, setSortOptions] = useState({})

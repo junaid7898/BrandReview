@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import {ImCross} from 'react-icons/im';
 import Select from "react-select";
-
+import SelectCategory from '../../../components/select_category/SelectCategory'
 const UpdateBrandProfile = ({ about,email, setEmail, name, setName, category, setCategory,options, setAbout, handleUpdate, setUpdateProfile}) => {
     const aboutLength = useRef(about.length)
     return (
@@ -32,27 +32,8 @@ const UpdateBrandProfile = ({ about,email, setEmail, name, setName, category, se
 
                         <div className="update__brand__profile__category">
                             <label htmlFor="categoryBrand">Category</label>
-                            <Select
-                                id = 'categoryBrand'
-                                value = {category}
-                                onChange = {setCategory}
-                                options = {options}
-                                className = 'update__brand__profile__category__select'
-                                placeholder = 'select a category for your brand'  
-                                isSearchable = {true}
-                            />
+                            <SelectCategory value = {category} setValue = {setCategory}/>
                         </div>
-                        {/* <div className="update__brand__profile__inputs__phone">
-                            <label htmlFor="phoneNumber">Phone Number </label>
-                                <PhoneInput
-                                    id = 'phoneNumber'
-                                    placeholder="Enter phone number"
-                                    value={phone}
-                                    className = 'update__brand__profile__inputs__phone-input'
-                                    name = 'phone number'
-                                    onChange={setPhone}
-                                />   
-                        </div> */}
 
                         <div className="update__brand__profile__inputs__about">
                             <label htmlFor="aboutBrand">About {`[${aboutLength.current}/200]`}</label>

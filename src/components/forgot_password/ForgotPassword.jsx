@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
 
 const ForgotPassword = ({onCancel, onSubmit, isSending}) => {
-    const [emailAddress, setEmailAddress] = useState(null)
+    const [emailAddress, setEmailAddress] = useState('')
     const dispatch = useDispatch()
     const validateEmail = () => {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -13,8 +13,12 @@ const ForgotPassword = ({onCancel, onSubmit, isSending}) => {
       }
 
     const submitEmail = () => {
-        const emailValidation = validateEmail()
-        if(emailAddress === null){
+        let emailValidation;
+        if(emailAddress){
+            console.log('here');
+            emailValidation = validateEmail()
+        }
+        if(emailAddress === null || emailAddress === ''){   
             dispatch(statusAction.setNotification({
                 message: "Must enter email address....",
                 type: "error"

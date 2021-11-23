@@ -17,7 +17,7 @@ import NotificationBell from "./components/NotificationBell";
 
 const Header = () => {
   //search bar states
-  const [searchKey] = useState(null);
+  const [searchKey] = useState('');
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const searchValueRef = useRef()

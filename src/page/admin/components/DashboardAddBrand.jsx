@@ -9,12 +9,12 @@ import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndica
 import SelectCategory from '../../../components/select_category/SelectCategory';
 
 const DashboardAddBrand = () => {
-    const [brandName, setBrandName] = useState(null)
-    const [brandEmail, setBrandEmail] = useState(null)
-    const [brandPassword, setBrandPassword] = useState(null)
-    const [brandConfirmPassword, setBrandConfirmPassword] = useState(null)
-    const [about, setAbout] = useState(null)
-    const [logo, setLogo] = useState(null)
+    const [brandName, setBrandName] = useState('')
+    const [brandEmail, setBrandEmail] = useState('')
+    const [brandPassword, setBrandPassword] = useState('')
+    const [brandConfirmPassword, setBrandConfirmPassword] = useState('')
+    const [about, setAbout] = useState('')
+    const [logo, setLogo] = useState('')
     const [category, setCategory] = useState({value: null , label: null})
     const [logoDetails, setLogoDetails] = useState(null)
     const [rawLogo, setRawLogo] = useState(null)

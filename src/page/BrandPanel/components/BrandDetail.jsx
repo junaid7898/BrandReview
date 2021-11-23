@@ -23,10 +23,10 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
     const [date, setDate] = useState([from , to])
 
 
-    const [about, setAbout] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [name, setName] = useState(null)
-    const [category, setCategory] = useState(null)
+    const [about, setAbout] = useState('')
+    const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const [category, setCategory] = useState({value: null, label: null})
 
 
     const [isUpdatingBrand, setIsUpdatingBrand] = useState(false)
@@ -47,8 +47,7 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
         if(item){
             setAbout(item.about)
             setEmail(item.email ? item.email : 'No email Address provided')
-            const categ = options.find((option) =>  option.value === item.category)
-            setCategory(categ)
+            setCategory({value: item.category, label: item.category})
             setName(item.name)
         }
     }, [item])
@@ -141,6 +140,7 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
                 message: err.response.data.message,
                 type: "error"
               }))
+              setIsUpdatingBrand(false)
           })
       } 
       else{

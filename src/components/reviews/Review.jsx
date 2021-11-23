@@ -547,7 +547,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
 
   return (
     review ?
-    <div  className="reviewComponent-container" style={{backgroundColor: review.isResolved ? "rgba(41, 202, 67, 0.23)" : null}}>
+    <div id = {review.id}  className="reviewComponent-container" style={{backgroundColor: review.isResolved ? "rgba(41, 202, 67, 0.23)" : null}}>
       <div className="reviewComponent-container__upper">
       <div className="reviewComponent-container__left">
         <div className="reviewComponent__userImage">

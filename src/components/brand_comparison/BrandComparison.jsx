@@ -13,8 +13,8 @@ const BrandComparison = (props) => {
   const {brands} = useSelector(state => state.brands)
 
   const [searchResults, setSearchResults] = useState([]);
-  const [brand1, setBrand1] = useState(null);
-  const [brand2, setBrand2] = useState(null);
+  const [brand1, setBrand1] = useState('');
+  const [brand2, setBrand2] = useState('');
 
   const [showResult1, setShowResult1] = useState(false);
   const [showResult2, setShowResult2] = useState(false);

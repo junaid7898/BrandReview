@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router'
 import { axios } from '../../axios/axiosInstance'
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
+import { GiConfirmed } from 'react-icons/gi'
 
 const ForgotPasswordPage = () => {
-    const [password, setPassword] = useState(null)
-    const [confirmPassword, setConfirmPassword] = useState(null)
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const {token, type} = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
@@ -22,7 +23,7 @@ const ForgotPasswordPage = () => {
         }
     }
     const validationCheck = () => {
-        if(password === null || confirmPassword === null){
+        if(password === null || password === '' || confirmPassword === '' || confirmPassword === null){
             return 'please fill all the entries....'
         }
         else if(!CheckPassword()){

@@ -137,7 +137,7 @@ const LoginInputs = () => {
       </div>
 
       <div className="login__form__inputs__email">
-        <label for = "userName">Your Email</label>
+        <label htmlFor = "userName">Your Email</label>
         <input
           id = "userName"
           type="email"
@@ -150,7 +150,7 @@ const LoginInputs = () => {
         />
       </div>
       <div className="login__form__inputs__password">
-        <label for = "userPassword">Password</label>
+        <label htmlFor = "userPassword">Password</label>
         <input
           id = "userPassword"
           type="password"

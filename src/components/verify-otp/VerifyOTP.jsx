@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {ImCross} from 'react-icons/im'
 import { axios } from '../../axios/axiosInstance'
 const VerifyOTP = ({onSubmit, onCut, user}) => {
-    const [otp, setOtp] = useState(null)
+    const [otp, setOtp] = useState('')
 
     const handleOtp = () => {
         const otpNum = parseInt(otp)

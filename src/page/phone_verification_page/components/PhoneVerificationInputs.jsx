@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const PhoneVerificationInputs = () => {
-    const [otp, setOtp] = useState(null)
+    const [otp, setOtp] = useState('')
 
     const otpVerification = () => {
         console.log('otp verified')
@@ -13,7 +13,7 @@ const PhoneVerificationInputs = () => {
         </div>
   
         <div className="phone__verification__inputs__otp">
-          <label for = "otpMobile">Code</label>
+          <label htmlFor = "otpMobile">Code</label>
           <input
             id = "otpMobile"
             type="otp"

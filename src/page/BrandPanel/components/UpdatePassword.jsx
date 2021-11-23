@@ -6,9 +6,9 @@ import LoadingIndicator from '../../../components/loadingIndicator/LoadingIndica
 import { useSelector } from 'react-redux'
 
 const UpdatePassword = ({brandId}) => {
-    const [oldPassword, setOldPassword] = useState(null)
-    const [newPassword, setNewPassword] = useState(null)
-    const [confirmPass, setConfirmPass] = useState(null)
+    const [oldPassword, setOldPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+    const [confirmPass, setConfirmPass] = useState('')
     const [isPasswordChanging, setIsPasswordChanging] = useState(false)
     const dispatch = useDispatch()
     const {client} = useSelector(state => state.client)

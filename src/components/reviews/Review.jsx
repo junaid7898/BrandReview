@@ -115,6 +115,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       handleShowComments(true)
     })
     .catch(err => {
+      console.error(err)
       setCommentIsSending(false)
     })
   }

@@ -425,6 +425,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
       else if(depth === 1){
         reqObj = {
           message: commentText,
+          review: review.id,
           parentId: comment.id,
           brand: client.brand.id,
           depth,

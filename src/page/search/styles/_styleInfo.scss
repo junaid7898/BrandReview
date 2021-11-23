@@ -71,6 +71,8 @@
                 font-size: 22px;
                 line-height: 33px;
                 text-transform: capitalize;
+                max-width: 300px;
+                overflow-wrap: break-word;
             }
             &__tag{
                 display: flex;

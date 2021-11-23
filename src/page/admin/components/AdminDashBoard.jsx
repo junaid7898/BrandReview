@@ -40,7 +40,7 @@ const AdminDashBoard = () => {
     const [settings, setSettings] = useState(null)
 
     const [addNewCategory, setAddNewCategory] = useState(false)
-    const [category, setCategory] = useState(null)
+    const [category, setCategory] = useState('')
 
     const [deleteCategory, setDeleteCategory] = useState(false)
 

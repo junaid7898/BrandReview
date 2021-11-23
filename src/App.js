@@ -56,17 +56,19 @@ function App() {
 
   useEffect(() => {
     
+    const remember = !!localStorage.getItem("remember")
     let type = localStorage.getItem("clientType")
-    if(!type){
-      type = window.sessionStorage.getItem("clientType")
-    }
+
+    
     if(type === "user"){
+      if(!remember){
+        localStorage.removeItem("clientType")
+        localStorage.removeItem("userId")
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("remember")
+      }
       let userId = localStorage.getItem("userId")
       let accessToken = localStorage.getItem("accessToken")
-      if(!userId || !accessToken){
-        userId = window.sessionStorage.getItem("userId")
-        accessToken = window.sessionStorage.getItem("accessToken")
-      }
       if(userId && accessToken){
         dispatch(statusAction.setAttemptingLogin(true))
         axios.get(`/auth/user/login/${userId}`,{
@@ -83,19 +85,19 @@ function App() {
           localStorage.removeItem("userId")
           localStorage.removeItem("accessToken")
           localStorage.removeItem("clientType")
-          window.sessionStorage.removeItem("userId")
-          window.sessionStorage.removeItem("accessToken")
-          window.sessionStorage.removeItem("clientType")
         })
       }
     }
     else if(type === "brand"){
+      if(!remember){
+        localStorage.removeItem("clientType")
+        localStorage.removeItem("brandId")
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("remember")
+      }
       let brandId = localStorage.getItem("brandId")
       let accessToken = localStorage.getItem("accessToken")
-      if(!brandId || !accessToken){
-        brandId = window.sessionStorage.getItem("brandId")
-        accessToken = window.sessionStorage.getItem("accessToken")
-      }
+      
       if(brandId && accessToken){
         dispatch(statusAction.setAttemptingLogin(true))
         axios.get(`/auth/brand/login/${brandId}`,{
@@ -112,9 +114,6 @@ function App() {
           localStorage.removeItem("brandId")
           localStorage.removeItem("accessToken")
           localStorage.removeItem("clientType")
-          window.sessionStorage.removeItem("brandId")
-          window.sessionStorage.removeItem("accessToken")
-          window.sessionStorage.removeItem("clientType")
         })
       }
     }

@@ -22,14 +22,14 @@ const BrandSignUpInputs = () => {
   const history = useHistory();
   const dispatch = useDispatch()
   // ANCHOR form states
-  const [username, setClientName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [repeatPassword, setRepeatPassword] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [brandLogo, setBrandLogo] = useState(null);
-  const [rawLogo, setRawLogo] = useState(null)
-  const [about, setAbout] = useState(null)
+  const [username, setClientName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [brandLogo, setBrandLogo] = useState('');
+  const [rawLogo, setRawLogo] = useState('')
+  const [about, setAbout] = useState('')
   const [characterCount, setCharacterCount] = useState(0)
   const [imageDetails, setImageDetails] = useState(null)
   const [category, setCategory] = useState({value: null , label: null})

@@ -3,11 +3,6 @@ import { Link } from 'react-router-dom'
 import Star from '../../../../../assests/Star';
 import Dots from '../../../../../assests/Dots'
 function Review({review}) {
-
-    // useEffect(() => {
-    //     console.log(review)
-    // }, [review])
-
     function truncateString(str, num) {
         if (str.length > num) {
           return str.slice(0, num) + "...";
@@ -17,13 +12,13 @@ function Review({review}) {
     }
     return (
         review &&
-        <div className="topReview__item">
+        <div className="topReview__item" id = {review._id}>
                 <div className="topReview__item-dots">
                     <Dots />
                 </div>
             <div className="topReview__item__heading">
                 <Link to={`/user/${review.user._id}`} className="topReview__item__heading__userImage"><img src={review.user.profileImage} alt="idk"/></Link>
-                <Link to={`/user/${review.user._id}`}className="topReview__item__heading__userName"><p className="topReview__item__heading__name">{review.user.name}</p></Link>
+                <Link to={`/user/${review.user._id}`} className="topReview__item__heading__userName"><p className="topReview__item__heading__name">{review.user.name}</p></Link>
             </div>
             <div className="topReview__item__body">
                 <Link to={`/brand/${review.brand.slug}`} className="topReview__item__body__brandName"><p>{review.brand.name}</p></Link>

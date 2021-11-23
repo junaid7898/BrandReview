@@ -17,11 +17,11 @@ import {
 const SignUpInputs = () => {
 
   // ANCHOR form states
-  const [username, setClientName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [repeatPassword, setRepeatPassword] = useState(null);
-  const [phone, setPhone] = useState(null);
+  const [username, setClientName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [phone, setPhone] = useState('');
 
   //ANCHOR loading states
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -57,7 +57,7 @@ const SignUpInputs = () => {
     if(password){
       validPassword = CheckPassword()
     }
-    if(username === null || email === null || password === null || repeatPassword === null || phone === null){
+    if(username === null || username === '' || email === null || email === '' || password === null || password === '' || repeatPassword === null || repeatPassword === '' || phone === null || phone === ''){
       return 'please fill all entries'
     }
     else if(emailValidation === false){

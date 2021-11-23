@@ -63,15 +63,26 @@ const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
   useEffect(() => {
         if(option === 2){
           setIsLoading({...isLoading, review: true})
+          let filters = {
+            "user": user.id,
+
+            ...filter
+          }
+      if(!visitorIsUser){
+        filters = {
+          ...filters,
+          isVerified : true,
+        }
+      }
       axios
       .post(`review/query/`,{
-        filters:{
-          "user": user.id
-        },
+
+        filters,
         options:{
           page,
           limit: 10,
-          populate:"user.User, brand.Brand"
+          populate:"user.User, brand.Brand",
+          sortBy: sortOptions,
       }
       })
       .then(({data}) =>{
@@ -88,13 +99,14 @@ const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
       else{
         setReviewData([])
       }
-  }, [page, option])
+  }, [page, option, sortOptions, filter])
 
   //ANCHOR use effect for getting user reviews|follows
 
   useEffect(() => {
     if(option === 3){
       setIsLoading({...isLoading, follow: true})
+      
 
     axios
     .post(`/review/query`,{

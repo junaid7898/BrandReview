@@ -85,15 +85,11 @@ const LoginInputs = () => {
             const {payload} = dispatch(clientActions.setClient(res.data))
             console.log(payload)
             if(rememberMe){
-              localStorage.setItem('userId', payload.user.id )
-              localStorage.setItem('accessToken', payload.tokens.access.token)
-              localStorage.setItem('clientType', "user")
+              localStorage.setItem('remember', "-")
             }
-            else{
-              window.sessionStorage.setItem('userId', payload.user.id )
-              window.sessionStorage.setItem('accessToken', payload.tokens.access.token)
-              window.sessionStorage.setItem('clientType', "user")
-            }
+            localStorage.setItem('userId', payload.user.id )
+            localStorage.setItem('accessToken', payload.tokens.access.token)
+            localStorage.setItem('clientType', "user")
             setIsLoggingIn({...isLoggingIn, email: false})
             history.push('/')
         }).catch(err => {
@@ -137,7 +133,7 @@ const LoginInputs = () => {
       </div>
 
       <div className="login__form__inputs__email">
-        <label for = "userName">Your Email</label>
+        <label htmlFor = "userName">Your Email</label>
         <input
           id = "userName"
           type="email"
@@ -150,7 +146,7 @@ const LoginInputs = () => {
         />
       </div>
       <div className="login__form__inputs__password">
-        <label for = "userPassword">Password</label>
+        <label htmlFor = "userPassword">Password</label>
         <input
           id = "userPassword"
           type="password"

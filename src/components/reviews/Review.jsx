@@ -547,7 +547,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
 
   return (
     review ?
-    <div  className="reviewComponent-container" style={{backgroundColor: review.isResolved ? "rgba(41, 202, 67, 0.23)" : null}}>
+    <div id = {review.id}  className="reviewComponent-container" style={{backgroundColor: review.isResolved ? "rgba(41, 202, 67, 0.23)" : null}}>
       <div className="reviewComponent-container__upper">
       <div className="reviewComponent-container__left">
         <div className="reviewComponent__userImage">
@@ -568,7 +568,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
             <div className="reviewComponent__profile__intro">
               <div className="reviewComponent__profile__intro__name">
                 <div className="reviewComponent__profile__intro__name-container" >
-                  <Link to={`/user/${review.user}`}>
+                  <Link to={`/user/${review.user.id}`}>
                     <p>{review.user.name}</p>
                   </Link> 
                   {
@@ -786,7 +786,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
             client.type.includes("brand") && client.brand.id === review.brand.id
             ?
             <div className="reviewComponent__comments__writeComment">
-                <Link to={`/brand/${client.brand.id}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
+                <Link to={`/brand/${client.brand.slug}`}><img className="reviewComponent__comments__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
                 <div className="reviewComponent__comments__writeComment__input">
                   <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Enter Comment" id={`review-${review.id}-write-comment`}/>
                     {

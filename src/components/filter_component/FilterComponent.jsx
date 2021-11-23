@@ -144,7 +144,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
                     <p>Sort By</p>
                     {
                         tab === "review" &&
-                        <div onClick={() => handleOption("rating")} className={`filter__options__item ${sort.likedByUsers && `filter__options__item-selected` }`}>
+                        <div onClick={() => handleOption("rating")} className={`filter__options__item ${sort.rating && `filter__options__item-selected` }`}>
                             <h5>Rating</h5>
                         </div>
                     }

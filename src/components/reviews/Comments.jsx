@@ -352,7 +352,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                                                 client.type.includes("brand") 
                                                 ?
                                                 <div className="reviewComponent__commentReply__writeComment">
-                                                    <Link to={`/brand/${client.brand.id}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
+                                                    <Link to={`/brand/${client.brand.slug}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
                                                     <div className="reviewComponent__commentReply__writeComment__input">
                                                         <input onChange={(e) => setCommentText(e.target.value) } value={commentText} className="" type="text" placeholder="Reply" />
                                                         {
@@ -514,7 +514,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
           </div>
           <div className="reviewComponent__comments__array__item__right">
               <div className="reviewComponent__comments__array__item__upper">
-                  <div className="reviewComponent__comments__array__item__text">{comment.message}</div>
+                  <div style={{color: "white"}} className="reviewComponent__comments__array__item__text">{comment.message}</div>
               </div>
               <div className="reviewComponent__comments__array__item__lower">
                   {
@@ -539,7 +539,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                       {
                       client.type.includes("brand") 
                       ?
-                          <p className="reviewComponent__buttons__button-reply">Reply</p>
+                          <p className="background__color reviewComponent__buttons__button-reply">Reply</p>
                       :
                           null
                       }
@@ -638,7 +638,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                               client.type.includes("brand") 
                                               ?
                                               <div className="reviewComponent__commentReply__writeComment">
-                                                  <Link to={`/brand/${client.brand.id}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
+                                                  <Link to={`/brand/${client.brand.slug}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
                                                   <div className="reviewComponent__commentReply__writeComment__input">
                                                       <input onChange={(e) => setCommentText(e.target.value) } value={commentText} className="" type="text" placeholder="Reply" />
                                                       {

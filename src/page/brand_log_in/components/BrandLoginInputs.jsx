@@ -76,16 +76,11 @@ const BrandLoginInputs = () => {
           const {payload} = dispatch(clientActions.setClient(data));
           if(rememberMe){
             console.log(payload)
-            localStorage.setItem('brandId', payload.brand.id )
-            localStorage.setItem('accessToken', payload.tokens.access.token)
-            localStorage.setItem('clientType', payload.type)
+            localStorage.setItem("remember", "-")
           }
-          else{
-            console.log(payload)
-            window.sessionStorage.setItem('brandId', payload.brand.id )
-            window.sessionStorage.setItem('accessToken', payload.tokens.access.token)
-            window.sessionStorage.setItem('clientType', payload.type)
-          }
+          localStorage.setItem('brandId', payload.brand.id )
+          localStorage.setItem('accessToken', payload.tokens.access.token)
+          localStorage.setItem('clientType', payload.type)
           setIsLoggingIn(false)
           history.push('/')
         })

@@ -185,12 +185,15 @@ const NotificationBell = () => {
                                     normalizedData[item].map(entry => 
                                         <NotificationItem notification = {entry}/>
                                     )
+                                    
                                 }
                                 
                             </div>
                         )
+                    
                     }
                 </div>
+
             }
         </div>
     )

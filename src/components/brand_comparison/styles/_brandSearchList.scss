@@ -25,11 +25,11 @@
         color: inherit;
         & img{
             max-width: 50px;
-            max-height: 30px;
+            max-height: 50px;
             min-width: 50px;
-            min-height: 30px;
+            min-height: 50px;
             // border-radius: 50%;
-            object-fit: cover;
+            object-fit: contain;
         }
         & h3{
             font-family: $subTitle2;

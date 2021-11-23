@@ -270,7 +270,7 @@
             }
             &-thanked{
                 transition: all 300ms;
-                color: #11fc4c;
+                color: #2faf4f;
                 &:hover{
                     color: grey;
                 }   
@@ -279,19 +279,19 @@
                 transition: all 300ms;
                 color: grey;
                 &:hover{
-                    color: #11fc4c;
+                    color: #2faf4f;
                 }   
             }
             &-follow{
                 transition: all 300ms;
                 color: grey;
                 &:hover{
-                    color: gold;
+                    color: rgb(172, 165, 66);
                 }
             }
             &-following{
                 transition: all 300ms;
-                color: rgb(255, 238, 0);
+                color: rgb(172, 165, 66);
                 &:hover{
                     color: grey;
                 }
@@ -649,5 +649,11 @@
 }
 
 .brandBackground{
-    background-color: $primary;
+    // background-color: #0ed40ed5;
+    background-color: #357acebb;
+    // color: #F8F8F8 !important;
+}
+
+.background__color{
+    color: #fff;
 }

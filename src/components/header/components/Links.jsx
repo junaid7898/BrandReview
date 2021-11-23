@@ -38,7 +38,7 @@ function Links({client}) {
         return(
             <>
                 <li>
-                    <Link to={`/brand/${client.brand.id}`}>Brand Page</Link>
+                    <Link to={`/brand/${client.brand.slug}`}>Brand Page</Link>
                 </li>
                 <li>
                     <Link to={`/brand/panel/${client.brand.id}`}>Brand Panel</Link>

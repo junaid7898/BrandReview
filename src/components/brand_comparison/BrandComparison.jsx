@@ -102,6 +102,9 @@ const BrandComparison = (props) => {
       if(selectedBrand1 === null || selectedBrand2 === null){
         return 'please fill all feilds...'
       }
+      else if(selectedBrand1 === selectedBrand2){
+        return 'Both brand are same.....'
+      }
       else{
         return 'ok'
       }

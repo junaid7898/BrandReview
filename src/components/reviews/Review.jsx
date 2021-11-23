@@ -36,10 +36,9 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       return 
     }
     let rect = entries[0].contentRect;
-    
     let height = rect.height;
-
     if(height !== currentHeight.current){
+      console.log(height)
       if(show){
         updateFirstLine()
       }
@@ -116,6 +115,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       handleShowComments(true)
     })
     .catch(err => {
+      console.error(err)
       setCommentIsSending(false)
     })
   }
@@ -598,10 +598,10 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
                       />
                     </div>
                   :
-                  <div className="reviewComponent__profile__intro__name__rating">
-                    <Star starLines="#357BCE" starGradient1="#357BCE" starGradiet2="#357BCE"/>
-                    <h4>{review.rating}</h4>
-                  </div>
+                    <div className="reviewComponent__profile__intro__name__rating">
+                      <Star starLines="#357BCE" starGradient1="#357BCE" starGradiet2="#357BCE"/>
+                      <h4>{review.rating}</h4>
+                    </div>
                 }
               </div>
               <div className="reviewComponent__profile__intro__status">

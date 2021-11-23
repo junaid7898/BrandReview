@@ -37,13 +37,13 @@ const BrandChart = ({brandId, date}) => {
 
 
                     if(ratingAvg[g]){
-                        ratingAvg[g].sum = ratingAvg[g].sum + item.ratingCount
+                        ratingAvg[g].sum = ratingAvg[g].sum + item.rating
                         ratingAvg[g].avg = ratingAvg[g].sum / newObj[g]
                     }
                     else {
                         ratingAvg[g] = {}
-                        ratingAvg[g].sum = item.ratingCount
-                        ratingAvg[g].avg = item.ratingCount
+                        ratingAvg[g].sum = item.rating
+                        ratingAvg[g].avg = item.rating
                     }
                 })
                 setChartData({

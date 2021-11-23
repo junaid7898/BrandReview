@@ -139,6 +139,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
         else if(depth === 1){
           reqObj = {
             message: commentText,
+            review: review.id,
             parentId: comment.id,
             user: client.user.id,
             depth,
@@ -163,6 +164,50 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
           setReplyIsSending(false)
         })
     }
+
+    const giveReplyBrand = (depth = 1) =>{
+        setReplyIsSending(true)
+        let reqObj = {}
+        if(depth === 0){
+          reqObj = {
+            message: commentText,
+            review: review.id,
+            brand: client.brand.id,
+            depth,
+            type: "brand"
+          }
+        }
+        else if(depth === 1){
+          reqObj = {
+            message: commentText,
+            review: review.id,
+            parentId: comment.id,
+            brand: client.brand.id,
+            depth,
+            type: "brand"
+          }
+        }
+        axios.post("/comment",reqObj,{
+          headers:{
+            "role" : client.type,
+            "authorization" : `bearer ${client.tokens.access.token}`
+          }
+        })
+        .then(({data})=>{
+              setReplyIsSending(false)
+              setCommentText("")
+              setReplies([{
+              ...data,
+              brand: client.brand
+              }, ...replies])
+        })
+        .catch(err => {
+            console.log("err ===>>>")
+          console.log(err)
+          setReplyIsSending(false)
+        })
+    }
+
 
     const getReplies = (bool) =>{
         if(page === 0){
@@ -277,49 +322,64 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                         {
                             <div id ={`comment/reply/${comment.id}`} className="reviewComponent__commentReply__replies">
                                 {
-                                    replies.map( reply => 
-                                        <div className="reviewComponent__commentReply__replies__item">
-                                            <div className="reviewComponent__commentReply__line" />
-                                            <div className="reviewComponent__comments__array__item__left">
-                                                <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${reply.user.id}`}>
-                                                    <img src={reply.user.profileImage} alt="logo" className="reviewComponent__comments__array__item__img" />
-                                                    {
-                                                        comment.type === "admin" &&
-                                                        <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
-                                                    }
-                                                    {
-                                                    review.user.isPhoneVerified &&
-                                                    <div className="reviewComponent__comments__array__item__tag__verified">
-                                                        <VerifiedCommentSvg />
-                                                    </div>
-                                                    }
-                                                </Link>
-                                                
-                                            </div>
-                                            <div className="reviewComponent__comments__array__item__right">
-                                                <div className="reviewComponent__comments__array__item__upper">
-                                                    <div className="reviewComponent__comments__array__item__text">{reply.message}</div>
-                                                </div>
-                                                <div className="reviewComponent__comments__array__item__lower">
-                                                    {
-                                                        client &&
-                                                        <Button className="reviewComponent__buttons__button" client={client} type={"user"} onClick= {() => handleCommentLike(reply)}>
-                                                        {
-                                                        client.type.includes("user") 
-                                                        ?
-                                                            client.user.likedComments.includes(reply.id) 
-                                                            ?
-                                                                <p className="reviewComponent__buttons__button-liked">Liked</p>
-                                                            :
-                                                                <p className="reviewComponent__buttons__button-like">Like</p>
-                                                        :
-                                                            null
-                                                        }
-                                                        </Button>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>    
+                                    replies.map( reply => {
+                                        if(reply.type === 'user' || reply.type === 'admin'){
+                                          <div className="reviewComponent__commentReply__replies__item">
+                                          <div className="reviewComponent__commentReply__line" />
+                                          <div className="reviewComponent__comments__array__item__left">
+                                              <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${reply.user.id}`}>
+                                                  <img src={reply.user.profileImage} alt="logo" className="reviewComponent__comments__array__item__img" />
+                                                  {
+                                                      reply.type === "admin" &&
+                                                      <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
+                                                  }
+                                                  {
+                                                  review.user.isPhoneVerified &&
+                                                  <div className="reviewComponent__comments__array__item__tag__verified">
+                                                      <VerifiedCommentSvg />
+                                                  </div>
+                                                  }
+                                              </Link>
+                                              
+                                          </div>
+                                          <div className="reviewComponent__comments__array__item__right">
+                                              <div className="reviewComponent__comments__array__item__upper">
+                                                  <div className="reviewComponent__comments__array__item__text">{reply.message}</div>
+                                              </div>
+                                              <div className="reviewComponent__comments__array__item__lower">
+                                              </div>
+                                          </div>
+                                      </div>  
+                                        }
+                                        else if(reply.type === 'brand'){
+                                          <div className="reviewComponent__commentReply__replies__item">
+                                          <div className="reviewComponent__commentReply__line" />
+                                          <div className="reviewComponent__comments__array__item__left">
+                                              <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${reply.brand.slug}`}>
+                                                  <img src={reply.brand.logo} alt="logo" className="reviewComponent__comments__array__item__img" />
+                                                  {
+                                                      comment.type === "admin" &&
+                                                      <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
+                                                  }
+                                                  {
+                                                  review.brand.isVerified &&
+                                                  <div className="reviewComponent__comments__array__item__tag__verified">
+                                                      <VerifiedCommentSvg />
+                                                  </div>
+                                                  }
+                                              </Link>
+                                              
+                                          </div>
+                                          <div className="reviewComponent__comments__array__item__right">
+                                              <div className="reviewComponent__comments__array__item__upper">
+                                                  <div className="reviewComponent__comments__array__item__text">{reply.message}</div>
+                                              </div>
+                                              <div className="reviewComponent__comments__array__item__lower">
+                                              </div>
+                                          </div>
+                                      </div>  
+                                        }
+                                    }
                                     )
                                 }
                                 
@@ -358,7 +418,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                                                         {
                                                             !replyIsSending 
                                                             ?
-                                                            <FiSend onClick={() => {}} className={`reviewComponent__commentReply__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__commentReply__writeComment__sendIcon-hide`}`}/>
+                                                            <FiSend onClick={() => {giveReplyBrand()}} className={`reviewComponent__commentReply__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__commentReply__writeComment__sendIcon-hide`}`}/>
                                                             : 
                                                             <LoadingIndicator className="reviewComponent__commentReply__writeComment__sendIcon-loader" />
                                                         }
@@ -424,6 +484,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
       else if(depth === 1){
         reqObj = {
           message: commentText,
+          review: review.id,
           parentId: comment.id,
           brand: client.brand.id,
           depth,
@@ -437,14 +498,16 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
         }
       })
       .then(({data})=>{
-          setReplyIsSending(false)
-        setCommentText("")
-        setReplies([{
-          ...data,
-          brand: client.brand
-        }, ...replies])
+            setReplyIsSending(false)
+            setCommentText("")
+            setReplies([{
+            ...data,
+            brand: client.brand
+            }, ...replies])
       })
       .catch(err => {
+          console.log("err ===>>>")
+        console.log(err)
         setReplyIsSending(false)
       })
   }
@@ -488,6 +551,48 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
         })
     }
 
+    const giveReplyUser = (depth = 1) =>{
+        setReplyIsSending(true)
+        let reqObj = {}
+        const isAdmin = !!client.type.includes("admin")
+        if(depth === 0){
+          reqObj = {
+            message: commentText,
+            review: review.id,
+            user: client.user.id,
+            depth,
+            type: isAdmin ? "admin" : "user"
+          }
+        }
+        else if(depth === 1){
+          reqObj = {
+            message: commentText,
+            review: review.id,
+            parentId: comment.id,
+            user: client.user.id,
+            depth,
+            type: "user"
+          }
+        }
+        axios.post("/comment",reqObj,{
+          headers:{
+            "role" : client.type,
+            "authorization" : `bearer ${client.tokens.access.token}`
+          }
+        })
+        .then(({data})=>{
+            setReplyIsSending(false)
+          setCommentText("")
+          setReplies([{
+            ...data,
+            user: client.user
+          }, ...replies])
+        })
+        .catch(err => {
+          setReplyIsSending(false)
+        })
+    }
+
   return(
       <div className="reviewComponent__comments__array__item brandBackground">
           <div className="reviewComponent__comments__line" />
@@ -517,22 +622,6 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                   <div style={{color: "white"}} className="reviewComponent__comments__array__item__text">{comment.message}</div>
               </div>
               <div className="reviewComponent__comments__array__item__lower">
-                  {
-                      // client &&
-                      // <Button className="reviewComponent__buttons__button" client={client} type={"brand"} onClick= {() => handleCommentLike(comment)}>
-                      // {
-                      //   client.type.includes("brand") 
-                      //   ?
-                      //     client.brand.likedComments.includes(comment.id) 
-                      //     ?
-                      //       <p className="reviewComponent__buttons__button-liked">Liked</p>
-                      //     :
-                      //       <p className="reviewComponent__buttons__button-like">Like</p>
-                      //   :
-                      //     null
-                      // }
-                      // </Button>
-                  }
                   {
                       client &&
                       <Button className="reviewComponent__buttons__button" client={client} type={"brand"} onClick= {handleReply}>
@@ -564,7 +653,37 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                           <div id ={`comment/reply/${comment.id}`} className="reviewComponent__commentReply__replies">
                               {
                                   replies.map( reply => 
-                                      <div className="reviewComponent__commentReply__replies__item">
+                                      {
+                                        if(reply.type === 'user' || reply.type === 'admin'){
+                                          <div className="reviewComponent__commentReply__replies__item">
+                                          <div className="reviewComponent__commentReply__line" />
+                                          <div className="reviewComponent__comments__array__item__left">
+                                              <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${reply.user.id}`}>
+                                                  <img src={reply.user.profileImage} alt="logo" className="reviewComponent__comments__array__item__img" />
+                                                  {
+                                                      reply.type === "admin" &&
+                                                      <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
+                                                  }
+                                                  {
+                                                  review.user.isPhoneVerified &&
+                                                  <div className="reviewComponent__comments__array__item__tag__verified">
+                                                      <VerifiedCommentSvg />
+                                                  </div>
+                                                  }
+                                              </Link>
+                                              
+                                          </div>
+                                          <div className="reviewComponent__comments__array__item__right">
+                                              <div className="reviewComponent__comments__array__item__upper">
+                                                  <div className="reviewComponent__comments__array__item__text">{reply.message}</div>
+                                              </div>
+                                              <div className="reviewComponent__comments__array__item__lower">
+                                              </div>
+                                          </div>
+                                      </div>  
+                                        }
+                                        else if(reply.type === 'brand'){
+                                          <div className="reviewComponent__commentReply__replies__item">
                                           <div className="reviewComponent__commentReply__line" />
                                           <div className="reviewComponent__comments__array__item__left">
                                               <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${reply.brand.slug}`}>
@@ -587,25 +706,11 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                                   <div className="reviewComponent__comments__array__item__text">{reply.message}</div>
                                               </div>
                                               <div className="reviewComponent__comments__array__item__lower">
-                                                  {
-                                                      // client &&
-                                                      // <Button className="reviewComponent__buttons__button" client={client} type={"brand"} onClick= {() => handleCommentLike(reply)}>
-                                                      // {
-                                                      // client.type.includes("brand") 
-                                                      // ?
-                                                      //     client.brand.likedComments.includes(reply.id) 
-                                                      //     ?
-                                                      //         <p className="reviewComponent__buttons__button-liked">Liked</p>
-                                                      //     :
-                                                      //         <p className="reviewComponent__buttons__button-like">Like</p>
-                                                      // :
-                                                      //     null
-                                                      // }
-                                                      // </Button>
-                                                  }
                                               </div>
                                           </div>
-                                      </div>    
+                                      </div>  
+                                        }
+                                      }  
                                   )
                               }
                               
@@ -635,7 +740,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                                   </div>
                                               </div>  
                                               :
-                                              client.type.includes("brand") 
+                                              (client.type.includes("user") || client.type.includes('admin')) 
                                               ?
                                               <div className="reviewComponent__commentReply__writeComment">
                                                   <Link to={`/brand/${client.brand.slug}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
@@ -644,7 +749,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                                       {
                                                           !replyIsSending 
                                                           ?
-                                                          <FiSend onClick={() => {}} className={`reviewComponent__commentReply__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__commentReply__writeComment__sendIcon-hide`}`}/>
+                                                          <FiSend onClick={() => {giveReplyUser()}} className={`reviewComponent__commentReply__writeComment__sendIcon ${commentText.length < 1 && `reviewComponent__commentReply__writeComment__sendIcon-hide`}`}/>
                                                           : 
                                                           <LoadingIndicator className="reviewComponent__commentReply__writeComment__sendIcon-loader" />
                                                       }

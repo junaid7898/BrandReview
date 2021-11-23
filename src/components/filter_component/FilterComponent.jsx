@@ -5,10 +5,10 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
     const [showList, setShowList] = useState(false)
     const filterRef = useRef(null)
     const [sort, setSort] = useState({
-        createdAt: "desc"
+        createdAt: -1
     })
     const [filterOption, setFilterOption] = useState({})
-    const [isAscending, setIsAscending] = useState(true)
+    const [isAscending, setIsAscending] = useState(false)
 
     useEffect(() => {
         if (showList) {

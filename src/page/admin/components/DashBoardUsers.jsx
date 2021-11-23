@@ -133,6 +133,11 @@ const DashBoardUsers = ({filters, sortOptions}) => {
                                     <p>{user.address ? user.address: 'No Address' }</p>
                                 </div>
 
+                                <div className="dashboard__users__data__user__item dashboard__users__data__user__details__address">
+                                    <label>IP Address</label>
+                                    <p>{user.ipAddress ? user.ipAddress: '-' }</p>
+                                </div>
+
                                 <div className="dashboard__users__data__user__item dashboard__users__data__user__details__phone">
                                     <label>Phone</label>
                                     <p>{user.countryCode ? user.countryCode + " " + user.phoneNumber : 'No Phone Number'}</p>
@@ -140,7 +145,7 @@ const DashBoardUsers = ({filters, sortOptions}) => {
 
                                 {
                                     !user.blackListed ?
-                                        <div className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
+                                        <div style = {{margin: '10px 0px', textAlign: 'left'}} className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
                                             <button disabled={!!blackListing.find(item => item.id === user.id)} onClick={() => handleBlackListing(user.id)}>
                                                 BlackList
                                                 {
@@ -150,7 +155,7 @@ const DashBoardUsers = ({filters, sortOptions}) => {
                                             </button>
                                         </div>
                                     :
-                                        <div className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
+                                        <div style = {{margin: '10px 0px', justifySelf :'flex-start'}} className="dashboard__users__data__user__item dashboard__users__data__user__details__button">
                                             <button disabled={!!blackListing.find(item => item.id === user.id)} onClick={() => handleRemoveBlackListing(user.id)}>
                                                 Remove from Blacklist
                                                 {

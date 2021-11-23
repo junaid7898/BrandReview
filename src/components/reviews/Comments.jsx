@@ -743,7 +743,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                               (client.type.includes("user") || client.type.includes('admin')) 
                                               ?
                                               <div className="reviewComponent__commentReply__writeComment">
-                                                  <Link to={`/brand/${client.brand.slug}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
+                                                  <Link to={`/user/${client.user.id}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.user.profileImage} alt={client.user.name} /></Link>
                                                   <div className="reviewComponent__commentReply__writeComment__input">
                                                       <input onChange={(e) => setCommentText(e.target.value) } value={commentText} className="" type="text" placeholder="Reply" />
                                                       {

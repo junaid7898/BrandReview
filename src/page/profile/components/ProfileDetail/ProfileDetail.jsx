@@ -6,8 +6,10 @@ import Review from "../../../../components/reviews/Review";
 import Pagination from "../../../../components/Pagination/Pagination"
 import LoadingIndicator from "../../../../components/loadingIndicator/LoadingIndicator";
 import FilterComponent from "../../../../components/filter_component/FilterComponent"
+import { useSelector } from "react-redux";
 const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
   // console.log('user:>', user);
+  const {client} = useSelector(state => state.client)
   const location = useLocation()
   const [option ,setOption] = useState(2)
   const [page, setPage] = useState(1)
@@ -109,7 +111,7 @@ const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
     })
     .then(({data}) =>{ 
       setIsLoading({...isLoading, follow: false})
-      setFollowData(data.results)
+      setReviewData(data.results)
       setTotalFollowPage(data.totalPages)
       setFollowCurrentPage(data.page)
     })
@@ -127,13 +129,25 @@ const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
 
 useEffect(() => {
   if(updatedReview){
+    console.log(updatedReview);
+    console.log(reviewData);
     setReviewData(
       reviewData.map(review => {
-        if(review.id === updatedReview.id){
-          return updatedReview
+        
+        if(option === 3){
+          if(updatedReview.id === review.id){
+            if(updatedReview.followedByUsers.length !== review.followedByUsers.length){
+              return null
+            }
+          }
+        }
+        else{
+          if(review.id === updatedReview.id){
+            return updatedReview
+          }
         }
         return review
-      })
+      }).filter(review => review !== null)
     )
     setUpdatedReview(null)
   }
@@ -205,8 +219,8 @@ useEffect(() => {
                   <div className="details__reviews">
                     <div className="details__reviews__comment" style = {{position: 'relative'}}>
                       {
-                        followData.length > 0  ?
-                          (followData.map(follow =>
+                        reviewData.length > 0  ?
+                          (reviewData.map(follow =>
                             {
                               return <Review review = {follow} setUpdatedReview ={setUpdatedReview} commentsAllowed={true} /> 
                             }

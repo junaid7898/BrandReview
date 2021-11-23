@@ -139,6 +139,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
         else if(depth === 1){
           reqObj = {
             message: commentText,
+            review: review.id,
             parentId: comment.id,
             user: client.user.id,
             depth,

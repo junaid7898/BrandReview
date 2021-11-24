@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator'
 import Button from './Button'
 import VerifiedCommentSvg from "../../assests/verified-comment-svg";
@@ -36,7 +36,6 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
                                         comment={comment}
                                         handleCommentLike={handleCommentLike}
                                         review={review}
-                                        updateFirstLine= {updateFirstLine}
                                     />
                           }
                           else if(comment.type ==="brand"){
@@ -50,7 +49,7 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
                       )
                     }
                     </div>
-                    <div className="reviewComponent__comments__moreComments">
+                    <div id={`more/${review.id}`} className="reviewComponent__comments__moreComments">
                     {
                       totalComments > comments.length && comments.length > 0 && showComments &&
                       <button disabled={commentsLoading} onClick={() => handleShowComments(true)}>
@@ -95,7 +94,7 @@ function Comments({updateFirstLine,  commentsAllowed, review, comments, client, 
     )
 }
 
-const UserComment = ({ index, review, comment, client, handleCommentLike, updateFirstLine}) =>{
+const UserComment = ({ index, review, comment, client, handleCommentLike}) =>{
     const [commentText, setCommentText] = useState("")
     const [replyActive, setReplyActive] = useState(false)
     const [replyIsSending, setReplyIsSending] = useState(false)
@@ -105,22 +104,75 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
     const [page, setPage] = useState(0)
     const [totalReplies, setTotalReplies] = useState(0)
     const [height, setHeight] = useState(0)
+    const show = useRef(false)
+    const currentHeight = useRef(0)
+
+    const resize_ob = new ResizeObserver(function(entries) {
+      if(!replyActive){
+        return 
+      }
+      let rect = entries[0].contentRect;
+      let height = rect.height;
+      if(height !== currentHeight.current){
+        if(show.current){
+          updateSecondLine()
+        }
+          return
+      }
+  
+    });  
+
+    const updateSecondLine = () => {
+      const arrayWrapper = document.getElementById(`comment/reply/${comment.id}`)
+          if(arrayWrapper && replies.length > 0){
+            const lastChild = arrayWrapper.lastChild
+              const writeReplyHeight = 40 
+              const loadMoreButton = document.getElementById(`loadmore/${comment.id}`)
+              let loadmoreButtonheight = 0
+              if(loadMoreButton){
+                loadmoreButtonheight = loadMoreButton.getBoundingClientRect().height
+              }
+              const lineBox = document.getElementById(`linebox/${comment.id}`).getBoundingClientRect().height - writeReplyHeight - loadmoreButtonheight       
+              // const padding = parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('padding-top')) + parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('padding-bottom'))
+              const margin = parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('margin-top')) + parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('margin-bottom'))
+              const lastChildHeight = lastChild.getBoundingClientRect().height + margin
+              const final = lineBox - lastChildHeight
+              setHeight(final)
+          }
+    } 
 
     useEffect(() => {
-        if(replies.length > 0){
-            
-            const repliesWrapper = document.getElementById(`comment/reply/${comment.id}`)
-            const wrapperHeight = repliesWrapper.getBoundingClientRect().height
-            const lastChildHeight = repliesWrapper.lastChild.getBoundingClientRect().height
-            const tweek = 0
-            const finalHeight = wrapperHeight - lastChildHeight - tweek + 50
-            setHeight(finalHeight)
+      if(replyActive && totalReplies > 0){
+        updateSecondLine()
+      }
+    }, [totalReplies])
 
+    useEffect(() => {
+      const commentWrapper = document.getElementById(`main/comment/${review.id}`)
+      if(replyActive && commentWrapper){
+        resize_ob.observe(commentWrapper);
+      }else{
+        resize_ob.unobserve(commentWrapper);
+      }
+      return () => {
+        resize_ob.unobserve(commentWrapper);
+      }
+
+      
+    }, [replyActive,replies])
+
+    useEffect(() => {
+      if(replyActive){
+        const g = document.getElementById(`writereply/${comment.id}`)
+        console.log(g)
+        if(g){
+          g.focus()
         }
-    }, [replies])
+      }
+    }, [replyActive])
 
     const handleReply = () => {
-        setReplyActive(true)
+        getReplies(true)
     }
 
     const giveReplyUser = (depth = 1) =>{
@@ -217,6 +269,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
             setReplies([])
             setPage(0)
             setReplyActive(bool)
+            show.current = bool
             return
           }
           if(page > 0){
@@ -225,7 +278,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
           const options = {
             page: page + 1,
             limit: 3,
-            populate: "user.User"
+            populate: "user.User,brand.Brand"
           }
           const filters={
             parentId: comment.id,
@@ -241,6 +294,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
             setPage(page + 1)
             setTotalReplies(data.totalResults)
             setReplyActive(bool)
+            show.current = bool
           })
           .catch(err => {
             setMoreRepliesLoading(false)
@@ -248,7 +302,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
         })
     }
     return(
-        <div key={index} className="reviewComponent__comments__array__item">
+        <div id={`main/comment/${review.id}`} key={index} className="reviewComponent__comments__array__item">
             <div className="reviewComponent__comments__line" />
             <div className="reviewComponent__comments__array__item__left">
                 <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${comment.user}`}>
@@ -264,9 +318,9 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                     </div>
                     }
                 </Link>
-                <div className="reviewComponent__comments__array__item__left__lineBox">
+                <div id={`linebox/${comment.id}`} className="reviewComponent__comments__array__item__left__lineBox">
                     {
-                        replyActive &&
+                        replyActive && (replies.length > 0) &&
                         <div className="reviewComponent__comments__array__item__left__lineBox__line" style={{height: `${height}px`}} />
                     }
                 </div>
@@ -322,45 +376,40 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                         {
                             <div id ={`comment/reply/${comment.id}`} className="reviewComponent__commentReply__replies">
                                 {
-                                    replies.map( reply => {
+                                    replies.map( (reply, index) => {
                                         if(reply.type === 'user' || reply.type === 'admin'){
-                                          <div className="reviewComponent__commentReply__replies__item">
-                                          <div className="reviewComponent__commentReply__line" />
-                                          <div className="reviewComponent__comments__array__item__left">
-                                              <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${reply.user.id}`}>
-                                                  <img src={reply.user.profileImage} alt="logo" className="reviewComponent__comments__array__item__img" />
-                                                  {
-                                                      reply.type === "admin" &&
-                                                      <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
-                                                  }
-                                                  {
-                                                  review.user.isPhoneVerified &&
-                                                  <div className="reviewComponent__comments__array__item__tag__verified">
-                                                      <VerifiedCommentSvg />
-                                                  </div>
-                                                  }
-                                              </Link>
-                                              
-                                          </div>
-                                          <div className="reviewComponent__comments__array__item__right">
-                                              <div className="reviewComponent__comments__array__item__upper">
-                                                  <div className="reviewComponent__comments__array__item__text">{reply.message}</div>
-                                              </div>
-                                              <div className="reviewComponent__comments__array__item__lower">
-                                              </div>
-                                          </div>
-                                      </div>  
+                                          return <div key={index} className="reviewComponent__commentReply__replies__item">
+                                            <div className="reviewComponent__commentReply__line" />
+                                            <div className="reviewComponent__comments__array__item__left">
+                                                <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${reply.user.id}`}>
+                                                    <img src={reply.user.profileImage} alt="logo" className="reviewComponent__comments__array__item__img" />
+                                                    {
+                                                        reply.type === "admin" &&
+                                                        <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
+                                                    }
+                                                    {
+                                                    review.user.isPhoneVerified &&
+                                                    <div className="reviewComponent__comments__array__item__tag__verified">
+                                                        <VerifiedCommentSvg />
+                                                    </div>
+                                                    }
+                                                </Link>      
+                                            </div>
+                                            <div className="reviewComponent__comments__array__item__right">
+                                                <div className="reviewComponent__comments__array__item__upper">
+                                                    <div className="reviewComponent__comments__array__item__text">{reply.message}</div>
+                                                </div>
+                                                <div className="reviewComponent__comments__array__item__lower">
+                                                </div>
+                                            </div>
+                                          </div>  
                                         }
                                         else if(reply.type === 'brand'){
-                                          <div className="reviewComponent__commentReply__replies__item">
+                                          return<div key={index} className="reviewComponent__commentReply__replies__item">
                                           <div className="reviewComponent__commentReply__line" />
                                           <div className="reviewComponent__comments__array__item__left">
                                               <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${reply.brand.slug}`}>
                                                   <img src={reply.brand.logo} alt="logo" className="reviewComponent__comments__array__item__img" />
-                                                  {
-                                                      comment.type === "admin" &&
-                                                      <div className="reviewComponent__comments__array__item__tag"><p>Admin</p></div>
-                                                  }
                                                   {
                                                   review.brand.isVerified &&
                                                   <div className="reviewComponent__comments__array__item__tag__verified">
@@ -386,6 +435,12 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                             </div>
                         }
                         {
+                          replyActive && (totalReplies > 0) && (replies.length < totalReplies) &&
+                          <button id={`loadmore/${comment.id}`} onClick={() => getReplies(true)}>
+                            Load more replies
+                          </button>
+                        }
+                        {
                             replyActive &&
                             <div className="review__commentReply">
                                 {
@@ -398,7 +453,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                                             <div className="reviewComponent__commentReply__writeComment">
                                                 <Link to={`/user/${client.user.id}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.user.profileImage} alt="" /></Link>
                                                     <div className="reviewComponent__commentReply__writeComment__input">
-                                                        <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Reply" />
+                                                        <input id={`writereply/${comment.id}`} onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Reply" />
                                                         {
                                                             !replyIsSending 
                                                             ?
@@ -414,7 +469,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike, update
                                                 <div className="reviewComponent__commentReply__writeComment">
                                                     <Link to={`/brand/${client.brand.slug}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
                                                     <div className="reviewComponent__commentReply__writeComment__input">
-                                                        <input onChange={(e) => setCommentText(e.target.value) } value={commentText} className="" type="text" placeholder="Reply" />
+                                                        <input id={`writereply/${comment.id}`} onChange={(e) => setCommentText(e.target.value) } value={commentText} className="" type="text" placeholder="Reply" />
                                                         {
                                                             !replyIsSending 
                                                             ?
@@ -453,20 +508,81 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
   const [page, setPage] = useState(0)
   const [totalReplies, setTotalReplies] = useState(0)
   const [height, setHeight] = useState(0)
+  const show = useRef(false)
+  const currentHeight = useRef(0)
+
+  const resize_ob = new ResizeObserver(function(entries) {
+    if(!replyActive){
+      return 
+    }
+    let rect = entries[0].contentRect;
+    let height = rect.height;
+    if(height !== currentHeight.current){
+      if(show.current){
+        updateSecondLine()
+      }
+        return
+    }
+
+  });  
+
+  const updateSecondLine = () => {
+    const arrayWrapper = document.getElementById(`comment/reply/${comment.id}`)
+        if(arrayWrapper && replies.length > 0){
+          console.log(arrayWrapper)
+          const lastChild = arrayWrapper.lastChild
+          console.log(lastChild)
+            const writeReplyHeight = 40 
+            const loadMoreButton = document.getElementById(`loadmore/${comment.id}`)
+            let loadmoreButtonheight = 0
+            if(loadMoreButton){
+              loadmoreButtonheight = loadMoreButton.getBoundingClientRect().height
+            }
+            const lineBox = document.getElementById(`linebox/${comment.id}`).getBoundingClientRect().height - writeReplyHeight - loadmoreButtonheight
+            console.log(lineBox)         
+            // const padding = parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('padding-top')) + parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('padding-bottom'))
+            const margin = parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('margin-top')) + parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('margin-bottom'))
+            const lastChildHeight = lastChild.getBoundingClientRect().height + margin
+            const final = lineBox - lastChildHeight
+            setHeight(final)
+        }
+  } 
 
   useEffect(() => {
-      if(replies.length > 0){
-          const repliesWrapper = document.getElementById(`comment/reply/${comment.id}`)
-          const wrapperHeight = repliesWrapper.getBoundingClientRect().height
-          const lastChildHeight = repliesWrapper.lastChild.getBoundingClientRect().height
-          const tweek = 0
-          const finalHeight = wrapperHeight - lastChildHeight - tweek + 50
-          setHeight(finalHeight)
+    if(replyActive && totalReplies > 0){
+      updateSecondLine()
+    }
+  }, [totalReplies])
+
+  useEffect(() => {
+    if(replyActive){
+      const g = document.getElementById(`writereply/${comment.id}`)
+      console.log(g)
+      if(g){
+        g.focus()
       }
+    }
+  }, [replyActive])
+
+  useEffect(() => {
+    const commentWrapper = document.getElementById(`main/comment/${review.id}`)
+    if(replyActive && commentWrapper){
+      resize_ob.observe(commentWrapper);
+    }else{
+      resize_ob.unobserve(commentWrapper);
+    }
+    return () => {
+      resize_ob.unobserve(commentWrapper);
+    }
+  }, [replyActive,replies])
+
+
+  useEffect(() => {
+    console.log(replies.length, height)
   }, [replies])
 
   const handleReply = () => {
-      setReplyActive(true)
+      getReplies(true)
   }
 
   const giveReplyBrand = (depth = 1) =>{
@@ -520,6 +636,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
             setReplies([])
             setPage(0)
             setReplyActive(bool)
+            show.current = bool
             return
           }
           if(page > 0){
@@ -543,7 +660,10 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
             setReplies([...replies, ...data.results])
             setPage(page + 1)
             setTotalReplies(data.totalResults)
-            setReplyActive(bool)
+            if(!replyActive){
+              setReplyActive(bool)
+              show.current = bool
+            }
           })
           .catch(err => {
             setMoreRepliesLoading(false)
@@ -594,7 +714,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
     }
 
   return(
-      <div className="reviewComponent__comments__array__item brandBackground">
+      <div id={`main/comment/${review.id}`} className="reviewComponent__comments__array__item brandBackground">
           <div className="reviewComponent__comments__line" />
           <div className="reviewComponent__comments__array__item__left">
               <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${comment.brand && comment.brand.slug}`}>
@@ -610,9 +730,9 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                   </div>
                   }
               </Link>
-              <div className="reviewComponent__comments__array__item__left__lineBox">
+              <div id={`linebox/${comment.id}`} className="reviewComponent__comments__array__item__left__lineBox">
                   {
-                      replyActive &&
+                      replyActive && (replies.length > 0) &&
                       <div className="reviewComponent__comments__array__item__left__lineBox__line" style={{height: `${height}px`}} />
                   }
               </div>
@@ -652,11 +772,11 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                       {
                           <div id ={`comment/reply/${comment.id}`} className="reviewComponent__commentReply__replies">
                               {
-                                  replies.map( reply => 
+                                  replies.map( (reply, index) => 
                                       {
                                         if(reply.type === 'user' || reply.type === 'admin'){
-                                          <div className="reviewComponent__commentReply__replies__item">
-                                          <div className="reviewComponent__commentReply__line" />
+                                          return <div key={index} className="reviewComponent__commentReply__replies__item">
+                                          <div className="reviewComponent__commentReply__line" style={{borderColor: "#fff"}} />
                                           <div className="reviewComponent__comments__array__item__left">
                                               <Link className="reviewComponent__comments__array__item__tag-container" to={`/user/${reply.user.id}`}>
                                                   <img src={reply.user.profileImage} alt="logo" className="reviewComponent__comments__array__item__img" />
@@ -683,7 +803,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                       </div>  
                                         }
                                         else if(reply.type === 'brand'){
-                                          <div className="reviewComponent__commentReply__replies__item">
+                                          return <div key={index} className="reviewComponent__commentReply__replies__item">
                                           <div className="reviewComponent__commentReply__line" />
                                           <div className="reviewComponent__comments__array__item__left">
                                               <Link className="reviewComponent__comments__array__item__tag-container" to={`/brand/${reply.brand.slug}`}>
@@ -717,6 +837,12 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                           </div>
                       }
                       {
+                          replyActive && (totalReplies > 0) && (replies.length < totalReplies) &&
+                          <button id={`loadmore/${comment.id}`} onClick={() => getReplies(true)}>
+                            Load more replies
+                          </button>
+                        }
+                      {
                           replyActive &&
                           <div className="review__commentReply">
                               {
@@ -728,8 +854,8 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                       ?
                                           <div className="reviewComponent__commentReply__writeComment">
                                               <Link to={`/brand/${client.brand.slug}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.brand.logo} alt="" /></Link>
-                                                  <div className="reviewComponent__commentReply__writeComment__input">
-                                                      <input onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Reply" />
+                                                  <div  className="reviewComponent__commentReply__writeComment__input">
+                                                      <input id={`writereply/${comment.id}`} onChange={(e) => setCommentText(e.target.value)} value={commentText} className="" type="text" placeholder="Reply" />
                                                       {
                                                           !replyIsSending 
                                                           ?
@@ -745,7 +871,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
                                               <div className="reviewComponent__commentReply__writeComment">
                                                   <Link to={`/user/${client.user.id}`}><img className="reviewComponent__commentReply__writeComment__userImage" src={client.user.profileImage} alt={client.user.name} /></Link>
                                                   <div className="reviewComponent__commentReply__writeComment__input">
-                                                      <input onChange={(e) => setCommentText(e.target.value) } value={commentText} className="" type="text" placeholder="Reply" />
+                                                      <input id={`writereply/${comment.id}`} onChange={(e) => setCommentText(e.target.value) } value={commentText} className="" type="text" placeholder="Reply" />
                                                       {
                                                           !replyIsSending 
                                                           ?

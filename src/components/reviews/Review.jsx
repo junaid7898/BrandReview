@@ -28,44 +28,39 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   const [clikedImage, setClickedImage] = useState(null)
   const [rating, setRating] = useState(null)
   const [firstCommentHeight, setFirstCommentHeight] = useState(0)
-  const currentHeight = useRef()
-  let show = false
+  const currentHeight = useRef(0)
+  const show = useRef(false)
   const resize_ob = new ResizeObserver(function(entries) {
-    // since we are observing only a single element, so we access the first element in entries array
     if(!showComments){
       return 
     }
     let rect = entries[0].contentRect;
     let height = rect.height;
     if(height !== currentHeight.current){
-      console.log(height)
-      if(show){
+      if(show.current){
         updateFirstLine()
       }
         return
     }
 
-    });  
+  });  
   const updateFirstLine = () => {
     const arrayWrapper = document.getElementById(review.id)
         if(arrayWrapper){
-            const reviewTextHeight = document.getElementById(`review/text/${review.id}`).getBoundingClientRect().height
-            const reviewButtonHeight = document.getElementById(`review/buttons/${review.id}`).getBoundingClientRect().height
-            const totalHeight = arrayWrapper.getBoundingClientRect().height
-            currentHeight.current = totalHeight
+            const left = document.getElementById(`left/${review.id}`).getBoundingClientRect().height - document.getElementById(`left/${review.id}`).childNodes[0].getBoundingClientRect().height          
             const lastChild = arrayWrapper.lastChild
-            const totalChilds = arrayWrapper.childNodes.length
+            const padding = parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('padding-top')) + parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('padding-bottom'))
+            const margin = parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('margin-top')) + parseInt(window.getComputedStyle(lastChild, null).getPropertyValue('margin-bottom'))
             const lastChildHeight = lastChild.getBoundingClientRect().height
-            const factors = reviewTextHeight + reviewButtonHeight
-            let childHeight = 0
-            if(totalChilds === 1){
-                childHeight = 0 - 10
-            }
-            else{
-                childHeight = (totalHeight - lastChildHeight) - 40
-            }
-            const finalHeight = childHeight + factors
-            setFirstCommentHeight(finalHeight)
+            let loadMoreCommentButtonHeight = 0;
+            const hideCommentButtonHeight = 39
+            let loadMoreCommentButton = document.getElementById(`more/${review.id}`)
+            if(loadMoreCommentButton){
+              loadMoreCommentButtonHeight = loadMoreCommentButton.getBoundingClientRect().height + parseInt(window.getComputedStyle(loadMoreCommentButton, null).getPropertyValue('padding-top')) + parseInt(window.getComputedStyle(loadMoreCommentButton, null).getPropertyValue('padding-bottom'))
+            } 
+            const adjust = 2
+            const final = left - hideCommentButtonHeight - (lastChildHeight + padding + margin + loadMoreCommentButtonHeight ) + adjust
+            setFirstCommentHeight(final)
         }
   }  
 
@@ -112,7 +107,9 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
           user: client.user
         }, ...comments])
       }
-      handleShowComments(true)
+      else{
+        handleShowComments(true)
+      }
     })
     .catch(err => {
       console.error(err)
@@ -161,8 +158,9 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
           ...data,
           brand: client.brand
         }, ...comments])
+      }else{
+        handleShowComments(true)
       }
-      handleShowComments(true)
     })
     .catch(err => {
       setCommentIsSending(false)
@@ -391,36 +389,45 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
   }
 
   useEffect(() => {
-    const arrayWrapper = document.getElementById(review.id)
+    const arrayWrapper = document.getElementById(`main/${review.id}`)
     if(arrayWrapper && showComments){
       resize_ob.observe(arrayWrapper);
     }
+    else{
+      resize_ob.unobserve(arrayWrapper);
+    }
+    return () => {
+      resize_ob.unobserve(arrayWrapper);
+    }
+
   }, [showComments])
   
   const handleShowComments = (bool) =>{
     const arrayWrapper = document.getElementById(review.id)
-    if(page === 0){
+    if(!showComments){
       setCommentsLoading(bool)
     }
     if(!bool){
+      resize_ob.unobserve(arrayWrapper);
       setComments([])
       setPage(0)
-      show = bool
+      show.current = bool
       setShowComments(bool)
-      resize_ob.unobserve(arrayWrapper);
+      setPage(0)
       return
     }
     
-    if(page > 0){
-      setMoreCommentsLoading(true)
-    }
+    // if(page > 0){
+    //   setMoreCommentsLoading(true)
+    // }
     const options = {
       page: page + 1,
       limit: 3,
       populate: "user.User,brand.Brand"
     }
     const filters={
-      review: review.id
+      review: review.id,
+      parentId: null
     }
     axios.post("/comment/query",{
       options, filters
@@ -431,7 +438,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       setComments([...comments, ...data.results])
       setPage(page + 1)
       setTotalComments(data.totalResults)
-      show = bool
+      show.current = bool
       setShowComments(bool)
       console.log(data)
     })
@@ -547,9 +554,9 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
 
   return (
     review ?
-    <div id = {review.id}  className="reviewComponent-container" style={{backgroundColor: review.isResolved ? "rgba(41, 202, 67, 0.23)" : null}}>
+    <div id = {`main/${review.id}`}  className="reviewComponent-container" style={{backgroundColor: review.isResolved ? "rgba(41, 202, 67, 0.23)" : null}}>
       <div className="reviewComponent-container__upper">
-      <div className="reviewComponent-container__left">
+      <div id = {`left/${review.id}`} className="reviewComponent-container__left">
         <div className="reviewComponent__userImage">
           <img  src={review.user.profileImage} alt={review.user.name} />
         </div>
@@ -739,23 +746,28 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
           </div>
         </div>
         {
-          review.comments.length > 0 ?
-            <Comments 
-              setHeight = {setFirstCommentHeight}
-              commentsAllowed = {commentsAllowed}
-              review={review}
-              comments={comments}
-              client={client}
-              showComments={showComments}
-              commentsLoading={commentsLoading}
-              moreCommentsLoading={moreCommentsLoading} 
-              totalComments={totalComments}
-              handleCommentLike={handleCommentLike}
-              handleShowComments={handleShowComments}
-              updateFirstLine={updateFirstLine}
-            />
-            :
-            null
+          <div id={`review/comment/${review.id}`}>
+            {
+              review.comments.length > 0 ?
+              <Comments 
+                setHeight = {setFirstCommentHeight}
+                commentsAllowed = {commentsAllowed}
+                review={review}
+                comments={comments}
+                client={client}
+                showComments={showComments}
+                commentsLoading={commentsLoading}
+                moreCommentsLoading={moreCommentsLoading} 
+                totalComments={totalComments}
+                handleCommentLike={handleCommentLike}
+                handleShowComments={handleShowComments}
+                updateFirstLine={updateFirstLine}
+              />
+              :
+              null
+            }
+          </div>
+          
         }
 
       </div>

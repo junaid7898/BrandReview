@@ -46,10 +46,10 @@ const NotificationBell = () => {
 
 
     useEffect(() => {
-        socket.current = io(ENDPOINT)
-        socket.current.on("update-notification", () =>{
-            getNotifications()
-        })
+        // socket.current = ;
+        // socket.current.on("update-notification", () =>{
+        //     getNotifications()
+        // })
     }, [])
 
     

@@ -93,6 +93,8 @@
         padding: 0 30px ;
         background-color: $primary;
         flex: 1;
+        display: flex;
+        align-items: center;
         &__item{
             display: flex;
             align-items: center;

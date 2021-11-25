@@ -37,7 +37,7 @@ export const uploadMultiPhotos = async(review, user, images) =>{
                 'Content-Type' : file.type
                 }
             })
-            const url = `https://review-website-dev.s3.eu-west-1.amazonaws.com/${uploadConfig.key}`
+            const url = `https://sikayetbox-images.s3.eu-west-1.amazonaws.com/${uploadConfig.key}`
             imageUrls = [...imageUrls, url]
             }
             catch(err){

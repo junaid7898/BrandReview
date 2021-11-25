@@ -15,8 +15,9 @@ const SearchBrand = () => {
     useEffect(() => {
       window.scrollTo(0,0)
   }, [useLocation().pathname])
+  const location = useLocation()
   const history = useHistory()
-  const query = new URLSearchParams(useLocation().search)
+  const query = useRef(new URLSearchParams(useLocation().search))
   const {brandSlug} = useParams()
   const [brandData, setBrandData] = useState(null)
   const [reviewData, setReviewData] = useState([])
@@ -51,6 +52,9 @@ const SearchBrand = () => {
   }, [brandSlug])
 
 
+  useEffect(() => {
+    query.current = new URLSearchParams(location.search)
+  }, [useLocation().pathname])
 
   const firstRender = useRef(false)
 
@@ -68,8 +72,9 @@ const SearchBrand = () => {
           "brand": brandData.id,
           "isVerified": true
         }
-        const reivewId = query.get("review")
+        const reivewId = query.current.get("review")
         if(reivewId){
+          alert(reivewId)
           filters={
             "_id": reivewId,
           }
@@ -97,7 +102,7 @@ const SearchBrand = () => {
 
     // firstRender.current = true
     
-  }, [isBrandDataSet, page, brandSlug])
+  }, [isBrandDataSet, page, brandSlug, location])
 
 
   const handlePageination = (index) => {

@@ -113,12 +113,14 @@ const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
       filters:{
         followedByUsers:JSON.stringify({
           $in: user.id
-        })
+        }),
+        ...filter
       },
       options:{
         page,
         limit: 10,
-        populate:"user.User, brand.Brand"
+        populate:"user.User, brand.Brand",
+        sortBy: sortOptions
     }
     })
     .then(({data}) =>{ 
@@ -136,7 +138,7 @@ const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
       setFollowData([])
     }
   
-}, [followPage, option])
+}, [followPage, option, sortOptions, filter])
 
 
 useEffect(() => {

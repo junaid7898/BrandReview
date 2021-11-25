@@ -25,7 +25,7 @@ export const uploadPhoto = async(user, image, ref) =>{
           'Content-Type' : file.type
         }
     })
-    return {url: `https://review-website-dev.s3.eu-west-1.amazonaws.com/${uploadConfig.key}`}
+    return {url: `https://sikayetbox-images.s3.eu-west-1.amazonaws.com/${uploadConfig.key}`}
     }
     catch(err){
         console.log(err.response)

@@ -207,10 +207,10 @@ const UserComment = ({ index, review, comment, client, handleCommentLike}) =>{
         .then(({data})=>{
             setReplyIsSending(false)
           setCommentText("")
-          setReplies([{
+          setReplies([...replies, {
             ...data,
             user: client.user
-          }, ...replies])
+          } ])
         })
         .catch(err => {
           setReplyIsSending(false)
@@ -248,10 +248,10 @@ const UserComment = ({ index, review, comment, client, handleCommentLike}) =>{
         .then(({data})=>{
               setReplyIsSending(false)
               setCommentText("")
-              setReplies([{
+              setReplies([...replies, {
               ...data,
               brand: client.brand
-              }, ...replies])
+              } ])
         })
         .catch(err => {
             console.log("err ===>>>")
@@ -290,7 +290,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike}) =>{
           .then(({data})=>{
             setRepliesLoading(false)
             setMoreRepliesLoading(false)
-            setReplies([...replies, ...data.results])
+            setReplies([...data.results.reverse(), ...replies ])
             setPage(page + 1)
             setTotalReplies(data.totalResults)
             setReplyActive(bool)
@@ -616,10 +616,10 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
       .then(({data})=>{
             setReplyIsSending(false)
             setCommentText("")
-            setReplies([{
+            setReplies([...replies, {
             ...data,
             brand: client.brand
-            }, ...replies])
+            } ])
       })
       .catch(err => {
           console.log("err ===>>>")
@@ -657,7 +657,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
           .then(({data})=>{
             setRepliesLoading(false)
             setMoreRepliesLoading(false)
-            setReplies([...replies, ...data.results])
+            setReplies([ ...data.results.reverse(), ...replies])
             setPage(page + 1)
             setTotalReplies(data.totalResults)
             if(!replyActive){
@@ -703,10 +703,10 @@ const BrandComment = ({ review, comment, client, handleCommentLike}) =>{
         .then(({data})=>{
             setReplyIsSending(false)
           setCommentText("")
-          setReplies([{
+          setReplies([ ...replies, {
             ...data,
             user: client.user
-          }, ...replies])
+          }])
         })
         .catch(err => {
           setReplyIsSending(false)

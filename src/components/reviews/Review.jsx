@@ -102,10 +102,10 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       }
       setUpdatedReview(updatedReview)
       if(showComments){
-        setComments([{
+        setComments([...comments, {
           ...data,
           user: client.user
-        }, ...comments])
+        }])
       }
       else{
         handleShowComments(true)
@@ -154,10 +154,10 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
       }
       setUpdatedReview(updatedReview)
       if(showComments){
-        setComments([{
+        setComments([...comments, {
           ...data,
           brand: client.brand
-        }, ...comments])
+        }])
       }else{
         handleShowComments(true)
       }
@@ -435,7 +435,7 @@ const Review = ({review, setUpdatedReview, commentsAllowed, brandData, setBrandD
     .then(({data})=>{
       setCommentsLoading(false)
       setMoreCommentsLoading(false)
-      setComments([...comments, ...data.results])
+      setComments([...data.results.reverse(), ...comments ])
       setPage(page + 1)
       setTotalComments(data.totalResults)
       show.current = bool

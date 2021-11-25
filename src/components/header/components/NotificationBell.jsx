@@ -88,7 +88,6 @@ const NotificationBell = () => {
         if(client){
             getNotifications()
         }
-
     }, [client])
 
 

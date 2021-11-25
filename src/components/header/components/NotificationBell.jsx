@@ -8,8 +8,8 @@ import { axios } from '../../../axios/axiosInstance'
 import WebsiteLogo from '../../../assests/WebsiteLogo'
 import {io} from 'socket.io-client';
 
-const ENDPOINT = 'https://sikayetbox.com'
-// const ENDPOINT = "http://localhost:5000"
+// const ENDPOINT = 'https://sikayetbox.com'
+const ENDPOINT = "http://localhost:5000"
 const NotificationBell = () => {
     const { client } = useSelector((state) => state.client);
     const [showNotificationContainer, setShowNotificationContainer] = useState(false)
@@ -46,10 +46,10 @@ const NotificationBell = () => {
 
 
     useEffect(() => {
-        // socket.current = ;
-        // socket.current.on("update-notification", () =>{
-        //     getNotifications()
-        // })
+        socket.current = io(ENDPOINT);
+        socket.current.on("update-notification", () =>{
+            getNotifications()
+        })
     }, [])
 
     

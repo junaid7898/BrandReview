@@ -81,15 +81,7 @@ function Contact() {
             <div className="contact__info">
                 <div className="contact__info__item">
                     <AiOutlineMail className="contact__info__item__icon"/>
-                    <p className="contact__info__item__text">mfahad018@gmailc,om</p>
-                </div>
-                <div className="contact__info__item">
-                    <IoLocation className="contact__info__item__icon"/>
-                    <p className="contact__info__item__text">mfahad018@gmailc,om</p>
-                </div>
-                <div className="contact__info__item">
-                    <AiOutlinePhone className="contact__info__item__icon"/>
-                    <p className="contact__info__item__text">mfahad018@gmailc,om</p>
+                    <a href = 'mailto:info@sikayetbox.com' className="contact__info__item__text">info@sikayetbox.com</a>
                 </div>
             </div>
         </div>

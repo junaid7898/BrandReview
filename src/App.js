@@ -181,7 +181,7 @@ function App() {
                     path="/user/:userId" 
                     component={Profile}
               />
-              <Route exact path="/review" > 
+              <Route path="/review/:brandId?" > 
                     {
                       client 
                       ? 

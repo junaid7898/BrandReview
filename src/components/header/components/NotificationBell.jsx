@@ -56,7 +56,7 @@ const NotificationBell = () => {
     const [notifications, setNotifications] = useState([])
 
     const getNotifications = () =>{
-        const options = {sortBy: {createdAt: 1}, populate:"userId.User,brandId.Brand"}
+        const options = {sortBy: {createdAt: -1}, populate:"userId.User,brandId.Brand"}
             if(client.type.includes('user')){
                 axios.post('/notification/',{filters: {userId: client.user.id, forUser: true}, options})
                 .then(({data}) => {

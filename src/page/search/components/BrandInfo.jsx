@@ -1,9 +1,11 @@
 import React from 'react'
+import { useHistory } from 'react-router'
 import HalfStar from '../../../assests/HalfStar'
 import Star from '../../../assests/Star'
 import BrandComparison from '../../../components/brand_comparison/BrandComparison'
 
 const BrandInfo = ({brand}) => {
+    const history = useHistory()
     return (
         <div className="brand__information">
             <div className="brand__information__img-ratings">
@@ -38,11 +40,15 @@ const BrandInfo = ({brand}) => {
                     }
                 </div>
                 <p className = 'brand__information__title-about__para'>{brand.about}</p>
+                <button className = 'brand__information__review-button'  onClick={() => history.push(`/review/${brand.id}`)}>
+                    Write a review
+                </button>
             </div>
             
             <div className="brand__information__comapre">
                 {/* TODO brand comparison component */}
                 <BrandComparison/>
+                {/* <button  onClick={() => history.push(`/review/${brand.id}`)}>Wrtie revie</button> */}
             </div>
         </div>
     )

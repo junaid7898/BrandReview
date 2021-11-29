@@ -93,7 +93,7 @@ const NotificationBell = () => {
 
     
 
-
+    console.log('helloooooooo')
     let [normalizedData, setNormalizedData] = useState({})
     useEffect(() => {
         if(notifications){

@@ -103,7 +103,7 @@ const NotificationBell = () => {
             notifications.map(item => {
                 item.createdAt = new Date(item.createdAt).toDateString()
                 if(norm[item.createdAt]){
-                    norm[item.createdAt].unshift(item)
+                    norm[item.createdAt].push(item)
                 }
                 else{
                     norm[item.createdAt] = [item]

@@ -153,6 +153,9 @@ useEffect(() => {
             if(updatedReview.followedByUsers.length !== review.followedByUsers.length){
               return null
             }
+            else{
+              return updatedReview
+            }
           }
         }
         else{

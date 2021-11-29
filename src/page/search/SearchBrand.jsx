@@ -75,7 +75,6 @@ const SearchBrand = () => {
         }
         const reivewId = query.current.get("review")
         if(reivewId){
-          alert(reivewId)
           filters={
             "_id": reivewId,
           }

@@ -17,7 +17,6 @@ import NotificationBell from "./components/NotificationBell";
 
 const Header = () => {
   //search bar states
-  const [searchKey] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const searchValueRef = useRef()
@@ -215,7 +214,6 @@ const Header = () => {
             type="text"
             placeholder="Search"
             autoComplete="off"
-            value={searchKey}
             onChange={(e) => {
               handleSearch(e.target.value);
               setShowResult(true);

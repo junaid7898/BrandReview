@@ -182,7 +182,7 @@ const NotificationBell = () => {
                                 </p>
                                 {
                                     normalizedData[item].map(entry => 
-                                        <NotificationItem notification = {entry}/>
+                                        <NotificationItem setShowNotificationContainer={setShowNotificationContainer} notification = {entry}/>
                                     )
                                     
                                 }
@@ -199,7 +199,7 @@ const NotificationBell = () => {
 }
 
 
-const NotificationItem = ({notification}) => {
+const NotificationItem = ({notification, setShowNotificationContainer}) => {
     const ADMIN_NEW_REVIEW = "ADMIN-NEW-REVIEW"
     const BRAND_NEW_REVIEW = 'BRAND-NEW-REVIEW'
     const BRAND_REVIEW_RESOLVE = 'BRAND-REVIEW-RESOLVE'
@@ -208,7 +208,7 @@ const NotificationItem = ({notification}) => {
     console.log(notification)
     if(notification.type === ADMIN_NEW_REVIEW){
         return(
-            <Link to={`/admin`} className = 'header__notification__item__notification'>
+            <Link onClick={() => setShowNotificationContainer(false)} to={`/admin`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image} alt = {notification.user.name}/>
                 <p>{notification.user.name} added a review on {notification.brand.name}</p>
             </Link>
@@ -216,7 +216,7 @@ const NotificationItem = ({notification}) => {
     }
     if(notification.type === BRAND_NEW_REVIEW){
         return (
-            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image} alt = 'user'/>
                 <p>{notification.user.name} added a new review</p>
             </Link>
@@ -225,7 +225,7 @@ const NotificationItem = ({notification}) => {
 
     if(notification.type === BRAND_REVIEW_RESOLVE){
         return (
-            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image}  alt = {notification.user.name}/>
                 <p>{notification.user.name} resolved a review</p>
             </Link>
@@ -233,7 +233,7 @@ const NotificationItem = ({notification}) => {
     }
     if(notification.type === USER_REVIEW_REPLY_BY_BRAND){
         return(
-            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.brand.image}  alt = {notification.brand.name}/>
                 <p>{notification.brand.name} replied to your review</p>
             </Link>
@@ -241,7 +241,7 @@ const NotificationItem = ({notification}) => {
     }
     if(notification.type === USER_REVIEW_APPROVED){
         return(
-            <Link to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
+            <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <WebsiteLogo className = 'header__notification__item__notification__logo'/>
                 <p>Your review on {notification.brand.name} has been approved</p>
             </Link>

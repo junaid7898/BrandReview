@@ -3,7 +3,7 @@ import {default as Ax} from 'axios'
 import React, { useRef, useState, useEffect } from "react";
 import ImagePreview from "../../components/image_preview/ImagePreview"
 import {getImageDetails} from "../../helpers/getImageDetails";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator'
 import { useDispatch, useSelector } from "react-redux";
 import { statusAction } from "../../Redux/statusSlice";
@@ -15,6 +15,7 @@ import HorizantalDotBackground from '../login/components/HorizantalDotBackground
 import ZigZagBackgroundComponent from '../login/components/ZigZagBackgroundComponent'
 import BlueZigZagComponent from '../login/components/BlueZigZagComponent'
 const WriteReview = () => {
+  const {brandId} = useParams()
   const history = useHistory()
   const dispatch = useDispatch()
   const ref = useRef()
@@ -63,6 +64,14 @@ const WriteReview = () => {
         setShowList(false)
     }
   }
+
+  useEffect(() => {
+    if(brandId && brands.length > 0){
+      const selectedBrand = brands.find( item => item.id === brandId)
+      document.getElementById("brandInput").value = selectedBrand.name
+      setBrand(selectedBrand)
+    }
+  }, [brandId, brands])
 
   const fileSelectHandler = async(e) => {
     const images = e.target.files

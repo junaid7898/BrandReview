@@ -11,6 +11,7 @@ import HorizantalDotBackground from "../login/components/HorizantalDotBackground
 import BlueSpiralBackground from "../login/components/BlueSpiralBackground";
 import ZigZagBackgroundComponent from "../login/components/ZigZagBackgroundComponent";
 import SpiralBackground from "../login/components/SpiralBackground";
+import BrandComparison from "../../components/brand_comparison/BrandComparison";
 const SearchBrand = () => {
     useEffect(() => {
       window.scrollTo(0,0)
@@ -163,9 +164,9 @@ const SearchBrand = () => {
                   <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
             </div>
           }
-            {/* <div className="brandMain__right__compare">
+            <div className="brandMain__right__compare">
                 <BrandComparison />
-            </div> */}
+            </div>
         </div>
       </div>
 

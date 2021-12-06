@@ -331,11 +331,30 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
           className="reviewComponent__comments__array__item__tag-container"
           to={`/user/${comment.user}`}
         >
-          <img
-            src={comment.user.profileImage}
-            alt="logo"
-            className="reviewComponent__comments__array__item__img"
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={comment.user.profileImage}
+              alt="logo"
+              className="reviewComponent__comments__array__item__img"
+            />
+            <span
+              style={{
+                textTransform: "capitalize",
+                minWidth: "max-content",
+                marginLeft: 5,
+              }}
+            >
+              {review.user.name.length > 6
+                ? review.user.name.slice(0, 6) + "..."
+                : review.user.name}
+            </span>
+          </div>
           {comment.type === "admin" && (
             <div className="reviewComponent__comments__array__item__tag">
               <p>Admin</p>
@@ -834,11 +853,30 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
           className="reviewComponent__comments__array__item__tag-container"
           to={`/brand/${comment.brand && comment.brand.slug}`}
         >
-          <img
-            src={comment.brand && comment.brand.logo}
-            alt="logo"
-            className="reviewComponent__comments__array__item__img"
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src={comment.brand && comment.brand.logo}
+              alt="logo"
+              className="reviewComponent__comments__array__item__img"
+            />
+            <span
+              style={{
+                textTransform: "capitalize",
+                minWidth: "max-content",
+                marginLeft: 5,
+              }}
+            >
+              {review.brand.name.length > 6
+                ? review.brand.name.slice(0, 6) + "..."
+                : review.brand.name}
+            </span>
+          </div>
           {comment.type === "admin" && (
             <div className="reviewComponent__comments__array__item__tag">
               <p>Admin</p>

@@ -539,7 +539,10 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                               alt=""
                             />
                           </Link>
-                          <div className="reviewComponent__commentReply__writeComment__input">
+                          <form onSubmit = {(e) => {
+                            e.preventDefault()
+                            giveReplyUser()
+                          }} className="reviewComponent__commentReply__writeComment__input">
                             <input
                               id={`writereply/${comment.id}`}
                               onChange={(e) => setCommentText(e.target.value)}
@@ -550,6 +553,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                             />
                             {!replyIsSending ? (
                               <FiSend
+                                type = 'submit'
                                 onClick={() => giveReplyUser()}
                                 className={`reviewComponent__commentReply__writeComment__sendIcon ${
                                   commentText.length < 1 &&
@@ -559,7 +563,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                             ) : (
                               <LoadingIndicator className="reviewComponent__commentReply__writeComment__sendIcon-loader" />
                             )}
-                          </div>
+                          </form>
                         </div>
                       ) : client.type.includes("brand") ? (
                         <div className="reviewComponent__commentReply__writeComment">
@@ -570,7 +574,10 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                               alt=""
                             />
                           </Link>
-                          <div className="reviewComponent__commentReply__writeComment__input">
+                          <form onSubmit = {e => {
+                            e.preventDefault()
+                            giveReplyBrand()
+                          }} className="reviewComponent__commentReply__writeComment__input">
                             <input
                               id={`writereply/${comment.id}`}
                               onChange={(e) => setCommentText(e.target.value)}
@@ -581,6 +588,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                             />
                             {!replyIsSending ? (
                               <FiSend
+                                type = 'submit'
                                 onClick={() => {
                                   giveReplyBrand();
                                 }}
@@ -592,7 +600,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                             ) : (
                               <LoadingIndicator className="reviewComponent__commentReply__writeComment__sendIcon-loader" />
                             )}
-                          </div>
+                          </form>
                         </div>
                       ) : null
                     ) : null}
@@ -1056,7 +1064,10 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                               alt=""
                             />
                           </Link>
-                          <div className="reviewComponent__commentReply__writeComment__input">
+                          <form onSubmit = {e => {
+                            e.preventDefault()
+                            giveReplyBrand()
+                          }} className="reviewComponent__commentReply__writeComment__input">
                             <input
                               id={`writereply/${comment.id}`}
                               onChange={(e) => setCommentText(e.target.value)}
@@ -1067,6 +1078,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                             />
                             {!replyIsSending ? (
                               <FiSend
+                                type = 'submit'
                                 onClick={() => giveReplyBrand()}
                                 className={`reviewComponent__commentReply__writeComment__sendIcon ${
                                   commentText.length < 1 &&
@@ -1076,7 +1088,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                             ) : (
                               <LoadingIndicator className="reviewComponent__commentReply__writeComment__sendIcon-loader" />
                             )}
-                          </div>
+                          </form>
                         </div>
                       ) : client.type.includes("user") ||
                         client.type.includes("admin") ? (
@@ -1088,7 +1100,10 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                               alt={client.user.name}
                             />
                           </Link>
-                          <div className="reviewComponent__commentReply__writeComment__input">
+                          <form onSubmit = {e => {
+                            e.preventDefault()
+                            giveReplyUser()
+                          }} className="reviewComponent__commentReply__writeComment__input">
                             <input
                               id={`writereply/${comment.id}`}
                               onChange={(e) => setCommentText(e.target.value)}
@@ -1099,6 +1114,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                             />
                             {!replyIsSending ? (
                               <FiSend
+                                type = 'submit'
                                 onClick={() => {
                                   giveReplyUser();
                                 }}
@@ -1110,7 +1126,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                             ) : (
                               <LoadingIndicator className="reviewComponent__commentReply__writeComment__sendIcon-loader" />
                             )}
-                          </div>
+                          </form>
                         </div>
                       ) : null
                     ) : null}

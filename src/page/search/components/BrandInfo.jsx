@@ -40,15 +40,11 @@ const BrandInfo = ({brand}) => {
                     }
                 </div>
                 <p className = 'brand__information__title-about__para'>{brand.about}</p>
-                <button className = 'brand__information__review-button'  onClick={() => history.push(`/review/${brand.id}`)}>
-                    Write a review
-                </button>
+
             </div>
             
-            <div className="brand__information__comapre">
-                {/* TODO brand comparison component */}
-                <BrandComparison/>
-                {/* <button  onClick={() => history.push(`/review/${brand.id}`)}>Wrtie revie</button> */}
+            <div className="brand__information__compare">
+                <button  onClick={() => history.push(`/review/${brand.id}`)}>Write Review</button>
             </div>
         </div>
     )

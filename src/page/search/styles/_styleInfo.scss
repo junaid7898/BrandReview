@@ -10,6 +10,29 @@
     padding: 10px 14px;
     background-color: $background;
     // align-items: flex-start;
+
+    &__compare{
+        padding: 10px 20px;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+        & button{
+            width: 200px;
+            background-color: $primary;
+            color: $onPrimary;
+            border: 1px solid transparent;
+            outline: none;
+            height: 50px;
+            border-radius: 8px;
+            transition: all 300ms;
+            margin-bottom: 50px;
+            &:hover{
+                background-color: transparent;
+                border-color: $primary;
+                color: $primary;
+            }
+        }
+    }
     &__review-button{
 
         align-self: flex-start;

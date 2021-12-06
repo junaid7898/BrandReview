@@ -645,7 +645,7 @@ const Review = ({
     <div
       id={`main/${review.id}`}
       className="reviewComponent-container"
-      style={{ backgroundColor: review.isResolved ? "rgba('#cdf3d4')" : null }}
+      style={{ backgroundColor: review.isResolved && "rgb(205, 243, 212)"  }}
     >
       <div className="reviewComponent-container__upper">
         <div
@@ -912,7 +912,10 @@ const Review = ({
                     alt=""
                   />
                 </Link>
-                <div className="reviewComponent__comments__writeComment__input">
+                <form onSubmit = {(e) => {
+                  e.preventDefault()
+                  handleCommentUser()
+                }} className="reviewComponent__comments__writeComment__input">
                   <input
                     onChange={(e) => setCommentText(e.target.value)}
                     value={commentText}
@@ -923,6 +926,7 @@ const Review = ({
                   />
                   {!commentIsSending ? (
                     <FiSend
+                      type = 'submit'
                       onClick={handleCommentUser}
                       className={`reviewComponent__comments__writeComment__sendIcon ${
                         commentText.length < 1 &&
@@ -932,7 +936,7 @@ const Review = ({
                   ) : (
                     <LoadingIndicator className="reviewComponent__comments__writeComment__sendIcon-loader" />
                   )}
-                </div>
+                </form>
               </div>
             ) : client.type.includes("brand") &&
               client.brand.id === review.brand.id ? (
@@ -944,7 +948,10 @@ const Review = ({
                     alt=""
                   />
                 </Link>
-                <div className="reviewComponent__comments__writeComment__input">
+                <form onSubmit = {(e) => {
+                  e.preventDefault()
+                  handleCommentBrand()
+                }} className="reviewComponent__comments__writeComment__input">
                   <input
                     onChange={(e) => setCommentText(e.target.value)}
                     value={commentText}
@@ -955,6 +962,7 @@ const Review = ({
                   />
                   {!commentIsSending ? (
                     <FiSend
+                      type = 'submit'
                       onClick={handleCommentBrand}
                       className={`reviewComponent__comments__writeComment__sendIcon ${
                         commentText.length < 1 &&
@@ -964,7 +972,7 @@ const Review = ({
                   ) : (
                     <LoadingIndicator className="reviewComponent__comments__writeComment__sendIcon-loader" />
                   )}
-                </div>
+                </form>
               </div>
             ) : null
           ) : null}

@@ -3,7 +3,7 @@
   border-radius: 2px;
   position: relative;
   &-container {
-    background-color: white;
+    background-color: ghostwhite;
     border-radius: 8px;
     padding: 5px;
     margin: 10px 0;
@@ -313,6 +313,7 @@
   }
   &__commentReply {
     &__line {
+      opacity: 0;
       position: absolute;
       left: -26px;
       top: 0;
@@ -386,7 +387,7 @@
         background-color: #f8f8f8;
         padding: 0 15px;
         height: 30px;
-        width: 100%;
+        width: 95%;
         margin: 5px 0;
         margin-left: 10px;
         border-radius: 3px;
@@ -497,7 +498,7 @@
       &__item {
         display: flex;
         flex-direction: row;
-        border-radius: 3px;
+        border-radius: 10px;
         margin: 10px 0;
         padding: 10px 0;
         position: relative;
@@ -514,6 +515,7 @@
           flex-direction: column;
           margin: 0 5px;
           &__lineBox {
+            opacity: 0;
             width: 100%;
             flex: 1;
             position: relative;
@@ -649,7 +651,7 @@
 
 .brandBackground {
   // background-color: #0ed40ed5;
-  background-color: #357acebb;
+  background-color: #698db9bb;
   // color: #F8F8F8 !important;
 }
 

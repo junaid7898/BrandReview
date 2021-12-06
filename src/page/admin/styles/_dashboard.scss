@@ -158,6 +158,9 @@
         position: relative;
         width: 45%;
         min-width: 45%;
+        background-color: #fff;
+        padding: 0px 10px;
+        border-radius: 4px;
         @include respond(phone){
             width: 100%;
         }

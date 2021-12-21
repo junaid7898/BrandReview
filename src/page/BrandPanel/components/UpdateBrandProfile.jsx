@@ -9,7 +9,7 @@ const UpdateBrandProfile = ({ about,email, setEmail, name, setName, category, se
             <div className="update__brand__profile" style = {{position: 'relative'}}>
                     <div className="update__brand__profile__inputs">
                         <div className = 'update__brand__profile__email'>
-                            <label htmlFor = 'brandEmail'>Email</label>
+                            <label htmlFor = 'brandEmail'>Email Adresi</label>
                             <input
                                 id = 'brandEmail'
                                 name = 'brand email'
@@ -20,7 +20,7 @@ const UpdateBrandProfile = ({ about,email, setEmail, name, setName, category, se
                         </div>
 
                         <div className = 'update__brand__profile__email'>
-                            <label htmlFor = 'brandName'>Name</label>
+                            <label htmlFor = 'brandName'>Marka İsmi</label>
                             <input
                                 id = 'brandName'
                                 name = 'brand name'
@@ -31,12 +31,12 @@ const UpdateBrandProfile = ({ about,email, setEmail, name, setName, category, se
                         </div>
 
                         <div className="update__brand__profile__category">
-                            <label htmlFor="categoryBrand">Category</label>
+                            <label htmlFor="categoryBrand">Kategori</label>
                             <SelectCategory value = {category} setValue = {setCategory}/>
                         </div>
 
                         <div className="update__brand__profile__inputs__about">
-                            <label htmlFor="aboutBrand">About {`[${aboutLength.current}/200]`}</label>
+                            <label htmlFor="aboutBrand">Marka Açıklaması {`[${aboutLength.current}/200]`}</label>
                                 <textarea
                                     type = 'text'
                                     maxLength = {200}

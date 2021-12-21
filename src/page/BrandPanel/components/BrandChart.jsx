@@ -78,14 +78,14 @@ const BrandChart = ({brandId, date}) => {
                 
                         <div className="chart__div__first-chart">
                             <div className="chart__div__first-chart__intro">
-                                <h3>Reviews</h3>
+                                <h3>Yorumlar</h3>
                             </div>
                             <div className = 'chart__div__first__chart__bar'>
                                 <Bar
                                     data = {{
                                         labels: chartData && chartData.label,
                                         datasets: [{  
-                                            label:"Total Reviews",
+                                            label:"Toplam Yorum",
                                             data: chartData && chartData.value,
                                             barPercentage: 0.5,
                                             barThickness: 15,
@@ -104,14 +104,14 @@ const BrandChart = ({brandId, date}) => {
 
                         <div className="chart__div__second-chart">
                             <div className="chart__div__second-chart__intro">
-                                    <h3>Review Ratings</h3>
+                                    <h3>Memnuniyet Puanı</h3>
                             </div>
                             <div className = 'chart__div__first__chart__bar'>
                                 <Line
                                         data = {{
                                             labels: chartData2 && chartData2.label,
                                             datasets: [{  
-                                                label: 'total ratings',  
+                                                label: 'Total Puan',  
                                                 data: chartData2 && chartData2.value,
                                                 barPercentage: 0.5,
                                                 barThickness: 6,

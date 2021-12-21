@@ -13,12 +13,11 @@ const Footer = () => {
           </div>
 
           <p>
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout.
+          Şikayetbox 2005 yılında kurulmuştur. Şikayetbox siz değerli kullanıcıları doğrudan marka temsilcileri ile buluşturan, güvenilir bir internet ortamı yaratarak iki tarafın da haklarına koruyan bir platformdur.
           </p>
         </div>
         <div className="footer__content__links">   
-          <Link to = '/termsandcondition' className = 'footer__content__links__title'><h4>Terms and Conditions</h4></Link>
+          <Link to = '/termsandcondition' className = 'footer__content__links__title'><h4>Kural ve Şartlar</h4></Link>
           <div className = 'footer__content__social__links'>
 
             <div className="footer__content__social__links-facebook">

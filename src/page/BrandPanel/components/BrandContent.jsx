@@ -96,7 +96,7 @@ const BrandContent = ({item, setItem}) => {
                   <p className='brand__progress__reviews__count'>
                     {item.reviews.length}
                   </p>
-                  <p className="brand__progress__reviews__text">Reviews</p>
+                  <p className="brand__progress__reviews__text">Yorumlar</p>
               </div>
               <div className = 'brand__progress__ratings'>
               <span>
@@ -106,7 +106,7 @@ const BrandContent = ({item, setItem}) => {
                   ))
                 }
                 </span>
-                <p className="brand__progress__reviews__reviewCount">{(item.averageRating).toFixed(1)} Ratings</p>
+                <p className="brand__progress__reviews__reviewCount">{(item.averageRating).toFixed(1)} Puan</p>
               </div>
           </div>
       </div> 

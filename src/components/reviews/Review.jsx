@@ -714,13 +714,13 @@ const Review = ({
                   {review.isResolved && (
                     <div className="reviewComponent__profile__intro__status__review-label">
                       {/* TODO wether review is a complaint/thanked/resolved */}
-                      <p>Resolved</p>
+                      <p>Çözümlendi</p>
                     </div>
                   )}
                   {review.isThanked && (
                     <div className="reviewComponent__profile__intro__status__thank-label">
                       {/* TODO wether review is a complaint/thanked/resolved */}
-                      <p>Thanked</p>
+                      <p>teşekkür etti</p>
                     </div>
                   )}
                 </div>
@@ -767,8 +767,8 @@ const Review = ({
             </div>
             {isEditingReview && (
               <div className="reviewComponent__text__edit__buttons">
-                <button onClick={() => handleConfirmChanges()}>Confirm</button>
-                <button onClick={() => handleCancelChanges()}>Cancel</button>
+                <button onClick={() => handleConfirmChanges()}>onaylamak</button>
+                <button onClick={() => handleCancelChanges()}>iptal</button>
               </div>
             )}
             <div
@@ -788,12 +788,12 @@ const Review = ({
                   >
                     {client.type.includes("user") ? (
                       client.user.likedReviews.includes(review.id) ? (
-                        <p className="reviewComponent__buttons__button-liked">
-                          Liked : {review.likedByUsers.length}
+                        <p className="reviewComponent__buttons__button-liked">  
+                        beğenildi : {review.likedByUsers.length}
                         </p>
                       ) : (
                         <p className="reviewComponent__buttons__button-like">
-                          Like: {review.likedByUsers.length}
+                          Beğen: {review.likedByUsers.length}
                         </p>
                       )
                     ) : null}
@@ -810,7 +810,7 @@ const Review = ({
                   >
                     {client.type.includes("user") ? (
                       <p className="reviewComponent__buttons__button-reply">
-                        Reply
+                        Yanıtla
                       </p>
                     ) : null}
                   </Button>
@@ -823,11 +823,11 @@ const Review = ({
                     {client.type.includes("user") ? (
                       client.user.followedReviews.includes(review.id) ? (
                         <p className="reviewComponent__buttons__button-following">
-                          Following
+                        Takip etmek
                         </p>
                       ) : (
                         <p className="reviewComponent__buttons__button-follow">
-                          Follow
+                        Takip Et
                         </p>
                       )
                     ) : null}
@@ -843,11 +843,11 @@ const Review = ({
                     client.user.id === review.user.id ? (
                       client.user.resolvedReviews.includes(review.id) ? (
                         <p className="reviewComponent__buttons__button-resolved">
-                          Resolved
+                        Çözümlendi
                         </p>
                       ) : (
                         <p className="reviewComponent__buttons__button-resolve">
-                          Resolve
+                        Sorun Çözüldü
                         </p>
                       )
                     ) : null}
@@ -864,11 +864,11 @@ const Review = ({
                       review.isResolved ? (
                         review.isThanked ? (
                           <p className="reviewComponent__buttons__button-thanked">
-                            Thanked
+                            teşekkür etti
                           </p>
                         ) : (
                           <p className="reviewComponent__buttons__button-thank">
-                            Thank
+                          Teşekkür
                           </p>
                         )
                       ) : null
@@ -921,7 +921,7 @@ const Review = ({
                     value={commentText}
                     className=""
                     type="text"
-                    placeholder="Enter Comment"
+                    placeholder="Yorum girin"
                     id={`review-${review.id}-write-comment`}
                   />
                   {!commentIsSending ? (

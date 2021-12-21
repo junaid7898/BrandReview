@@ -64,7 +64,7 @@ function Comments({
                       disabled={commentsLoading}
                       onClick={() => handleShowComments(true)}
                     >
-                      Load More Comments
+                      daha fazla
                       {moreCommentsLoading && <LoadingIndicator />}
                     </button>
                   )}
@@ -78,11 +78,11 @@ function Comments({
           <div className="reviewComponent__comments__showComments">
             {showComments ? (
               <button onClick={() => handleShowComments(false)}>
-                Hide Comments
+              Yorumları Gizle
               </button>
             ) : (
               <button onClick={() => handleShowComments(true)}>
-                Show Comments
+              Yorumları Göster
                 {commentsLoading && <LoadingIndicator />}
               </button>
             )}
@@ -357,7 +357,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
           </div>
           {comment.type === "admin" && (
             <div className="reviewComponent__comments__array__item__tag">
-              <p>Admin</p>
+              <p>yönetici</p>
             </div>
           )}
           {review.user.isPhoneVerified && (
@@ -395,10 +395,10 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
               {client.type.includes("user") ? (
                 client.user.likedComments.includes(comment.id) ? (
                   <p className="reviewComponent__buttons__button-liked">
-                    Liked
+                  beğenildi
                   </p>
                 ) : (
-                  <p className="reviewComponent__buttons__button-like">Like</p>
+                  <p className="reviewComponent__buttons__button-like">Beğen</p>
                 )
               ) : null}
             </Button>
@@ -411,7 +411,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
               onClick={handleReply}
             >
               {client.type.includes("user") ? (
-                <p className="reviewComponent__buttons__button-reply">Reply</p>
+                <p className="reviewComponent__buttons__button-reply">Yanıtla</p>
               ) : null}
             </Button>
           )}
@@ -423,14 +423,14 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                 className="reviewComponent__commentReply__show"
                 onClick={() => getReplies(false)}
               >
-                hide replies
+                Yanıtları Gizle
               </p>
             ) : (
               <p
                 className="reviewComponent__commentReply__show"
                 onClick={() => getReplies(true)}
               >
-                show replies
+                Yanıtları Göster
                 {repliesLoading && <LoadingIndicator />}
               </p>
             )}
@@ -459,7 +459,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                             />
                             {reply.type === "admin" && (
                               <div className="reviewComponent__comments__array__item__tag">
-                                <p>Admin</p>
+                                <p>yönetici</p>
                               </div>
                             )}
                             {review.user.isPhoneVerified && (
@@ -522,7 +522,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                 id={`loadmore/${comment.id}`}
                 onClick={() => getReplies(true)}
               >
-                Load more replies
+                daha fazla
               </button>
             )}
             {replyActive && (
@@ -887,7 +887,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
           </div>
           {comment.type === "admin" && (
             <div className="reviewComponent__comments__array__item__tag">
-              <p>Admin</p>
+              <p>yönetici</p>
             </div>
           )}
           {review.brand.isVerified && (
@@ -927,7 +927,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
             >
               {client.type.includes("brand") ? (
                 <p className="background__color reviewComponent__buttons__button-reply">
-                  Reply
+                Yanıtla
                 </p>
               ) : null}
             </Button>
@@ -940,14 +940,14 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                 className="reviewComponent__commentReply__show reviewComponent__commentReply__show__brand"
                 onClick={() => getReplies(false)}
               >
-                hide replies
+                Yanıtları Gizle
               </p>
             ) : (
               <p
                 className="reviewComponent__commentReply__show reviewComponent__commentReply__show__brand"
                 onClick={() => getReplies(true)}
               >
-                show replies
+                Yanıtları Göster
                 {repliesLoading && <LoadingIndicator />}
               </p>
             )}
@@ -979,7 +979,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                             />
                             {reply.type === "admin" && (
                               <div className="reviewComponent__comments__array__item__tag">
-                                <p>Admin</p>
+                                <p>yönetici</p>
                               </div>
                             )}
                             {review.user.isPhoneVerified && (
@@ -1018,7 +1018,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                             />
                             {comment.type === "admin" && (
                               <div className="reviewComponent__comments__array__item__tag">
-                                <p>Admin</p>
+                                <p>yönetici</p>
                               </div>
                             )}
                             {review.brand.isVerified && (
@@ -1047,7 +1047,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                 id={`loadmore/${comment.id}`}
                 onClick={() => getReplies(true)}
               >
-                Load more replies
+                daha fazla
               </button>
             )}
             {replyActive && (

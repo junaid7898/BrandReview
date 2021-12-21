@@ -78,7 +78,7 @@ const LoginInputs = () => {
         req
         ).then(res => {
           dispatch(statusAction.setNotification({
-            message: "Logged in",
+            message: "Giriş Yapıldı",
             type: "success"
           }))
           console.log('response: ' , res.data)
@@ -126,19 +126,19 @@ const LoginInputs = () => {
       login()
     }}>
       <div className="login__form__inputs__title">
-        <h1>Login as User</h1>
+        <h1>Kullanıcı Girişi</h1>
         <p className="login__form__inputs__title__noaccount-link">
-          Welcome, we missed you
+          Hoşgeldiniz
         </p>
       </div>
 
       <div className="login__form__inputs__email">
-        <label htmlFor = "userName">Your Email</label>
+        <label htmlFor = "userName">Email Adresiniz</label>
         <input
           id = "userName"
           type="email"
           name="email"
-          placeholder="Enter your email address"
+          placeholder="Email Adresinizi Yazınız"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -146,12 +146,12 @@ const LoginInputs = () => {
         />
       </div>
       <div className="login__form__inputs__password">
-        <label htmlFor = "userPassword">Password</label>
+        <label htmlFor = "userPassword">Şifreniz</label>
         <input
           id = "userPassword"
           type="password"
           name="password"
-          placeholder="Enter your password"
+          placeholder="şifrenizi girin"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
@@ -172,10 +172,10 @@ const LoginInputs = () => {
               }
             }}
           />
-          <label htmlFor="saveUserInfo">Remember me</label>
+          <label htmlFor="saveUserInfo">Beni Hatırla</label>
         </div>
         <div className = 'login__form__inputs__after__forgot-password' onClick = {() => setForgotPassword(true)}>
-          <p>Forgot Password?</p>
+          <p>Şifremi Unuttum?</p>
         </div>
         {
           forgotPassword ? 
@@ -189,7 +189,7 @@ const LoginInputs = () => {
       </div>
 
       <label className="login__form__inputs__login-link" htmlFor="userSignup">
-          Don't have an account? <Link to="/user/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Singup</Link>
+        Henüz Üye Değil misiniz? <Link to="/user/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Üye Ol</Link>
         </label>
 
       <button
@@ -199,18 +199,18 @@ const LoginInputs = () => {
         type = 'submit'
         onKeyDown = {handleKeyDown}
       >
-        Login
+        Giriş
         {
           isLoggingIn.email &&
           <LoadingIndicator />
         }
       </button>
-      <p>or continue with</p>
+      <p>veya devam et</p>
       <div className="login__form__inputs__social-button">
         <div onClick={loginWithGoogle} style={{pointerEvents: isLoggingIn.google ? "none" : "all"}} className="login__form__inputs__social-button__google">
           <img src={GoogleIcon} alt="google logo" />
 
-          <p>Sign in with Google</p>
+          <p>Google Hesabınızla Giriş</p>
           
         </div>
         {/* <div  className="login__form__inputs__social-button__facebook" onClick = {() => alert('sign in with facebook')}>

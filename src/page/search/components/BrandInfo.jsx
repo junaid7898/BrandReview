@@ -23,7 +23,7 @@ const BrandInfo = ({brand}) => {
                         })
                     }
                     </div>
-                    <p>{brand.reviews.length > 0 ? `${brand.averageRating.toFixed(1)} out of ${brand.reviews.length} reviews` : 'No reviews for now'} </p> 
+                    <p>{brand.reviews.length > 0 ? `${brand.averageRating.toFixed(1)} Memnuniyet Puanı ${brand.reviews.length} Yorumdan` : 'No reviews for now'} </p> 
                 </div>
             </div>
 
@@ -44,7 +44,7 @@ const BrandInfo = ({brand}) => {
             </div>
             
             <div className="brand__information__compare">
-                <button  onClick={() => history.push(`/review/${brand.id}`)}>Write Review</button>
+                <button  onClick={() => history.push(`/review/${brand.id}`)}>Yorum Yaz</button>
             </div>
         </div>
     )

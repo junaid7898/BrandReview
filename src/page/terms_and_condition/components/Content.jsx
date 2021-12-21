@@ -5,7 +5,7 @@ const Content = () => {
   return (
     <section className="content">
       <div className="content__intro">
-        <h1>Terms And Condition</h1>
+        <h1>Kural ve Şartlar</h1>
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever

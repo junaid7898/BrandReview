@@ -212,7 +212,7 @@ const Header = () => {
           <input
             id="nav_search"
             type="text"
-            placeholder="Search"
+            placeholder="Arama Yap"
             autoComplete="off"
             onChange={(e) => {
               handleSearch(e.target.value);
@@ -276,21 +276,21 @@ const Header = () => {
                           setShowLogin(!showLogin);
                         }}>
                                     {/* SECTION nav links on click login */}
-                            <h4 className = 'nav__links__link__h4'>Login</h4>
+                            <h4 className = 'nav__links__link__h4'>Girişi</h4>
                             <FiChevronDown size={20} className="nav__links__icon" />
                                 <div ref = {loginRef} className={`nav__links__link__user-login ${!showLogin && `nav__links__link__user-login-hide` }`}>
 
                                   <Link to="/user/login"  className="nav__links__link__user-login__link1">
                                     <div className="nav__links__link__user-login__link1__item">
                                       <BiUser size = {15}/>
-                                      <h4>User</h4>
+                                      <h4>kullanıcı</h4>
                                     </div> 
                                   </Link>
 
                                   <Link to="/brand/login" className="nav__links__link__user-login__link2">
                                     <div className="nav__links__link__user-login__link2__item">
                                           <AiFillCar size = {15}/>
-                                          <h4 >Brand</h4>
+                                          <h4>marka</h4>
                                     </div>
                                   </Link>
                                 </div>
@@ -310,7 +310,7 @@ const Header = () => {
                           }}
                         >
                           
-                          <h4 className = 'nav__links__link__h4'>Signup</h4>
+                          <h4 className = 'nav__links__link__h4'>yazılmak</h4>
                           <FiChevronDown size={20} className="nav__links__icon" />
                             
                                 <div ref = {registerRef} className={`nav__links__link__user-login ${!showRegister && `nav__links__link__user-login-hide` }`}>
@@ -321,7 +321,7 @@ const Header = () => {
                                     >
                                       <div className="nav__links__link__user-login__link1__item">
                                         <BiUser size = {15}/>
-                                        <h4>User</h4>
+                                        <h4>kullanıcı</h4>
                                     </div>
                                     </Link>
 
@@ -351,7 +351,7 @@ const Header = () => {
                         (
                           client.user.role.includes("user") &&
                           <li>
-                            <Link to={`/user/${client.user.id}`} ><h4 className = 'nav__links__link__h4'>Profile</h4></Link>
+                            <Link to={`/user/${client.user.id}`} ><h4 className = 'nav__links__link__h4'>Profil</h4></Link>
                           </li>
                         ) 
                         :
@@ -359,7 +359,7 @@ const Header = () => {
                         (
                             <li>
                               <Link to={`/brand/${client.brand.slug}`}>
-                                <h4  className = 'nav__links__link__h4'>Brand Page</h4>
+                                <h4  className = 'nav__links__link__h4'>Marka Sayfası</h4>
                               </Link>
                             </li>
                         )
@@ -375,7 +375,7 @@ const Header = () => {
                           (
                             <li>
                               <Link to={`/brand/panel/${client.brand.id}`}>   
-                                <h4 className = 'nav__links__link__h4'>Brand Panel</h4>    
+                                <h4 className = 'nav__links__link__h4'>Marka Paneli</h4>    
                               </Link>
                             </li>
                           )
@@ -427,7 +427,7 @@ const Header = () => {
                       className = 'nav__links__button'
                         onClick={() => logout(dispatch, history, client.type, client.tokens.refresh.token)}
                       >
-                        Logout
+                        Çıkış Yap
                       </button>
                     </>
                   </>
@@ -448,13 +448,13 @@ const Header = () => {
           ?
             !client.user.isEmailVerified ?
               <div className="nav__emailVerification">
-                <button onClick = {handleUserVerification}>verifiy email</button>
+                <button onClick = {handleUserVerification}>Emailini Onayla</button>
               </div>
               : null
           : client.type.includes("brand") ?
             !client.brand.isEmailVerified ?
               <div className="nav__emailVerification">
-                <button onClick = {handleBrandVerification}>verifiy email</button>
+                <button onClick = {handleBrandVerification}>Emailini Onayla</button>
               </div>
             : null
           : null

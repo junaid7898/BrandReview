@@ -18,19 +18,19 @@ const VerifyOTP = ({onSubmit, onCut, user}) => {
             <div className="verifyOtp__container">
 
                 <div className="verifyOtp__container__header">
-                    <p>Enter Verification Code sent to your phone</p>
+                    <p>Telefonunuza gelen şifreyi giriniz</p>
                 </div>
 
                 <div className="verifyOtp__container__input-button">
 
                     <div className="verifyOtp__container__input-button__input">
 
-                        <label htmlFor = 'otpVerification'>Code</label>
+                        <label htmlFor = 'otpVerification'>Kod</label>
                         <input
                             type = 'text'
                             maxLength = {4}
                             name = 'code'
-                            placeholder = 'Enter OTP code'
+                            placeholder = 'Telefonunuza gelen şifrenizi girin'
                             value = {otp}
                             onChange = {e=>setOtp(e.target.value)}
                         />
@@ -38,7 +38,7 @@ const VerifyOTP = ({onSubmit, onCut, user}) => {
                     </div>
 
                     <div className="verifyOtp__container__input-button__button" onClick = {() => handleOtp()}>
-                        <p>Continue</p>
+                        <p>Devam Et</p>
                     </div>
 
                 </div>

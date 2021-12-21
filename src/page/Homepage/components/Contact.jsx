@@ -61,17 +61,17 @@ function Contact() {
         <div className="contact">
             <div className="contact__form">
                 <div className="contact__form__header">
-                    <p>Do you have any Questions</p>
+                    <p>Bize Ulaşın</p>
                 </div>
                 <div className="contact__form__fields">
                     <div className="contact__form__upper">
-                        <input id= "contact_nameInput" onChange={(e) => nameRef.current = e.target.value} defaultValue={nameRef.current} type="text" className="contact__form__input" placeholder="Name" />
+                        <input id= "contact_nameInput" onChange={(e) => nameRef.current = e.target.value} defaultValue={nameRef.current} type="text" className="contact__form__input" placeholder="Ad-Soyad" />
                         <input id = "contact_emailInput" onChange={(e) => emailRef.current = e.target.value} defaultValue={emailRef.current} type="text" className="contact__form__input"  placeholder="Email"/>
                     </div>
-                    <input id = "contact_messageInput" onChange={(e) => messageRef.current = e.target.value} type="text" className="contact__form__input contact__form__input-message" placeholder="Message" />
+                    <input id = "contact_messageInput" onChange={(e) => messageRef.current = e.target.value} type="text" className="contact__form__input contact__form__input-message" placeholder="Mesajınız" />
                 </div>
                 <button disabled={isSending} onClick={handleSend} className="contact__form__button">
-                    Send
+                Gönder
                     {
                         isSending &&
                         <LoadingIndicator />

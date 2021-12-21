@@ -38,17 +38,17 @@ const ForgotPassword = ({onCancel, onSubmit, isSending}) => {
         <div className="forgot__password">
             <div className="forgot__password__container">
                 <div className="forgot__password__container__inputs">
-                    <label htmlFor = 'email'>Enter your Email</label>
+                    <label htmlFor = 'email'>Email Adresiniz</label>
                     <input
                         type = 'text'
-                        placeholder = 'Enter your Email Address'
+                        placeholder = 'Email Adresinizi Yazınız'
                         name = 'email'
                         value = {emailAddress}
                         onChange = {e => setEmailAddress(e.target.value)}
                     />
                 </div>
                 <button disabled={isSending} className="forgot__password__container__button" onClick = {() => submitEmail(emailAddress)}>
-                    <h3> Forgot Password </h3>
+                    <h3> Yeni Şifre Gönder </h3>
                     {
                         isSending &&
                         <LoadingIndicator />

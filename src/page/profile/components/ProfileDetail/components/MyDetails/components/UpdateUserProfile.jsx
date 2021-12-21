@@ -106,7 +106,7 @@ const UpdateUserProfile = ({onSubmit, user, setClientDetails}) => {
                     }}>
 
                     <div className="update__user__profile__component__form__phone">
-                        <label htmlFor="phoneNumber">Phone Number </label>
+                        <label htmlFor="phoneNumber">Telefon Numarası </label>
                         <PhoneInput   
                             id = 'phoneNumber'
                             placeholder="Enter phone number"
@@ -118,7 +118,7 @@ const UpdateUserProfile = ({onSubmit, user, setClientDetails}) => {
                     </div>
 
                     <div className = 'update__user__profile__component__form__birthday'>
-                        <label htmlFor="birthDate">Birthday </label>
+                        <label htmlFor="birthDate">Doğum Tarihi </label>
                         <DatePicker
                             id="birthDate"
                             placeholder="click to open"
@@ -133,7 +133,7 @@ const UpdateUserProfile = ({onSubmit, user, setClientDetails}) => {
                     </div>
                     
                     <div className="update__user__profile__component__form__address">
-                        <label htmlFor="address">Address </label>
+                        <label htmlFor="address">Adres </label>
                         <textarea
                             id = 'address'
                             className = 'update__user__profile__component__form__address__textarea'
@@ -146,7 +146,7 @@ const UpdateUserProfile = ({onSubmit, user, setClientDetails}) => {
                     </div>
 
                     <button className = 'update__user__profile__component__form__submit' type = 'submit'>
-                        Submit {isUpdating && <LoadingIndicator/> }
+                    Onayla {isUpdating && <LoadingIndicator/> }
                     </button>
                 </form>
 

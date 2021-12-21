@@ -52,7 +52,7 @@ function Search() {
         <div ref={searchRef} className="header__searchbar-container">
             <div className="header__searchbar" onClick={ () => setShowSearchResults(true) }>
                 <div className="header__searchbar__input">
-                    <input onChange={(e) => handleSearch(e.target.value)} type="text" placeholder="Search here" />
+                    <input onChange={(e) => handleSearch(e.target.value)} type="text" placeholder="Arama Yap" />
                 </div>
                 <div className="header__searchbar__icon">
                     <SearchIcon />

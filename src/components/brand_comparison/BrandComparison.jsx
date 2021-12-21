@@ -154,7 +154,7 @@ const BrandComparison = (props) => {
       <div ref={searchRef} className="comparison__first-brand">
         <input
           type="text"
-          placeholder="1. Brand"
+          placeholder="1. Marka"
           onClick = { () => setShowDropdown(!showDropdown)}
           value = {brand1}
           defaultValue={props.selectedBrand1}
@@ -180,12 +180,12 @@ const BrandComparison = (props) => {
         ) : null}
       </div>
 
-      <h1>With</h1>
+      <h1>İle</h1>
 
       <div ref = {searchRef2} className="comparison__second-brand">
         <input
           type="text"
-          placeholder="2. Brand"
+          placeholder="2. Marka"
           defaultValue={props.selectedBrand2}
           value = {brand2}
           onChange={(e) => {
@@ -210,7 +210,7 @@ const BrandComparison = (props) => {
         ) : null}
       </div>
       <div onClick={() => handleCompare()} className="comparison__button">
-          <p>Compare</p>
+          <p>karşılaştırmak</p>
       </div>
       
     </section>

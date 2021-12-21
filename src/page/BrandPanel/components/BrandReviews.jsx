@@ -27,7 +27,7 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
       sortBy: sortOptions,
       populate:"user.User"
     };
-    let newFilter = filters;
+    let newFilter = {...filters};
 
     if (date) {
       newFilter = {
@@ -37,6 +37,7 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
           $lt: new Date(date[1]),
         }),
       };
+      console.log(date);
     }
     newFilter = {
       ...newFilter,
@@ -49,6 +50,8 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
         setReviewData(data.results);
         setTotalPages(data.totalPages);
         setCurrentPage(data.page);
+        console.log('reviewksddddddddddd:', data.results);
+        console.log('filters', newFilter);
       });
     }
   }, [page, filters, sortOptions, date]);
@@ -126,7 +129,7 @@ const BrandReviews = ({ brandId, date, filters, sortOptions }) => {
       </div>
       :
       <div className = 'empty__data__container'>
-        <EmptyData value = 'No Review Yet....'/>
+        <EmptyData value = {`hiç yorum`}/>
       </div>
     }
 

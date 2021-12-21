@@ -74,7 +74,7 @@ function TopBrands({category, skipBrandId, rank, length}) {
                             }
                             <td className="topbrands__list__ratings">
                                 <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                <p className="topbrands__list__ratings__text">{item.averageRating.toFixed(1)} Ratings</p>
+                                <p className="topbrands__list__ratings__text">{item.averageRating.toFixed(1)} Puan</p>
                             </td>
                         </Link>  
                     )

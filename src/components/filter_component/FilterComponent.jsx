@@ -132,7 +132,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
         <div ref = {filterRef} className="filter">
             <div className="filter__div"  >
                 <div onClick = {() => setShowList(!showList)} className="filter__div__div">
-                    <input onChange={(e) => handleInput(e)} type="text" placeholder="Filter & Sort" />
+                    <input onChange={(e) => handleInput(e)} type="text" placeholder="Sırala" />
                 </div>
                 <div className="filter__div__icon">
                     <FaSortAmountDownAlt onClick={() => setIsAscending(!isAscending)} className={`filter__div__icon__svg ${isAscending && `filter__div__icon__svg-asc`}`} size = {24} color = '#357BCE'/>
@@ -141,23 +141,23 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
             {showList ? 
             (
                 <div  className="filter__options">
-                    <p>Sort By</p>
+                    <p>Göre Sırala</p>
                     {
                         tab === "review" &&
                         <div onClick={() => handleOption("rating")} className={`filter__options__item ${sort.rating && `filter__options__item-selected` }`}>
-                            <h5>Rating</h5>
+                            <h5>Memnuniyet</h5>
                         </div>
                     }
                     <div onClick={() => handleOption("date")} className={`filter__options__item ${sort.createdAt && `filter__options__item-selected` }`}>
-                        <h5>Date Created</h5>
+                        <h5>Tarihe Göre</h5>
                     </div>
 
-                    <p>Filter Options</p>
+                    <p>Filtrele</p>
                     {
                         tab === "review" &&
                         <div onClick = {() => handleFilters('resolved')} 
                          className={`filter__options__filter ${filterOption.isResolved && `filter__options__filter-selected` }`}>
-                            <h5>Resolved</h5>
+                            <h5>Çözümlenen</h5>
                         </div>
                     }
                     {
@@ -178,7 +178,7 @@ const FilterComponent = ({tab, setFilters, setSortOptions}) => {
                         (tab === "review" || tab === "brand") &&
                         <div onClick = {() => handleFilters('verified')} 
                          className={`filter__options__filter ${filterOption.isVerified && `filter__options__filter-selected` }`}>
-                            <h5>IsVerified</h5>
+                            <h5>Onaylanan</h5>
                         </div>
                     }
 

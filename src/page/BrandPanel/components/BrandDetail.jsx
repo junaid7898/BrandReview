@@ -160,9 +160,9 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
             <div className = 'dashboard__list'>
                 <div className="dashboard__list__brand__link">
                     <ul>
-                        <li onClick = {handleShowDashBoard} className = {option === 1 ? 'list__click': ''}>Dashboard</li>
-                        <li onClick = {handleShowReviews} className = {option === 2 ? 'list__click': ''}>Reports</li>
-                        <li onClick = {handleShowSettings} className = {option === 3 ? 'list__click': ''}>Settings</li>
+                        <li onClick = {handleShowDashBoard} className = {option === 1 ? 'list__click': ''}>Anasayfa</li>
+                        <li onClick = {handleShowReviews} className = {option === 2 ? 'list__click': ''}>Raporlar</li>
+                        <li onClick = {handleShowSettings} className = {option === 3 ? 'list__click': ''}>Ayarlar</li>
                     </ul>
                     <div className="dashboard__list__brand__link__filters">
                         {
@@ -194,21 +194,21 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
 
                             <div className="dashboard__list__settings__items">
                                 <div className="dashboard__list__settings__items__brand-name">
-                                    <h3>Name</h3>
+                                    <h3>Marka İsmi</h3>
                                     <h4>{item.name}</h4>
                                 </div>
                             </div>
 
                             <div className="dashboard__list__settings__items">
                                 <div className="dashboard__list__settings__items__category-name">
-                                    <h3>Category</h3>
+                                    <h3>Kategori</h3>
                                     <h4>{item.category ? item.category : " - "}</h4>
                                 </div>
                             </div>
 
                             <div className="dashboard__list__settings__item">
                                 <div className="dashboard__list__settings__item__email">
-                                    <h3>Email</h3>
+                                    <h3>Email Adresi</h3>
                                     <h4>{item.email}</h4>
                                 </div>
                             </div>
@@ -218,7 +218,7 @@ const BrandDetail = ({item, brandId, visitorIsBrand}) => {
 
                         <div className="mydetails__update-button">
                             <div className="mydetails__update-button__button1">
-                                <UpdateProfile onClick={() => setUpdateProfile(true)}  value = 'Update Profile' />
+                                <UpdateProfile onClick={() => setUpdateProfile(true)}  value = 'Profili Güncelle' />
                             </div>
                         {/* {
                             item.isPhoneVerified ?

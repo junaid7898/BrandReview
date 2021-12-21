@@ -21,7 +21,7 @@ const MyDetails = ({ user, setClientDetails }) => {
 
   const handleOtpVerification = () => {
     dispatch(statusAction.setNotification({
-      message: 'sending otp',
+      message: 'Şifre Gönderme',
       type: "loading"
     }))
     const phoneNumber = user.countryCode + user.phoneNumber;
@@ -29,7 +29,7 @@ const MyDetails = ({ user, setClientDetails }) => {
     axios.post('/auth/user/send-verification-sms', {user})
     .then(() => {
       dispatch(statusAction.setNotification({
-        message: 'OTP sent',
+        message: 'Şirfe Gönderildi',
         type: "success"
       }))
       setIsSendingOtp(false)
@@ -51,23 +51,23 @@ const MyDetails = ({ user, setClientDetails }) => {
       {user ? (
         <>
           <div className="mydetails__details">
-            <DetailTag class1="tag " label="Phone" value={user.countryCode+" "+user.phoneNumber} isPhoneNumber = {true} verification = {user.isPhoneVerified}/>
+            <DetailTag class1="tag " label="Telefon" value={user.countryCode+" "+user.phoneNumber} isPhoneNumber = {true} verification = {user.isPhoneVerified}/>
             <DetailTag
               class1="tag "
-              label="Birthday"
+              label="Doğum Tarihi"
               value={new Date(user.dateOfBirth).toDateString()}
             />
             <DetailTag
               class1="tag tag__address"
-              label="Address"
+              label="Adres"
               value={user.address}
             />
-            <DetailTag class1="tag " label="Email" value={user.email} />
+            <DetailTag class1="tag " label="E-posta" value={user.email} />
           </div>
 
           <div className="mydetails__update-button">
               <div className="mydetails__update-button__button1">
-                <UpdateProfile onClick={() => setUpdateProfile(true)} value = 'Update Profile' />
+                <UpdateProfile onClick={() => setUpdateProfile(true)} value = 'Bilgileri Güncelle' />
               </div>
           {
              user.isPhoneVerified ?
@@ -78,7 +78,7 @@ const MyDetails = ({ user, setClientDetails }) => {
                   isSendingOtp ? 
                   <LoadingIndicator/>
                   :
-                  <UpdateProfile onClick = {() => handleOtpVerification()} value = 'Verify Phone'/>
+                  <UpdateProfile onClick = {() => handleOtpVerification()} value = 'Telefonunu Onayla'/>
                 }
               </div>
             

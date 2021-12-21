@@ -27,16 +27,16 @@ const UpdatePassword = ({brandId}) => {
     const validationCheck = () => {
         
         if(newPassword && !CheckPassword()){
-            return 'password must be between 7-15 characters long and contain at least one numeric digit and special character'
+            return 'şifre 7-15 karakter uzunluğunda olmalı ve en az bir sayısal rakam ve özel karakter içermelidir'
         }
         else if(!oldPassword || !newPassword || !confirmPass ){
-            return 'please fill all entries...'
+            return 'Lütfen Gerekli Alanları Doldurunuz.'
         }
         else if(oldPassword === newPassword){
-            return 'Old Password and New Password are same...'
+            return 'Eski Şifre ve Yeni Şifre aynı...'
         }
         else if(newPassword !== confirmPass){
-            return 'Password and Confirm password does not match...'
+            return 'Şifre ve Şifreyi Onayla eşleşmiyor...'
         }
         else{
             return 'ok'
@@ -87,14 +87,14 @@ const UpdatePassword = ({brandId}) => {
     }
     return (
         <div className = 'update__brand__password__container'>
-            <p>Update Your Password</p>
+            <p>Şifrenizi Güncelleyin</p>
             <div className = 'update__brand__password__container__inputs'>
                 <div className = 'update__brand__password__container__inputs__old-pass'>
-                    <label htmlFor = 'brandOldPassword'>Old Password</label>
+                    <label htmlFor = 'brandOldPassword'>Eski Şifreniz</label>
                     <input
                         type = 'password'
                         id = 'brandOldPassword'
-                        placeholder = 'Enter your old password'
+                        placeholder = 'eski şifrenizi girin'
                         name = 'brand new password'
                         value = {oldPassword}
                         onChange = {e => setOldPassword(e.target.value)}
@@ -102,11 +102,11 @@ const UpdatePassword = ({brandId}) => {
                 </div>
 
                 <div className = 'update__brand__password__container__inputs__new-pass'>
-                    <label htmlFor = 'brandNewPassword'>New Password</label>
+                    <label htmlFor = 'brandNewPassword'>Yeni Şifreniz</label>
                     <input
                         type = 'password'
                         id = 'brandNewPassword'
-                        placeholder = 'Enter your new password'
+                        placeholder = 'Yeni şifrenizi giriniz'
                         name = 'brand new password'
                         value = {newPassword}
                         onChange = {e => setNewPassword(e.target.value)}
@@ -114,19 +114,19 @@ const UpdatePassword = ({brandId}) => {
                 </div>
 
                 <div className = 'update__brand__password__container__inputs__confirm-pass'>
-                    <label htmlFor = 'confirmPass'>Confirm Password</label>
+                    <label htmlFor = 'confirmPass'>Yeni şifrenizi giriniz</label>
                     <input
                         type = 'password'
                         id = 'confirmPass'
                         name = 'brand confirm password'
-                        placeholder = 'Confirm your password'
+                        placeholder = 'Yeni şifrenizi giriniz'
                         value = {confirmPass}
                         onChange = {e => setConfirmPass(e.target.value)}
                     />
                 </div>
             </div>
             <button className = 'update__brand__password__container__button' onClick = {handleUpdatePassword}>
-                Change {isPasswordChanging && <LoadingIndicator/>}   
+                Onayla {isPasswordChanging && <LoadingIndicator/>}   
             </button>
 
         </div>

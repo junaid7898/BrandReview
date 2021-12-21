@@ -27,13 +27,13 @@ function Header() {
                 <div className="homepage__header__left">
                     <div className="homepage__header__left__sub">
                         <h1 className="homepage__header__infoHeading">
-                        Choose The Best Brand Item with Us
+                        En İyi Marka Ürününü Bizimle Seçin
                         </h1>
                         <p className="homepage__header__infoText">
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.
+                        Markalar, şirketler veya internet siteleri hakkında ki yorumlarınızı bizlerle paylaşarak siz de diğer kullanıcılara yardımda bulunabilir veya yazılmış olan yorumlarla kararınızı rahatlıkla verebilirsiniz.
                         </p>
                         <Link to="/review" className="homepage__header__link">
-                            Write a Review
+                            Yorum Yaz
                         </Link>
                     </div>
                 </div>

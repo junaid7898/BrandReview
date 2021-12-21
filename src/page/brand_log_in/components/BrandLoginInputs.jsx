@@ -128,14 +128,14 @@ const BrandLoginInputs = () => {
       login()
     }}>
       <div className="brand__login__inputs__title">
-        <h1>Login as Brand</h1>
+        <h1>marka giriş</h1>
         <p className="brand__login__inputs__title__noaccount-link">
-          Welcome, we missed you
+          Hoşgeldiniz
         </p>
       </div>
 
       <div className="brand__login__inputs__email">
-        <label for="userName">Your Email</label>
+        <label for="userName">Email Adresiniz</label>
         <input
           id="userName"
           type="email"
@@ -148,7 +148,7 @@ const BrandLoginInputs = () => {
         />
       </div>
       <div className="brand__login__inputs__password">
-        <label for="userPassword">Password</label>
+        <label for="userPassword">Şifreniz</label>
         <input
           id="userPassword"
           type="password"
@@ -174,10 +174,10 @@ const BrandLoginInputs = () => {
               }
             }}
           />
-          <label htmlFor="saveUserInfo">Remember me</label>
+          <label htmlFor="saveUserInfo">Beni Hatırla</label>
         </div>
         <div className = 'login__form__inputs__after__forgot-password' onClick = {() => setForgotPassword(true)}>
-          <p>Forgot Password?</p>
+          <p>Şifremi Unuttum?</p>
         </div>
         {
           forgotPassword ? 
@@ -190,7 +190,7 @@ const BrandLoginInputs = () => {
       </div>
 
       <label className="login__form__inputs__login-link" htmlFor="userSignup">
-          Don't have an account? <Link to="/brand/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Signup</Link>
+        Henüz Üye Değil misiniz? <Link to="/brand/signup" id = 'userSignup' className = 'login__form__inputs__login-link__link'>Üye Ol</Link>
       </label>
 
       <button
@@ -200,7 +200,7 @@ const BrandLoginInputs = () => {
         disabled = {isLoggingIn.email}
         style={{position:"relative"}}
       >
-        Login
+        Giriş
         {
           isLoggingIn.email && <LoadingIndicator />
         }

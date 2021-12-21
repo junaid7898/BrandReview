@@ -159,7 +159,7 @@ const SearchBrand = () => {
           { 
             brandData && 
             <div className="brandMain__topbrands">
-                  <h2>Top brands in the same category</h2>
+                  <h2>Aynı kategoride ki Popüler Markalar</h2>
                   <TopBrands category={brandData.category} skipBrandId={brandData.id}  rank={false} length={5} />
             </div>
           }

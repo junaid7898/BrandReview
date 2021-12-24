@@ -87,7 +87,7 @@ const UpdatePassword = ({brandId}) => {
     }
     return (
         <div className = 'update__brand__password__container'>
-            <p>Şifrenizi Güncelleyin</p>
+            <p>Sifrenizi Güncelleyin</p>
             <div className = 'update__brand__password__container__inputs'>
                 <div className = 'update__brand__password__container__inputs__old-pass'>
                     <label htmlFor = 'brandOldPassword'>Eski Şifreniz</label>

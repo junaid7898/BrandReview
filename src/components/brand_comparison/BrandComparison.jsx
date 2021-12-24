@@ -210,7 +210,7 @@ const BrandComparison = (props) => {
         ) : null}
       </div>
       <div onClick={() => handleCompare()} className="comparison__button">
-          <p>karşılaştırmak</p>
+          <p>Karşılaştır</p>
       </div>
       
     </section>

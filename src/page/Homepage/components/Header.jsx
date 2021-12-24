@@ -27,7 +27,7 @@ function Header() {
                 <div className="homepage__header__left">
                     <div className="homepage__header__left__sub">
                         <h1 className="homepage__header__infoHeading">
-                        En İyi Marka Ürününü Bizimle Seçin
+                        En Iyi Marka Ürününü Bizimle Seçin
                         </h1>
                         <p className="homepage__header__infoText">
                         Markalar, şirketler veya internet siteleri hakkında ki yorumlarınızı bizlerle paylaşarak siz de diğer kullanıcılara yardımda bulunabilir veya yazılmış olan yorumlarla kararınızı rahatlıkla verebilirsiniz.
@@ -51,7 +51,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[0]].averageRating.toFixed(1)} out of {brands[brandIndexArray[0]].reviews.length} Reviews</p>
+                                    <p>{brands[brandIndexArray[0]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[0]].reviews.length} Yorumdan</p>
                                 </div>
                             </div>
                             <div className="homepage__header__brand__item">
@@ -60,7 +60,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[1]].averageRating.toFixed(1)} out of {brands[brandIndexArray[1]].reviews.length} Reviews</p>
+                                    <p>{brands[brandIndexArray[1]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[1]].reviews.length} Yorumdan</p>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ function Header() {
                                 </Link>
                                 <div className="homepage__header__brand__item__rating">
                                     <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[2]].averageRating.toFixed(1)} out of {brands[brandIndexArray[2]].reviews.length} Reviews</p>
+                                    <p>{brands[brandIndexArray[2]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[2]].reviews.length} Yorumdan</p>
                                 </div>
                             </div>
                         </div>

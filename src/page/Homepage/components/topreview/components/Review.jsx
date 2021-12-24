@@ -33,7 +33,7 @@ function Review({review}) {
                     }
                 </div>
                 <div className="topReview__item__footer__rating">
-                    <p>{review.rating} Ratings</p>
+                    <p>{review.rating} Puan</p>
                 </div>
             </div>
         </div>

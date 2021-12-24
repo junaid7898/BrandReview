@@ -276,21 +276,21 @@ const Header = () => {
                           setShowLogin(!showLogin);
                         }}>
                                     {/* SECTION nav links on click login */}
-                            <h4 className = 'nav__links__link__h4'>Girişi</h4>
+                            <h4 className = 'nav__links__link__h4'>Giriş</h4>
                             <FiChevronDown size={20} className="nav__links__icon" />
                                 <div ref = {loginRef} className={`nav__links__link__user-login ${!showLogin && `nav__links__link__user-login-hide` }`}>
 
                                   <Link to="/user/login"  className="nav__links__link__user-login__link1">
                                     <div className="nav__links__link__user-login__link1__item">
                                       <BiUser size = {15}/>
-                                      <h4>kullanıcı</h4>
+                                      <h4>Kullanıcı</h4>
                                     </div> 
                                   </Link>
 
                                   <Link to="/brand/login" className="nav__links__link__user-login__link2">
                                     <div className="nav__links__link__user-login__link2__item">
                                           <AiFillCar size = {15}/>
-                                          <h4>marka</h4>
+                                          <h4>Marka</h4>
                                     </div>
                                   </Link>
                                 </div>
@@ -310,7 +310,7 @@ const Header = () => {
                           }}
                         >
                           
-                          <h4 className = 'nav__links__link__h4'>yazılmak</h4>
+                          <h4 className = 'nav__links__link__h4'>Kayıt Ol</h4>
                           <FiChevronDown size={20} className="nav__links__icon" />
                             
                                 <div ref = {registerRef} className={`nav__links__link__user-login ${!showRegister && `nav__links__link__user-login-hide` }`}>
@@ -321,7 +321,7 @@ const Header = () => {
                                     >
                                       <div className="nav__links__link__user-login__link1__item">
                                         <BiUser size = {15}/>
-                                        <h4>kullanıcı</h4>
+                                        <h4>Kullanıcı</h4>
                                     </div>
                                     </Link>
 

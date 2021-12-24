@@ -61,7 +61,7 @@ function Contact() {
         <div className="contact">
             <div className="contact__form">
                 <div className="contact__form__header">
-                    <p>Bize Ulaşın</p>
+                    <p>Bize Ulasın</p>
                 </div>
                 <div className="contact__form__fields">
                     <div className="contact__form__upper">

@@ -72,7 +72,7 @@ function Search() {
                                         </Link>
                                 )
                             :
-                                <p className="header__searchbar__dropdown-empty">Nothing to show</p>
+                                <p className="header__searchbar__dropdown-empty">Sonuç bulunamadı</p>
                         }
                     </div>
                 :

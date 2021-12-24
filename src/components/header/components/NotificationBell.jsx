@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { axios } from '../../../axios/axiosInstance'
 import WebsiteLogo from '../../../assests/WebsiteLogo'
 import {io} from 'socket.io-client';
+import { normalizeDate } from '../../../helpers/normalizeDate'
 
 const ENDPOINT = 'https://sikayetbox.com:5000'
 // const ENDPOINT = "http://localhost:5000"
@@ -159,6 +160,7 @@ const NotificationBell = () => {
             })
         }
     }
+     
 
 
     return (
@@ -178,7 +180,7 @@ const NotificationBell = () => {
                         Object.keys(normalizedData).map(item => 
                             <div className = 'header__notification__item'>
                                 <p className = 'header__notification__item__date'>
-                                    {new Date(item).toDateString()}
+                                    {normalizeDate(item)}
                                 </p>
                                 {
                                     normalizedData[item].map(entry => 
@@ -218,7 +220,7 @@ const NotificationItem = ({notification, setShowNotificationContainer}) => {
         return (
             <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image} alt = 'user'/>
-                <p>{notification.user.name} added a new review</p>
+                <p>{notification.user.name} yeni bir yorum ekledi</p>
             </Link>
         )
     }
@@ -227,7 +229,7 @@ const NotificationItem = ({notification, setShowNotificationContainer}) => {
         return (
             <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.user.image}  alt = {notification.user.name}/>
-                <p>{notification.user.name} resolved a review</p>
+                <p>{notification.user.name} şikayeti çözüldü</p>
             </Link>
         )
     }
@@ -235,7 +237,7 @@ const NotificationItem = ({notification, setShowNotificationContainer}) => {
         return(
             <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <img src = {notification.brand.image}  alt = {notification.brand.name}/>
-                <p>{notification.brand.name} replied to your review</p>
+                <p>{notification.brand.name} yorumunuzu cevapladı</p>
             </Link>
         )
     }
@@ -243,7 +245,7 @@ const NotificationItem = ({notification, setShowNotificationContainer}) => {
         return(
             <Link onClick={() => setShowNotificationContainer(false)} to={`/brand/${notification.brandId.slug}?review=${notification.reviewId}`} className = 'header__notification__item__notification'>
                 <WebsiteLogo className = 'header__notification__item__notification__logo'/>
-                <p>Your review on {notification.brand.name} has been approved</p>
+                <p>{notification.brand.name} hakkındaki yorumunuz onaylandı</p>
             </Link>
         )
     }

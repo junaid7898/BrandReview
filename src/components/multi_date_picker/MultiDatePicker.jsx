@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import DatePicker from "react-multi-date-picker";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import turkish_calender from '../../helpers/turkishCalender'
 
 function CustomButton({ direction, handleClick, disabled }) {
   return (
@@ -30,7 +31,7 @@ function CustomButton({ direction, handleClick, disabled }) {
 function CustomHeader() {
   return (
     <div className="date__picker__custom-header">
-      <h1>Calender</h1>
+      <h1>Tarih Seçiniz</h1>
     </div>
   );
 }
@@ -65,6 +66,7 @@ const MultiDatePicker = ({date, setDate}) => {
           }}
         multiple={true}
         range={true}
+        locale={turkish_calender}
         containerClassName="date__picker__picked-dates"
         arrowClassName="date__picker__arrow"
         inputClass="date__picker__input"

@@ -147,7 +147,7 @@ const SearchBrand = () => {
             })
             :
             <>
-              <EmptyData value = 'No reviews posted for this brand...'/>
+              <EmptyData value = 'Bu marka hakkında henüz yorum yapılmamış....'/>
               </>
             }
 

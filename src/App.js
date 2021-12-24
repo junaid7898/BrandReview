@@ -188,9 +188,9 @@ function App() {
                         client.type.includes("user") ?
                           <WriteReview />
                           :
-                            () => handleRedirect("Brands cant give review :))")
+                            () => handleRedirect("Markalar yorum yazamamaktadır :))")
                       :
-                        () => handleRedirect("You need to be Logged in to give reviews")
+                        () => handleRedirect("Yorum yazabilmek için üye olmanız yada giriş yapmanız gerekmektedir.")
                     }
                     
               </Route>
@@ -204,7 +204,7 @@ function App() {
                     }
                     
               </Route>
-              <Route exact path="/brand/signup" > 
+              {/* <Route exact path="/brand/signup" > 
                     {
                       !client 
                       ? 
@@ -212,7 +212,7 @@ function App() {
                       :
                         <Redirect to='/' exact />
                     }
-              </Route>
+              </Route> */}
 
               <Route exact path="/brand/panel/:brandId" > 
                     {

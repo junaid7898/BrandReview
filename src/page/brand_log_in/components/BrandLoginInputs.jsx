@@ -57,7 +57,7 @@ const BrandLoginInputs = () => {
 
   const login = async () => {
     dispatch(statusAction.setNotification({
-      message: "Logging in Please wait",
+      message: "Giriş Yap Lütfen bekleyin",
       type: "loading"
     }))
     setIsLoggingIn(true)
@@ -70,7 +70,7 @@ const BrandLoginInputs = () => {
         .post("/auth/brand/login", req)
         .then(({data}) => {
           dispatch(statusAction.setNotification({
-            message: "Logged in successfully",
+            message: "Giriş Yapıldı",
             type: "success"
           }))
           const {payload} = dispatch(clientActions.setClient(data));
@@ -128,7 +128,7 @@ const BrandLoginInputs = () => {
       login()
     }}>
       <div className="brand__login__inputs__title">
-        <h1>marka giriş</h1>
+        <h1>Marka Girisi</h1>
         <p className="brand__login__inputs__title__noaccount-link">
           Hoşgeldiniz
         </p>

@@ -83,7 +83,7 @@ const BrandContent = ({item, setItem}) => {
                 {
                   item.premiered ? 
                     <div className = 'brand__info__container__tag'>
-                      Premiered
+                      Onaylı
                     </div>
                     :
                     null

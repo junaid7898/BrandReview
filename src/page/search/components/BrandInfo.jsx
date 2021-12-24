@@ -23,7 +23,7 @@ const BrandInfo = ({brand}) => {
                         })
                     }
                     </div>
-                    <p>{brand.reviews.length > 0 ? `${brand.averageRating.toFixed(1)} Memnuniyet Puanı ${brand.reviews.length} Yorumdan` : 'No reviews for now'} </p> 
+                    <p>{brand.reviews.length > 0 ? `${brand.averageRating.toFixed(1)} Memnuniyet Puanı ${brand.reviews.length} Yorumdan` : 'Henüz yorum yapılmamış'} </p> 
                 </div>
             </div>
 
@@ -33,7 +33,7 @@ const BrandInfo = ({brand}) => {
                     {
                         brand.premiered ? 
                             <div className = 'brand__information__title-about__premeired__tag'>
-                                Premiered                                
+                                Onaylı                                
                             </div>
                             :
                             null

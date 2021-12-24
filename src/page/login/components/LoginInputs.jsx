@@ -63,7 +63,7 @@ const LoginInputs = () => {
 
   const login = async () => {
     dispatch(statusAction.setNotification({
-      message: "Logging in",
+      message: "Giriş Yap Lütfen bekleyin",
       type: "loading"
     }))
     console.log("login")

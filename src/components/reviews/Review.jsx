@@ -720,7 +720,7 @@ const Review = ({
                   {review.isThanked && (
                     <div className="reviewComponent__profile__intro__status__thank-label">
                       {/* TODO wether review is a complaint/thanked/resolved */}
-                      <p>teşekkür etti</p>
+                      <p>Teşekkür Etti</p>
                     </div>
                   )}
                 </div>
@@ -864,7 +864,7 @@ const Review = ({
                       review.isResolved ? (
                         review.isThanked ? (
                           <p className="reviewComponent__buttons__button-thanked">
-                            teşekkür etti
+                            Teşekkür Etti
                           </p>
                         ) : (
                           <p className="reviewComponent__buttons__button-thank">
@@ -921,7 +921,7 @@ const Review = ({
                     value={commentText}
                     className=""
                     type="text"
-                    placeholder="Yorum girin"
+                    placeholder="Yorumunuzu Yazın"
                     id={`review-${review.id}-write-comment`}
                   />
                   {!commentIsSending ? (
@@ -957,7 +957,7 @@ const Review = ({
                     value={commentText}
                     className=""
                     type="text"
-                    placeholder="Enter Comment"
+                    placeholder="Yorumunuzu Yazın"
                     id={`review-${review.id}-write-comment`}
                   />
                   {!commentIsSending ? (

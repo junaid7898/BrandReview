@@ -38,8 +38,8 @@ const Footer = () => {
       </div>
       <div className="footer__rights">
         <Link to = '/' className = 'footer__rights__link'><h4>SikayetBox</h4></Link>
-        <p>© 2021SikayetBox, All rights reserved </p>
-        <p> Impressum Datenschutz Glossar</p>
+        <p>© 2021SikayetBox, Tüm hakları saklıdır </p>
+        <p> Dogru markayı bulmanın merkezi</p>
       </div>
     </section>
   );

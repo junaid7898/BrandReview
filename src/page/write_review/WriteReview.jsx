@@ -301,7 +301,7 @@ const WriteReview = () => {
             <input
                 autoComplete="off"
                 type="text"
-                placeholder="Select the Brand"
+                placeholder="Markayı Seçin"
                 className="review__content__tboxes1__input"
                 id="brandInput"
                 onFocus = {() => {
@@ -338,7 +338,7 @@ const WriteReview = () => {
           </div>
             <input
               type="text"
-              placeholder="Subject"
+              placeholder="Konu"
               className="review__content__textbox"
               onChange = {(e) => {setTitle(e.target.value)}}
               required
@@ -359,7 +359,7 @@ const WriteReview = () => {
             </div>
 
             <textarea
-              placeholder="Write Your Review"
+              placeholder="Yorumunuzu Yazınız"
               className="review__content__textarea"
               rows={10}
               onChange = {e => {setMessage(e.target.value)}}
@@ -386,7 +386,7 @@ const WriteReview = () => {
 
           <div className="review__content__buttons">
             <div className="review__content__uploadButton">
-              <label htmlFor="uploadMedia">Upload Media</label>
+              <label htmlFor="uploadMedia">Görsel yada Video Yükle</label>
               <input
                 type="file"
                 name="file"
@@ -398,9 +398,9 @@ const WriteReview = () => {
               />
             </div>
             <button type = 'submit' className="review__content__publishButton" >
-              Publish
+              Paylaş
               {
-                isPublishing &&
+                isPublishing &&   
                 <LoadingIndicator/>
               }
             </button>

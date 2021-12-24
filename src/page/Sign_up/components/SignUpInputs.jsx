@@ -160,17 +160,17 @@ const SignUpInputs = () => {
       <div className="signup__form__inputs">
 
         <div className="signup__form__inputs__title">
-          <h1>Signup as User</h1>
+          <h1>Kullanıcı Olarak Kayıt Ol</h1>
           <p className="signup__form__inputs__title__noaccount-link">
-            Don't have an account?
+            Henüz Hesabınız Yok mu?
           </p>
         </div>
 
 
         <div className="signup__form__inputs__username">
-          <label htmlFor="userName">Full name</label>
+          <label htmlFor="userName">Adınız Soyadınız</label>
           <input
-            id="userName" type="text" placeholder="Enter your name" value={username} name="username"
+            id="userName" type="text" placeholder="Adınızı Soyadınızı Yazınız" value={username} name="username"
             onChange={(e) => 
             {
               setClientName(e.target.value);
@@ -184,7 +184,7 @@ const SignUpInputs = () => {
           <input
             id="userEmail"
             type="text"
-            placeholder="Enter your email address"
+            placeholder="Email Adresinizi Yazınız"
             value={email}
             name="email"
             onChange={(e) => {
@@ -195,27 +195,27 @@ const SignUpInputs = () => {
 
 
         <div className="signup__form__inputs__password">
-          <label htmlFor="userPassword">Password</label>
+          <label htmlFor="userPassword">Şifre</label>
           <input
             id="userPassword"
             type="password"
-            placeholder="Enter your password"
+            placeholder="Şifrenizi Yazınız"
             name="password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
-          <h5 className = 'password__warning__validation'>Password must be 7 to 15 characters which contain at least one numeric digit and a special character</h5>
+          <h5 className = 'password__warning__validation'>Şifreniz 7 ile 15 karakterden oluşup içerisinde en az 1 tane rakam ve özel karakter içermelidir.</h5>
         </div>
 
 
         <div className="signup__form__inputs__email">
-          <label htmlFor="userPhone">Confirm password</label>
+          <label htmlFor="userPhone">Şifrenizi Onaylayın</label>
           <input
             id="userPhone"
             type="password"
-            placeholder="Enter your password again"
+            placeholder="Şifrenizi Yeniden Giriniz"
             value={repeatPassword}
             name="confirm password"
             onChange={(e) => {
@@ -226,11 +226,11 @@ const SignUpInputs = () => {
 
 
         <div className="signup__form__inputs__phone">
-            <label htmlFor="phoneNumber">Phone Number </label>
+            <label htmlFor="phoneNumber">Telefon Numaranız </label>
               <PhoneInput
                   id = 'phoneNumber'
                   defaultCountry = "US"
-                  placeholder="Enter phone number"
+                  placeholder="Telefon Numaranızı Girin"
                   value={phone}
                   className = 'mydetails__update-details__update__phone__phone-number'
                   name = 'phone number'
@@ -239,13 +239,13 @@ const SignUpInputs = () => {
 
 
         <label className="signup__form__inputs__login-link" htmlFor="userLogin">
-          Already have an Account?{" "}
+          Site'de Hesabınız Mevcut mu?{" "}
           <Link
             to="/user/login"
             id="userLogin"
             className="signup__form__inputs__login-link__link"
           >
-            Login
+            Giriş Yap
           </Link>
         </label>
 
@@ -255,7 +255,7 @@ const SignUpInputs = () => {
           title="sign up"
           onClick={signUp}
         >
-          {isSigningIn ? <LoadingIndicator /> : "Signup"}
+          {isSigningIn ? <LoadingIndicator /> : "Kayıt Ol"}
         </button>
 
 

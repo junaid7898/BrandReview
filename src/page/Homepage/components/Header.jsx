@@ -43,39 +43,43 @@ function Header() {
                 {
                     brandIndexArray.length > 0 &&
                     <div className="homepage__header__right">
-                    <div className="homepage__header__brand">
-                        <div className="homepage__header__brand__col1">
-                            <div className="homepage__header__brand__item">
-                                <Link to = {`/brand/${brands[brandIndexArray[0]].slug}`} className="homepage__header__brand__item__logo-container">
-                                    <img src={brands[brandIndexArray[0]].logo} className="homepage__header__brand__item__logo"/>
-                                </Link>
-                                <div className="homepage__header__brand__item__rating">
-                                    <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[0]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[0]].reviews.length} Yorumdan</p>
+                    {
+                        brands && brands.length > 0 &&
+                        <div className="homepage__header__brand">
+                            <div className="homepage__header__brand__col1">
+                                <div className="homepage__header__brand__item">
+                                
+                                    <Link to = {`/brand/${brands[brandIndexArray[0]].slug}`} className="homepage__header__brand__item__logo-container">
+                                        <img src={brands[brandIndexArray[0]].logo} className="homepage__header__brand__item__logo"/>
+                                    </Link>
+                                    <div className="homepage__header__brand__item__rating">
+                                        <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
+                                        <p>{brands[brandIndexArray[0]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[0]].reviews.length} Yorumdan</p>
+                                    </div>
+                                </div>
+                                <div className="homepage__header__brand__item">
+                                    <Link to = {`/brand/${brands[brandIndexArray[1]].slug}`} className="homepage__header__brand__item__logo-container">
+                                        <img src={brands[brandIndexArray[1]].logo} className="homepage__header__brand__item__logo"/>
+                                    </Link>
+                                    <div className="homepage__header__brand__item__rating">
+                                        <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
+                                        <p>{brands[brandIndexArray[1]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[1]].reviews.length} Yorumdan</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="homepage__header__brand__item">
-                                <Link to = {`/brand/${brands[brandIndexArray[1]].slug}`} className="homepage__header__brand__item__logo-container">
-                                    <img src={brands[brandIndexArray[1]].logo} className="homepage__header__brand__item__logo"/>
-                                </Link>
-                                <div className="homepage__header__brand__item__rating">
-                                    <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[1]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[1]].reviews.length} Yorumdan</p>
+                            <div className="homepage__header__brand__col2">
+                                <div className="homepage__header__brand__item">
+                                    <Link to = {`/brand/${brands[brandIndexArray[2]].slug}`} className="homepage__header__brand__item__logo-container">
+                                        <img src={brands[brandIndexArray[2]].logo} className="homepage__header__brand__item__logo"/>
+                                    </Link>
+                                    <div className="homepage__header__brand__item__rating">
+                                        <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
+                                        <p>{brands[brandIndexArray[2]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[2]].reviews.length} Yorumdan</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="homepage__header__brand__col2">
-                            <div className="homepage__header__brand__item">
-                                <Link to = {`/brand/${brands[brandIndexArray[2]].slug}`} className="homepage__header__brand__item__logo-container">
-                                    <img src={brands[brandIndexArray[2]].logo} className="homepage__header__brand__item__logo"/>
-                                </Link>
-                                <div className="homepage__header__brand__item__rating">
-                                    <Star starGradient1="#FFDC64" starGradiet2="#FFC850" starLines="#FFF082" />
-                                    <p>{brands[brandIndexArray[2]].averageRating.toFixed(1)} Puan {brands[brandIndexArray[2]].reviews.length} Yorumdan</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
                 }
             </div>

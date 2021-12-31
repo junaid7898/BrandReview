@@ -7,6 +7,7 @@ import Pagination from "../../../../components/Pagination/Pagination"
 import LoadingIndicator from "../../../../components/loadingIndicator/LoadingIndicator";
 import FilterComponent from "../../../../components/filter_component/FilterComponent"
 import { useSelector } from "react-redux";
+import EmptyData from '../../../../components/EmptyDataComponent/EmptyData'
 const ProfileDetail = ({user, visitorIsUser, userId, setClientDetails}) => {
   // console.log('user:>', user);
   const {client} = useSelector(state => state.client)
@@ -219,7 +220,7 @@ useEffect(() => {
                         ?
                             <LoadingIndicator />
                         :
-                          <h1>no reviews yet.....</h1>
+                          <EmptyData value={'sıfır yorum'}/>
                       }
                     </div>
                     {
@@ -247,7 +248,7 @@ useEffect(() => {
                         ?
                             <LoadingIndicator />
                         :
-                          <h1>oops no ff yet.....</h1>
+                        <EmptyData value={'sıfır yorum'}/>
                       }
                     </div>
                     {

@@ -172,12 +172,10 @@ const WriteReview = () => {
         message: 'review published....',
         type: "success"
       }))
-      console.log(gg)
       data = {...gg}
       return true
     })
     .catch(err =>{
-      console.log(err)
       dispatch(statusAction.setNotification({
         message: err.response.data.message,
         type: "error"
@@ -216,7 +214,6 @@ const WriteReview = () => {
             message: 'publishing selected images......',
             type: "loading"
           }))
-          console.log(data.imageArray[index] + "\n")
           axios.put(data.imageArray[index], rawImages[0][index],{
             headers:{
               "Content-Type": imageDetails[index].fileType
@@ -232,7 +229,7 @@ const WriteReview = () => {
             history.push("/")  
           })
           .catch(err => {
-            console.log(err)
+            console.log('image upload======================', err)
             dispatch(statusAction.setNotification({
               message: "Image Upload Failed",
               type: "error"

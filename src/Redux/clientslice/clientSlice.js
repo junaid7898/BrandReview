@@ -9,7 +9,6 @@ const clientSlice = createSlice({
     initialState: initialClientState,
     reducers:{
         setClient(state, action){
-            console.log(action.payload)
             const getType = Object.keys(action.payload)[0]
             let type = [];
             if(getType === "user"){

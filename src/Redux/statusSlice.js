@@ -20,8 +20,6 @@ const statusSlice = createSlice({
     reducers:{
         setAttemptingLogin(state, action){
             state.attemptingLoginOnSiteLoad = action.payload
-            console.log(action.payload)
-            console.log(state)
         },
         isUserLoggedIn(state, action){
             state.status = {
@@ -45,7 +43,6 @@ const statusSlice = createSlice({
         },
         setNotification(state, action){
             action.payload.show = true
-            console.log(action.payload)
             if(action.payload.type === "error"){
                 action.payload.color = "#FF5151"
             }

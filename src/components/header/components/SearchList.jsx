@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom'
 
 
 const SearchList = ({styling ,divStyling,  data, setShowResult, event}) => {
-    
-    
     return (
         <div className = {styling}>
             {
-                data ?
+                data && data.length > 0 ?
                 data.map((item) => {
                 return(
                     <Link to ={`/brand/${item.slug}`} className = {divStyling} onClick = { () => {setShowResult(false); event.current.value = null}} key = {item.id}>
@@ -19,7 +17,7 @@ const SearchList = ({styling ,divStyling,  data, setShowResult, event}) => {
                 )
             }) :
                 <h3 style={{padding: 10}}>
-                    No Relavant Resutls
+                    Sonuç bulunamadı
                 </h3>
             }
         </div>

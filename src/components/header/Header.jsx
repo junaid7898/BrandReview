@@ -223,7 +223,7 @@ const Header = () => {
           />
           <SearchIcon className="nav__searchBar__searchIcon" />
 
-          {searchResults.length > 0 && showResult ? (
+          { showResult && (
             <>
               <SearchList
                 styling="nav__search__results"
@@ -234,7 +234,7 @@ const Header = () => {
                 event = {searchValueRef}
               />
             </>
-          ) : null}
+          ) }
         </div>
       </div>
 

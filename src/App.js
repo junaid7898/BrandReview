@@ -45,7 +45,6 @@ function App() {
   })
 
   useEffect(() => {
-    console.log(attemptingLoginOnSiteLoad)
     if(attemptingLoginOnSiteLoad === null || attemptingLoginOnSiteLoad === undefined){
       setIsState(true)
     }
@@ -78,10 +77,8 @@ function App() {
         }).then(({data: user}) => {
           dispatch(clientActions.setClient(user))
           dispatch(statusAction.setAttemptingLogin(false))
-          console.log(user);
         })
         .catch(err =>{
-          console.log(err);
           localStorage.removeItem("userId")
           localStorage.removeItem("accessToken")
           localStorage.removeItem("clientType")
@@ -107,10 +104,8 @@ function App() {
         }).then(({data: brand}) => {
           dispatch(clientActions.setClient(brand))
           dispatch(statusAction.setAttemptingLogin(false))
-          console.log(brand);
         })
         .catch(err =>{
-          console.log(err);
           localStorage.removeItem("brandId")
           localStorage.removeItem("accessToken")
           localStorage.removeItem("clientType")
@@ -121,7 +116,6 @@ function App() {
     
   }, [dispatch])
 
-  console.log("Latest COde ->>>>>...")
   const handleRedirect = (message, type = "error") => {
 
     if(!message){

@@ -34,6 +34,11 @@
     src: url('../../fonts/gothic_round/FontsFree-Net-All-Round-Gothic-W01-Bold.ttf');
 }
 
+@font-face {
+    font-family: baloo;
+    src: url('../../fonts/Baloo-Regular.ttf');
+}
+
 $primary:#357BCE;
 $primaryHover:#2a5994; 
 $onPrimary: #ffffff;
@@ -42,13 +47,14 @@ $surface: #F8F8F8;
 $onSurface-primary: rgba(0, 0, 0, 0.8);
 $onSurface-secondary: rgba(0, 0, 0, 0.5);
 
-$title: hv-B;
+$title: baloo;
 $subTitle: hv-S;
 $subTitle2: hv-M;
 $rights: rb-B;
 $subRights: rb-S;
 $subRights2: rb-M;
-$round: gr;
+$round: baloo;
+// $alternative-title: baloo;
 
 
 $maxwidth: 1200px;

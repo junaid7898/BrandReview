@@ -823,7 +823,7 @@ const Review = ({
                     {client.type.includes("user") ? (
                       client.user.followedReviews.includes(review.id) ? (
                         <p className="reviewComponent__buttons__button-following">
-                        Takip etmek
+                        Takip Edildi
                         </p>
                       ) : (
                         <p className="reviewComponent__buttons__button-follow">

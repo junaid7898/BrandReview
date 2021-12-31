@@ -416,7 +416,7 @@ const Header = () => {
                       }
                       {
                         client &&
-                          <li>
+                          <li style={{width: 50}}>
                               <NotificationBell/>  
                           </li>
                           

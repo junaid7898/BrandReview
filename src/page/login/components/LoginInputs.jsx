@@ -126,7 +126,7 @@ const LoginInputs = () => {
       login()
     }}>
       <div className="login__form__inputs__title">
-        <h1>Kullanıcı Girişi</h1>
+        <h1>Kullanıcı Girisi</h1>
         <p className="login__form__inputs__title__noaccount-link">
           Hoşgeldiniz
         </p>

@@ -64,7 +64,7 @@ function Comments({
                       disabled={commentsLoading}
                       onClick={() => handleShowComments(true)}
                     >
-                      daha fazla
+                      Daha fazla göster
                       {moreCommentsLoading && <LoadingIndicator />}
                     </button>
                   )}
@@ -395,7 +395,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
               {client.type.includes("user") ? (
                 client.user.likedComments.includes(comment.id) ? (
                   <p className="reviewComponent__buttons__button-liked">
-                  beğenildi
+                  Beğendin
                   </p>
                 ) : (
                   <p className="reviewComponent__buttons__button-like">Beğen</p>
@@ -522,7 +522,7 @@ const UserComment = ({ index, review, comment, client, handleCommentLike }) => {
                 id={`loadmore/${comment.id}`}
                 onClick={() => getReplies(true)}
               >
-                daha fazla
+                Daha fazla göster
               </button>
             )}
             {replyActive && (
@@ -1047,7 +1047,7 @@ const BrandComment = ({ review, comment, client, handleCommentLike }) => {
                 id={`loadmore/${comment.id}`}
                 onClick={() => getReplies(true)}
               >
-                daha fazla
+                Daha fazla göster
               </button>
             )}
             {replyActive && (

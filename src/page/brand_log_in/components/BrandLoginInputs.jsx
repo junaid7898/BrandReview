@@ -140,7 +140,7 @@ const BrandLoginInputs = () => {
           id="userName"
           type="email"
           name="email"
-          placeholder="Enter your email address"
+          placeholder="Email Adresinizi Giriniz"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -153,7 +153,7 @@ const BrandLoginInputs = () => {
           id="userPassword"
           type="password"
           name="password"
-          placeholder="Enter your password"
+          placeholder="Şifrenizi Giriniz"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);

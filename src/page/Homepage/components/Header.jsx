@@ -27,7 +27,7 @@ function Header() {
                 <div className="homepage__header__left">
                     <div className="homepage__header__left__sub">
                         <h1 className="homepage__header__infoHeading">
-                        En Iyi Marka Ürününü Bizimle Seçin
+                        En İyi Marka Ürününü Bizimle Seçin
                         </h1>
                         <p className="homepage__header__infoText">
                         Markalar, şirketler veya internet siteleri hakkında ki yorumlarınızı bizlerle paylaşarak siz de diğer kullanıcılara yardımda bulunabilir veya yazılmış olan yorumlarla kararınızı rahatlıkla verebilirsiniz.

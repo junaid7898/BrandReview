@@ -230,6 +230,12 @@
     text-align: center;
     // min-width: 100px;
     z-index: 50;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // background-color: red;
     @include respond(phone){
         padding: 8px 8px;
     }

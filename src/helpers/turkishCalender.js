@@ -21,7 +21,7 @@ const turkish_calender = {
       ["tuesday", "salı"],
       ["wednesday", "çarşamba"],
       ["thursday", "perşembe"],
-      ["friday", "cumā"],
+      ["friday", "cuma"],
     ],
     digits: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
     meridiems: [

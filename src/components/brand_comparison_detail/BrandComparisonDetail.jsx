@@ -16,7 +16,7 @@ const BrandComparisonDetail = (props) => {
         <div className="brand__comparison__info__stats">
             <div className="brand__comparison__review">
             <h3>Review Count</h3>
-            <h4>{props.reviewCount}</h4>
+            <h4>{props.reviewCount }</h4>
           </div>
           <div className="brand__comparison__solved-count">
             <h3>Solved Count</h3>
